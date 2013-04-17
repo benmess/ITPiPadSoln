@@ -1,0 +1,681 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s0="http://scms.silcar.com.au/" xmlns:tns="http://scms.silcar.com.au/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://scms.silcar.com.au/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://scms.silcar.com.au/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="CookieLogin">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sPassword" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CookieLoginResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="CookieLoginResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSubcontractorITPsForDownload">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSubcontractorITPsForDownloadResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetSubcontractorITPsForDownloadResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="ArrayOfAnyType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetITPDownloadInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sID" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPDownloadInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetITPDownloadInfoResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetITPStatus">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sID" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="iStatus" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetITPStatusResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="SetITPStatusResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPFullQuestionnaireInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPFullQuestionnaireInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetITPFullQuestionnaireInfoResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPFullITPTypeInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPFullITPTypeInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetITPFullITPTypeInfoResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPBatteryFuseTypeInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPBatteryFuseTypeInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetITPBatteryFuseTypeInfoResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPValidHierarchyInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPValidHierarchyInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetITPValidHierarchyInfoResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPFullDocumentSectionInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPFullDocumentSectionInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetITPFullDocumentSectionInfoResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPStaticTableVersionNumber">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sTableName" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPStaticTableVersionNumberResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetITPStaticTableVersionNumberResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPProjectQuestionnaireInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sId" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPProjectQuestionnaireInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetITPProjectQuestionnaireInfoResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPProjectSection10Info">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sId" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPProjectSection10InfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetITPProjectSection10InfoResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPProjectRFUInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sId" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPProjectRFUInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetITPProjectRFUInfoResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPInventoryInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPInventoryInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetITPInventoryInfoResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetITPUploadInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sSendString" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetITPUploadInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="SetITPUploadInfoResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </types>
+  <message name="CookieLoginSoapIn">
+    <part name="parameters" element="tns:CookieLogin" />
+  </message>
+  <message name="CookieLoginSoapOut">
+    <part name="parameters" element="tns:CookieLoginResponse" />
+  </message>
+  <message name="GetSubcontractorITPsForDownloadSoapIn">
+    <part name="parameters" element="tns:GetSubcontractorITPsForDownload" />
+  </message>
+  <message name="GetSubcontractorITPsForDownloadSoapOut">
+    <part name="parameters" element="tns:GetSubcontractorITPsForDownloadResponse" />
+  </message>
+  <message name="GetITPDownloadInfoSoapIn">
+    <part name="parameters" element="tns:GetITPDownloadInfo" />
+  </message>
+  <message name="GetITPDownloadInfoSoapOut">
+    <part name="parameters" element="tns:GetITPDownloadInfoResponse" />
+  </message>
+  <message name="SetITPStatusSoapIn">
+    <part name="parameters" element="tns:SetITPStatus" />
+  </message>
+  <message name="SetITPStatusSoapOut">
+    <part name="parameters" element="tns:SetITPStatusResponse" />
+  </message>
+  <message name="GetITPFullQuestionnaireInfoSoapIn">
+    <part name="parameters" element="tns:GetITPFullQuestionnaireInfo" />
+  </message>
+  <message name="GetITPFullQuestionnaireInfoSoapOut">
+    <part name="parameters" element="tns:GetITPFullQuestionnaireInfoResponse" />
+  </message>
+  <message name="GetITPFullITPTypeInfoSoapIn">
+    <part name="parameters" element="tns:GetITPFullITPTypeInfo" />
+  </message>
+  <message name="GetITPFullITPTypeInfoSoapOut">
+    <part name="parameters" element="tns:GetITPFullITPTypeInfoResponse" />
+  </message>
+  <message name="GetITPBatteryFuseTypeInfoSoapIn">
+    <part name="parameters" element="tns:GetITPBatteryFuseTypeInfo" />
+  </message>
+  <message name="GetITPBatteryFuseTypeInfoSoapOut">
+    <part name="parameters" element="tns:GetITPBatteryFuseTypeInfoResponse" />
+  </message>
+  <message name="GetITPValidHierarchyInfoSoapIn">
+    <part name="parameters" element="tns:GetITPValidHierarchyInfo" />
+  </message>
+  <message name="GetITPValidHierarchyInfoSoapOut">
+    <part name="parameters" element="tns:GetITPValidHierarchyInfoResponse" />
+  </message>
+  <message name="GetITPFullDocumentSectionInfoSoapIn">
+    <part name="parameters" element="tns:GetITPFullDocumentSectionInfo" />
+  </message>
+  <message name="GetITPFullDocumentSectionInfoSoapOut">
+    <part name="parameters" element="tns:GetITPFullDocumentSectionInfoResponse" />
+  </message>
+  <message name="GetITPStaticTableVersionNumberSoapIn">
+    <part name="parameters" element="tns:GetITPStaticTableVersionNumber" />
+  </message>
+  <message name="GetITPStaticTableVersionNumberSoapOut">
+    <part name="parameters" element="tns:GetITPStaticTableVersionNumberResponse" />
+  </message>
+  <message name="GetITPProjectQuestionnaireInfoSoapIn">
+    <part name="parameters" element="tns:GetITPProjectQuestionnaireInfo" />
+  </message>
+  <message name="GetITPProjectQuestionnaireInfoSoapOut">
+    <part name="parameters" element="tns:GetITPProjectQuestionnaireInfoResponse" />
+  </message>
+  <message name="GetITPProjectSection10InfoSoapIn">
+    <part name="parameters" element="tns:GetITPProjectSection10Info" />
+  </message>
+  <message name="GetITPProjectSection10InfoSoapOut">
+    <part name="parameters" element="tns:GetITPProjectSection10InfoResponse" />
+  </message>
+  <message name="GetITPProjectRFUInfoSoapIn">
+    <part name="parameters" element="tns:GetITPProjectRFUInfo" />
+  </message>
+  <message name="GetITPProjectRFUInfoSoapOut">
+    <part name="parameters" element="tns:GetITPProjectRFUInfoResponse" />
+  </message>
+  <message name="GetITPInventoryInfoSoapIn">
+    <part name="parameters" element="tns:GetITPInventoryInfo" />
+  </message>
+  <message name="GetITPInventoryInfoSoapOut">
+    <part name="parameters" element="tns:GetITPInventoryInfoResponse" />
+  </message>
+  <message name="SetITPUploadInfoSoapIn">
+    <part name="parameters" element="tns:SetITPUploadInfo" />
+  </message>
+  <message name="SetITPUploadInfoSoapOut">
+    <part name="parameters" element="tns:SetITPUploadInfoResponse" />
+  </message>
+  <portType name="wbsITP_ExternalSoap">
+    <operation name="CookieLogin">
+      <input message="tns:CookieLoginSoapIn" />
+      <output message="tns:CookieLoginSoapOut" />
+    </operation>
+    <operation name="GetSubcontractorITPsForDownload">
+      <input message="tns:GetSubcontractorITPsForDownloadSoapIn" />
+      <output message="tns:GetSubcontractorITPsForDownloadSoapOut" />
+    </operation>
+    <operation name="GetITPDownloadInfo">
+      <input message="tns:GetITPDownloadInfoSoapIn" />
+      <output message="tns:GetITPDownloadInfoSoapOut" />
+    </operation>
+    <operation name="SetITPStatus">
+      <input message="tns:SetITPStatusSoapIn" />
+      <output message="tns:SetITPStatusSoapOut" />
+    </operation>
+    <operation name="GetITPFullQuestionnaireInfo">
+      <input message="tns:GetITPFullQuestionnaireInfoSoapIn" />
+      <output message="tns:GetITPFullQuestionnaireInfoSoapOut" />
+    </operation>
+    <operation name="GetITPFullITPTypeInfo">
+      <input message="tns:GetITPFullITPTypeInfoSoapIn" />
+      <output message="tns:GetITPFullITPTypeInfoSoapOut" />
+    </operation>
+    <operation name="GetITPBatteryFuseTypeInfo">
+      <input message="tns:GetITPBatteryFuseTypeInfoSoapIn" />
+      <output message="tns:GetITPBatteryFuseTypeInfoSoapOut" />
+    </operation>
+    <operation name="GetITPValidHierarchyInfo">
+      <input message="tns:GetITPValidHierarchyInfoSoapIn" />
+      <output message="tns:GetITPValidHierarchyInfoSoapOut" />
+    </operation>
+    <operation name="GetITPFullDocumentSectionInfo">
+      <input message="tns:GetITPFullDocumentSectionInfoSoapIn" />
+      <output message="tns:GetITPFullDocumentSectionInfoSoapOut" />
+    </operation>
+    <operation name="GetITPStaticTableVersionNumber">
+      <input message="tns:GetITPStaticTableVersionNumberSoapIn" />
+      <output message="tns:GetITPStaticTableVersionNumberSoapOut" />
+    </operation>
+    <operation name="GetITPProjectQuestionnaireInfo">
+      <input message="tns:GetITPProjectQuestionnaireInfoSoapIn" />
+      <output message="tns:GetITPProjectQuestionnaireInfoSoapOut" />
+    </operation>
+    <operation name="GetITPProjectSection10Info">
+      <input message="tns:GetITPProjectSection10InfoSoapIn" />
+      <output message="tns:GetITPProjectSection10InfoSoapOut" />
+    </operation>
+    <operation name="GetITPProjectRFUInfo">
+      <input message="tns:GetITPProjectRFUInfoSoapIn" />
+      <output message="tns:GetITPProjectRFUInfoSoapOut" />
+    </operation>
+    <operation name="GetITPInventoryInfo">
+      <input message="tns:GetITPInventoryInfoSoapIn" />
+      <output message="tns:GetITPInventoryInfoSoapOut" />
+    </operation>
+    <operation name="SetITPUploadInfo">
+      <input message="tns:SetITPUploadInfoSoapIn" />
+      <output message="tns:SetITPUploadInfoSoapOut" />
+    </operation>
+  </portType>
+  <binding name="wbsITP_ExternalSoap" type="tns:wbsITP_ExternalSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="CookieLogin">
+      <soap:operation soapAction="http://scms.silcar.com.au/CookieLogin" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSubcontractorITPsForDownload">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetSubcontractorITPsForDownload" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPDownloadInfo">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetITPDownloadInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SetITPStatus">
+      <soap:operation soapAction="http://scms.silcar.com.au/SetITPStatus" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPFullQuestionnaireInfo">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetITPFullQuestionnaireInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPFullITPTypeInfo">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetITPFullITPTypeInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPBatteryFuseTypeInfo">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetITPBatteryFuseTypeInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPValidHierarchyInfo">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetITPValidHierarchyInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPFullDocumentSectionInfo">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetITPFullDocumentSectionInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPStaticTableVersionNumber">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetITPStaticTableVersionNumber" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPProjectQuestionnaireInfo">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetITPProjectQuestionnaireInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPProjectSection10Info">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetITPProjectSection10Info" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPProjectRFUInfo">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetITPProjectRFUInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPInventoryInfo">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetITPInventoryInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SetITPUploadInfo">
+      <soap:operation soapAction="http://scms.silcar.com.au/SetITPUploadInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="wbsITP_ExternalSoap12" type="tns:wbsITP_ExternalSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="CookieLogin">
+      <soap12:operation soapAction="http://scms.silcar.com.au/CookieLogin" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSubcontractorITPsForDownload">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetSubcontractorITPsForDownload" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPDownloadInfo">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetITPDownloadInfo" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SetITPStatus">
+      <soap12:operation soapAction="http://scms.silcar.com.au/SetITPStatus" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPFullQuestionnaireInfo">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetITPFullQuestionnaireInfo" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPFullITPTypeInfo">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetITPFullITPTypeInfo" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPBatteryFuseTypeInfo">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetITPBatteryFuseTypeInfo" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPValidHierarchyInfo">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetITPValidHierarchyInfo" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPFullDocumentSectionInfo">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetITPFullDocumentSectionInfo" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPStaticTableVersionNumber">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetITPStaticTableVersionNumber" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPProjectQuestionnaireInfo">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetITPProjectQuestionnaireInfo" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPProjectSection10Info">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetITPProjectSection10Info" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPProjectRFUInfo">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetITPProjectRFUInfo" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPInventoryInfo">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetITPInventoryInfo" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SetITPUploadInfo">
+      <soap12:operation soapAction="http://scms.silcar.com.au/SetITPUploadInfo" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="wbsITP_External">
+    <port name="wbsITP_ExternalSoap" binding="tns:wbsITP_ExternalSoap">
+      <soap:address location="http://silcar-ws11.silcar.com.au:8003/wbsITP_External.asmx" />
+    </port>
+    <port name="wbsITP_ExternalSoap12" binding="tns:wbsITP_ExternalSoap12">
+      <soap12:address location="http://silcar-ws11.silcar.com.au:8003/wbsITP_External.asmx" />
+    </port>
+  </service>
+</definitions>

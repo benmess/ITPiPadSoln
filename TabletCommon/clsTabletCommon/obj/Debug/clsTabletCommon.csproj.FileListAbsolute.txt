@@ -1,0 +1,11 @@
+C:\Development\TabletCommon\clsTabletCommon\bin\Debug\clsTabletCommon.dll
+C:\Development\TabletCommon\clsTabletCommon\bin\Debug\clsTabletCommon.pdb
+C:\Development\TabletCommon\clsTabletCommon\bin\Debug\clsTabletCommon.dll.mdb
+C:\Development\TabletCommon\clsTabletCommon\bin\Debug\clsTabletCommon.clsTabletCommon.apk
+C:\Development\TabletCommon\clsTabletCommon\bin\Debug\clsTabletCommon.clsTabletCommon-Signed.apk
+C:\Development\TabletCommon\clsTabletCommon\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\TabletCommon\clsTabletCommon\obj\Debug\clsTabletCommon.dll
+C:\Development\TabletCommon\clsTabletCommon\obj\Debug\clsTabletCommon.pdb
+C:\Development\TabletCommon\clsTabletCommon\obj\Debug\android\bin\clsTabletCommon.clsTabletCommon.apk
+C:\Development\TabletCommon\clsTabletCommon\obj\Debug\R.cs.flag
+C:\Development\TabletCommon\clsTabletCommon\obj\Debug\uploadflags.txt

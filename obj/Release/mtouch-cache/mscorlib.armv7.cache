@@ -1,0 +1,1 @@
+--aot=mtriple=armv7-darwin,full,static,asmonly,direct-icalls,nodebug,outfile=/mscorlib.dll.armv7.s "/Users/benmessenger/Projects/ITPiPadSoln/ITPiPadSoln/bin/iPhone/Release/SilcarESITP.app/mscorlib.dll"
