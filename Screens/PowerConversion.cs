@@ -1486,7 +1486,6 @@ namespace ITPiPadSoln
             txtDOMTextView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 7);};
 
-            //This shows for any type of equipment
             arrItems2 [13] = txtDOMVw;
             
             
