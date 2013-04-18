@@ -31,18 +31,10 @@ namespace ITPiPadSoln
         int iExpandSectionBtnTagId = 10004;
         int iContractSectionBtnTagId = 10005;
         int iContainerSectionTagId = 10006;
-        int iQuestionHdrTagId = 10007;
-        int iAnswerHdrTagId = 10008;
-        int iCommentsHdrTagId = 10009;
         int iSectionHeightTagId = 10010;
         int iSectionRowsTagId = 10011;
         int iSectionStatusTagId = 10012;
-        int ihfRowStatusTagId = 10100;
-        int ihfAutoRowTagId = 10200;
-        int iQuestionRowTagId = 10300;
-        int iAnswerGroupTagId = 10400;
-        int iCommentsTagId = 10500;
-        
+
         //Tags for Battery Section
         int iPwrIdSectionTagId = 10010800;
         int iStringFullRowTagId = 10010900;
@@ -102,90 +94,19 @@ namespace ITPiPadSoln
         int i20MinTestBtnTagId = 10016900;
         int i20MinTestHiddenTagId = 10017100;
         int iDeleteBatteryStringBtnTagId = 10017200;
-        
-        //Tags for RFU section at theend of the screen
-        int iRFUPwrIdHdrLabelTagId = 10019100;
-        int iRFUDesignLoadHdrLabelTagId = 10019200;
-        int iRFUCutoverLoadHdrLabelTagId = 10019300;
-        int iRFUCutoverDateHdrLabelTagId = 10019400;
-        int iRFUDecommissionedHdrLabelTagId = 10019500;
-        int iRFUCommissionedHdrLabelTagId = 10019600;
-        int iRFUSaveRFUHdrLabelTagId = 10019700;
-        int ihfRowRFUStatusTagId = 10020100;
-        int iRFUPwrIdRowLabelTagId = 10020200;
-        int iRFUDesignLoadRowLabelTagId = 10020300; 
-        int iRFUCutoverLoadRowLabelTagId = 10020400; 
-        int iRFUCutoverDateRowLabelTagId = 10020500;
-        int iRFUDecommissionRowCheckTagId = 10020600;
-        int iRFUCommissionRowCheckTagId = 10020700;
-        int iRFUButtonSaveTagId = 10020800;
-        int ihfRowRFUBatteryCapacityTagId = 10020900;
+
         int iPwrIdExpandTagId = 10021100;
         int iPwrIdContractTagId = 10021200;
         int iPwrIdSectionInnerTagId = 10021300;
         int iPwrIdHeightTagId  = 10021400;
-        
-        //Tags for equipment section
-        int iEquipmentFullRowTagId = 10021500;
-        int iFloorEquipLabelTagId = 10021600;
-        int iSuiteEquipLabelTagId = 10021700;
-        int iRackEquipLabelTagId = 10021800;
-        int iSubrackEquipLabelTagId = 10021900;
-        int iPositionEquipLabelTagId = 10022000;
-        int iStringEquipLabelTagId = 10022100;
-        int iEquipTypeEquipLabelTagId = 10022200;
-        int iDOMEquipLabelTagId = 10022300;
-        int iSerialNoEquipLabelTagId = 10022400;
-        int iMakeEquipLabelTagId = 10022500;
-        int iModelEquipLabelTagId = 10022600;
-        int iDeleteEquipLabelTagId = 10022700;
-        int iBlank1EquipLabelTagId = 10022800;
-        
-        int iEquipmentRowSectionCounterTagId = 10013200;
-        int iEquipmentRowPwrIdTagId = 10013300;
-        int iEquipmentRowStatusTagId = 10013400;
-        int iEquipmentRowAutoIdTagId = 10013500;
-        int iEquipmentRowMaximoAssetIdTagId = 10013600;
-        int iEquipmentBankNoTagId = 10013700;
-        int iEquipmentBankNoHiddenTagId = 10013800;
-        int iEquipmentBankNoSearchTagId = 10013900;
-        int iEquipmentMakeTagId = 10014200;
-        int iEquipmentMakeSearchTagId = 10014300;
-        int iEquipmentModelTagId = 10014400;
-        int iEquipmentSPNHiddenTagId = 10014500;
-        int iEquipmentModelSearchTagId = 10014600;
-        int iEquipmentDOMTagId = 10014700;
-        int iEquipmentFloorTagId = 10015200;
-        int iEquipmentFloorHiddenTagId = 10015300;
-        int iEquipmentFloorSearchTagId = 10015400;
-        int iEquipmentSuiteTagId = 10015500;
-        int iEquipmentSuiteHiddenTagId = 10015600;
-        int iEquipmentSuiteSearchTagId = 10015700;
-        int iEquipmentRackTagId = 10015800;
-        int iEquipmentRackHiddenTagId = 10015900;
-        int iEquipmentRackSearchTagId = 10016100;
-        int iEquipmentSubRackTagId = 10016200;
-        int iEquipmentSubRackHiddenTagId = 10016300;
-        int iEquipmentSubRackSearchTagId = 10016400;
-        int iEquipmentPositionTagId = 10016200;
-        int iEquipmentPositionHiddenTagId = 10016300;
-        int iEquipmentPositionSearchTagId = 10016400;
-        int iEquipmentEquipTypeTagId = 10016500;
-        int iEquipmentSerialNoTagId = 10016600;
-        int iEquipmentTypeHiddenTagId = 10016800; //This is the integer to signify whether the item is a rack, position, string etc (1 = floor, 2 = suite, 3 = rack ...)
-        int iEquipmentDeleteBatteryStringBtnTagId = 10017200;
-        
+
         string m_sSessionId = "";
         string m_sPassedId = "";
         string m_sProjDesc = "";
         int m_iSections = 0;
         int m_iBatterySectionCounter = 0;
         int m_iEquipmentSectionCounter = 0;
-        int m_iEquipmentPwrIds = 0;
-        int m_iRFUSectionCounter = 0;
         float m_iBatteryRowHeight = 0f;
-        float m_iEquipmentRowHeight = 0f;
-        string m_sUser = "";
         string[] m_sBatteryMakes;
         string[] m_sBatteryModels;
         bool m_bSuppressMove = false;
@@ -243,30 +164,30 @@ namespace ITPiPadSoln
             }
         }
         
-        public override void ViewDidUnload ()
-        {
-            base.ViewDidUnload ();
-            
-            // Clear any references to subviews of the main view in order to
-            // allow the Garbage Collector to collect them sooner.
-            //
-            // e.g. myOutlet.Dispose (); myOutlet = null;
-            
-            ReleaseDesignerOutlets ();
-        }
-        
-        public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
-        {
-            // Return true for supported orientations
-            return true;
-        }
+//        public override void ViewDidUnload ()
+//        {
+//            base.ViewDidUnload ();
+//            
+//            // Clear any references to subviews of the main view in order to
+//            // allow the Garbage Collector to collect them sooner.
+//            //
+//            // e.g. myOutlet.Dispose (); myOutlet = null;
+//            
+//            ReleaseDesignerOutlets ();
+//        }
+//        
+//        public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
+//        {
+//            // Return true for supported orientations
+//            return true;
+//        }
+  
         public void DrawMenu()
         {
             UIView[] arrItems = new UIView[8];
             string sUsername = "";
             HomeScreen home = GetHomeScreen();
             sUsername = home.GetLoginName();
-            m_sUser = sUsername;
             m_sSessionId = home.GetSessionId();
             DownloadedITPsScreen downloadedScreen =   GetDownloadedITPsScreen();
             m_sPassedId = downloadedScreen.GetSelectedProjectId();
@@ -369,34 +290,17 @@ namespace ITPiPadSoln
         {
             try
             {
-                DateClass dt = new DateClass();
                 int iColNo = 0;
                 int iSectionId = 0;
-                bool bYes;
-                bool bNo;
-                bool bNA;
                 string sId = m_sPassedId;
                 float iVert = 0f;
                 float iPwrIdRowVertInner = 0f;
                 float iSectionHdrRowHeight = 40f;
-                float iQuestionHdrRowHeight = 20f;
-                float iQuestionRowHeight = 30f;
-                float iQuestionRowVert = 0f;
                 float iTotalHeight = 0f;
-                float iHeightToAdd = iQuestionRowHeight;
-                float iHeightToAdd2 = iHeightToAdd;
-                bool bDisableRow = false;
-                bool[] bHideSections = new bool[1];
-                UIView[] arrItems = new UIView[4];
-                UIView[] arrItems2 = new UIView[6];
-                UIView[] arrItems3 = new UIView[5];
+                float iHeightToAdd = 0f;
                 UIView[] arrItems4 = new UIView[7];
                 UIView[] arrItems5 = new UIView[7];
-                UIView[] arrItems6 = new UIView[9];
-                UIView[] arrItems7 = new UIView[7];
-                
-                
-                
+
                 //Get some static data for dropdowns only once so we don't reprocess unecessarily
                 clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory();
                 string[] sBatteryMakes = ITPInventory.GetBatteryMakes();
@@ -406,389 +310,6 @@ namespace ITPiPadSoln
                 layout.Frame = new RectangleF(0f,35f,1000f,620f);
                 layout.Tag = 2;
                 clsTabletDB.ITPDocumentSection ITPSection = new clsTabletDB.ITPDocumentSection();
-//                
-//                //Get all the sections and place a table layout for each one
-//                DataSet arrITPSections = ITPSection.GetLocalITPSections(sId);
-//                
-//                
-//                if (arrITPSections.Tables.Count > 0)
-//                {
-//                    int iRows = arrITPSections.Tables[0].Rows.Count;
-//                    m_iSections = iRows;
-//                    Array.Resize<bool>(ref bHideSections, iRows);
-//                    
-//                    for (int i = 0; i < iRows; i++)
-//                    {
-//                        bHideSections[i] = false;
-//                        
-//                        //Add in a view for each section.
-//                        UIView SectionRow = new UIView();
-//                        iSectionId = iSectionTagId * (i+1);
-//                        SectionRow.Tag = iSectionId;
-//                        SectionRow.Frame = new RectangleF(0f,iVert,1000f,iSectionHdrRowHeight);
-//                        
-//                        layout.AddSubview(SectionRow);
-//                        
-//                        //Add in the section title and buttons for each section header
-//                        UILabel hfSection = new UILabel();
-//                        iColNo = arrITPSections.Tables[0].Columns["SectionId"].Ordinal;
-//                        hfSection.Text = arrITPSections.Tables[0].Rows[i].ItemArray[iColNo].ToString();
-//                        hfSection.Tag = iSectionDBIdTagId * (i+1);
-//                        hfSection.Hidden = true;
-//                        SectionRow.AddSubview(hfSection);
-//                        
-//                        iUtils.CreateFormGridItem Section = new iUtils.CreateFormGridItem();
-//                        UIView SectionVw = new UIView();
-//                        iColNo = arrITPSections.Tables[0].Columns["Name"].Ordinal;
-//                        Section.SetDimensions(0f,0f, 550f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
-//                        Section.SetLabelText(arrITPSections.Tables[0].Rows[i].ItemArray[iColNo].ToString());
-//                        Section.SetBorderWidth(0.0f);
-//                        Section.SetFontName("Verdana-Bold");
-//                        Section.SetTextColour("White");
-//                        Section.SetFontSize(12f);
-//                        Section.SetCellColour("DarkSlateGrey");
-//                        Section.SetTag(iSectionDescTagId * (i+1));
-//                        SectionVw = Section.GetLabelCell();
-//                        arrItems[0] = SectionVw;
-//                        
-//                        
-//                        iUtils.CreateFormGridItem btnSave = new iUtils.CreateFormGridItem();
-//                        UIView btnSaveVw = new UIView();
-//                        btnSave.SetDimensions(550f,0f, 150f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                        btnSave.SetLabelText("Save Section");
-//                        btnSave.SetBorderWidth(0.0f);
-//                        btnSave.SetFontName("Verdana");
-//                        btnSave.SetFontSize(12f);
-//                        btnSave.SetTag(iSaveSectionBtnTagId * (i+1));
-//                        btnSave.SetCellColour("DarkSlateGrey");
-//                        btnSaveVw = btnSave.GetButtonCell();
-//                        
-//                        UIButton btnSaveButton = new UIButton();
-//                        btnSaveButton = btnSave.GetButton();
-//                        btnSaveButton.TouchUpInside += (sender,e) => {SaveThisSection(sender, e);};
-//                        
-//                        arrItems[1] = btnSaveVw;
-//                        
-//                        iUtils.CreateFormGridItem btnExpand = new iUtils.CreateFormGridItem();
-//                        UIView btnExpandVw = new UIView();
-//                        btnExpand.SetDimensions(700f,0f, 50f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                        btnExpand.SetLabelText("+");
-//                        btnExpand.SetBorderWidth(0.0f);
-//                        btnExpand.SetFontName("Verdana");
-//                        btnExpand.SetFontSize(12f);
-//                        btnExpand.SetTag(iExpandSectionBtnTagId * (i+1));
-//                        btnExpand.SetCellColour("DarkSlateGrey");
-//                        btnExpandVw = btnExpand.GetButtonCell();
-//                        
-//                        UIButton btnExpandButton = new UIButton();
-//                        btnExpandButton = btnExpand.GetButton();
-//                        btnExpandButton.Enabled = false;
-//                        btnExpandButton.TouchUpInside += (sender,e) => {ExpandSection(sender, e);};
-//                        
-//                        arrItems[2] = btnExpandVw;
-//                        
-//                        iUtils.CreateFormGridItem btnContract = new iUtils.CreateFormGridItem();
-//                        UIView btnContractVw = new UIView();
-//                        btnContract.SetDimensions(750f,0f, 50f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                        btnContract.SetLabelText("-");
-//                        btnContract.SetBorderWidth(0.0f);
-//                        btnContract.SetFontName("Verdana");
-//                        btnContract.SetFontSize(12f);
-//                        btnContract.SetTag(iContractSectionBtnTagId * (i+1));
-//                        btnContract.SetCellColour("DarkSlateGrey");
-//                        btnContractVw = btnContract.GetButtonCell();
-//                        
-//                        UIButton btnContractButton = new UIButton();
-//                        btnContractButton = btnContract.GetButton();
-//                        btnContractButton.TouchUpInside += (sender,e) => {ContractSection(sender, e);};
-//                        
-//                        arrItems[3] = btnContractVw;
-//                        
-//                        SectionRow.AddSubviews(arrItems);
-//                        
-//                        iVert += iSectionHdrRowHeight;
-//                        
-//                        //Now add a new view to this view to hold another view containing all the questions for this section
-//                        UIView QuestionsTableRow = new UIView();
-//                        float iQuestionRowVertTop = iVert;
-//                        QuestionsTableRow.Frame = new RectangleF(0f,iQuestionRowVertTop,1000f,iQuestionHdrRowHeight);
-//                        iSectionId = iContainerSectionTagId * (i+1);
-//                        QuestionsTableRow.Tag = iSectionId;
-//                        layout.AddSubview(QuestionsTableRow);
-//                        
-//                        
-//                        //Get all the questions in this section and place a row for each one
-//                        iColNo = arrITPSections.Tables[0].Columns["SectionId"].Ordinal;
-//                        int iDBSectionId = Convert.ToInt32( arrITPSections.Tables[0].Rows[i].ItemArray[iColNo]);
-//                        iColNo = arrITPSections.Tables[0].Columns["QuestionType"].Ordinal;
-//                        int iQuestionTypes = Convert.ToInt32(arrITPSections.Tables[0].Rows[i].ItemArray[iColNo]);
-//                        
-//                        DataSet arrITPSectionQuestions = ITPSection.GetLocalITPSectionQuestions(sId, iDBSectionId);
-//                        
-//                        if (arrITPSectionQuestions.Tables.Count > 0)
-//                        {
-//                            int iQuestionRows = arrITPSectionQuestions.Tables[0].Rows.Count;
-//                            
-//                            //Put in the header row
-//                            iUtils.CreateFormGridItem lblQuestionHdr = new iUtils.CreateFormGridItem();
-//                            UIView lblQuestionHdrVw = new UIView();
-//                            lblQuestionHdr.SetDimensions(0f,0f, 400f, iQuestionHdrRowHeight, 4f, 1f, 4f, 1f);
-//                            lblQuestionHdr.SetLabelText("Question");
-//                            lblQuestionHdr.SetBorderWidth(0.0f);
-//                            lblQuestionHdr.SetFontName("Verdana-Bold");
-//                            lblQuestionHdr.SetTextAlignment("Centre");
-//                            lblQuestionHdr.SetFontSize(12f);
-//                            lblQuestionHdr.SetCellColour("Pale Yellow");
-//                            lblQuestionHdr.SetTag(iQuestionHdrTagId * (i+1));
-//                            lblQuestionHdrVw = lblQuestionHdr.GetLabelCell();
-//                            arrItems2[0] = lblQuestionHdrVw;
-//                            
-//                            iUtils.CreateFormGridItem lblAnswerHdr = new iUtils.CreateFormGridItem();
-//                            UIView lblAnswerHdrVw = new UIView();
-//                            lblAnswerHdr.SetDimensions(400f,0f, 200f, iQuestionHdrRowHeight, 4f, 1f, 4f, 1f);
-//                            lblAnswerHdr.SetLabelText("Answer");
-//                            lblAnswerHdr.SetBorderWidth(0.0f);
-//                            lblAnswerHdr.SetFontName("Verdana-Bold");
-//                            lblAnswerHdr.SetTextAlignment("Centre");
-//                            lblAnswerHdr.SetFontSize(12f);
-//                            lblAnswerHdr.SetCellColour("Pale Yellow");
-//                            lblAnswerHdr.SetTag(iAnswerHdrTagId * (i+1));
-//                            lblAnswerHdrVw = lblAnswerHdr.GetLabelCell();
-//                            arrItems2[1] = lblAnswerHdrVw;
-//                            
-//                            iUtils.CreateFormGridItem lblCommentsHdr = new iUtils.CreateFormGridItem();
-//                            UIView lblCommentsHdrVw = new UIView();
-//                            lblCommentsHdr.SetDimensions(600f,0f, 200f, iQuestionHdrRowHeight, 4f, 1f, 4f, 1f);
-//                            lblCommentsHdr.SetLabelText("Comments");
-//                            lblCommentsHdr.SetBorderWidth(0.0f);
-//                            lblCommentsHdr.SetFontName("Verdana-Bold");
-//                            lblCommentsHdr.SetTextAlignment("Centre");
-//                            lblCommentsHdr.SetFontSize(12f);
-//                            lblCommentsHdr.SetCellColour("Pale Yellow");
-//                            lblCommentsHdr.SetTag(iCommentsHdrTagId * (i+1));
-//                            lblCommentsHdrVw = lblCommentsHdr.GetLabelCell();
-//                            arrItems2[2] = lblCommentsHdrVw;
-//                            layout.AddSubview(QuestionsTableRow);
-//                            
-//                            float iSectionQuestionsHeight = iQuestionHdrRowHeight;
-//                            UILabel hfSectionHeight = new UILabel();
-//                            hfSectionHeight.Tag = iSectionHeightTagId * (i+1);
-//                            hfSectionHeight.Hidden = true;
-//                            arrItems2[3] = hfSectionHeight;
-//                            
-//                            UILabel hfSectionRows = new UILabel();
-//                            hfSectionRows.Tag = iSectionRowsTagId * (i+1);
-//                            hfSectionRows.Hidden = true;
-//                            hfSectionRows.Text = iQuestionRows.ToString();
-//                            arrItems2[4] = hfSectionRows;
-//                            
-//                            UILabel hfSectionStatus = new UILabel();
-//                            hfSectionStatus.Tag = iSectionStatusTagId * (i+1);
-//                            hfSectionStatus.Hidden = true;
-//                            hfSectionStatus.Text = "0";
-//                            arrItems2[5] = hfSectionStatus;
-//                            
-//                            QuestionsTableRow.AddSubviews(arrItems2);
-//                            
-//                            iVert += iQuestionHdrRowHeight;
-//                            iQuestionRowVert = iQuestionHdrRowHeight;
-//                            bool bSectionFullyCompleted = true;
-//                            
-//                            for (int j = 0; j < iQuestionRows; j++)
-//                            {
-//                                
-//                                UILabel hfRowStatus = new UILabel();
-//                                hfRowStatus.Text = "0";
-//                                hfRowStatus.Tag = (ihfRowStatusTagId + (j+1)) * (i+1);
-//                                hfRowStatus.Hidden = true;
-//                                arrItems3[0] = hfRowStatus;
-//                                
-//                                iColNo = arrITPSectionQuestions.Tables[0].Columns["AutoId"].Ordinal;
-//                                string sAutoId = arrITPSectionQuestions.Tables[0].Rows[j].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSectionQuestions.Tables[0].Columns["Question"].Ordinal;
-//                                string sQuestion = arrITPSectionQuestions.Tables[0].Rows[j].ItemArray[iColNo].ToString();
-//                                
-//                                UILabel hfAutoId = new UILabel();
-//                                hfAutoId.Text = sAutoId;
-//                                hfAutoId.Tag = (ihfAutoRowTagId + (j+1)) * (i+1);
-//                                hfAutoId.Hidden = true;
-//                                arrItems3[1] = hfAutoId;
-//                                
-//                                //Put in the question
-//                                iUtils.CreateFormGridItem rowQuestion = new iUtils.CreateFormGridItem();
-//                                UIView rowQuestionVw = new UIView();
-//                                rowQuestion.SetLabelWrap(1); //This means the text will be wrapped in the label
-//                                rowQuestion.SetDimensions(0f,iQuestionRowVert, 400f, iQuestionRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                                rowQuestion.SetLabelText(sQuestion);
-//                                rowQuestion.SetBorderWidth(0.0f);
-//                                rowQuestion.SetFontName("Verdana");
-//                                rowQuestion.SetFontSize(12f);
-//                                rowQuestion.SetTag((iQuestionRowTagId + (j+1)) * (i+1));
-//                                
-//                                if (j % 2 == 0)                 
-//                                {
-//                                    rowQuestion.SetCellColour("Pale Blue");
-//                                }
-//                                else
-//                                {
-//                                    rowQuestion.SetCellColour("Sky Blue");
-//                                }
-//                                
-//                                rowQuestionVw = rowQuestion.GetLabelCell();
-//                                iHeightToAdd = rowQuestion.GetCellHeight();
-//                                
-//                                //Put in the answer
-//                                iColNo = arrITPSectionQuestions.Tables[0].Columns["Yes"].Ordinal;
-//                                bYes = Convert.ToBoolean(arrITPSectionQuestions.Tables[0].Rows[j].ItemArray[iColNo]);
-//                                
-//                                iColNo = arrITPSectionQuestions.Tables[0].Columns["No"].Ordinal;
-//                                bNo = Convert.ToBoolean(arrITPSectionQuestions.Tables[0].Rows[j].ItemArray[iColNo]);
-//                                
-//                                iColNo = arrITPSectionQuestions.Tables[0].Columns["NA"].Ordinal;
-//                                bNA = Convert.ToBoolean(arrITPSectionQuestions.Tables[0].Rows[j].ItemArray[iColNo]);
-//                                
-//                                iUtils.CreateFormGridItem radGrp = new iUtils.CreateFormGridItem();
-//                                UIView radGrpVw = new UIView();
-//                                radGrp.SetDimensions(400f,iQuestionRowVert, 200f, iQuestionRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                                radGrp.SetFontName("Verdana");
-//                                radGrp.SetFontSize(12f);
-//                                radGrp.SetTag((iAnswerGroupTagId + (j+1)) * (i+1));
-//                                
-//                                if (j % 2 == 0)
-//                                {
-//                                    radGrp.SetCellColour("Pale Blue");
-//                                }
-//                                else
-//                                {
-//                                    radGrp.SetCellColour("Sky Blue");
-//                                }
-//                                
-//                                radGrpVw = radGrp.GetRadioButtonCell();
-//                                
-//                                UISegmentedControl radGrpRadio = new UISegmentedControl();
-//                                radGrpRadio = radGrp.GetRadioGroup();
-//                                radGrpRadio.TouchUpInside += (sender,e) => {SetRowRadioChanged(sender, e);};
-//                                radGrpRadio.ValueChanged += (sender,e) => {SetRowRadioChanged(sender, e);};
-//                                
-//                                QuestionsBitMask mask = (QuestionsBitMask)iQuestionTypes;
-//                                int iPos = 0;
-//                                bool bQuestionSet = false;
-//                                
-//                                if ((mask & QuestionsBitMask.Yes) == QuestionsBitMask.Yes)
-//                                {
-//                                    radGrpRadio.InsertSegment("Yes", iPos,false);
-//                                    if(bYes)
-//                                    {
-//                                        radGrpRadio.SelectedSegment = iPos;
-//                                        bQuestionSet= true; 
-//                                    }
-//                                    iPos++;
-//                                }
-//                                
-//                                if ((mask & QuestionsBitMask.No) == QuestionsBitMask.No)
-//                                {
-//                                    radGrpRadio.InsertSegment("No", iPos,false);
-//                                    if(bNo)
-//                                    {
-//                                        radGrpRadio.SelectedSegment = iPos;
-//                                        bQuestionSet= true; 
-//                                    }
-//                                    iPos++;
-//                                }
-//                                
-//                                if ((mask & QuestionsBitMask.NA) == QuestionsBitMask.NA)
-//                                {
-//                                    radGrpRadio.InsertSegment("N/A", iPos,false);
-//                                    if(bNA)
-//                                    {
-//                                        radGrpRadio.SelectedSegment = iPos;
-//                                        bQuestionSet= true; 
-//                                    }
-//                                }
-//                                
-//                                if(bQuestionSet)
-//                                {
-//                                    radGrpRadio.Enabled = false;
-//                                }
-//                                else
-//                                {
-//                                    bSectionFullyCompleted = false;
-//                                }
-//                                
-//                                //Put in the comments
-//                                iUtils.CreateFormGridItem rowComments = new iUtils.CreateFormGridItem();
-//                                UIView rowCommentsVw = new UIView();
-//                                iColNo = arrITPSectionQuestions.Tables[0].Columns["Comments"].Ordinal;
-//                                rowComments.SetLabelWrap(1); //This means the text will be wrapped in the label
-//                                rowComments.SetDimensions(600f,iQuestionRowVert, 200f, iQuestionRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                                rowComments.SetLabelText(arrITPSectionQuestions.Tables[0].Rows[j].ItemArray[iColNo].ToString());
-//                                rowComments.SetBorderWidth(0.0f);
-//                                rowComments.SetFontName("Verdana");
-//                                rowComments.SetFontSize(12f);
-//                                rowComments.SetTag((iCommentsTagId + (j+1)) * (i+1)); //
-//                                
-//                                if (j % 2 == 0)
-//                                {
-//                                    rowComments.SetCellColour("Pale Blue");
-//                                }
-//                                else
-//                                {
-//                                    rowComments.SetCellColour("Sky Blue");
-//                                }
-//                                
-//                                rowCommentsVw = rowComments.GetTextCell();
-//                                iHeightToAdd2 = rowComments.GetCellHeight();
-//                                UITextView rowCommentsTextVw = new UITextView();
-//                                rowCommentsTextVw = rowComments.GetTextView();
-//                                rowCommentsTextVw.Changed += (sender,e) => {SetRowEditTextChanged(sender, e);};
-//                                
-//                                if(bQuestionSet)
-//                                {
-//                                    rowCommentsTextVw.Editable = false;
-//                                }
-//                                
-//                                if(iHeightToAdd2 > iHeightToAdd)
-//                                {
-//                                    rowQuestion.SetDimensions(0f,iQuestionRowVert, 400f, iHeightToAdd2, 2f, 2.5f, 2f, 2.5f);
-//                                    rowQuestion.ResetCellViewDimensions(rowQuestionVw);
-//                                    radGrp.SetDimensions(400f,iQuestionRowVert, 200f, iHeightToAdd2, 2f, 2.5f, 2f, 2.5f);
-//                                    radGrp.ResetCellViewDimensions(radGrpVw);
-//                                }
-//                                else
-//                                {
-//                                    radGrp.SetDimensions(400f,iQuestionRowVert, 200f, iHeightToAdd, 2f, 2.5f, 2f, 2.5f);
-//                                    radGrp.ResetCellViewDimensions(radGrpVw);
-//                                    rowComments.SetDimensions(600f,iQuestionRowVert, 200f, iHeightToAdd, 2f, 2.5f, 2f, 2.5f);
-//                                    rowComments.ResetCellViewDimensions(rowCommentsVw);
-//                                    rowComments.ResetCellTextViewDimensions(rowCommentsTextVw);
-//                                }
-//                                
-//                                arrItems3[2] = rowQuestionVw;
-//                                arrItems3[3] = radGrpVw;
-//                                arrItems3[4] = rowCommentsVw;
-//                                
-//                                QuestionsTableRow.AddSubviews(arrItems3);
-//                                
-//                                iSectionQuestionsHeight += iHeightToAdd;
-//                                iQuestionRowVert += iHeightToAdd;
-//                                iVert += iHeightToAdd;
-//                                
-//                            }   
-//                            
-//                            //Now resize the UIView that is effectively the container for the questions for this section
-//                            //And also store this height in a hidden field for use in the contract and expand functions
-//                            QuestionsTableRow.Frame = new RectangleF(0f,iQuestionRowVertTop,1000f,iSectionQuestionsHeight);
-//                            hfSectionHeight.Text = iSectionQuestionsHeight.ToString();
-//                            
-//                            if(bSectionFullyCompleted)
-//                            {
-//                                bHideSections[i] = true;
-//                            }
-//                        }
-//                    }
-//                    
-//                }
-                
                 //******************************************************************************************//
                 //                      SECTION 10 (BATTERIES)                                              //
                 //******************************************************************************************//
@@ -1216,968 +737,6 @@ namespace ITPiPadSoln
                 }
                 
                 
-                //******************************************************************************************//
-                //                      SECTION 10 (EQUIPMENT)                                              //
-                //******************************************************************************************//
-//                //Get all the PwrId's for this project from ITPSection10
-//                DataSet arrITPSectionEquipmentPwrIds = ITPSection.GetLocalITPSectionEquipmentPwrIds(sId);
-//                
-//                if (arrITPSectionEquipmentPwrIds.Tables.Count > 0)
-//                {
-//                    int iii = m_iSections;
-//                    m_iSections++; //Add an extra one for the batteries section
-//                    m_iEquipmentSectionCounter = iii;
-//                    int iPwrIdRows = arrITPSectionEquipmentPwrIds.Tables[0].Rows.Count;
-//                    
-//                    //Add in the section title and buttons for each section header
-//                    UIView SectionEquipmentRow = new UIView();
-//                    float iSectionEquipmentRowVertTop = iVert;
-//                    SectionEquipmentRow.Frame = new RectangleF(0f,iSectionEquipmentRowVertTop,1000f,iSectionHdrRowHeight);
-//                    iSectionId = iSectionTagId * (iii+1);
-//                    SectionEquipmentRow.Tag = iSectionId;
-//                    layout.AddSubview(SectionEquipmentRow);
-//                    
-//                    UILabel hfSectionEquipment = new UILabel();
-//                    hfSectionEquipment.Text = "10";
-//                    hfSectionEquipment.Tag = iSectionDBIdTagId * (iii+1);
-//                    hfSectionEquipment.Hidden = true;
-//                    SectionEquipmentRow.AddSubview(hfSectionEquipment);
-//                    
-//                    iUtils.CreateFormGridItem SectionEquipment = new iUtils.CreateFormGridItem();
-//                    UIView SectionEquipmentVw = new UIView();
-//                    SectionEquipment.SetDimensions(0f,0f, 550f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
-//                    SectionEquipment.SetLabelText("POWER CONVERSION");
-//                    SectionEquipment.SetBorderWidth(0.0f);
-//                    SectionEquipment.SetFontName("Verdana-Bold");
-//                    SectionEquipment.SetTextColour("White");
-//                    SectionEquipment.SetFontSize(12f);
-//                    SectionEquipment.SetCellColour("DarkSlateGrey");
-//                    SectionEquipment.SetTag(iSectionDescTagId * (iii+1));
-//                    SectionEquipmentVw = SectionEquipment.GetLabelCell();
-//                    arrItems4[0] = SectionEquipmentVw;
-//                    
-//                    
-//                    iUtils.CreateFormGridItem btnSaveEquipment = new iUtils.CreateFormGridItem();
-//                    UIView btnSaveEquipmentVw = new UIView();
-//                    btnSaveEquipment.SetDimensions(550f,0f, 150f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                    btnSaveEquipment.SetLabelText("Save Section");
-//                    btnSaveEquipment.SetBorderWidth(0.0f);
-//                    btnSaveEquipment.SetFontName("Verdana");
-//                    btnSaveEquipment.SetFontSize(12f);
-//                    btnSaveEquipment.SetTag(iSaveSectionBtnTagId * (iii+1));
-//                    btnSaveEquipment.SetCellColour("DarkSlateGrey");
-//                    btnSaveEquipmentVw = btnSaveEquipment.GetButtonCell();
-//                    
-//                    UIButton btnSaveEquipmentButton = new UIButton();
-//                    btnSaveEquipmentButton = btnSaveEquipment.GetButton();
-//                    btnSaveEquipmentButton.TouchUpInside += (sender,e) => {SaveThisSection(sender, e);};
-//                    
-//                    arrItems4[1] = btnSaveEquipmentVw;
-//                    
-//                    iUtils.CreateFormGridItem btnExpandEquipment = new iUtils.CreateFormGridItem();
-//                    UIView btnExpandEquipmentVw = new UIView();
-//                    btnExpandEquipment.SetDimensions(700f,0f, 50f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                    btnExpandEquipment.SetLabelText("+");
-//                    btnExpandEquipment.SetBorderWidth(0.0f);
-//                    btnExpandEquipment.SetFontName("Verdana");
-//                    btnExpandEquipment.SetFontSize(12f);
-//                    btnExpandEquipment.SetTag(iExpandSectionBtnTagId * (iii+1));
-//                    btnExpandEquipment.SetCellColour("DarkSlateGrey");
-//                    btnExpandEquipmentVw = btnExpandEquipment.GetButtonCell();
-//                    
-//                    UIButton btnExpandEquipmentButton = new UIButton();
-//                    btnExpandEquipmentButton = btnExpandEquipment.GetButton();
-//                    btnExpandEquipmentButton.Enabled = false;
-//                    btnExpandEquipmentButton.TouchUpInside += (sender,e) => {ExpandSection(sender, e);};
-//                    
-//                    arrItems4[2] = btnExpandEquipmentVw;
-//                    
-//                    iUtils.CreateFormGridItem btnContractEquipment = new iUtils.CreateFormGridItem();
-//                    UIView btnContractEquipmentVw = new UIView();
-//                    btnContractEquipment.SetDimensions(750f,0f, 50f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                    btnContractEquipment.SetLabelText("-");
-//                    btnContractEquipment.SetBorderWidth(0.0f);
-//                    btnContractEquipment.SetFontName("Verdana");
-//                    btnContractEquipment.SetFontSize(12f);
-//                    btnContractEquipment.SetTag(iContractSectionBtnTagId * (iii+1));
-//                    btnContractEquipment.SetCellColour("DarkSlateGrey");
-//                    btnContractEquipmentVw = btnContractEquipment.GetButtonCell();
-//                    
-//                    UIButton btnContractEquipmentButton = new UIButton();
-//                    btnContractEquipmentButton = btnContractEquipment.GetButton();
-//                    btnContractEquipmentButton.TouchUpInside += (sender,e) => {ContractSection(sender, e);};
-//                    
-//                    arrItems4[3] = btnContractEquipmentVw;
-//                    
-//                    UILabel hfSectionEquipmentHeight = new UILabel();
-//                    hfSectionEquipmentHeight.Tag = iSectionHeightTagId * (iii+1);
-//                    hfSectionEquipmentHeight.Hidden = true;
-//                    hfSectionEquipmentHeight.Text = "0";
-//                    arrItems4[4] = hfSectionEquipmentHeight;
-//                    
-//                    UILabel hfSectionEquipmentRows = new UILabel();
-//                    hfSectionEquipmentRows.Tag = iSectionRowsTagId * (iii+1);
-//                    hfSectionEquipmentRows.Hidden = true;
-//                    hfSectionEquipmentRows.Text = iPwrIdRows.ToString();
-//                    arrItems4[5] = hfSectionEquipmentRows;
-//                    
-//                    UILabel hfSectionEquipmentStatus = new UILabel();
-//                    hfSectionEquipmentStatus.Tag = iSectionStatusTagId * (iii+1);
-//                    hfSectionEquipmentStatus.Hidden = true;
-//                    hfSectionEquipmentStatus.Text = "0";
-//                    arrItems4[6] = hfSectionEquipmentStatus;
-//                    
-//                    
-//                    SectionEquipmentRow.AddSubviews(arrItems4);
-//                    
-//                    iVert += iSectionHdrRowHeight;
-//                    
-//                    //Now add a new view to this view to hold another view containing all the pwrid info for this section 10
-//                    UIView PwrIdTableRow = new UIView();
-//                    PwrIdTableRow.Frame = new RectangleF(0f,iVert,1000f,iSectionHdrRowHeight);
-//                    iSectionId = iContainerSectionTagId * (iii+1);
-//                    PwrIdTableRow.Tag = iSectionId;
-//                    layout.AddSubview(PwrIdTableRow);
-//                    float iPwrIdRowVert = 0.0f;
-//                    float iSectionPwrIdHeight = 0.0f;
-//                    float iPwrIdRowVertTop = iVert;
-//                    float iPwrIdRowInnerTop = 0.0f;
-//                    float iPwrIdRowInnerTop2 = 0.0f;
-//                    
-//                    //Temporray
-//                    //iPwrIdRows = 3;
-//                    m_iEquipmentPwrIds = iPwrIdRows;
-//                    for (int jj = 0; jj < iPwrIdRows; jj++)
-//                    {
-//                        iPwrIdRowInnerTop2 = 0.0f;
-//                        UIView vwPwrInternalRowId = new UIView();
-//                        vwPwrInternalRowId.Frame = new RectangleF(0f,iPwrIdRowVert,1000f,200f); //This will be resized later on
-//                        vwPwrInternalRowId.Tag = (iPwrIdSectionTagId + (jj+1)) * (iii+1);  
-//                        
-//                        
-//                        UILabel hfRow10Status = new UILabel();
-//                        hfRow10Status.Text = "0";
-//                        hfRow10Status.Tag = (ihfRow10StatusTagId + (jj+1)) * (iii+1);
-//                        hfRow10Status.Hidden = true;
-//                        arrItems5[0] = hfRow10Status;
-//                        
-//                        //Put in the PwrId Label
-//                        iUtils.CreateFormGridItem rowPwrIdLabel = new iUtils.CreateFormGridItem();
-//                        UIView rowPwrIdLabelVw = new UIView();
-//                        iColNo = arrITPSection10PwrIds.Tables[0].Columns["PwrId"].Ordinal;
-//                        string sPwrId = arrITPSection10PwrIds.Tables[0].Rows[jj].ItemArray[iColNo].ToString();
-//                        rowPwrIdLabel.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
-//                        rowPwrIdLabel.SetDimensions(0f,iPwrIdRowVert, 200f, iSectionHdrRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                        rowPwrIdLabel.SetLabelText(sPwrId);
-//                        rowPwrIdLabel.SetBorderWidth(0.0f);
-//                        rowPwrIdLabel.SetFontName("Verdana-Bold");
-//                        rowPwrIdLabel.SetFontSize(18f);
-//                        rowPwrIdLabel.SetTag((iPwrIdRowLabelTagId + (jj+1)) * (iii+1));
-//                        
-//                        if (jj % 2 == 0)
-//                        {
-//                            rowPwrIdLabel.SetCellColour("Pale Yellow");
-//                        }
-//                        else
-//                        {
-//                            rowPwrIdLabel.SetCellColour("Pale Orange");
-//                        }
-//                        
-//                        rowPwrIdLabelVw = rowPwrIdLabel.GetLabelCell();
-//                        iHeightToAdd = iSectionHdrRowHeight;
-//                        arrItems5[1] = rowPwrIdLabelVw;
-//                        
-//                        iUtils.CreateFormGridItem btnNewEquipment = new iUtils.CreateFormGridItem();
-//                        UIView btnNewEquipmentVw = new UIView();
-//                        btnNewEquipment.SetDimensions(200f,iPwrIdRowVert, 350f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                        btnNewEquipment.SetLabelText("New Item");
-//                        btnNewEquipment.SetBorderWidth(0.0f);
-//                        btnNewEquipment.SetFontName("Verdana");
-//                        btnNewEquipment.SetFontSize(12f);
-//                        btnNewEquipment.SetTag((iPwrIdNewBtnTagId + (jj+1)) * (iii+1));
-//                        if (jj % 2 == 0)
-//                        {
-//                            btnNewEquipment.SetCellColour("Pale Yellow");
-//                        }
-//                        else
-//                        {
-//                            btnNewEquipment.SetCellColour("Pale Orange");
-//                        }
-//                        btnNewEquipmentVw = btnNewEquipment.GetButtonCell();
-//                        
-//                        UIButton btnNewEquipmentButton = new UIButton();
-//                        btnNewEquipmentButton = btnNewEquipment.GetButton();
-//                        btnNewEquipmentButton.TouchUpInside += (sender,e) => {AddNewEquipment(sender, e);};
-//                        
-//                        arrItems5[2] = btnNewEquipmentVw;
-//                        
-//                        iUtils.CreateFormGridItem rowPwrIdBlank = new iUtils.CreateFormGridItem();
-//                        UIView rowPwrIdBlankVw = new UIView();
-//                        rowPwrIdBlank.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
-//                        rowPwrIdBlank.SetDimensions(550f,iPwrIdRowVert, 350f, iSectionHdrRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                        rowPwrIdBlank.SetLabelText("");
-//                        rowPwrIdBlank.SetBorderWidth(0.0f);
-//                        rowPwrIdBlank.SetFontName("Verdana");
-//                        rowPwrIdBlank.SetFontSize(12f);
-//                        rowPwrIdBlank.SetTag((iPwrIdRowLabelTagId + (jj+1)) * (iii+1));
-//                        
-//                        if (jj % 2 == 0)
-//                        {
-//                            rowPwrIdBlank.SetCellColour("Pale Yellow");
-//                        }
-//                        else
-//                        {
-//                            rowPwrIdBlank.SetCellColour("Pale Orange");
-//                        }
-//                        
-//                        rowPwrIdBlankVw = rowPwrIdBlank.GetLabelCell();
-//                        arrItems5[3] = rowPwrIdBlankVw;
-//                        
-//                        iUtils.CreateFormGridItem btnExpandPwrId = new iUtils.CreateFormGridItem();
-//                        UIView btnExpandPwrIdVw = new UIView();
-//                        btnExpandPwrId.SetDimensions(900f,0f, 50f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                        btnExpandPwrId.SetLabelText("+");
-//                        btnExpandPwrId.SetBorderWidth(0.0f);
-//                        btnExpandPwrId.SetFontName("Verdana");
-//                        btnExpandPwrId.SetFontSize(12f);
-//                        btnExpandPwrId.SetTag((iPwrIdExpandTagId + (jj+1)) * (iii+1));
-//                        if (jj % 2 == 0)
-//                        {
-//                            btnExpandPwrId.SetCellColour("Pale Yellow");
-//                        }
-//                        else
-//                        {
-//                            btnExpandPwrId.SetCellColour("Pale Orange");
-//                        }
-//                        btnExpandPwrIdVw = btnExpandPwrId.GetButtonCell();
-//                        
-//                        UIButton btnExpandPwrIdButton = new UIButton();
-//                        btnExpandPwrIdButton = btnExpandPwrId.GetButton();
-//                        btnExpandPwrIdButton.Enabled = false;
-//                        btnExpandPwrIdButton.TouchUpInside += (sender,e) => {ExpandPwrId(sender, e, 2);};
-//                        
-//                        arrItems5[4] = btnExpandPwrIdVw;
-//                        
-//                        iUtils.CreateFormGridItem btnContractPwrId = new iUtils.CreateFormGridItem();
-//                        UIView btnContractPwrIdVw = new UIView();
-//                        btnContractPwrId.SetDimensions(950f,0f, 50f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                        btnContractPwrId.SetLabelText("-");
-//                        btnContractPwrId.SetBorderWidth(0.0f);
-//                        btnContractPwrId.SetFontName("Verdana");
-//                        btnContractPwrId.SetFontSize(12f);
-//                        btnContractPwrId.SetTag((iPwrIdContractTagId + (jj+1)) * (iii+1));
-//                        if (jj % 2 == 0)
-//                        {
-//                            btnContractPwrId.SetCellColour("Pale Yellow");
-//                        }
-//                        else
-//                        {
-//                            btnContractPwrId.SetCellColour("Pale Orange");
-//                        }
-//                        btnContractPwrIdVw = btnContractPwrId.GetButtonCell();
-//                        
-//                        UIButton btnContractPwrIdButton = new UIButton();
-//                        btnContractPwrIdButton = btnContractPwrId.GetButton();
-//                        btnContractPwrIdButton.TouchUpInside += (sender,e) => {ContractPwrId(sender, e, 2);};
-//                        
-//                        arrItems5[5] = btnContractPwrIdVw;
-//                        
-//                        UILabel hfPwrIdSectionHeight = new UILabel();
-//                        hfPwrIdSectionHeight.Tag = (iPwrIdHeightTagId + (jj+1)) * (iii+1);
-//                        hfPwrIdSectionHeight.Hidden = true;
-//                        hfPwrIdSectionHeight.Text = "0";
-//                        arrItems5[6] = hfPwrIdSectionHeight;
-//                        
-//                        iHeightToAdd = iSectionHdrRowHeight;
-//                        
-//                        //Now add the row details into the view
-//                        vwPwrInternalRowId.AddSubviews(arrItems5);
-//                        
-//                        iSectionPwrIdHeight += iHeightToAdd;
-//                        iPwrIdRowVert += iHeightToAdd;
-//                        iVert += iHeightToAdd;
-//                        iPwrIdRowInnerTop2 += iHeightToAdd;
-//                        
-//                        iPwrIdRowVertInner = 0f;
-//                        UIView vwPwrInternalRowIdInnner = new UIView();
-//                        vwPwrInternalRowIdInnner.Tag = (iPwrIdSectionInnerTagId + (jj+1)) * (iii+1);                   
-//                        vwPwrInternalRowIdInnner.Frame = new RectangleF(0f,iPwrIdRowVertInner,1000f,200f); //This will be resized later on
-//                        //                        vwPwrInternalRowIdInnner.Hidden = true;  
-//                        
-//                        
-//                        UIView PwrIdHdr = BuildEquipmentHeader(jj, ref iHeightToAdd);
-//                        PwrIdHdr.Frame = new RectangleF(0f, iPwrIdRowVertInner, 1000f, iHeightToAdd);
-//                        vwPwrInternalRowIdInnner.AddSubview(PwrIdHdr);
-//                        vwPwrInternalRowId.AddSubview(vwPwrInternalRowIdInnner);
-//                        
-//                        iSectionPwrIdHeight += iHeightToAdd;
-//                        iPwrIdRowVert += iHeightToAdd;
-//                        iPwrIdRowVertInner += iHeightToAdd;
-//                        iVert += iHeightToAdd;
-//                        
-//                        //Now for each PwrId get the details for each string
-//                        DataSet arrITPSection10PwrIdItems = ITPSection.GetLocalITPSection10PwrIdEquipmentDetails(sId, sPwrId);
-//                        
-//                        if (arrITPSection10PwrIdItems.Tables.Count > 0)
-//                        {
-//                            int iPwrIdItemRows = arrITPSection10PwrIdItems.Tables[0].Rows.Count;
-//                            //Add the rows to a hidden field so we know how many rows are in each PwrId battery block
-//                            UILabel hfPwrIdStringRows = new UILabel();
-//                            hfPwrIdStringRows.Text = iPwrIdItemRows.ToString();
-//                            hfPwrIdStringRows.Tag = (ihfPwrIdStringRowsTagId + (jj+1)) * (iii+1);
-//                            hfPwrIdStringRows.Hidden = true;
-//                            vwPwrInternalRowIdInnner.AddSubview(hfPwrIdStringRows);
-//                            
-//                            
-//                            for (var kk = 0; kk < iPwrIdItemRows; kk++)
-//                            {
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["AutoId"].Ordinal;
-//                                int iAutoId = Convert.ToInt32(arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo]);
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["BankNo"].Ordinal;
-//                                string sBankNo = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["Make"].Ordinal;
-//                                string sMake = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["Model"].Ordinal;
-//                                string sModel = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["SPN"].Ordinal;
-//                                string sSPN = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["DOM"].Ordinal;
-//                                string sDOM = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["Floor"].Ordinal;
-//                                string sFloor = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["Suite"].Ordinal;
-//                                string sSuite = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["Rack"].Ordinal;
-//                                string sRack = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["SubRack"].Ordinal;
-//                                string sSubRack = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["Position"].Ordinal;
-//                                string sPosition = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["Equipment_Condition"].Ordinal;
-//                                string sEquipType = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["SerialBatch"].Ordinal;
-//                                string sSerialNo = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["tblMaximoPSA_ID"].Ordinal;
-//                                string sMaximoPSAId = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["tblMaximoTransfer_Eqnum"].Ordinal;
-//                                string sMaximoTransferId = arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo].ToString();
-//                                if(sMaximoPSAId == "" || sMaximoPSAId == "0")
-//                                {
-//                                    sMaximoPSAId = "-1";
-//                                }
-//                                if(sMaximoTransferId == "" || sMaximoTransferId == "0")
-//                                {
-//                                    sMaximoTransferId = "-1";
-//                                }
-//                                int iMaximoPSAId = Convert.ToInt32(sMaximoPSAId);
-//                                int iMaximoTransferId = Convert.ToInt32(sMaximoTransferId);
-//                                int iMaximoAssetId = -1;
-//                                
-//                                if(iMaximoPSAId > 0)
-//                                {
-//                                    iMaximoAssetId = iMaximoPSAId;
-//                                }
-//                                else if(iMaximoTransferId > 0)
-//                                {
-//                                    iMaximoAssetId = iMaximoTransferId;
-//                                }
-//                                else
-//                                {
-//                                    iMaximoAssetId = -1;
-//                                }
-//                                
-//                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["Equipment_Type"].Ordinal;
-//                                int iEquipmentType = Convert.ToInt32(arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo]);
-//                                
-//                                //Add in the row
-//                                UIView EquipmentItemRow = BuildEquipmentItemRowDetails(iii, jj, kk, sPwrId, iAutoId,
-//                                                                                       iMaximoAssetId, sBankNo,
-//                                                                                       sMake, sModel, sSPN, sDOM,
-//                                                                                       sFloor, sSuite, sRack, sSubRack, sPosition, 
-//                                                                                       sEquipType, sSerialNo, iEquipmentType,
-//                                                                                       false, ref iHeightToAdd);
-//                                EquipmentItemRow.Frame = new RectangleF(0f, iPwrIdRowVertInner, 1000f, iHeightToAdd);
-//                                EquipmentItemRow.Tag = iEquipmentFullRowTagId * (jj + 1) + (kk + 1);
-//                                vwPwrInternalRowIdInnner.AddSubview(EquipmentItemRow);
-//                                
-//                                m_iEquipmentRowHeight = iHeightToAdd;
-//                                iSectionPwrIdHeight += iHeightToAdd;
-//                                iPwrIdRowVert += iHeightToAdd;
-//                                iPwrIdRowVertInner += iHeightToAdd;
-//                                iVert += iHeightToAdd;
-//                                
-//                            }
-//                            
-//                            hfPwrIdSectionHeight.Text = iPwrIdRowVertInner.ToString();
-//                            vwPwrInternalRowIdInnner.Frame = new RectangleF(0f, iPwrIdRowInnerTop2, 1000f, iPwrIdRowVertInner);
-//                            vwPwrInternalRowId.Frame = new RectangleF(0f, iPwrIdRowInnerTop, 1000f, iPwrIdRowVert);
-//                            PwrIdTableRow.AddSubview(vwPwrInternalRowId);
-//                            iPwrIdRowInnerTop += iPwrIdRowVert;
-//                            //iPwrIdRowInnerTop2 += iPwrIdRowVertInner;
-//                            iPwrIdRowVert = 0f;
-//                        }
-//                        
-//                    }
-//                    //Now resize the UIView that is effectively the container for the battery info for this section
-//                    //And also store this height in a hidden field for use in the contract and expand functions
-//                    PwrIdTableRow.Frame = new RectangleF(0f,iPwrIdRowVertTop,1000f,iSectionPwrIdHeight);
-//                    hfSectionEquipmentHeight.Text = iSectionPwrIdHeight.ToString();
-//                }
-//                
-//                //******************************************************************************************//
-//                //                      SECTION RFU                                                         //
-//                //******************************************************************************************//
-//                //Get all the PwrId's for this project from ITPRFU
-//                DataSet arrITPRFUs = ITPSection.GetLocalITPRFUPwrIds(sId);
-//                
-//                if (arrITPRFUs.Tables.Count > 0)
-//                {
-//                    float iRFURowVert = 0.0f;
-//                    float iSectionRFUHeight = 0.0f;
-//                    float iRFURowVertTop = iVert;
-//                    float iRFURowInnerTop = 0.0f;
-//                    
-//                    int ii = m_iSections;
-//                    m_iSections++; //Add an extra one for the RFU section
-//                    m_iRFUSectionCounter = ii; //Here ii and m_iSections are different by 1. If we add more sections after this it will be different later on
-//                    int iPwrIdRowsRFU = arrITPRFUs.Tables[0].Rows.Count;
-//                    
-//                    //Add in the section title and buttons for each section header
-//                    UIView SectionRFURow = new UIView();
-//                    float iSection10RowVertTop = iVert;
-//                    SectionRFURow.Frame = new RectangleF(0f,iSection10RowVertTop,1000f,iSectionHdrRowHeight);
-//                    iSectionId = iSectionTagId * (ii+1);
-//                    SectionRFURow.Tag = iSectionId;
-//                    layout.AddSubview(SectionRFURow);
-//                    
-//                    UILabel hfSectionRFU = new UILabel();
-//                    hfSectionRFU.Text = "RFU";
-//                    hfSectionRFU.Tag = iSectionDBIdTagId * (ii+1);
-//                    hfSectionRFU.Hidden = true;
-//                    SectionRFURow.AddSubview(hfSectionRFU);
-//                    
-//                    iUtils.CreateFormGridItem SectionRFU = new iUtils.CreateFormGridItem();
-//                    UIView SectionRFUVw = new UIView();
-//                    SectionRFU.SetDimensions(0f,0f, 550f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
-//                    SectionRFU.SetLabelText("READY FOR USE (RFU)");
-//                    SectionRFU.SetBorderWidth(0.0f);
-//                    SectionRFU.SetFontName("Verdana-Bold");
-//                    SectionRFU.SetTextColour("White");
-//                    SectionRFU.SetFontSize(12f);
-//                    SectionRFU.SetCellColour("DarkSlateGrey");
-//                    SectionRFU.SetTag(iSectionDescTagId * (ii+1));
-//                    SectionRFUVw = SectionRFU.GetLabelCell();
-//                    arrItems4[0] = SectionRFUVw;
-//                    
-//                    
-//                    iUtils.CreateFormGridItem btnSaveRFU = new iUtils.CreateFormGridItem();
-//                    UIView btnSaveRFUVw = new UIView();
-//                    btnSaveRFU.SetDimensions(550f,0f, 150f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                    btnSaveRFU.SetLabelText("Save Section");
-//                    btnSaveRFU.SetBorderWidth(0.0f);
-//                    btnSaveRFU.SetFontName("Verdana");
-//                    btnSaveRFU.SetFontSize(12f);
-//                    btnSaveRFU.SetTag(iSaveSectionBtnTagId * (ii+1));
-//                    btnSaveRFU.SetCellColour("DarkSlateGrey");
-//                    btnSaveRFUVw = btnSaveRFU.GetButtonCell();
-//                    
-//                    UIButton btnSaveRFUButton = new UIButton();
-//                    btnSaveRFUButton = btnSaveRFU.GetButton();
-//                    btnSaveRFUButton.TouchUpInside += (sender,e) => {SaveThisSection(sender, e);};
-//                    
-//                    arrItems4[1] = btnSaveRFUVw;
-//                    
-//                    iUtils.CreateFormGridItem btnExpandRFU = new iUtils.CreateFormGridItem();
-//                    UIView btnExpandRFUVw = new UIView();
-//                    btnExpandRFU.SetDimensions(700f,0f, 50f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                    btnExpandRFU.SetLabelText("+");
-//                    btnExpandRFU.SetBorderWidth(0.0f);
-//                    btnExpandRFU.SetFontName("Verdana");
-//                    btnExpandRFU.SetFontSize(12f);
-//                    btnExpandRFU.SetTag(iExpandSectionBtnTagId * (ii+1));
-//                    btnExpandRFU.SetCellColour("DarkSlateGrey");
-//                    btnExpandRFUVw = btnExpandRFU.GetButtonCell();
-//                    
-//                    UIButton btnExpandRFUButton = new UIButton();
-//                    btnExpandRFUButton = btnExpandRFU.GetButton();
-//                    btnExpandRFUButton.Enabled = false;
-//                    btnExpandRFUButton.TouchUpInside += (sender,e) => {ExpandSection(sender, e);};
-//                    
-//                    arrItems4[2] = btnExpandRFUVw;
-//                    
-//                    iUtils.CreateFormGridItem btnContractRFU = new iUtils.CreateFormGridItem();
-//                    UIView btnContractRFUVw = new UIView();
-//                    btnContractRFU.SetDimensions(750f,0f, 50f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                    btnContractRFU.SetLabelText("-");
-//                    btnContractRFU.SetBorderWidth(0.0f);
-//                    btnContractRFU.SetFontName("Verdana");
-//                    btnContractRFU.SetFontSize(12f);
-//                    btnContractRFU.SetTag(iContractSectionBtnTagId * (ii+1));
-//                    btnContractRFU.SetCellColour("DarkSlateGrey");
-//                    btnContractRFUVw = btnContractRFU.GetButtonCell();
-//                    
-//                    UIButton btnContractRFUButton = new UIButton();
-//                    btnContractRFUButton = btnContractRFU.GetButton();
-//                    btnContractRFUButton.TouchUpInside += (sender,e) => {ContractSection(sender, e);};
-//                    
-//                    arrItems4[3] = btnContractRFUVw;
-//                    
-//                    UILabel hfSectionHeight = new UILabel();
-//                    hfSectionHeight.Tag = iSectionHeightTagId * (ii+1);
-//                    hfSectionHeight.Hidden = true;
-//                    hfSectionHeight.Text = "0";
-//                    arrItems4[4] = hfSectionHeight;
-//                    
-//                    UILabel hfSectionRows = new UILabel();
-//                    hfSectionRows.Tag = iSectionRowsTagId * (ii+1);
-//                    hfSectionRows.Hidden = true;
-//                    hfSectionRows.Text = iPwrIdRowsRFU.ToString();
-//                    arrItems4[5] = hfSectionRows;
-//                    
-//                    UILabel hfSectionStatus = new UILabel();
-//                    hfSectionStatus.Tag = iSectionStatusTagId * (ii+1);
-//                    hfSectionStatus.Hidden = true;
-//                    hfSectionStatus.Text = "0";
-//                    arrItems4[6] = hfSectionStatus;
-//                    
-//                    
-//                    SectionRFURow.AddSubviews(arrItems4);
-//                    
-//                    iVert += iSectionHdrRowHeight;
-//                    iRFURowVertTop += iSectionHdrRowHeight;
-//                    
-//                    //Now add a new view to this view to hold another view containing all the pwrid info for this RFU section
-//                    UIView RFUTableRow = new UIView();
-//                    RFUTableRow.Frame = new RectangleF(0f,iRFURowVertTop,1000f,iSectionHdrRowHeight);
-//                    iSectionId = iContainerSectionTagId * (ii+1);
-//                    RFUTableRow.Tag = iSectionId;
-//                    layout.AddSubview(RFUTableRow);
-//                    
-//                    //Put in the header
-//                    UIView vwPwrHdrInternalRowId = new UIView();
-//                    vwPwrHdrInternalRowId.Frame = new RectangleF(0f,iRFURowVert,1000f,iSectionHdrRowHeight); //This will be resized later on
-//                    
-//                    iUtils.CreateFormGridItem rowPwrIdHdrLbl = new iUtils.CreateFormGridItem();
-//                    UIView rowPwrIdHdrLblVw = new UIView();
-//                    rowPwrIdHdrLbl.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
-//                    rowPwrIdHdrLbl.SetDimensions(0f,iRFURowVert, 100f, iSectionHdrRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                    rowPwrIdHdrLbl.SetLabelText("Power Id");
-//                    rowPwrIdHdrLbl.SetTextAlignment("centre");
-//                    rowPwrIdHdrLbl.SetBorderWidth(0.0f);
-//                    rowPwrIdHdrLbl.SetFontName("Verdana-Bold");
-//                    rowPwrIdHdrLbl.SetFontSize(14f);
-//                    rowPwrIdHdrLbl.SetTag((iRFUPwrIdHdrLabelTagId) * (ii+1));                   
-//                    rowPwrIdHdrLbl.SetCellColour("Pale Yellow");
-//                    
-//                    rowPwrIdHdrLblVw = rowPwrIdHdrLbl.GetLabelCell();
-//                    iHeightToAdd = iSectionHdrRowHeight;
-//                    arrItems7[0] = rowPwrIdHdrLblVw;
-//                    
-//                    iUtils.CreateFormGridItem rowDesignLoadHdrLbl = new iUtils.CreateFormGridItem();
-//                    UIView rowDesignLoadHdrLblVw = new UIView();
-//                    rowDesignLoadHdrLbl.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
-//                    rowDesignLoadHdrLbl.SetDimensions(100f,iRFURowVert, 100f, iSectionHdrRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                    rowDesignLoadHdrLbl.SetLabelText("Design Load");
-//                    rowDesignLoadHdrLbl.SetTextAlignment("centre");
-//                    rowDesignLoadHdrLbl.SetBorderWidth(0.0f);
-//                    rowDesignLoadHdrLbl.SetFontName("Verdana-Bold");
-//                    rowDesignLoadHdrLbl.SetFontSize(14f);
-//                    rowDesignLoadHdrLbl.SetTag((iRFUDesignLoadHdrLabelTagId) * (ii+1));                   
-//                    rowDesignLoadHdrLbl.SetCellColour("Pale Yellow");
-//                    rowDesignLoadHdrLblVw = rowDesignLoadHdrLbl.GetLabelCell();
-//                    iHeightToAdd = iSectionHdrRowHeight;
-//                    arrItems7[1] = rowDesignLoadHdrLblVw;
-//                    
-//                    iUtils.CreateFormGridItem rowCutoverLoadHdrLbl = new iUtils.CreateFormGridItem();
-//                    UIView rowCutoverLoadHdrLblVw = new UIView();
-//                    rowCutoverLoadHdrLbl.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
-//                    rowCutoverLoadHdrLbl.SetDimensions(200f,iRFURowVert, 100f, iSectionHdrRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                    rowCutoverLoadHdrLbl.SetLabelText("Cutover Load");
-//                    rowCutoverLoadHdrLbl.SetTextAlignment("centre");
-//                    rowCutoverLoadHdrLbl.SetBorderWidth(0.0f);
-//                    rowCutoverLoadHdrLbl.SetFontName("Verdana-Bold");
-//                    rowCutoverLoadHdrLbl.SetFontSize(14f);
-//                    rowCutoverLoadHdrLbl.SetTag((iRFUCutoverLoadHdrLabelTagId) * (ii+1));                   
-//                    rowCutoverLoadHdrLbl.SetCellColour("Pale Yellow");
-//                    
-//                    rowCutoverLoadHdrLblVw = rowCutoverLoadHdrLbl.GetLabelCell();
-//                    iHeightToAdd = iSectionHdrRowHeight;
-//                    arrItems7[2] = rowCutoverLoadHdrLblVw;
-//                    
-//                    iUtils.CreateFormGridItem rowCutoverDateHdrLbl = new iUtils.CreateFormGridItem();
-//                    UIView rowCutoverDateHdrLblVw = new UIView();
-//                    rowCutoverDateHdrLbl.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
-//                    rowCutoverDateHdrLbl.SetDimensions(300f,iRFURowVert, 100f, iSectionHdrRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                    rowCutoverDateHdrLbl.SetLabelText("Cutover Date");
-//                    rowCutoverDateHdrLbl.SetTextAlignment("centre");
-//                    rowCutoverDateHdrLbl.SetBorderWidth(0.0f);
-//                    rowCutoverDateHdrLbl.SetFontName("Verdana-Bold");
-//                    rowCutoverDateHdrLbl.SetFontSize(14f);
-//                    rowCutoverDateHdrLbl.SetTag((iRFUCutoverDateHdrLabelTagId) * (ii+1));                   
-//                    rowCutoverDateHdrLbl.SetCellColour("Pale Yellow");
-//                    
-//                    rowCutoverDateHdrLblVw = rowCutoverDateHdrLbl.GetLabelCell();
-//                    iHeightToAdd = iSectionHdrRowHeight;
-//                    arrItems7[3] = rowCutoverDateHdrLblVw;
-//                    
-//                    iUtils.CreateFormGridItem rowDecommissionedHdrLbl = new iUtils.CreateFormGridItem();
-//                    UIView rowDecommissionedHdrLblVw = new UIView();
-//                    rowDecommissionedHdrLbl.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
-//                    rowDecommissionedHdrLbl.SetDimensions(400f,iRFURowVert, 150f, iSectionHdrRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                    rowDecommissionedHdrLbl.SetLabelText("Decommissioned");
-//                    rowDecommissionedHdrLbl.SetTextAlignment("centre");
-//                    rowDecommissionedHdrLbl.SetBorderWidth(0.0f);
-//                    rowDecommissionedHdrLbl.SetFontName("Verdana-Bold");
-//                    rowDecommissionedHdrLbl.SetFontSize(14f);
-//                    rowDecommissionedHdrLbl.SetTag((iRFUDecommissionedHdrLabelTagId) * (ii+1));                   
-//                    rowDecommissionedHdrLbl.SetCellColour("Pale Yellow");
-//                    
-//                    rowDecommissionedHdrLblVw = rowDecommissionedHdrLbl.GetLabelCell();
-//                    iHeightToAdd = iSectionHdrRowHeight;
-//                    arrItems7[4] = rowDecommissionedHdrLblVw;
-//                    
-//                    iUtils.CreateFormGridItem rowCommissionedHdrLbl = new iUtils.CreateFormGridItem();
-//                    UIView rowCommissionedHdrLblVw = new UIView();
-//                    rowCommissionedHdrLbl.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
-//                    rowCommissionedHdrLbl.SetDimensions(550f,iRFURowVert, 150f, iSectionHdrRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                    rowCommissionedHdrLbl.SetLabelText("Commissioned");
-//                    rowCommissionedHdrLbl.SetTextAlignment("centre");
-//                    rowCommissionedHdrLbl.SetBorderWidth(0.0f);
-//                    rowCommissionedHdrLbl.SetFontName("Verdana-Bold");
-//                    rowCommissionedHdrLbl.SetFontSize(14f);
-//                    rowCommissionedHdrLbl.SetTag((iRFUCommissionedHdrLabelTagId) * (ii+1));                   
-//                    rowCommissionedHdrLbl.SetCellColour("Pale Yellow");
-//                    
-//                    rowCommissionedHdrLblVw = rowCommissionedHdrLbl.GetLabelCell();
-//                    iHeightToAdd = iSectionHdrRowHeight;
-//                    arrItems7[5] = rowCommissionedHdrLblVw;
-//                    
-//                    iUtils.CreateFormGridItem rowSaveRFUHdrLbl = new iUtils.CreateFormGridItem();
-//                    UIView rowSaveRFUHdrLblVw = new UIView();
-//                    rowSaveRFUHdrLbl.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
-//                    rowSaveRFUHdrLbl.SetDimensions(700f,iRFURowVert, 130f, iSectionHdrRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                    rowSaveRFUHdrLbl.SetLabelText("Commit RFU");
-//                    rowSaveRFUHdrLbl.SetTextAlignment("centre");
-//                    rowSaveRFUHdrLbl.SetBorderWidth(0.0f);
-//                    rowSaveRFUHdrLbl.SetFontName("Verdana-Bold");
-//                    rowSaveRFUHdrLbl.SetFontSize(14f);
-//                    rowSaveRFUHdrLbl.SetTag((iRFUSaveRFUHdrLabelTagId) * (ii+1));                   
-//                    rowSaveRFUHdrLbl.SetCellColour("Pale Yellow");
-//                    
-//                    rowSaveRFUHdrLblVw = rowSaveRFUHdrLbl.GetLabelCell();
-//                    iHeightToAdd = iSectionHdrRowHeight;
-//                    arrItems7[6] = rowSaveRFUHdrLblVw;
-//                    
-//                    //Now add the row details into the view
-//                    vwPwrHdrInternalRowId.AddSubviews(arrItems7);
-//                    
-//                    iSectionRFUHeight += iHeightToAdd;
-//                    iRFURowVert += iHeightToAdd;
-//                    iVert += iHeightToAdd;
-//                    
-//                    
-//                    vwPwrHdrInternalRowId.Frame = new RectangleF(0f, iRFURowInnerTop, 1000f, iRFURowVert);
-//                    RFUTableRow.AddSubview(vwPwrHdrInternalRowId);
-//                    iRFURowInnerTop += iRFURowVert;
-//                    iRFURowVert = 0f;
-//                    
-//                    
-//                    for (var j = 0; j < iPwrIdRowsRFU; j++)
-//                    {
-//                        UIView vwPwrInternalRowId = new UIView();
-//                        vwPwrInternalRowId.Frame = new RectangleF(0f,iRFURowVert,1000f,200f); //This will be resized later on
-//                        vwPwrInternalRowId.Tag = (iPwrIdSectionTagId + (j+1)) * (ii+1);                   
-//                        
-//                        iColNo = arrITPRFUs.Tables[0].Columns["PwrId"].Ordinal;
-//                        string sPwrId = arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo].ToString();
-//                        iColNo = arrITPRFUs.Tables[0].Columns["CutoverLoad"].Ordinal;
-//                        string sCutoverLoad = arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo].ToString();
-//                        iColNo = arrITPRFUs.Tables[0].Columns["CutoverDate"].Ordinal;
-//                        string sCutoverDate = arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo].ToString();
-//                        iColNo = arrITPRFUs.Tables[0].Columns["Decommission"].Ordinal;
-//                        int iDecommission = Convert.ToInt32(arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo]);
-//                        iColNo = arrITPRFUs.Tables[0].Columns["Commission"].Ordinal;
-//                        int iCommission = Convert.ToInt32(arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo]);
-//                        
-//                        if(sCutoverLoad != "0" && sCutoverLoad != "" &&
-//                           sCutoverDate != "0" && sCutoverDate != "" &&
-//                           (iDecommission == 1 || iCommission == 1))
-//                        {
-//                            bDisableRow = true;
-//                        }
-//                        else
-//                        {
-//                            bDisableRow = false;
-//                        }
-//                        
-//                        UILabel hfRowRFUStatus = new UILabel();
-//                        hfRowRFUStatus.Text = "0";
-//                        hfRowRFUStatus.Tag = (ihfRowRFUStatusTagId + (j+1)) * (ii+1);
-//                        hfRowRFUStatus.Hidden = true;
-//                        arrItems6[0] = hfRowRFUStatus;
-//                        
-//                        //Put in the PwrId Label
-//                        iUtils.CreateFormGridItem rowPwrIdLabel = new iUtils.CreateFormGridItem();
-//                        UIView rowPwrIdLabelVw = new UIView();
-//                        rowPwrIdLabel.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
-//                        rowPwrIdLabel.SetDimensions(0f,iRFURowVert, 100f, iSectionHdrRowHeight, 2f, 2.5f, 2f, 2.5f);
-//                        rowPwrIdLabel.SetLabelText(sPwrId);
-//                        rowPwrIdLabel.SetBorderWidth(0.0f);
-//                        rowPwrIdLabel.SetFontName("Verdana");
-//                        rowPwrIdLabel.SetFontSize(14f);
-//                        rowPwrIdLabel.SetTag((iRFUPwrIdRowLabelTagId + (j+1)) * (ii+1));
-//                        
-//                        if (j % 2 == 0)
-//                        {
-//                            rowPwrIdLabel.SetCellColour("Pale Blue");
-//                        }
-//                        else
-//                        {
-//                            rowPwrIdLabel.SetCellColour("Sky Blue");
-//                        }
-//                        
-//                        rowPwrIdLabelVw = rowPwrIdLabel.GetLabelCell();
-//                        iHeightToAdd = iSectionHdrRowHeight;
-//                        arrItems6[1] = rowPwrIdLabelVw;
-//                        
-//                        //Put in the PwrId Label
-//                        iUtils.CreateFormGridItem rowDesignLoadLabel = new iUtils.CreateFormGridItem();
-//                        UIView rowDesignLoadLabelVw = new UIView();
-//                        iColNo = arrITPRFUs.Tables[0].Columns["DesignLoad"].Ordinal;
-//                        string sDesignLoad = arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo].ToString();
-//                        rowDesignLoadLabel.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
-//                        rowDesignLoadLabel.SetDimensions(100f,iRFURowVert, 100f, iSectionHdrRowHeight, 20f, 2.5f, 20f, 2.5f);
-//                        rowDesignLoadLabel.SetLabelText(sDesignLoad);
-//                        rowDesignLoadLabel.SetTextAlignment("right");
-//                        rowDesignLoadLabel.SetBorderWidth(0.0f);
-//                        rowDesignLoadLabel.SetFontName("Verdana");
-//                        rowDesignLoadLabel.SetFontSize(14f);
-//                        rowDesignLoadLabel.SetTag((iRFUDesignLoadRowLabelTagId + (j+1)) * (ii+1));
-//                        
-//                        if (j % 2 == 0)
-//                        {
-//                            rowDesignLoadLabel.SetCellColour("Pale Blue");
-//                        }
-//                        else
-//                        {
-//                            rowDesignLoadLabel.SetCellColour("Sky Blue");
-//                        }
-//                        
-//                        rowDesignLoadLabelVw = rowDesignLoadLabel.GetLabelCell();
-//                        iHeightToAdd = iSectionHdrRowHeight;
-//                        arrItems6[2] = rowDesignLoadLabelVw;
-//                        
-//                        iUtils.CreateFormGridItem txtCutoverLoad = new iUtils.CreateFormGridItem();
-//                        UIView txtCutoverLoadVw = new UIView();
-//                        txtCutoverLoad.SetDimensions(200f,iRFURowVert, 100f, iSectionHdrRowHeight, 15f, 2.5f, 15f, 2.5f);
-//                        txtCutoverLoad.SetLabelText(sCutoverLoad);
-//                        txtCutoverLoad.SetTextAlignment("right");
-//                        txtCutoverLoad.SetBorderWidth(0.0f);
-//                        txtCutoverLoad.SetFontName("Verdana");
-//                        txtCutoverLoad.SetFontSize(14f);
-//                        txtCutoverLoad.SetTag((iRFUCutoverLoadRowLabelTagId + (j+1)) * (ii+1));
-//                        
-//                        if (j % 2 == 0)
-//                        {
-//                            txtCutoverLoad.SetCellColour("Pale Blue");
-//                        }
-//                        else
-//                        {
-//                            txtCutoverLoad.SetCellColour("Sky Blue");
-//                        }
-//                        
-//                        txtCutoverLoadVw = txtCutoverLoad.GetTextFieldCell();
-//                        UITextField txtCutoverLoadView = txtCutoverLoad.GetTextFieldView();
-//                        txtCutoverLoadView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
-//                        txtCutoverLoadView.ReturnKeyType = UIReturnKeyType.Next;
-//                        txtCutoverLoadView.ShouldEndEditing += (sender) => {
-//                            return ValidateCutoverLoad(sender);};
-//                        txtCutoverLoadView.ShouldReturn += (sender) => {
-//                            return MoveNextTextField(sender, 9);};
-//                        
-//                        if(bDisableRow)
-//                        {
-//                            txtCutoverLoadView.Enabled = false;
-//                        }
-//                        arrItems6[3] = txtCutoverLoadVw;
-//                        
-//                        iUtils.CreateFormGridItem txtCutoverDate = new iUtils.CreateFormGridItem();
-//                        UIView txtCutoverDateVw = new UIView();
-//                        txtCutoverDate.SetDimensions(300f,iRFURowVert, 100f, iSectionHdrRowHeight, 8f, 2.5f, 8f, 2.5f);
-//                        if (sCutoverDate == "" || sCutoverDate == "0")
-//                        {
-//                            sCutoverDate = "01/01/1900";
-//                        }
-//                        DateTime dtCutover = Convert.ToDateTime(sCutoverDate);
-//                        string sCutoverDisplay = dt.Get_Date_String(dtCutover, "dd/mm/yy");
-//                        txtCutoverDate.SetLabelText(sCutoverDisplay);
-//                        txtCutoverDate.SetTextAlignment("right");
-//                        txtCutoverDate.SetBorderWidth(0.0f);
-//                        txtCutoverDate.SetFontName("Verdana");
-//                        txtCutoverDate.SetFontSize(14f);
-//                        txtCutoverDate.SetTag((iRFUCutoverDateRowLabelTagId + (j+1)) * (ii+1));
-//                        
-//                        if (j % 2 == 0)
-//                        {
-//                            txtCutoverDate.SetCellColour("Pale Blue");
-//                        }
-//                        else
-//                        {
-//                            txtCutoverDate.SetCellColour("Sky Blue");
-//                        }
-//                        
-//                        txtCutoverDateVw = txtCutoverDate.GetTextFieldCell();
-//                        UITextField txtCutoverDateView = txtCutoverDate.GetTextFieldView();
-//                        txtCutoverDateView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
-//                        txtCutoverDateView.ReturnKeyType = UIReturnKeyType.Next;
-//                        txtCutoverDateView.ShouldEndEditing += (sender) => {
-//                            return ValidateCutoverDate(sender);};
-//                        txtCutoverDateView.ShouldReturn += (sender) => {
-//                            return MoveNextTextField(sender, 10);};
-//                        
-//                        if(bDisableRow)
-//                        {
-//                            txtCutoverDateView.Enabled = false;
-//                        }
-//                        
-//                        arrItems6[4] = txtCutoverDateVw;
-//                        
-//                        iUtils.CreateFormGridItem chkDecommission = new iUtils.CreateFormGridItem();
-//                        UIView chkDecommissionVw = new UIView();
-//                        chkDecommission.SetDimensions(400f,iRFURowVert, 150f, iSectionHdrRowHeight, 30f, 2.5f, 30f, 2.5f);
-//                        bool bDecommission = false;
-//                        if (iDecommission > 0)
-//                        {
-//                            bDecommission = true;
-//                        }
-//                        chkDecommission.SetCheckboxOnOff(bDecommission);
-//                        chkDecommission.SetBorderWidth(0.0f);
-//                        
-//                        
-//                        chkDecommission.SetSwitchType(2);
-//                        chkDecommission.SetTag((iRFUDecommissionRowCheckTagId + (j+1)) * (ii+1));
-//                        
-//                        if (j % 2 == 0)
-//                        {
-//                            chkDecommission.SetCellColour("Pale Blue");
-//                        }
-//                        else
-//                        {
-//                            chkDecommission.SetCellColour("Sky Blue");
-//                        }
-//                        
-//                        
-//                        chkDecommissionVw = chkDecommission.GetCheckboxCell();
-//                        UISwitch chkDecommissionCheck = chkDecommission.GetCheckbox();
-//                        chkDecommissionCheck.ValueChanged += (sender,e) => {CheckboxChanged(sender, e, 1);};
-//                        
-//                        if(bDisableRow)
-//                        {
-//                            chkDecommissionCheck.Enabled = false;
-//                        }
-//                        
-//                        arrItems6[5] = chkDecommissionVw;
-//                        
-//                        iUtils.CreateFormGridItem chkCommission = new iUtils.CreateFormGridItem();
-//                        UIView chkCommissionVw = new UIView();
-//                        chkCommission.SetDimensions(550f,iRFURowVert, 150f, iSectionHdrRowHeight, 30f, 2.5f, 30f, 2.5f);
-//                        bool bCommission = false;
-//                        if (iCommission > 0)
-//                        {
-//                            bCommission = true;
-//                        }
-//                        chkCommission.SetCheckboxOnOff(bCommission);
-//                        chkCommission.SetBorderWidth(0.0f);
-//                        chkCommission.SetSwitchType(2);
-//                        chkCommission.SetTag((iRFUCommissionRowCheckTagId + (j+1)) * (ii+1));
-//                        
-//                        if (j % 2 == 0)
-//                        {
-//                            chkCommission.SetCellColour("Pale Blue");
-//                        }
-//                        else
-//                        {
-//                            chkCommission.SetCellColour("Sky Blue");
-//                        }
-//                        
-//                        chkCommissionVw = chkCommission.GetCheckboxCell();
-//                        UISwitch chkCommissionCheck = chkCommission.GetCheckbox();
-//                        chkCommissionCheck.ValueChanged += (sender,e) => {CheckboxChanged(sender, e, 2);};
-//                        
-//                        if(bDisableRow)
-//                        {
-//                            chkCommissionCheck.Enabled = false;
-//                        }
-//                        
-//                        arrItems6[6] = chkCommissionVw;
-//                        
-//                        iUtils.CreateFormGridItem btnRFU = new iUtils.CreateFormGridItem();
-//                        UIView btnRFUVw = new UIView();
-//                        btnRFU.SetDimensions(700f,iRFURowVert, 130f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
-//                        if(bDisableRow)
-//                        {
-//                            btnRFU.SetLabelText("Committed");
-//                        }
-//                        else
-//                        {
-//                            btnRFU.SetLabelText("Commit RFU");
-//                        }
-//                        btnRFU.SetBorderWidth(0.0f);
-//                        btnRFU.SetFontName("Verdana");
-//                        btnRFU.SetFontSize(14f);
-//                        btnRFU.SetTag((iRFUButtonSaveTagId + (j+1)) * (ii+1));
-//                        
-//                        if (j % 2 == 0)
-//                        {
-//                            btnRFU.SetCellColour("Pale Blue");
-//                        }
-//                        else
-//                        {
-//                            btnRFU.SetCellColour("Sky Blue");
-//                        }
-//                        
-//                        btnRFUVw = btnRFU.GetButtonCell();
-//                        
-//                        UIButton btnRFUButton = new UIButton();
-//                        btnRFUButton = btnRFU.GetButton();
-//                        btnRFUButton.TouchUpInside += (sender,e) => {CommitRFU(sender, e);};
-//                        
-//                        if(bDisableRow)
-//                        {
-//                            btnRFUButton.Enabled = false;
-//                        }
-//                        
-//                        arrItems6[7] = btnRFUVw;
-//                        
-//                        
-//                        iColNo = arrITPRFUs.Tables[0].Columns["BatteryCapacity"].Ordinal;
-//                        string sBatteryCapacity = arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo].ToString();
-//                        UILabel hfRFUBatteryCapacity = new UILabel();
-//                        hfRFUBatteryCapacity.Text = sBatteryCapacity;
-//                        hfRFUBatteryCapacity.Tag = (ihfRowRFUBatteryCapacityTagId + (j+1)) * (ii+1);
-//                        hfRFUBatteryCapacity.Hidden = true;
-//                        arrItems6[8] = hfRFUBatteryCapacity;
-//                        
-//                        //Now add the row details into the view
-//                        vwPwrInternalRowId.AddSubviews(arrItems6);
-//                        
-//                        iSectionRFUHeight += iHeightToAdd;
-//                        iRFURowVert += iHeightToAdd;
-//                        iVert += iHeightToAdd;
-//                        
-//                        
-//                        vwPwrInternalRowId.Frame = new RectangleF(0f, iRFURowInnerTop, 1000f, iRFURowVert);
-//                        RFUTableRow.AddSubview(vwPwrInternalRowId);
-//                        iRFURowInnerTop += iRFURowVert;
-//                        iRFURowVert = 0f;
-//                        
-//                    }
-//                    //Now resize the UIView that is effectively the container for the RFU info for this section
-//                    //And also store this height in a hidden field for use in the contract and expand functions
-//                    RFUTableRow.Frame = new RectangleF(0f,iRFURowVertTop,1000f,iSectionRFUHeight);
-//                    hfSectionHeight.Text = iSectionRFUHeight.ToString();
-//                }
-//                
                 iTotalHeight = iVert + 280f;
                 SizeF layoutSize = new SizeF(1000f, iTotalHeight);
                 layout.ContentSize = layoutSize;
@@ -2188,31 +747,12 @@ namespace ITPiPadSoln
                 hfScrollContentHeight.Hidden = true;
                 layout.AddSubview(hfScrollContentHeight);
                 View.AddSubview(layout);
-//                
-//                //Now determine what is to be contrated by default
-//                for(int iiii=0;iiii< m_iSections; iiii++)
-//                {
-//                    if(bHideSections[iiii])
-//                    {
-//                        UIButton btnContract = (UIButton)View.ViewWithTag (iContractSectionBtnTagId * (iiii+1));
-//                        
-//                        ContractSection(btnContract, null);
-//                    }
-//                }
-//                
-//                //Contract all the power conversion PwrIds
-//                for(int iiii=0;iiii< m_iEquipmentPwrIds; iiii++)
-//                {
-//                    UIButton btnContract = (UIButton)View.ViewWithTag ((iPwrIdContractTagId + (iiii+1)) * (m_iEquipmentSectionCounter+1));                        
-//                    ContractPwrId(btnContract, null, 2);
-//                }
-//                
-                
-                
             }
             catch (Exception except)
             {
                 string sTest = except.Message.ToString();
+                iUtils.AlertBox alert = new iUtils.AlertBox ();
+                alert.CreateErrorAlertDialog (sTest);
             }
         }
         
@@ -2554,306 +1094,6 @@ namespace ITPiPadSoln
             return hdrRow;
         }
         
-        
-        public UIView BuildEquipmentHeader (int iRowNo, ref float iHeightToAdd)
-        {
-            iHeightToAdd = 0.0f;
-            UIView hdrRow = new UIView();
-            float iHdrVert = 0.0f;
-            float iRowHeight = 20f;
-            UIView[] arrItems = new UIView[3];
-            UIView[] arrItems2 = new UIView[10];
-            
-            //Now put in the 2nd header row of labels
-            iUtils.CreateFormGridItem lblFloor = new iUtils.CreateFormGridItem();
-            UIView lblFloorVw = new UIView();
-            lblFloor.SetDimensions(0f,iHdrVert, 51f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblFloor.SetLabelText("Floor");
-            lblFloor.SetBorderWidth(1.0f);
-            lblFloor.SetFontName("Verdana");
-            lblFloor.SetFontSize(12f);
-            lblFloor.SetTag(iFloorEquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblFloor.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblFloor.SetCellColour("Pale Orange");
-            }
-            
-            lblFloorVw = lblFloor.GetLabelCell();
-            arrItems2[0] = lblFloorVw;
-            
-            iUtils.CreateFormGridItem lblSuite = new iUtils.CreateFormGridItem();
-            UIView lblSuiteVw = new UIView();
-            lblSuite.SetDimensions(50f,iHdrVert, 51f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblSuite.SetLabelText("Suite");
-            lblSuite.SetBorderWidth(1.0f);
-            lblSuite.SetFontName("Verdana");
-            lblSuite.SetFontSize(12f);
-            lblSuite.SetTag(iSuiteEquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblSuite.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblSuite.SetCellColour("Pale Orange");
-            }
-            
-            lblSuiteVw = lblSuite.GetLabelCell();
-            arrItems2[1] = lblSuiteVw;
-            
-            iUtils.CreateFormGridItem lblRack = new iUtils.CreateFormGridItem();
-            UIView lblRackVw = new UIView();
-            lblRack.SetDimensions(100f,iHdrVert, 41f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblRack.SetLabelText("Rack");
-            lblRack.SetBorderWidth(1.0f);
-            lblRack.SetFontName("Verdana");
-            lblRack.SetFontSize(12f);
-            lblRack.SetTag(iRackEquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblRack.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblRack.SetCellColour("Pale Orange");
-            }
-            
-            lblRackVw = lblRack.GetLabelCell();
-            arrItems2[2] = lblRackVw;
-            
-            iUtils.CreateFormGridItem lblSubrack = new iUtils.CreateFormGridItem();
-            UIView lblSubrackVw = new UIView();
-            lblSubrack.SetDimensions(140f,iHdrVert, 61f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblSubrack.SetLabelText("Subrack");
-            lblSubrack.SetBorderWidth(1.0f);
-            lblSubrack.SetFontName("Verdana");
-            lblSubrack.SetFontSize(12f);
-            lblSubrack.SetTag(iSubrackEquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblSubrack.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblSubrack.SetCellColour("Pale Orange");
-            }
-            
-            lblSubrackVw = lblSubrack.GetLabelCell();
-            arrItems2[3] = lblSubrackVw;
-            
-            iUtils.CreateFormGridItem lblPosition = new iUtils.CreateFormGridItem();
-            UIView lblPositionVw = new UIView();
-            lblPosition.SetDimensions(200f,iHdrVert, 51f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblPosition.SetLabelText("Posn");
-            lblPosition.SetBorderWidth(1.0f);
-            lblPosition.SetFontName("Verdana");
-            lblPosition.SetFontSize(12f);
-            lblPosition.SetTag(iPositionEquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblPosition.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblPosition.SetCellColour("Pale Orange");
-            }
-            
-            lblPositionVw = lblPosition.GetLabelCell();
-            arrItems2[4] = lblPositionVw;
-            
-            iUtils.CreateFormGridItem lblString = new iUtils.CreateFormGridItem();
-            UIView lblStringVw = new UIView();
-            lblString.SetDimensions(250f,iHdrVert, 51f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblString.SetLabelText("String");
-            lblString.SetBorderWidth(1.0f);
-            lblString.SetFontName("Verdana");
-            lblString.SetFontSize(12f);
-            lblString.SetTag(iStringEquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblString.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblString.SetCellColour("Pale Orange");
-            }
-            
-            lblStringVw = lblString.GetLabelCell();
-            arrItems2[5] = lblStringVw;
-            
-            iUtils.CreateFormGridItem lblEquipType = new iUtils.CreateFormGridItem();
-            UIView lblEquipTypeVw = new UIView();
-            lblEquipType.SetDimensions(300f,iHdrVert, 201f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblEquipType.SetLabelText("EquipType");
-            lblEquipType.SetBorderWidth(1.0f);
-            lblEquipType.SetFontName("Verdana");
-            lblEquipType.SetFontSize(12f);
-            lblEquipType.SetTag(iEquipTypeEquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblEquipType.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblEquipType.SetCellColour("Pale Orange");
-            }
-            
-            lblEquipTypeVw = lblEquipType.GetLabelCell();
-            arrItems2[6] = lblEquipTypeVw;
-            
-            iUtils.CreateFormGridItem lblDOM = new iUtils.CreateFormGridItem();
-            UIView lblDOMVw = new UIView();
-            lblDOM.SetDimensions(500f,iHdrVert, 81f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
-            lblDOM.SetLabelText("DOM");
-            lblDOM.SetBorderWidth(1.0f);
-            lblDOM.SetFontName("Verdana");
-            lblDOM.SetFontSize(12f);
-            lblDOM.SetTag(iDOMEquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblDOM.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblDOM.SetCellColour("Pale Orange");
-            }
-            
-            lblDOMVw = lblDOM.GetLabelCell();
-            arrItems2[7] = lblDOMVw;
-            
-            iUtils.CreateFormGridItem lblSerialNo = new iUtils.CreateFormGridItem();
-            UIView lblSerialNoVw = new UIView();
-            lblSerialNo.SetDimensions(580f,iHdrVert, 301f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblSerialNo.SetLabelText("SerialNo");
-            lblSerialNo.SetBorderWidth(1.0f);
-            lblSerialNo.SetFontName("Verdana");
-            lblSerialNo.SetFontSize(12f);
-            lblSerialNo.SetTag(iSerialNoEquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblSerialNo.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblSerialNo.SetCellColour("Pale Orange");
-            }
-            
-            lblSerialNoVw = lblSerialNo.GetLabelCell();
-            arrItems2[8] = lblSerialNoVw;
-            
-            
-            iUtils.CreateFormGridItem lblDeleteLabel = new iUtils.CreateFormGridItem();
-            UIView lblDeleteLabelVw = new UIView();
-            lblDeleteLabel.SetDimensions(880f,iHdrVert, 120f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblDeleteLabel.SetLabelText("Delete");
-            lblDeleteLabel.SetBorderWidth(1.0f);
-            lblDeleteLabel.SetFontName("Verdana");
-            lblDeleteLabel.SetFontSize(12f);
-            lblDeleteLabel.SetTag(iDeleteEquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblDeleteLabel.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblDeleteLabel.SetCellColour("Pale Orange");
-            }
-            
-            lblDeleteLabelVw = lblDeleteLabel.GetLabelCell();
-            arrItems2[9] = lblDeleteLabelVw;
-            
-            hdrRow.AddSubviews(arrItems2);
-            
-            iHeightToAdd += iRowHeight - 1; //This is because of the 1 pixel overlap of the border (not required on the last one)
-            iHdrVert += iRowHeight - 1; //This is because of the 1 pixel overlap of the border (not required on the last one)
-            
-            iUtils.CreateFormGridItem lblMake = new iUtils.CreateFormGridItem();
-            UIView lblMakeVw = new UIView();
-            lblMake.SetDimensions(0f,iHdrVert, 401f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
-            lblMake.SetLabelText("Make");
-            lblMake.SetBorderWidth(1.0f);
-            lblMake.SetFontName("Verdana");
-            lblMake.SetFontSize(12f);
-            lblMake.SetTag(iMakeEquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblMake.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblMake.SetCellColour("Pale Orange");
-            }
-            
-            lblMakeVw = lblMake.GetLabelCell();
-            arrItems[0] = lblMakeVw;
-            
-            iUtils.CreateFormGridItem lblModel = new iUtils.CreateFormGridItem();
-            UIView lblModelVw = new UIView();
-            lblModel.SetDimensions(400f,iHdrVert, 501f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
-            lblModel.SetLabelText("Model");
-            lblModel.SetBorderWidth(1.0f);
-            lblModel.SetFontName("Verdana");
-            lblModel.SetFontSize(12f);
-            lblModel.SetTag(iModelEquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblModel.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblModel.SetCellColour("Pale Orange");
-            }
-            
-            lblModelVw = lblModel.GetLabelCell();
-            arrItems[1] = lblModelVw;
-            
-            iUtils.CreateFormGridItem lblBlank1 = new iUtils.CreateFormGridItem();
-            UIView lblBlank1Vw = new UIView();
-            lblBlank1.SetDimensions(900f,iHdrVert, 100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
-            lblBlank1.SetLabelText("");
-            lblBlank1.SetBorderWidth(1.0f);
-            lblBlank1.SetFontName("Verdana");
-            lblBlank1.SetFontSize(12f);
-            lblBlank1.SetTag(iBlank1EquipLabelTagId * (iRowNo+1));
-            
-            if (iRowNo % 2 == 0)
-            {
-                lblBlank1.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblBlank1.SetCellColour("Pale Orange");
-            }
-            
-            lblBlank1Vw = lblBlank1.GetLabelCell();
-            arrItems[2] = lblBlank1Vw;
-            
-            hdrRow.AddSubviews(arrItems);
-            
-            iHeightToAdd += iRowHeight;
-            iHdrVert += iRowHeight;
-            
-            return hdrRow;
-        }
-        
-        
-        
         public UIView BuildBatteryStringRowDetails(int iSectionCounterId, int iRowNo, int iStringRow, string sPwrId, 
                                                    int iAutoId, int iMaximoAssetId, string sBankNo,
                                                    string sBankPlane, string sMake, string sModel, string sSPN, string sDOM,
@@ -2929,6 +1169,7 @@ namespace ITPiPadSoln
             
             lblBankNoVw = lblBankNo.GetTextFieldCell();
             UITextField txtBankNoView = lblBankNo.GetTextFieldView();
+            txtBankNoView.AutocorrectionType = UITextAutocorrectionType.No;
             txtBankNoView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtBankNoView.ReturnKeyType = UIReturnKeyType.Next;
             txtBankNoView.ShouldEndEditing += (sender) => {
@@ -3114,6 +1355,7 @@ namespace ITPiPadSoln
             
             txtDOMVw = txtDOM.GetTextFieldCell();
             UITextField txtDOMTextView = txtDOM.GetTextFieldView();
+            txtDOMTextView.AutocorrectionType = UITextAutocorrectionType.No;
             txtDOMTextView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtDOMTextView.ReturnKeyType = UIReturnKeyType.Next;
             txtDOMTextView.ShouldEndEditing += (sender) => {
@@ -3190,6 +1432,7 @@ namespace ITPiPadSoln
             
             txtRatingVw = txtRating.GetTextFieldCell();
             UITextField txtRatingTextView = txtRating.GetTextFieldView();
+            txtRatingTextView.AutocorrectionType = UITextAutocorrectionType.No;
             txtRatingTextView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtRatingTextView.ReturnKeyType = UIReturnKeyType.Next;
             txtRatingTextView.ShouldEndEditing += (sender) => {
@@ -3227,6 +1470,7 @@ namespace ITPiPadSoln
             
             lblFloorVw = lblFloor.GetTextFieldCell();
             UITextField txtFloorView = lblFloor.GetTextFieldView();
+            txtFloorView.AutocorrectionType = UITextAutocorrectionType.No;
             txtFloorView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtFloorView.ReturnKeyType = UIReturnKeyType.Next;
             txtFloorView.ShouldEndEditing += (sender) => {
@@ -3262,6 +1506,7 @@ namespace ITPiPadSoln
             
             lblSuiteVw = lblSuite.GetTextFieldCell();
             UITextField txtSuiteView = lblSuite.GetTextFieldView();
+            txtSuiteView.AutocorrectionType = UITextAutocorrectionType.No;
             txtSuiteView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtSuiteView.ReturnKeyType = UIReturnKeyType.Next;
             txtSuiteView.ShouldEndEditing += (sender) => {
@@ -3297,6 +1542,7 @@ namespace ITPiPadSoln
             
             lblRackVw = lblRack.GetTextFieldCell();
             UITextField txtRackView = lblRack.GetTextFieldView();
+            txtRackView.AutocorrectionType = UITextAutocorrectionType.No;
             txtRackView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtRackView.ReturnKeyType = UIReturnKeyType.Next;
             txtRackView.ShouldEndEditing += (sender) => {
@@ -3332,6 +1578,7 @@ namespace ITPiPadSoln
             
             lblSubRackVw = lblSubRack.GetTextFieldCell();
             UITextField txtSubRackView = lblSubRack.GetTextFieldView();
+            txtSubRackView.AutocorrectionType = UITextAutocorrectionType.No;
             txtSubRackView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtSubRackView.ReturnKeyType = UIReturnKeyType.Next;
             txtSubRackView.ShouldEndEditing += (sender) => {
@@ -3413,6 +1660,7 @@ namespace ITPiPadSoln
             
             lblSerialNoVw = lblSerialNo.GetTextFieldCell();
             UITextField txtSerialNoView = lblSerialNo.GetTextFieldView();
+            txtSerialNoView.AutocorrectionType = UITextAutocorrectionType.No;
             txtSerialNoView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtSerialNoView.ReturnKeyType = UIReturnKeyType.Next;
             txtSerialNoView.ShouldEndEditing += (sender) => {
@@ -3643,717 +1891,6 @@ namespace ITPiPadSoln
         }
         
         
-        public UIView BuildEquipmentItemRowDetails(int iSectionCounterId, int iPwrIdRowNo, int iEquipRowNo, string sPwrId, 
-                                                   int iAutoId, int iMaximoAssetId, string sStringNo,
-                                                   string sMake, string sModel, string sSPN, string sDOM,
-                                                   string sFloor, string sSuite,string sRack, string sSubRack, 
-                                                   string sPosition, string sEquipType, string sSerialNo,
-                                                   int iEquipmentType,bool bNewRow, ref float iHeightToAdd)
-        {
-            DateClass dt = new DateClass();
-            iHeightToAdd = 0.0f;
-            UIView hdrRow = new UIView();
-            float iHdrVert = 0.0f;
-            float iRowHeight = 40f;
-            UIView[] arrItems = new UIView[6];
-            UIView[] arrItems2 = new UIView[16];
-            UIView[] arrItems3 = new UIView[6];
-            
-            UILabel hfSectionCounter = new UILabel();
-            hfSectionCounter.Text = iSectionCounterId.ToString();
-            hfSectionCounter.Tag = iEquipmentRowSectionCounterTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
-            hfSectionCounter.Hidden = true;
-            arrItems[0] = hfSectionCounter;
-            
-            UILabel hfPwrId = new UILabel();
-            hfPwrId.Text = sPwrId;
-            hfPwrId.Tag = iEquipmentRowPwrIdTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
-            hfPwrId.Hidden = true;
-            arrItems[1] = hfPwrId;
-            
-            UILabel hfRowStatus = new UILabel();
-            if (bNewRow)
-            {
-                hfRowStatus.Text = "2"; //2 means new
-            }
-            else
-            {
-                hfRowStatus.Text = "0";
-            }
-            
-            hfRowStatus.Tag = iStringRowStatusTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
-            hfRowStatus.Hidden = true;
-            arrItems [2] = hfRowStatus;
-            
-            UILabel hfAutoId = new UILabel();
-            hfAutoId.Text = iAutoId.ToString();
-            hfAutoId.Tag = iStringRowAutoIdTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
-            hfAutoId.Hidden = true;
-            arrItems [3] = hfAutoId;
-            
-            UILabel hfMaximoAssetId = new UILabel();
-            hfMaximoAssetId.Text = iMaximoAssetId.ToString();
-            hfMaximoAssetId.Tag = iStringRowMaximoAssetIdTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
-            hfMaximoAssetId.Hidden = true;
-            arrItems [4] = hfMaximoAssetId;
-            
-            
-            
-            //***************************************************************//
-            //              1st Row                                          //
-            //***************************************************************//
-            iUtils.CreateFormGridItem lblFloor = new iUtils.CreateFormGridItem();
-            UIView lblFloorVw = new UIView();
-            lblFloor.SetDimensions(0f, iHdrVert, 50f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblFloor.SetLabelText(sFloor);
-            lblFloor.SetBorderWidth(0.0f);
-            lblFloor.SetFontName("Verdana");
-            lblFloor.SetFontSize(12f);
-            lblFloor.SetTag(iFloorTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                lblFloor.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblFloor.SetCellColour("Pale Orange");
-            }
-            
-            lblFloorVw = lblFloor.GetTextFieldCell();
-            UITextField txtFloorView = lblFloor.GetTextFieldView();
-            txtFloorView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
-            txtFloorView.ReturnKeyType = UIReturnKeyType.Next;
-            txtFloorView.ShouldEndEditing += (sender) => {
-                return ValidateFloor(sender);};
-            txtFloorView.ShouldReturn += (sender) => {
-                return MoveNextTextField(sender, 4);};
-            
-            arrItems2 [0] = lblFloorVw;
-            
-            UILabel hfCurrentFloor = new UILabel();
-            hfCurrentFloor.Text = sFloor;
-            hfCurrentFloor.Tag = iFloorHiddenTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
-            hfCurrentFloor.Hidden = true;
-            arrItems2 [1] = hfCurrentFloor;
-            
-            iUtils.CreateFormGridItem lblSuite = new iUtils.CreateFormGridItem();
-            UIView lblSuiteVw = new UIView();
-            lblSuite.SetDimensions(50f, iHdrVert, 50f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblSuite.SetLabelText(sSuite);
-            lblSuite.SetBorderWidth(0.0f);
-            lblSuite.SetFontName("Verdana");
-            lblSuite.SetFontSize(12f);
-            lblSuite.SetTag(iSuiteTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                lblSuite.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblSuite.SetCellColour("Pale Orange");
-            }
-            
-            lblSuiteVw = lblSuite.GetTextFieldCell();
-            UITextField txtSuiteView = lblSuite.GetTextFieldView();
-            txtSuiteView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
-            txtSuiteView.ReturnKeyType = UIReturnKeyType.Next;
-            txtSuiteView.ShouldEndEditing += (sender) => {
-                return ValidateSuite(sender);};
-            txtSuiteView.ShouldReturn += (sender) => {
-                return MoveNextTextField(sender, 5);};
-            
-            arrItems2 [2] = lblSuiteVw;
-            
-            UILabel hfCurrentSuite = new UILabel();
-            hfCurrentSuite.Text = sSuite;
-            hfCurrentSuite.Tag = iSuiteHiddenTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
-            hfCurrentSuite.Hidden = true;
-            arrItems2 [3] = hfCurrentSuite;
-            
-            iUtils.CreateFormGridItem lblRack = new iUtils.CreateFormGridItem();
-            UIView lblRackVw = new UIView();
-            lblRack.SetDimensions(100f, iHdrVert, 50f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblRack.SetLabelText(sRack);
-            lblRack.SetBorderWidth(0.0f);
-            lblRack.SetFontName("Verdana");
-            lblRack.SetFontSize(12f);
-            lblRack.SetTag(iRackTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                lblRack.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblRack.SetCellColour("Pale Orange");
-            }
-            
-            lblRackVw = lblRack.GetTextFieldCell();
-            UITextField txtRackView = lblRack.GetTextFieldView();
-            txtRackView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
-            txtRackView.ReturnKeyType = UIReturnKeyType.Next;
-            txtRackView.ShouldEndEditing += (sender) => {
-                return ValidateRack(sender);};
-            txtRackView.ShouldReturn += (sender) => {
-                return MoveNextTextField(sender, 6);};
-            
-            arrItems2 [4] = lblRackVw;
-            
-            UILabel hfCurrentRack = new UILabel();
-            hfCurrentRack.Text = sRack;
-            hfCurrentRack.Tag = iRackHiddenTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
-            hfCurrentRack.Hidden = true;
-            arrItems2 [5] = hfCurrentRack;
-            
-            iUtils.CreateFormGridItem lblSubRack = new iUtils.CreateFormGridItem();
-            UIView lblSubRackVw = new UIView();
-            lblSubRack.SetDimensions(140f, iHdrVert, 60f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblSubRack.SetLabelText(sSubRack);
-            lblSubRack.SetBorderWidth(0.0f);
-            lblSubRack.SetFontName("Verdana");
-            lblSubRack.SetFontSize(12f);
-            lblSubRack.SetTag(iSubRackTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                lblSubRack.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblSubRack.SetCellColour("Pale Orange");
-            }
-            
-            lblSubRackVw = lblSubRack.GetTextFieldCell();
-            UITextField txtSubRackView = lblSubRack.GetTextFieldView();
-            txtSubRackView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
-            txtSubRackView.ReturnKeyType = UIReturnKeyType.Next;
-            txtSubRackView.ShouldEndEditing += (sender) => {
-                return ValidateSubRack(sender);};
-            txtSubRackView.ShouldReturn += (sender) => {
-                return MoveNextTextField(sender, 7);};
-            
-            arrItems2 [6] = lblSubRackVw;
-            
-            UILabel hfCurrentSubRack = new UILabel();
-            hfCurrentSubRack.Text = sSubRack;
-            hfCurrentSubRack.Tag = iSubRackHiddenTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
-            hfCurrentSubRack.Hidden = true;
-            arrItems2 [7] = hfCurrentSubRack;
-            
-            iUtils.CreateFormGridItem lblPosition = new iUtils.CreateFormGridItem();
-            UIView lblPositionVw = new UIView();
-            lblPosition.SetDimensions(200f, iHdrVert, 50f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblPosition.SetLabelText(sPosition);
-            lblPosition.SetBorderWidth(0.0f);
-            lblPosition.SetFontName("Verdana");
-            lblPosition.SetFontSize(12f);
-            lblPosition.SetTag(iEquipmentPositionTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                lblPosition.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblPosition.SetCellColour("Pale Orange");
-            }
-            
-            lblPositionVw = lblPosition.GetTextFieldCell();
-            UITextField txtPositionView = lblPosition.GetTextFieldView();
-            txtPositionView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
-            txtPositionView.ReturnKeyType = UIReturnKeyType.Next;
-            txtPositionView.ShouldEndEditing += (sender) => {
-                return ValidatePosition(sender);};
-            txtPositionView.ShouldReturn += (sender) => {
-                return MoveNextTextField(sender, 7);};
-            
-            arrItems2 [8] = lblPositionVw;
-            
-            UILabel hfCurrentPosition = new UILabel();
-            hfCurrentPosition.Text = sPosition;
-            hfCurrentPosition.Tag = iEquipmentPositionHiddenTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
-            hfCurrentPosition.Hidden = true;
-            arrItems2 [9] = hfCurrentPosition;
-            
-            iUtils.CreateFormGridItem lblString = new iUtils.CreateFormGridItem();
-            UIView lblStringVw = new UIView();
-            lblString.SetDimensions(250f, iHdrVert, 50f, iRowHeight, 2f, 2f, 2f, 2f);
-            lblString.SetLabelText(sStringNo);
-            lblString.SetBorderWidth(0.0f);
-            lblString.SetFontName("Verdana");
-            lblString.SetFontSize(12f);
-            lblString.SetTag(iEquipmentBankNoTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                lblString.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblString.SetCellColour("Pale Orange");
-            }
-            
-            lblStringVw = lblString.GetTextFieldCell();
-            UITextField txtStringView = lblString.GetTextFieldView();
-            txtStringView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
-            txtStringView.ReturnKeyType = UIReturnKeyType.Next;
-            txtStringView.ShouldEndEditing += (sender) => {
-                return ValidateBankNo(sender, 2);};
-            txtStringView.ShouldReturn += (sender) => {
-                return MoveNextTextField(sender, 7);};
-            
-            arrItems2 [10] = lblStringVw;
-            
-            UILabel hfCurrentString = new UILabel();
-            hfCurrentString.Text = sStringNo;
-            hfCurrentString.Tag = iEquipmentBankNoHiddenTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
-            hfCurrentString.Hidden = true;
-            arrItems2 [11] = hfCurrentString;
-            
-            
-            iUtils.CreateFormGridItem radEquipType = new iUtils.CreateFormGridItem();
-            UIView radEquipTypeVw = new UIView();
-            radEquipType.SetDimensions(300f, iHdrVert, 200f, iRowHeight * 2, 8f, iRowHeight / 2f, 8f, iRowHeight / 2f);
-            radEquipType.SetFontName("Verdana");
-            radEquipType.SetFontSize(12f);
-            radEquipType.SetTag(iEquipTypeTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                radEquipType.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                radEquipType.SetCellColour("Pale Orange");
-            }
-            
-            radEquipTypeVw = radEquipType.GetRadioButtonCell();
-            
-            UISegmentedControl radEquipTypeRadio = new UISegmentedControl();
-            radEquipTypeRadio = radEquipType.GetRadioGroup();
-            radEquipTypeRadio.TouchUpInside += (sender,e) => {
-                SetStringEquipTypeChanged(sender, e);};
-            
-            radEquipTypeRadio.InsertSegment("New", 0, false);
-            radEquipTypeRadio.InsertSegment("Used", 1, false);
-            
-            if (sEquipType == "N")
-            {
-                radEquipTypeRadio.SelectedSegment = 0;
-            }
-            else
-            {
-                radEquipTypeRadio.SelectedSegment = 1;
-            }
-            
-            if (bNewRow || iMaximoAssetId < 0)
-            {
-                radEquipTypeRadio.Enabled = true;
-            }
-            else
-            {
-                radEquipTypeRadio.Enabled = false;
-            }
-            
-            arrItems2 [12] = radEquipTypeVw;
-            
-            iUtils.CreateFormGridItem txtDOM = new iUtils.CreateFormGridItem();
-            UIView txtDOMVw = new UIView();
-            txtDOM.SetDimensions(500f, iHdrVert, 80f, iRowHeight * 2, 2f, iRowHeight / 2f, 2f, iRowHeight / 2f);
-            if (sDOM == "" || sDOM == "0")
-            {
-                sDOM = "01/01/1900";
-            }
-            DateTime dtDOM = Convert.ToDateTime(sDOM);
-            string sDOMDisplay = dt.Get_Date_String(dtDOM, "dd/mm/yy");
-            txtDOM.SetLabelText(sDOMDisplay);
-            txtDOM.SetBorderWidth(0.0f);
-            txtDOM.SetFontName("Verdana");
-            txtDOM.SetFontSize(12f);
-            txtDOM.SetTag(iBankDOMTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                txtDOM.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                txtDOM.SetCellColour("Pale Orange");
-            }
-            
-            txtDOMVw = txtDOM.GetTextFieldCell();
-            UITextField txtDOMTextView = txtDOM.GetTextFieldView();
-            txtDOMTextView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
-            txtDOMTextView.ReturnKeyType = UIReturnKeyType.Next;
-            txtDOMTextView.ShouldEndEditing += (sender) => {
-                return ValidateDOM(sender);};
-            txtDOMTextView.ShouldReturn += (sender) => {
-                return MoveNextTextField(sender, 2);};
-            
-            arrItems2 [13] = txtDOMVw;
-            
-            
-            iUtils.CreateFormGridItem lblSerialNo = new iUtils.CreateFormGridItem();
-            UIView lblSerialNoVw = new UIView();
-            lblSerialNo.SetDimensions(580f, iHdrVert, 300f, iRowHeight * 2f, 2f, iRowHeight / 2f, 2f, iRowHeight / 2f);
-            lblSerialNo.SetLabelText(sSerialNo);
-            lblSerialNo.SetBorderWidth(0.0f);
-            lblSerialNo.SetFontName("Verdana");
-            lblSerialNo.SetFontSize(12f);
-            lblSerialNo.SetTag(iSerialNoTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                lblSerialNo.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblSerialNo.SetCellColour("Pale Orange");
-            }
-            
-            lblSerialNoVw = lblSerialNo.GetTextFieldCell();
-            UITextField txtSerialNoView = lblSerialNo.GetTextFieldView();
-            txtSerialNoView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
-            txtSerialNoView.ReturnKeyType = UIReturnKeyType.Next;
-            txtSerialNoView.ShouldEndEditing += (sender) => {
-                return ValidateSerialNo(sender);};
-            txtSerialNoView.ShouldReturn += (sender) => {
-                return MoveNextTextField(sender, 8);};
-            
-            arrItems2 [14] = lblSerialNoVw;
-            
-            iUtils.CreateFormGridItem btnDelete = new iUtils.CreateFormGridItem();
-            UIView btnDeleteVw = new UIView();
-            btnDelete.SetDimensions(880f, iHdrVert, 120f, iRowHeight * 2f, 8f, iRowHeight / 2f, 8f, iRowHeight / 2f);
-            btnDelete.SetLabelText("Delete");
-            btnDelete.SetBorderWidth(0.0f);
-            btnDelete.SetFontName("Verdana");
-            btnDelete.SetFontSize(12f);
-            btnDelete.SetTag(iDeleteBatteryStringBtnTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                btnDelete.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                btnDelete.SetCellColour("Pale Orange");
-            }
-            
-            btnDeleteVw = btnDelete.GetButtonCell();
-            
-            UIButton btnDeleteButton = new UIButton();
-            btnDeleteButton = btnDelete.GetButton();
-            btnDeleteButton.TouchUpInside += (sender,e) => {
-                DeleteBatteryString(sender, e);};
-            
-            if (iMaximoAssetId > 0)
-            {
-                btnDeleteButton.Enabled = false;
-            }
-            arrItems2[15] = btnDeleteVw;
-            
-            hdrRow.AddSubviews(arrItems2);
-            
-            iHeightToAdd += iRowHeight; 
-            iHdrVert += iRowHeight; 
-            
-            //***************************************************************//
-            //              2nd Row                                          //
-            //***************************************************************//
-            
-            iUtils.CreateFormGridItem btnFloorSearch = new iUtils.CreateFormGridItem();
-            UIView btnFloorSearchVw = new UIView();
-            btnFloorSearch.SetDimensions(0f,iHdrVert, 50f, iRowHeight, 8f, 4f, 8f, 4f);
-            btnFloorSearch.SetLabelText("...");
-            btnFloorSearch.SetBorderWidth(0.0f);
-            btnFloorSearch.SetFontName("Verdana");
-            btnFloorSearch.SetFontSize(12f);
-            btnFloorSearch.SetTag(iFloorSearchTagId * (iPwrIdRowNo+1) + (iEquipRowNo+1));
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                btnFloorSearch.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                btnFloorSearch.SetCellColour("Pale Orange");
-            }
-            btnFloorSearchVw = btnFloorSearch.GetButtonCell();
-            
-            UIButton btnFloorSearchButton = new UIButton();
-            btnFloorSearchButton = btnFloorSearch.GetButton();
-            btnFloorSearchButton.TouchUpInside += (sender,e) => {OpenSearchView(sender, e, 1);};
-            
-            arrItems3[0] = btnFloorSearchVw;
-            
-            iUtils.CreateFormGridItem btnSuiteSearch = new iUtils.CreateFormGridItem();
-            UIView btnSuiteSearchVw = new UIView();
-            btnSuiteSearch.SetDimensions(50f,iHdrVert, 50f, iRowHeight, 8f, 4f, 8f, 4f);
-            btnSuiteSearch.SetLabelText("...");
-            btnSuiteSearch.SetBorderWidth(0.0f);
-            btnSuiteSearch.SetFontName("Verdana");
-            btnSuiteSearch.SetFontSize(12f);
-            btnSuiteSearch.SetTag(iSuiteSearchTagId * (iPwrIdRowNo+1) + (iEquipRowNo+1));
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                btnSuiteSearch.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                btnSuiteSearch.SetCellColour("Pale Orange");
-            }
-            btnSuiteSearchVw = btnSuiteSearch.GetButtonCell();
-            
-            UIButton btnSuiteSearchButton = new UIButton();
-            btnSuiteSearchButton = btnSuiteSearch.GetButton();
-            btnSuiteSearchButton.TouchUpInside += (sender,e) => {OpenSearchView(sender, e, 2);};
-            
-            arrItems3[1] = btnSuiteSearchVw;
-            
-            iUtils.CreateFormGridItem btnRackSearch = new iUtils.CreateFormGridItem();
-            UIView btnRackSearchVw = new UIView();
-            btnRackSearch.SetDimensions(100f,iHdrVert, 40f, iRowHeight, 3f, 4f, 3f, 4f);
-            btnRackSearch.SetLabelText("...");
-            btnRackSearch.SetBorderWidth(0.0f);
-            btnRackSearch.SetFontName("Verdana");
-            btnRackSearch.SetFontSize(12f);
-            btnRackSearch.SetTag(iRackSearchTagId * (iPwrIdRowNo+1) + (iEquipRowNo+1));
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                btnRackSearch.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                btnRackSearch.SetCellColour("Pale Orange");
-            }
-            btnRackSearchVw = btnRackSearch.GetButtonCell();
-            
-            UIButton btnRackSearchButton = new UIButton();
-            btnRackSearchButton = btnRackSearch.GetButton();
-            btnRackSearchButton.TouchUpInside += (sender,e) => {OpenSearchView(sender, e, 3);};
-            
-            arrItems3[2] = btnRackSearchVw;
-            
-            iUtils.CreateFormGridItem btnSubRackSearch = new iUtils.CreateFormGridItem();
-            UIView btnSubRackSearchVw = new UIView();
-            btnSubRackSearch.SetDimensions(140f,iHdrVert, 60f, iRowHeight, 13f, 4f, 13f, 4f);
-            btnSubRackSearch.SetLabelText("...");
-            btnSubRackSearch.SetBorderWidth(0.0f);
-            btnSubRackSearch.SetFontName("Verdana");
-            btnSubRackSearch.SetFontSize(12f);
-            btnSubRackSearch.SetTag(iSubRackSearchTagId * (iPwrIdRowNo+1) + (iEquipRowNo+1));
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                btnSubRackSearch.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                btnSubRackSearch.SetCellColour("Pale Orange");
-            }
-            btnSubRackSearchVw = btnSubRackSearch.GetButtonCell();
-            
-            UIButton btnSubRackSearchButton = new UIButton();
-            btnSubRackSearchButton = btnSubRackSearch.GetButton();
-            btnSubRackSearchButton.TouchUpInside += (sender,e) => {OpenSearchView(sender, e, 4);};
-            
-            arrItems3[3] = btnSubRackSearchVw;
-            
-            iUtils.CreateFormGridItem btnPositionSearch = new iUtils.CreateFormGridItem();
-            UIView btnPositionSearchVw = new UIView();
-            btnPositionSearch.SetDimensions(200f,iHdrVert, 50f, iRowHeight, 8f, 4f, 8f, 4f);
-            btnPositionSearch.SetLabelText("...");
-            btnPositionSearch.SetBorderWidth(0.0f);
-            btnPositionSearch.SetFontName("Verdana");
-            btnPositionSearch.SetFontSize(12f);
-            btnPositionSearch.SetTag(iEquipmentPositionSearchTagId * (iPwrIdRowNo+1) + (iEquipRowNo+1));
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                btnPositionSearch.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                btnPositionSearch.SetCellColour("Pale Orange");
-            }
-            btnPositionSearchVw = btnPositionSearch.GetButtonCell();
-            
-            UIButton btnPositionSearchButton = new UIButton();
-            btnPositionSearchButton = btnPositionSearch.GetButton();
-            btnPositionSearchButton.TouchUpInside += (sender,e) => {OpenSearchView(sender, e, 4);};
-            
-            arrItems3[4] = btnPositionSearchVw;
-            
-            iUtils.CreateFormGridItem btnStringSearch = new iUtils.CreateFormGridItem();
-            UIView btnStringSearchVw = new UIView();
-            btnStringSearch.SetDimensions(250f,iHdrVert, 50f, iRowHeight, 8f, 4f, 8f, 4f);
-            btnStringSearch.SetLabelText("...");
-            btnStringSearch.SetBorderWidth(0.0f);
-            btnStringSearch.SetFontName("Verdana");
-            btnStringSearch.SetFontSize(12f);
-            btnStringSearch.SetTag(iEquipmentBankNoSearchTagId * (iPwrIdRowNo+1) + (iEquipRowNo+1));
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                btnStringSearch.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                btnStringSearch.SetCellColour("Pale Orange");
-            }
-            btnStringSearchVw = btnStringSearch.GetButtonCell();
-            
-            UIButton btnStringSearchButton = new UIButton();
-            btnStringSearchButton = btnStringSearch.GetButton();
-            btnStringSearchButton.TouchUpInside += (sender,e) => {OpenSearchView(sender, e, 4);};
-            
-            arrItems3[5] = btnStringSearchVw;
-            
-            hdrRow.AddSubviews(arrItems3);
-            
-            iHeightToAdd += iRowHeight; 
-            iHdrVert += iRowHeight; 
-            
-            //***************************************************************//
-            //              3nd Row                                          //
-            //***************************************************************//
-            
-            iUtils.CreateFormGridItem lblBankMake = new iUtils.CreateFormGridItem();
-            UIView lblBankMakeVw = new UIView();
-            lblBankMake.SetDimensions(0f, iHdrVert, 340f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
-            lblBankMake.SetLabelText(sMake);
-            lblBankMake.SetBorderWidth(0.0f);
-            lblBankMake.SetFontName("Verdana");
-            lblBankMake.SetFontSize(12f);
-            lblBankMake.SetTag(iBankMakeTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                lblBankMake.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblBankMake.SetCellColour("Pale Orange");
-            }
-            
-            lblBankMakeVw = lblBankMake.GetLabelCell();
-            arrItems[0] = lblBankMakeVw;
-            
-            iUtils.CreateFormGridItem btnMakeSearch = new iUtils.CreateFormGridItem();
-            UIView btnMakeSearchVw = new UIView();
-            btnMakeSearch.SetDimensions(340f, iHdrVert, 60f, iRowHeight, 8f, 4f, 8f, 4f);
-            btnMakeSearch.SetLabelText("...");
-            btnMakeSearch.SetBorderWidth(0.0f);
-            btnMakeSearch.SetFontName("Verdana");
-            btnMakeSearch.SetFontSize(12f);
-            btnMakeSearch.SetTag(iBankMakeSearchTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                btnMakeSearch.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                btnMakeSearch.SetCellColour("Pale Orange");
-            }
-            btnMakeSearchVw = btnMakeSearch.GetButtonCell();
-            
-            UIButton btnMakeSearchButton = new UIButton();
-            btnMakeSearchButton = btnMakeSearch.GetButton();
-            btnMakeSearchButton.TouchUpInside += (sender,e) => {
-                OpenMakeList(sender, e);};
-            
-            arrItems[1] = btnMakeSearchVw;
-            
-            iUtils.CreateFormGridItem lblBankModel = new iUtils.CreateFormGridItem();
-            UIView lblBankModelVw = new UIView();
-            lblBankModel.SetDimensions(400f, iHdrVert, 440f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
-            lblBankModel.SetLabelText(sModel);
-            lblBankModel.SetBorderWidth(0.0f);
-            lblBankModel.SetFontName("Verdana");
-            lblBankModel.SetFontSize(12f);
-            lblBankModel.SetTag(iBankModelTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                lblBankModel.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblBankModel.SetCellColour("Pale Orange");
-            }
-            
-            lblBankModelVw = lblBankModel.GetLabelCell();
-            arrItems[2] = lblBankModelVw;
-            
-            UILabel hfSPN = new UILabel();
-            hfSPN.Text = sSPN;
-            hfSPN.Tag = iSPNHiddenTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
-            hfSPN.Hidden = true;
-            arrItems[3] = hfSPN;
-            
-            iUtils.CreateFormGridItem btnModelSearch = new iUtils.CreateFormGridItem();
-            UIView btnModelSearchVw = new UIView();
-            btnModelSearch.SetDimensions(840f, iHdrVert, 60f, iRowHeight, 8f, 4f, 8f, 4f);
-            btnModelSearch.SetLabelText("...");
-            btnModelSearch.SetBorderWidth(0.0f);
-            btnModelSearch.SetFontName("Verdana");
-            btnModelSearch.SetFontSize(12f);
-            btnModelSearch.SetTag(iBankModelSearchTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                btnModelSearch.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                btnModelSearch.SetCellColour("Pale Orange");
-            }
-            btnModelSearchVw = btnModelSearch.GetButtonCell();
-            
-            UIButton btnModelSearchButton = new UIButton();
-            btnModelSearchButton = btnModelSearch.GetButton();
-            btnModelSearchButton.TouchUpInside += (sender,e) => {
-                OpenModelList(sender, e);};
-            
-            arrItems[4] = btnModelSearchVw;
-            
-            iUtils.CreateFormGridItem lblBlank2 = new iUtils.CreateFormGridItem();
-            UIView lblBlank2Vw = new UIView();
-            lblBlank2.SetDimensions(900f,iHdrVert, 100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
-            lblBlank2.SetLabelText("");
-            lblBlank2.SetBorderWidth(0.0f);
-            lblBlank2.SetFontName("Verdana");
-            lblBlank2.SetFontSize(12f);
-            lblBlank2.SetTag(iBlank1EquipLabelTagId * (iPwrIdRowNo+1));
-            
-            if (iPwrIdRowNo % 2 == 0)
-            {
-                lblBlank2.SetCellColour("Pale Yellow");
-            }
-            else
-            {
-                lblBlank2.SetCellColour("Pale Orange");
-            }
-            
-            lblBlank2Vw = lblBlank2.GetLabelCell();
-            arrItems[5] = lblBlank2Vw;
-            
-            hdrRow.AddSubviews(arrItems);
-            
-            iHeightToAdd += iRowHeight; 
-            iHdrVert += iRowHeight; 
-            
-            //Now draw a 1 pixel horizontal line
-            UIView vwHorizLine = new UIView();
-            vwHorizLine.Frame = new RectangleF(0f,iHdrVert, 1000f, 1f);
-            vwHorizLine.BackgroundColor = UIColor.FromRGBA(0,0,0,255);
-            
-            iHeightToAdd += 1f;
-            iHdrVert += 1f;
-            
-            hdrRow.AddSubview(vwHorizLine);
-            
-            return hdrRow;
-        }
-        
         public void OpenBankNoList (object sender, EventArgs e)
         {
             UIButton btnBankNoSearch = (UIButton)sender;
@@ -4490,7 +2027,8 @@ namespace ITPiPadSoln
             UILabel lblSupplier = (UILabel)View.ViewWithTag (iBankMakeTagId * (iPwrIdRow) + (iStringRow));
             string sSupplier = lblSupplier.Text;
             
-            if (sSupplier == "") {
+            if (sSupplier == "") 
+            {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
                 alert.CreateErrorAlertDialog ("You must select a make before you can select a model");
                 return;
@@ -4703,6 +2241,7 @@ namespace ITPiPadSoln
                 txtSearch.Frame = new RectangleF (2f, 44f, 198f, 40f);
                 txtSearch.BackgroundColor = UIColor.FromRGBA (255, 255, 255, 255);
                 txtSearch.Tag = iSearchTextTagId;
+                txtSearch.AutocorrectionType = UITextAutocorrectionType.No;
                 txtSearch.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
                 m_vwSearch.AddSubview (txtSearch);
                 
@@ -4922,7 +2461,8 @@ namespace ITPiPadSoln
             int iStringRow = iTagId - (iPwrIdRow * iFloorTagId);
             int iHiddenBankId =  iFloorHiddenTagId * iPwrIdRow + iStringRow;
             UILabel hfHiddenFloor = (UILabel)View.ViewWithTag (iHiddenBankId);
-            
+            string sOldFloor = hfHiddenFloor.Text;
+
             if (!bFloorCheck) 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
@@ -4940,10 +2480,86 @@ namespace ITPiPadSoln
                 hfRowStatus.Text = "1";
                 SetSectionValueChanged(m_iBatterySectionCounter + 1);
                 SetAnyValueChanged(sender, null);
+
+                //Ask the question
+                int iSectionTagId = iStringRowSectionCounterTagId * iPwrIdRow + iStringRow;
+                UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
+                int iSectionId = Convert.ToInt32(hfSectionId.Text);
+                
+                int iPwrIdTagId = iStringRowPwrIdTagId * iPwrIdRow + iStringRow;
+                UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
+                string sPwrId = hfPwrId.Text;
+                
+                if(CheckSameFloorExists(sOldFloor,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                {
+                    iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                    alert2.CreateAlertYesNoDialog();
+                    alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + sOldFloor + 
+                                           " to floor " +  sFloor + " ?");
+                    alert2.ShowAlertBox(); 
+                    
+                    UIAlertView alert3 = alert2.GetAlertDialog();
+                    alert3.Clicked += (sender2, e2)  => {CheckFloorChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, sOldFloor, iSectionId, iPwrIdRow);}; 
+                }
                 return true;
             }
         }
         
+        public bool CheckSameFloorExists(string sFloor, int iSectionIdCounter, int iPwrIdCounter, string sPwrId, int iSourceRow)
+        {
+            int iRowsTagId = (ihfPwrIdStringRowsTagId + (iPwrIdCounter)) * (iSectionIdCounter+1);
+            UILabel hfRowsCounter = (UILabel)View.ViewWithTag (iRowsTagId);
+            int iRows = Convert.ToInt32(hfRowsCounter.Text);
+            
+            for(int i=0;i<iRows;i++)
+            {
+                if((i+1) != iSourceRow)
+                {
+                    int iFloorId =  iFloorTagId * iPwrIdCounter + (i+1);
+                    UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                    string sExistingFloor = txtFloor.Text;
+                    if(sExistingFloor == sFloor)
+                    {
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+        
+        public void CheckFloorChangesQuestion (object sender, EventArgs e, int iBtnIndex, int iSourceRow, string sPwrId, string sFloor, string sOldFloor, int iSectionIdCounter, int iPwrIdCounter)
+        {
+            switch (iBtnIndex) 
+            {
+                case 0: //Yes
+                    int iRowsTagId = (ihfPwrIdStringRowsTagId + (iPwrIdCounter)) * (iSectionIdCounter+1);
+                    UILabel hfRowsCounter = (UILabel)View.ViewWithTag (iRowsTagId);
+                    int iRows = Convert.ToInt32(hfRowsCounter.Text);
+                    
+                    for(int i=0;i<iRows;i++)
+                    {
+                        if((i+1) != iSourceRow)
+                        {
+                            int iFloorId =  iFloorTagId * iPwrIdCounter + (i+1);
+                            UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                            string sExistingFloor = txtFloor.Text;
+                            if(sExistingFloor == sOldFloor)
+                            {
+                                txtFloor.Text = sFloor;
+                                
+                                int iHiddenFloorId =  iFloorHiddenTagId * iPwrIdCounter + (i+1);
+                                UILabel hfHiddenFloor = (UILabel)View.ViewWithTag (iHiddenFloorId);
+                                hfHiddenFloor.Text = sFloor;
+                            }
+                        }
+                    }
+                    break;
+                case 1: //No
+                    break;
+            }
+        }
+
         public bool ValidateSuite (object sender)
         {
             UITextField txtSuite = (UITextField)sender;
@@ -5044,91 +2660,6 @@ namespace ITPiPadSoln
                 UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
                 hfRowStatus.Text = "1";
                 SetSectionValueChanged(m_iBatterySectionCounter + 1);
-                SetAnyValueChanged(sender, null);
-                return true;
-            }
-        }
-        
-        public bool ValidatePosition (object sender)
-        {
-            UITextField txtPosition = (UITextField)sender;
-            string sPosition = txtPosition.Text;
-            sPosition = sPosition.ToUpper();
-            txtPosition.Text = sPosition;
-            clsTabletDB.ITPValidHierarchy ITPValidHierarchy = new clsTabletDB.ITPValidHierarchy();
-            bool bPositionCheck = ITPValidHierarchy.IsValidItem(sPosition, 5);
-            int iTagId = txtPosition.Tag;
-            int iPwrIdRow =  iTagId/ iEquipmentPositionTagId;
-            int iStringRow = iTagId - (iPwrIdRow * iEquipmentPositionTagId);
-            int iHiddenPositionId =  iEquipmentPositionHiddenTagId * iPwrIdRow + iStringRow;
-            UILabel hfHiddenPosition = (UILabel)View.ViewWithTag (iHiddenPositionId);
-            
-            if (!bPositionCheck) 
-            {
-                iUtils.AlertBox alert = new iUtils.AlertBox ();
-                alert.CreateErrorAlertDialog ("Please enter a valid position or search from the list by using the button underneath");
-                txtPosition.Text = hfHiddenPosition.Text;
-                txtPosition.ResignFirstResponder();
-                txtPosition.BecomeFirstResponder();
-                m_bSuppressMove = true;
-                return false;
-            } 
-            else 
-            {
-                hfHiddenPosition.Text = txtPosition.Text;
-                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdRow + iStringRow);
-                hfRowStatus.Text = "1";
-                SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
-                SetAnyValueChanged(sender, null);
-                return true;
-            }
-        }
-        
-        public bool ValidateCutoverLoad (object sender)
-        {
-            UITextField txtCutoverLoad = (UITextField)sender;
-            string sRating = txtCutoverLoad.Text;
-            int iTagId = txtCutoverLoad.Tag;
-            int iSection =  m_iRFUSectionCounter + 1;
-            int iStringRow = iTagId/iSection - iRFUCutoverLoadRowLabelTagId;
-            
-            string sLoadReturn = Regex.Replace(sRating, @"[^\d]+","");
-            txtCutoverLoad.Text = sLoadReturn;
-            
-            UILabel hfRowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + iStringRow) * iSection);
-            hfRowStatus.Text = "1";
-            SetSectionValueChanged(m_iRFUSectionCounter + 1);
-            SetAnyValueChanged(sender, null);
-            return true;
-        }
-        
-        public bool ValidateCutoverDate (object sender)
-        {
-            UITextField txtCODate = (UITextField)sender;
-            string sCODate = txtCODate.Text;
-            DateClass dt = new DateClass ();
-            DateTime dtCO;
-            bool bDateCheck = dt.ValidateDate (sCODate, ref dtCO);
-            int iTagId = txtCODate.Tag;
-            int iSection =  m_iRFUSectionCounter + 1;
-            int iStringRow = iTagId/iSection - iRFUCutoverDateRowLabelTagId;
-            
-            if (!bDateCheck) 
-            {
-                iUtils.AlertBox alert = new iUtils.AlertBox ();
-                alert.CreateErrorAlertDialog ("Please enter a valid date for the cutover date");
-                txtCODate.ResignFirstResponder();
-                txtCODate.BecomeFirstResponder();
-                m_bSuppressMove = true;
-                return false;
-            } 
-            else 
-            {
-                string sCOReturn = dt.Get_Date_String(dtCO, "dd/mm/yy");
-                txtCODate.Text = sCOReturn;
-                UILabel hfRowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + iStringRow) * iSection);
-                hfRowStatus.Text = "1";
-                SetSectionValueChanged(m_iRFUSectionCounter + 1);
                 SetAnyValueChanged(sender, null);
                 return true;
             }
@@ -5451,23 +2982,11 @@ namespace ITPiPadSoln
             
             //And move to the position
             UIScrollView scrollVw = (UIScrollView)View.ViewWithTag (2);
-            UIView vwPwrId = (UIView)View.ViewWithTag(iContainerSectionTagId * (m_iBatterySectionCounter+1));
             float iTotalPosn = iPwrIdRowVert + scrollVw.ContentOffset.Y;
             PointF posn = new PointF(0f, iTotalPosn);
             scrollVw.SetContentOffset(posn, true);
             
             
-        }
-        
-        public void AddNewEquipment (object sender, EventArgs e)
-        {
-            
-        }
-        public void SavePwrIdInfo (object sender, EventArgs e)
-        {
-            UIButton btnSave = (UIButton)sender;
-            int iBtnId = btnSave.Tag;
-            int iSectionId = iSectionTagId * (iBtnId/iSaveSectionBtnTagId);
         }
         
         public void ExpandSection (object sender, EventArgs e)
@@ -5549,86 +3068,7 @@ namespace ITPiPadSoln
             
             
         }
-        
-        public bool CheckboxChanged(object sender, EventArgs e, int iCheckboxIndex)
-        {
-            UISwitch checkbox = (UISwitch)sender;
-            int iTagId = checkbox.Tag;
-            int iSection =  m_iRFUSectionCounter + 1;
-            int iStringRow = 1;
-            
-            switch(iCheckboxIndex)
-            {
-                case 1:
-                    iStringRow = iTagId/iSection - iRFUDecommissionRowCheckTagId;
-                    break;
-                    
-                case 2:
-                    iStringRow = iTagId/iSection - iRFUCommissionRowCheckTagId;
-                    break;
-            }
-            
-            UILabel hfRowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + iStringRow) * iSection);
-            hfRowStatus.Text = "1";
-            SetSectionValueChanged(m_iRFUSectionCounter + 1);
-            SetAnyValueChanged(sender, null);
-            return true;
-        }
-        
-        public bool CommitRFU(object sender, EventArgs e)
-        {
-            UIButton btnRFUSave = (UIButton)sender;
-            int iTagId = btnRFUSave.Tag;
-            int iSectionId = m_iRFUSectionCounter + 1;
-            int iStringRow = iTagId / iSectionId - iRFUButtonSaveTagId;
-            bool bReturn = false;
-            
-            //Before we do anything we must check if the RFU is complete
-            if (RFUComplete(iStringRow))
-            {
-                bReturn = SaveRFURow(m_sPassedId, iStringRow - 1, true);
-            }
-            else
-            {
-                bReturn = false;
-            }
-            
-            return bReturn;
-        }
-        
-        public bool RFUComplete(int iStringRow)
-        {
-            int iSectionId = m_iRFUSectionCounter;
-            bool bQuestion = QuestionsComplete();
-            UILabel lblPwrId = (UILabel)View.ViewWithTag((iRFUPwrIdRowLabelTagId + iStringRow) * (iSectionId+1));
-            string sPwrId = lblPwrId.Text;
-            bool bBatteries = BatteryPwrIdComplete(sPwrId);
-            
-            if (!bQuestion && !bBatteries)
-            {
-                iUtils.AlertBox alert = new iUtils.AlertBox();
-                alert.CreateErrorAlertDialog("Some battery information on PwrId " + sPwrId + " is incomplete and not all questions have been answered. You cannot commit the RFU at this stage.");
-                return false;
-            }
-            
-            if (!bBatteries)
-            {
-                iUtils.AlertBox alert = new iUtils.AlertBox();
-                alert.CreateErrorAlertDialog("Some battery information on PwrId " + sPwrId + " is incomplete. You cannot commit the RFU at this stage.");
-                return false;
-            }
-            
-            if (!bQuestion)
-            {
-                iUtils.AlertBox alert = new iUtils.AlertBox();
-                alert.CreateErrorAlertDialog("Not all questions have been answered. You cannot commit the RFU at this stage.");
-                return false;
-            }
-            
-            return true;
-            
-        }
-        
+
         public bool QuestionsComplete()
         {
             clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
@@ -5667,78 +3107,7 @@ namespace ITPiPadSoln
         
         public bool SaveSection (int iBtnId)
         {
-            UILabel hfSectionsRows = (UILabel)View.ViewWithTag (iBtnId / iSaveSectionBtnTagId * iSectionRowsTagId);
-            int iRows = Convert.ToInt32 (hfSectionsRows.Text);
-            int i;
-            int iAnswer = 2;
-            int iAnswerIndex;
-            string sAnswer;
-            string sComments;
-            int iSectionNo = iBtnId / iSaveSectionBtnTagId;
-            
-            if (iSectionNo == m_iBatterySectionCounter + 1) 
-            {
-                return SaveBatterySection(iBtnId);
-                
-            }
-            
-            if (iSectionNo == m_iRFUSectionCounter + 1) 
-            {
-                return SaveRFUSection(iBtnId);
-                
-            }
-            
-            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
-            UILabel hfDBSectionId = (UILabel)View.ViewWithTag (iSectionDBIdTagId * iSectionNo);
-            int iDBSectionId = Convert.ToInt32(hfDBSectionId.Text);
-            
-            for (i = 0; i < iRows; i++) 
-            {
-                UILabel hfRowStatus = (UILabel)View.ViewWithTag ((ihfRowStatusTagId + (i+1)) * iSectionNo);
-                int iRowStatus = Convert.ToInt32(hfRowStatus.Text);
-                
-                if (iRowStatus == 1)
-                {
-                    UISegmentedControl radGrp = (UISegmentedControl)View.ViewWithTag ((iAnswerGroupTagId + (i+1)) * iSectionNo);
-                    iAnswerIndex = radGrp.SelectedSegment;  
-                    if(iAnswerIndex >=0)
-                    {
-                        sAnswer = radGrp.TitleAt(iAnswerIndex);
-                    }
-                    else
-                    {
-                        sAnswer = "";
-                    }
-                    
-                    switch(sAnswer)
-                    {
-                        case "Yes":
-                            iAnswer = 0;
-                            break;
-                        case "No":
-                            iAnswer = 1;
-                            break;
-                        case "N/A":
-                            iAnswer = 2;
-                            break;
-                        default:
-                            iAnswer = -1;
-                            break;
-                    }
-                    
-                    UITextView txtComments = (UITextView)View.ViewWithTag ((iCommentsTagId + (i+1)) * iSectionNo);
-                    sComments = txtComments.Text;
-                    UILabel hfAutoId = (UILabel)View.ViewWithTag ((ihfAutoRowTagId + (i+1)) * iSectionNo);
-                    int iAutoId = Convert.ToInt32(hfAutoId.Text);
-                    DBQ.SetLocalITPSectionQuestion(iAutoId, m_sPassedId, iDBSectionId, iAnswer, sComments);
-                    hfRowStatus.Text = "0";
-                }
-            }
-            
-            UILabel hfSectionStatus = (UILabel)View.ViewWithTag (iSectionStatusTagId * iSectionNo);
-            hfSectionStatus.Text = "0";
-            SetAnyValueChangedOff();
-            return true;
+            return SaveBatterySection(iBtnId);
         }
         
         public bool SaveBatterySection(int iBtnId)
@@ -5945,176 +3314,6 @@ namespace ITPiPadSoln
             }
         }
         
-        public bool SaveRFUSection(int iBtnId)
-        {
-            int i;
-            string sId = m_sPassedId;
-            
-            //Get the number of PwrId's
-            UILabel hfSectionPwrIds = (UILabel)View.ViewWithTag(iSectionRowsTagId * (m_iRFUSectionCounter + 1));
-            int iTotalPwrIds = Convert.ToInt32(hfSectionPwrIds.Text);
-            bool bResetSectionFlag = true;
-            
-            for (i=0; i<iTotalPwrIds; i++)
-            {
-                //For each RFU  block in this PwrId save it if necessary
-                UILabel hfRFURowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + (i+1)) * (m_iRFUSectionCounter+1));
-                int iRowStatus = Convert.ToInt32(hfRFURowStatus.Text);
-                
-                if (iRowStatus == 1)
-                {
-                    SaveRFURow(sId, i, false);
-                }
-                
-                
-            }
-            //Reset the section flag
-            if (bResetSectionFlag)
-            {
-                UILabel hfSectionStatus = (UILabel)View.ViewWithTag(iSectionStatusTagId * (m_iRFUSectionCounter + 1));
-                hfSectionStatus.Text = "0";
-                SetAnyValueChangedOff();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        
-        public bool SaveRFURow(string sId, int iRow, bool bCheckSectionStatus)
-        {
-            clsTabletDB.ITPDocumentSection DB = new clsTabletDB.ITPDocumentSection();
-            string[] sItemValues = new string[9];
-            int i;
-            
-            UILabel hfRFURowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + (iRow + 1)) * (m_iRFUSectionCounter + 1));
-            int iRowStatus = Convert.ToInt32(hfRFURowStatus.Text);
-            UILabel lblPwrId = (UILabel)View.ViewWithTag((iRFUPwrIdRowLabelTagId + (iRow + 1)) * (m_iRFUSectionCounter + 1));
-            string sPwrId = lblPwrId.Text;
-            UILabel lblDesignLoad = (UILabel)View.ViewWithTag((iRFUDesignLoadRowLabelTagId + (iRow + 1)) * (m_iRFUSectionCounter + 1));
-            string sDesignLoad = lblDesignLoad.Text;
-            UITextField txtCutoverLoad = (UITextField)View.ViewWithTag((iRFUCutoverLoadRowLabelTagId + (iRow + 1)) * (m_iRFUSectionCounter + 1));
-            string sCutoverLoad = txtCutoverLoad.Text;
-            UITextField txtCutoverDate = (UITextField)View.ViewWithTag((iRFUCutoverDateRowLabelTagId + (iRow + 1)) * (m_iRFUSectionCounter + 1));
-            string sCutoverDate = txtCutoverDate.Text;
-            UISwitch chkDecommission = (UISwitch)View.ViewWithTag((iRFUDecommissionRowCheckTagId + (iRow + 1)) * (m_iRFUSectionCounter + 1));
-            bool bDecommission = chkDecommission.On;
-            int iDecommission;
-            if (bDecommission)
-            {
-                iDecommission = 1;
-            }
-            else
-            {
-                iDecommission = 0;
-            }
-            UISwitch chkCommission = (UISwitch)View.ViewWithTag((iRFUCommissionRowCheckTagId + (iRow + 1)) * (m_iRFUSectionCounter + 1));
-            bool bCommission = chkCommission.On;
-            int iCommission;
-            if (bCommission)
-            {
-                iCommission = 1;
-            }
-            else
-            {
-                iCommission = 0;
-            }
-            string sCurrentDateAndTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-            UILabel hfBatteryCapacity = (UILabel)View.ViewWithTag((ihfRowRFUBatteryCapacityTagId + (iRow + 1)) * (m_iRFUSectionCounter + 1));
-            string sBatteryCapacity = hfBatteryCapacity.Text;
-            
-            //            string[] colRFUItemsNames = { "ID", "PWRID", "DesignLoad", "CutoverLoad", "CutoverDate", "Decommission", 
-            //                "Commission", "Audit_DateStamp", "BatteryCapacity"};
-            
-            //Get all the info for this RFU row
-            sItemValues [0] = sId;
-            sItemValues [1] = sPwrId;
-            sItemValues [2] = sDesignLoad;
-            sItemValues [3] = sCutoverLoad;
-            sItemValues [4] = sCutoverDate;
-            sItemValues [5] = iDecommission.ToString();
-            sItemValues [6] = iCommission.ToString();
-            sItemValues [7] = sCurrentDateAndTime;
-            sItemValues [8] = sBatteryCapacity;
-            
-            if (sCutoverLoad == "" || sCutoverDate == "" || (iDecommission == 0 && iCommission == 0) ||
-                (iDecommission == 1 && iCommission == 1))
-            {
-                iUtils.AlertBox alert = new iUtils.AlertBox();
-                alert.CreateAlertDialog();
-                alert.SetAlertMessage("The Power Id " + sPwrId + " RFU info is not complete. You cannot commit the RFU at this stage.");
-                alert.ShowAlertBox(); 
-                return false;
-            }
-            //Update or insert into the local DB
-            if (DB.ITPRFUSetRecord(sId, sPwrId, sItemValues))
-            {
-                //Update the row status
-                hfRFURowStatus.Text = "0";
-            }
-            else
-            {
-                return false;
-            }
-            
-            //Now check to see if the section should be marked as complete and ultimately the whole page
-            if (bCheckSectionStatus)
-            {
-                UILabel hfSectionPwrIds = (UILabel)View.ViewWithTag(iSectionRowsTagId * (m_iRFUSectionCounter + 1));
-                int iTotalPwrIds = Convert.ToInt32(hfSectionPwrIds.Text);
-                bool bResetSectionFlag = true;
-                
-                for (i=0; i<iTotalPwrIds; i++)
-                {
-                    UILabel hfRFURowStatus1 = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + (i + 1)) * (m_iRFUSectionCounter + 1));
-                    int iRowStatus1 = Convert.ToInt32(hfRFURowStatus1.Text);
-                    if(iRowStatus1 == 1)
-                    {
-                        bResetSectionFlag = false;
-                        break;
-                    }
-                    
-                }
-                
-                if(bResetSectionFlag)
-                {
-                    UILabel hfSectionStatus = (UILabel)View.ViewWithTag(iSectionStatusTagId * (m_iRFUSectionCounter + 1));
-                    hfSectionStatus.Text = "0";
-                    SetAnyValueChangedOff();
-                    return true;
-                }
-            }
-            
-            return true;
-        }
-        
-        public void SetRowRadioChanged(object sender, EventArgs e)
-        {
-            UISegmentedControl radGrp = (UISegmentedControl)sender;
-            int iSenderId = radGrp.Tag;
-            int iSectionNo = iSenderId /iAnswerGroupTagId; //This it the number of the section (1 based)
-            int iRowNo = (iSenderId - (iSectionNo * iAnswerGroupTagId))/iSectionNo; //This is the row number in the section (1 based)
-            int iStatusId = (ihfRowStatusTagId + iRowNo) * iSectionNo;
-            UILabel txtRowStatus = (UILabel)View.ViewWithTag (iStatusId);
-            txtRowStatus.Text = "1";
-            SetSectionValueChanged(iSectionNo);
-            SetAnyValueChanged(sender, e);
-        }
-        
-        public void SetRowEditTextChanged(object sender, EventArgs e)
-        {
-            UITextView edtText = (UITextView)sender;
-            int iSenderId = edtText.Tag;
-            int iSectionNo = iSenderId /iCommentsTagId; //This it the number of the section (1 based)
-            int iRowNo = (iSenderId - (iSectionNo * iCommentsTagId))/iSectionNo; //This is the row number in the section (1 based)
-            int iStatusId = (ihfRowStatusTagId + iRowNo) * iSectionNo;
-            UILabel txtRowStatus = (UILabel)View.ViewWithTag (iStatusId);
-            txtRowStatus.Text = "1";
-            SetSectionValueChanged(iSectionNo);
-            SetAnyValueChanged(sender, e);
-        }
-        
         //Send through just the section counter NOT the section Id. So 1 NOT 10000 etc
         public void SetSectionValueChanged(int iSectionId)
         {
@@ -6233,34 +3432,17 @@ namespace ITPiPadSoln
                 case 8:
                     iTextTagId = iSerialNoTagId;
                     break;
-                case 9:
-                    iTextTagId = iRFUCutoverLoadRowLabelTagId;
-                    break;
-                case 10:
-                    iTextTagId = iRFUCutoverDateRowLabelTagId;
-                    break;
             }
             
             int iPwrIdRow;
             int iStringRow;
             UILabel hfPwrIdStringRows;
             int iTotalStringRows;
-            if (iTextFieldIndex <= 8)
-            {
-                iPwrIdRow = iTagId / iTextTagId;
-                iStringRow = iTagId - (iPwrIdRow * iTextTagId);
-                iSectionCounterId = m_iBatterySectionCounter;
-                hfPwrIdStringRows = (UILabel)View.ViewWithTag((ihfPwrIdStringRowsTagId + iPwrIdRow) * (iSectionCounterId + 1)); 
-                iTotalStringRows = Convert.ToInt32(hfPwrIdStringRows.Text);
-            }
-            else
-            {
-                iSectionCounterId = m_iRFUSectionCounter;
-                iPwrIdRow = iTagId / iTextTagId;
-                iStringRow = iTagId/iPwrIdRow - iTextTagId;
-                hfPwrIdStringRows = (UILabel)View.ViewWithTag((iSectionRowsTagId) * iPwrIdRow); 
-                iTotalStringRows = Convert.ToInt32(hfPwrIdStringRows.Text);
-            }
+            iPwrIdRow = iTagId / iTextTagId;
+            iStringRow = iTagId - (iPwrIdRow * iTextTagId);
+            iSectionCounterId = m_iBatterySectionCounter;
+            hfPwrIdStringRows = (UILabel)View.ViewWithTag((ihfPwrIdStringRowsTagId + iPwrIdRow) * (iSectionCounterId + 1)); 
+            iTotalStringRows = Convert.ToInt32(hfPwrIdStringRows.Text);
             switch (iTextFieldIndex) 
             {
                 case 1: //This means you are coming from the bank no and going to the DOM
@@ -6334,30 +3516,7 @@ namespace ITPiPadSoln
                     {
                         txtNext = (UITextField)View.ViewWithTag (iBankNoTagId * (iPwrIdRow) + (iStringRow + 1)); //Go to the next string, hence the + 1 here
                     }
-                    break;
-                    
-                case 9: //Coming from Cutover Load to Cutover Date
-                    txtNext = (UITextField)View.ViewWithTag ((iRFUCutoverDateRowLabelTagId + iStringRow) * iPwrIdRow);
-                    break;
-                case 10: //Coming from Cutover Date to Cutover Load
-                    if(m_bSuppressMove) //This is required on the validate because the endediting and return delegates both fire
-                    {
-                        m_bSuppressMove = false;
-                        return false;
-                    }
-                    
-                    //Make sure we are not on the last RFU PwrId because there is no extra row to go to so go to the first one again
-                    if((iStringRow + 1) > iTotalStringRows)
-                    {
-                        txtNext = (UITextField)View.ViewWithTag ((iRFUCutoverLoadRowLabelTagId + 1) * iPwrIdRow); //Cycle back to the first row
-                    }
-                    else
-                    {
-                        txtNext = (UITextField)View.ViewWithTag ((iRFUCutoverLoadRowLabelTagId + iStringRow + 1) * iPwrIdRow); //Go to the next string, hence the + 1 here
-                    }
-                    break;
-                    
-                    
+                    break;                    
             }
             
             txtNext.BecomeFirstResponder();

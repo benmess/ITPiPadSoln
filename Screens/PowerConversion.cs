@@ -96,19 +96,15 @@ namespace ITPiPadSoln
         int iEquipmentStringSearchTagId = 10017000;
         int iEquipmentEquipTypeTagId = 10017100;
         int iEquipmentSerialNoTagId = 10017200;
-        int iEquipmentTypeHiddenTagId = 10017300; //This is the integer to signify whether the item is a rack, position, string etc (1 = floor, 2 = suite, 3 = rack ...)
         int iEquipmentDeleteBtnTagId = 10017400;
         
         string m_sSessionId = "";
         string m_sPassedId = "";
         string m_sProjDesc = "";
         int m_iSections = 0;
-//        int m_iBatterySectionCounter = 0;
         int m_iEquipmentSectionCounter = 0;
         int m_iEquipmentPwrIds = 0;
-//        float m_iBatteryRowHeight = 0f;
         float m_iEquipmentRowHeight = 0f;
-        string m_sUser = "";
         string[] m_sRackMakes;
         string[] m_sRackModels;
         string[] m_sSubRackMakes;
@@ -172,30 +168,29 @@ namespace ITPiPadSoln
             }
         }
         
-        public override void ViewDidUnload ()
-        {
-            base.ViewDidUnload ();
-            
-            // Clear any references to subviews of the main view in order to
-            // allow the Garbage Collector to collect them sooner.
-            //
-            // e.g. myOutlet.Dispose (); myOutlet = null;
-            
-            ReleaseDesignerOutlets ();
-        }
-        
-        public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
-        {
-            // Return true for supported orientations
-            return true;
-        }
+//        public override void ViewDidUnload ()
+//        {
+//            base.ViewDidUnload ();
+//            
+//            // Clear any references to subviews of the main view in order to
+//            // allow the Garbage Collector to collect them sooner.
+//            //
+//            // e.g. myOutlet.Dispose (); myOutlet = null;
+//            
+//            ReleaseDesignerOutlets ();
+//        }
+//        
+//        public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
+//        {
+//            // Return true for supported orientations
+//            return true;
+//        }
         public void DrawMenu()
         {
             UIView[] arrItems = new UIView[8];
             string sUsername = "";
             HomeScreen home = GetHomeScreen();
             sUsername = home.GetLoginName();
-            m_sUser = sUsername;
             m_sSessionId = home.GetSessionId();
             DownloadedITPsScreen downloadedScreen =   GetDownloadedITPsScreen();
             m_sPassedId = downloadedScreen.GetSelectedProjectId();
@@ -760,6 +755,8 @@ namespace ITPiPadSoln
             catch (Exception except)
             {
                 string sTest = except.Message.ToString();
+                iUtils.AlertBox alert = new iUtils.AlertBox ();
+                alert.CreateErrorAlertDialog (sTest);
             }
         }
 
@@ -1148,6 +1145,7 @@ namespace ITPiPadSoln
             
             lblFloorVw = lblFloor.GetTextFieldCell();
             UITextField txtFloorView = lblFloor.GetTextFieldView();
+            txtFloorView.AutocorrectionType = UITextAutocorrectionType.No;
             txtFloorView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtFloorView.ReturnKeyType = UIReturnKeyType.Next;
             txtFloorView.ShouldEndEditing += (sender) => {
@@ -1183,6 +1181,7 @@ namespace ITPiPadSoln
             
             lblSuiteVw = lblSuite.GetTextFieldCell();
             UITextField txtSuiteView = lblSuite.GetTextFieldView();
+            txtSuiteView.AutocorrectionType = UITextAutocorrectionType.No;
             txtSuiteView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtSuiteView.ReturnKeyType = UIReturnKeyType.Next;
             txtSuiteView.ShouldEndEditing += (sender) => {
@@ -1218,6 +1217,7 @@ namespace ITPiPadSoln
             
             lblRackVw = lblRack.GetTextFieldCell();
             UITextField txtRackView = lblRack.GetTextFieldView();
+            txtRackView.AutocorrectionType = UITextAutocorrectionType.No;
             txtRackView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtRackView.ReturnKeyType = UIReturnKeyType.Next;
             txtRackView.ShouldEndEditing += (sender) => {
@@ -1255,6 +1255,7 @@ namespace ITPiPadSoln
                 
                 lblSubRackVw = lblSubRack.GetTextFieldCell();
                 UITextField txtSubRackView = lblSubRack.GetTextFieldView();
+                txtSubRackView.AutocorrectionType = UITextAutocorrectionType.No;
                 txtSubRackView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
                 txtSubRackView.ReturnKeyType = UIReturnKeyType.Next;
                 txtSubRackView.ShouldEndEditing += (sender) => {
@@ -1313,6 +1314,7 @@ namespace ITPiPadSoln
                 
                 lblPositionVw = lblPosition.GetTextFieldCell();
                 UITextField txtPositionView = lblPosition.GetTextFieldView();
+                txtPositionView.AutocorrectionType = UITextAutocorrectionType.No;
                 txtPositionView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
                 txtPositionView.ReturnKeyType = UIReturnKeyType.Next;
                 txtPositionView.ShouldEndEditing += (sender) => {
@@ -1371,6 +1373,7 @@ namespace ITPiPadSoln
                 
                 lblStringVw = lblString.GetTextFieldCell();
                 UITextField txtStringView = lblString.GetTextFieldView();
+                txtStringView.AutocorrectionType = UITextAutocorrectionType.No;
                 txtStringView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
                 txtStringView.ReturnKeyType = UIReturnKeyType.Next;
                 txtStringView.ShouldEndEditing += (sender) => {
@@ -1479,6 +1482,7 @@ namespace ITPiPadSoln
             
             txtDOMVw = txtDOM.GetTextFieldCell();
             UITextField txtDOMTextView = txtDOM.GetTextFieldView();
+            txtDOMTextView.AutocorrectionType = UITextAutocorrectionType.No;
             txtDOMTextView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtDOMTextView.ReturnKeyType = UIReturnKeyType.Next;
             txtDOMTextView.ShouldEndEditing += (sender) => {
@@ -1509,6 +1513,7 @@ namespace ITPiPadSoln
             
             lblSerialNoVw = lblSerialNo.GetTextFieldCell();
             UITextField txtSerialNoView = lblSerialNo.GetTextFieldView();
+            txtSerialNoView.AutocorrectionType = UITextAutocorrectionType.No;
             txtSerialNoView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtSerialNoView.ReturnKeyType = UIReturnKeyType.Next;
             txtSerialNoView.ShouldEndEditing += (sender) => {
@@ -2317,6 +2322,7 @@ namespace ITPiPadSoln
                 txtSearch.Frame = new RectangleF (2f, 44f, 198f, 40f);
                 txtSearch.BackgroundColor = UIColor.FromRGBA (255, 255, 255, 255);
                 txtSearch.Tag = iSearchTextTagId;
+                txtSearch.AutocorrectionType = UITextAutocorrectionType.No;
                 txtSearch.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
                 m_vwSearch.AddSubview (txtSearch);
                 
@@ -2557,18 +2563,44 @@ namespace ITPiPadSoln
                 UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
                 string sPwrId = hfPwrId.Text;
 
-                iUtils.AlertBox alert2 = new iUtils.AlertBox();
-                alert2.CreateAlertYesNoDialog();
-                alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + sOldFloor + 
-                                       " to floor " +  sFloor + " ?");
-                alert2.ShowAlertBox(); 
-                
-                UIAlertView alert3 = alert2.GetAlertDialog();
-                alert3.Clicked += (sender2, e2)  => {CheckFloorChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, sOldFloor, iSectionId, iPwrIdRow);}; 
+                if(CheckSameFloorExists(sOldFloor,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                {
+                    iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                    alert2.CreateAlertYesNoDialog();
+                    alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + sOldFloor + 
+                                           " to floor " +  sFloor + " ?");
+                    alert2.ShowAlertBox(); 
+                    
+                    UIAlertView alert3 = alert2.GetAlertDialog();
+                    alert3.Clicked += (sender2, e2)  => {CheckFloorChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, sOldFloor, iSectionId, iPwrIdRow);}; 
+                }
                 return true;
             }
         }
-        
+
+        public bool CheckSameFloorExists(string sFloor, int iSectionIdCounter, int iPwrIdCounter, string sPwrId, int iSourceRow)
+        {
+            int iRowsTagId = (ihfPwrIdStringRowsTagId + (iPwrIdCounter)) * (iSectionIdCounter+1);
+            UILabel hfRowsCounter = (UILabel)View.ViewWithTag (iRowsTagId);
+            int iRows = Convert.ToInt32(hfRowsCounter.Text);
+            
+            for(int i=0;i<iRows;i++)
+            {
+                if((i+1) != iSourceRow)
+                {
+                    int iFloorId =  iEquipmentFloorTagId * iPwrIdCounter + (i+1);
+                    UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                    string sExistingFloor = txtFloor.Text;
+                    if(sExistingFloor == sFloor)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public void CheckFloorChangesQuestion (object sender, EventArgs e, int iBtnIndex, int iSourceRow, string sPwrId, string sFloor, string sOldFloor, int iSectionIdCounter, int iPwrIdCounter)
         {
             switch (iBtnIndex) 
@@ -2924,6 +2956,11 @@ namespace ITPiPadSoln
             scrollVw.ContentSize = layoutSize;
         }
         
+        public void AddNewEquipment (object sender, EventArgs e)
+        {
+
+        }
+
         //The section type tells us whether we are doing an expand on a battery (1) or a power conversion equipment (2) PwrId
         public void ExpandPwrId(object sender, EventArgs e, int iSectionType)
         {
@@ -2996,17 +3033,6 @@ namespace ITPiPadSoln
             btnExpand.Enabled = true;                        
         }
 
-        public void AddNewEquipment (object sender, EventArgs e)
-        {
-            
-        }
-        public void SavePwrIdInfo (object sender, EventArgs e)
-        {
-            UIButton btnSave = (UIButton)sender;
-            int iBtnId = btnSave.Tag;
-            int iSectionId = iSectionTagId * (iBtnId/iSaveSectionBtnTagId);
-        }
-        
         public void ExpandSection (object sender, EventArgs e)
         {
             UIButton btnExpand = (UIButton)sender;

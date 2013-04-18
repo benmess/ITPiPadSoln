@@ -20,5 +20,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string>SES ITP App</string>
+	<key>CFBundleIdentifier</key>
+	<string>au.com.silcar.itpapp</string>
 </dict>
 </plist>
