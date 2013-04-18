@@ -1658,7 +1658,23 @@ namespace ITPiPadSoln
             }
             else
             {
-                arrItems3[3] = vwBlank;
+                iUtils.CreateFormGridItem btnSubRackSearch = new iUtils.CreateFormGridItem();
+                UIView btnSubRackSearchVw = new UIView();
+                btnSubRackSearch.SetDimensions(140f,iHdrVert, 60f, iRowHeight, 13f, 4f, 13f, 4f);
+                btnSubRackSearch.SetBorderWidth(0.0f);
+                btnSubRackSearch.SetTag(iEquipmentSubRackSearchTagId * (iPwrIdRowNo+1) + (iEquipRowNo+1));
+
+                if (iPwrIdRowNo % 2 == 0)
+                {
+                    btnSubRackSearch.SetCellColour("Pale Yellow");
+                }
+                else
+                {
+                    btnSubRackSearch.SetCellColour("Pale Orange");
+                }
+
+                btnSubRackSearchVw = btnSubRackSearch.GetLabelCell();
+                arrItems3[3] = btnSubRackSearchVw;
             }
 
             if(iEquipmentType > 4)
@@ -1689,7 +1705,23 @@ namespace ITPiPadSoln
             }
             else
             {
-                arrItems3[4] = vwBlank;
+                iUtils.CreateFormGridItem btnPositionSearch = new iUtils.CreateFormGridItem();
+                UIView btnPositionSearchVw = new UIView();
+                btnPositionSearch.SetDimensions(200f,iHdrVert, 50f, iRowHeight, 8f, 4f, 8f, 4f);
+                btnPositionSearch.SetBorderWidth(0.0f);
+                btnPositionSearch.SetTag(iEquipmentSubRackSearchTagId * (iPwrIdRowNo+1) + (iEquipRowNo+1));
+                
+                if (iPwrIdRowNo % 2 == 0)
+                {
+                    btnPositionSearch.SetCellColour("Pale Yellow");
+                }
+                else
+                {
+                    btnPositionSearch.SetCellColour("Pale Orange");
+                }
+                
+                btnPositionSearchVw = btnPositionSearch.GetLabelCell();
+                arrItems3[4] = btnPositionSearchVw;
             }
 
             if(iEquipmentType > 5)
@@ -1720,7 +1752,23 @@ namespace ITPiPadSoln
             }
             else
             {
-                arrItems3[5] = vwBlank;
+                iUtils.CreateFormGridItem btnStringSearch = new iUtils.CreateFormGridItem();
+                UIView btnStringSearchVw = new UIView();
+                btnStringSearch.SetDimensions(250f,iHdrVert, 50f, iRowHeight, 8f, 4f, 8f, 4f);
+                btnStringSearch.SetBorderWidth(0.0f);
+                btnStringSearch.SetTag(iEquipmentSubRackSearchTagId * (iPwrIdRowNo+1) + (iEquipRowNo+1));
+                
+                if (iPwrIdRowNo % 2 == 0)
+                {
+                    btnStringSearch.SetCellColour("Pale Yellow");
+                }
+                else
+                {
+                    btnStringSearch.SetCellColour("Pale Orange");
+                }
+                
+                btnStringSearchVw = btnStringSearch.GetLabelCell();
+                arrItems3[5] = btnStringSearchVw;
             }
 
             hdrRow.AddSubviews(arrItems3);
@@ -1948,52 +1996,34 @@ namespace ITPiPadSoln
             int iEquipmentType = Convert.ToInt32(lblEquipmentType.Text);
             
             List<string> mylist = new List<string> ();
+            clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
+            string[] sMakes;
             switch(iEquipmentType)
             {
                 case 3:
-                    if (m_sRackMakes == null) 
-                    {
-                        clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
-                        string[] sMakes = ITPInventory.GetRackMakes ();
-                        m_sRackMakes = sMakes;
-                    }
+                    sMakes = ITPInventory.GetRackMakes ();
+                    m_sRackMakes = sMakes;
                     Array.ForEach (m_sRackMakes, value => mylist.Add (value.ToString ()));
                     break;
                 case 4:
-                    if (m_sSubRackMakes == null) 
-                    {
-                        clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
-                        string[] sMakes = ITPInventory.GetSubRackMakes ();
-                        m_sSubRackMakes = sMakes;
-                    }
+                    sMakes = ITPInventory.GetSubRackMakes ();
+                    m_sSubRackMakes = sMakes;
                     Array.ForEach (m_sSubRackMakes, value => mylist.Add (value.ToString ()));
                     break;
                 case 5:
-                    if (m_sPositionMakes == null) 
-                    {
-                        clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
-                        string[] sMakes = ITPInventory.GetPositionMakes ();
-                        m_sPositionMakes = sMakes;
-                    }
-                    Array.ForEach (m_sRackMakes, value => mylist.Add (value.ToString ()));
+                    sMakes = ITPInventory.GetPositionMakes ();
+                    m_sPositionMakes = sMakes;
+                    Array.ForEach (m_sPositionMakes, value => mylist.Add (value.ToString ()));
                     break;
                 case 7:
-                    if (m_sSolarStringMakes == null) 
-                    {
-                        clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
-                        string[] sMakes = ITPInventory.GetSolarStringMakes ();
-                        m_sSolarStringMakes = sMakes;
-                    }
-                    Array.ForEach (m_sRackMakes, value => mylist.Add (value.ToString ()));
+                    sMakes = ITPInventory.GetSolarStringMakes ();
+                    m_sSolarStringMakes = sMakes;
+                    Array.ForEach (m_sSolarStringMakes, value => mylist.Add (value.ToString ()));
                     break;
                 default:
-                    if (m_sPositionMakes == null) 
-                    {
-                        clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
-                        string[] sMakes = ITPInventory.GetPositionMakes ();
-                        m_sPositionMakes = sMakes;
-                    }
-                    Array.ForEach (m_sRackMakes, value => mylist.Add (value.ToString ()));
+                    sMakes = ITPInventory.GetPositionMakes ();
+                    m_sPositionMakes = sMakes;
+                    Array.ForEach (m_sPositionMakes, value => mylist.Add (value.ToString ()));
                     break;
             }
 
@@ -2083,52 +2113,34 @@ namespace ITPiPadSoln
 
             //Create a list and convert the string array to the list. Why the system cannot take a simple string array is beyond me!!!
             List<string> listModel = new List<string> ();
+            clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
+            string[] sModels;
             switch(iEquipmentType)
             {
                 case 3:
-                    if (m_sRackModels == null) 
-                    {
-                        clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
-                        string[] sModels = ITPInventory.GetRackModels (sSupplier);
-                        m_sRackModels = sModels;
-                    }
+                    sModels = ITPInventory.GetRackModels (sSupplier);
+                    m_sRackModels = sModels;
                     Array.ForEach (m_sRackModels, value => listModel.Add (value.ToString ()));
                     break;
                 case 4:
-                    if (m_sSubRackModels == null) 
-                    {
-                        clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
-                        string[] sModels = ITPInventory.GetSubRackModels (sSupplier);
-                        m_sSubRackModels = sModels;
-                    }
+                    sModels = ITPInventory.GetSubRackModels (sSupplier);
+                    m_sSubRackModels = sModels;
                     Array.ForEach (m_sSubRackModels, value => listModel.Add (value.ToString ()));
                     break;
                 case 5:
-                    if (m_sPositionModels == null) 
-                    {
-                        clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
-                        string[] sModels = ITPInventory.GetPositionModels (sSupplier);
-                        m_sPositionModels = sModels;
-                    }
-                    Array.ForEach (m_sRackModels, value => listModel.Add (value.ToString ()));
+                    sModels = ITPInventory.GetPositionModels (sSupplier);
+                    m_sPositionModels = sModels;
+                    Array.ForEach (m_sPositionModels, value => listModel.Add (value.ToString ()));
                     break;
                 case 7:
-                    if (m_sSolarStringModels == null) 
-                    {
-                        clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
-                        string[] sModels = ITPInventory.GetSolarStringModels (sSupplier);
-                        m_sSolarStringModels = sModels;
-                    }
-                    Array.ForEach (m_sRackModels, value => listModel.Add (value.ToString ()));
+                    sModels = ITPInventory.GetSolarStringModels (sSupplier);
+                    m_sSolarStringModels = sModels;
+                    Array.ForEach (m_sSolarStringModels, value => listModel.Add (value.ToString ()));
                     break;
                 default:
-                    if (m_sPositionModels == null) 
-                    {
-                        clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
-                        string[] sModels = ITPInventory.GetPositionModels (sSupplier);
-                        m_sPositionModels = sModels;
-                    }
-                    Array.ForEach (m_sRackModels, value => listModel.Add (value.ToString ()));
+                    sModels = ITPInventory.GetPositionModels (sSupplier);
+                    m_sPositionModels = sModels;
+                    Array.ForEach (m_sPositionModels, value => listModel.Add (value.ToString ()));
                     break;
             }
 
@@ -2141,13 +2153,27 @@ namespace ITPiPadSoln
             int iContentHeight = Convert.ToInt32 (hfContentHeight.Text);
             if (iTop + 190f > (float)iContentHeight) 
             {
-                cmbModel.Frame = new RectangleF(iLeft, iTop - 190f, 290f, 200f);
+                if (iLeft + 290f > 1000f) 
+                {
+                    cmbModel.Frame = new RectangleF(iLeft - 300f, iTop - 190f, 290f, 200f);
+                } 
+                else 
+                {
+                    cmbModel.Frame = new RectangleF(iLeft, iTop - 190f, 290f, 200f);
+                }
             } 
             else 
             {
-                cmbModel.Frame = new RectangleF(iLeft, iTop, 290f, 200f);
+                if (iLeft + 290f > 1000f) 
+                {
+                    cmbModel.Frame = new RectangleF(iLeft - 300f, iTop, 290f, 200f);
+                } 
+                else 
+                {
+                    cmbModel.Frame = new RectangleF(iLeft, iTop, 290f, 200f);
+                }
             }
-            
+
             tabdata.SetParent(cmbModel);
             tabdata.SetUpdateFieldType("UILabel");
             UILabel lblVwUpdate = (UILabel)View.ViewWithTag (iEquipmentModelTagId * (iPwrIdRow) + (iStringRow));
@@ -2157,7 +2183,7 @@ namespace ITPiPadSoln
             tabdata.SetShowUnsavedOnChange(true);
             UILabel hfRowStatus = (UILabel)View.ViewWithTag (iEquipmentRowStatusTagId * (iPwrIdRow) + (iStringRow));
             UILabel lblSPN = (UILabel)View.ViewWithTag (iEquipmentSPNHiddenTagId * (iPwrIdRow) + (iStringRow));
-            tabdata.SetModelPostUpdate(6, hfRowStatus, lblSPN, sSupplier);
+            tabdata.SetModelPostUpdate(6, hfRowStatus, lblSPN, sSupplier); //Here the 6 refers to the post update index and NOT batteries as the equipment type
             
             //Also set the section flag to 1 that it has changed and the overall flag that it has changed
             UILabel lblUnsavedFlag = (UILabel)View.ViewWithTag (80);
@@ -2502,6 +2528,7 @@ namespace ITPiPadSoln
             int iStringRow = iTagId - (iPwrIdRow * iEquipmentFloorTagId);
             int iHiddenBankId =  iEquipmentFloorHiddenTagId * iPwrIdRow + iStringRow;
             UILabel hfHiddenFloor = (UILabel)View.ViewWithTag (iHiddenBankId);
+            string sOldFloor = hfHiddenFloor.Text;
             
             if (!bFloorCheck) 
             {
@@ -2516,12 +2543,61 @@ namespace ITPiPadSoln
             else 
             {
                 hfHiddenFloor.Text = txtFloor.Text;
-                //iEquipmentRowStatusTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1)
                 UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdRow + iStringRow);
                 hfRowStatus.Text = "1";
                 SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
                 SetAnyValueChanged(sender, null);
+
+                //Ask the question
+                int iSectionTagId = iEquipmentRowSectionCounterTagId * iPwrIdRow + iStringRow;
+                UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
+                int iSectionId = Convert.ToInt32(hfSectionId.Text);
+
+                int iPwrIdTagId = iEquipmentRowPwrIdTagId * iPwrIdRow + iStringRow;
+                UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
+                string sPwrId = hfPwrId.Text;
+
+                iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                alert2.CreateAlertYesNoDialog();
+                alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + sOldFloor + 
+                                       " to floor " +  sFloor + " ?");
+                alert2.ShowAlertBox(); 
+                
+                UIAlertView alert3 = alert2.GetAlertDialog();
+                alert3.Clicked += (sender2, e2)  => {CheckFloorChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, sOldFloor, iSectionId, iPwrIdRow);}; 
                 return true;
+            }
+        }
+        
+        public void CheckFloorChangesQuestion (object sender, EventArgs e, int iBtnIndex, int iSourceRow, string sPwrId, string sFloor, string sOldFloor, int iSectionIdCounter, int iPwrIdCounter)
+        {
+            switch (iBtnIndex) 
+            {
+                case 0: //Yes
+                    int iRowsTagId = (ihfPwrIdStringRowsTagId + (iPwrIdCounter)) * (iSectionIdCounter+1);
+                    UILabel hfRowsCounter = (UILabel)View.ViewWithTag (iRowsTagId);
+                    int iRows = Convert.ToInt32(hfRowsCounter.Text);
+
+                    for(int i=0;i<iRows;i++)
+                    {
+                        if((i+1) != iSourceRow)
+                        {
+                            int iFloorId =  iEquipmentFloorTagId * iPwrIdCounter + (i+1);
+                            UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                            string sExistingFloor = txtFloor.Text;
+                            if(sExistingFloor == sOldFloor)
+                            {
+                                txtFloor.Text = sFloor;
+
+                                int iHiddenFloorId =  iEquipmentFloorHiddenTagId * iPwrIdCounter + (i+1);
+                                UILabel hfHiddenFloor = (UILabel)View.ViewWithTag (iHiddenFloorId);
+                                hfHiddenFloor.Text = sFloor;
+                            }
+                        }
+                    }
+                    break;
+                case 1: //No
+                    break;
             }
         }
         
