@@ -40,6 +40,7 @@ namespace ITPiPadSoln
 		int iQuestionRowTagId = 10300;
 		int iAnswerGroupTagId = 10400;
 		int iCommentsTagId = 10500;
+        int iSectionCompleteLabelTagId = 10600;
 
         //Tags for Battery Section
         int iPwrIdSectionTagId = 10010800;
@@ -74,6 +75,7 @@ namespace ITPiPadSoln
 		string m_sPassedId = "";
 		string m_sProjDesc = "";
 		int m_iSections = 0;
+        int m_iQuestionSections = 0;
         int m_iBatterySectionCounter = 0;
         int m_iEquipmentSectionCounter = 0;
         int m_iRFUSectionCounter = 0;
@@ -128,24 +130,6 @@ namespace ITPiPadSoln
 
             }
 		}
-
-//		public override void ViewDidUnload ()
-//		{
-//			base.ViewDidUnload ();
-//			
-//			// Clear any references to subviews of the main view in order to
-//			// allow the Garbage Collector to collect them sooner.
-//			//
-//			// e.g. myOutlet.Dispose (); myOutlet = null;
-//			
-//			ReleaseDesignerOutlets ();
-//		}
-//		
-//		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
-//		{
-//			// Return true for supported orientations
-//			return true;
-//		}
 
 		public void DrawMenu()
 		{
@@ -271,11 +255,12 @@ namespace ITPiPadSoln
 				float iHeightToAdd = iQuestionRowHeight;
 				float iHeightToAdd2 = iHeightToAdd;
                 bool bDisableRow = false;
+                bool bHideComplete = true;
                 bool[] bHideSections = new bool[1];
                 UIView[] arrItems = new UIView[4];
 				UIView[] arrItems2 = new UIView[6];
 				UIView[] arrItems3 = new UIView[5];
-                UIView[] arrItems4 = new UIView[5];
+                UIView[] arrItems4 = new UIView[6];
                 UIView[] arrItems6 = new UIView[9];
                 UIView[] arrItems7 = new UIView[7];
                 UIView[] arrItems14 = new UIView[7];
@@ -293,6 +278,7 @@ namespace ITPiPadSoln
 				{
 					int iRows = arrITPSections.Tables[0].Rows.Count;
 					m_iSections = iRows;
+                    m_iQuestionSections = iRows;
                     Array.Resize<bool>(ref bHideSections, iRows);
 
 					for (int i = 0; i < iRows; i++)
@@ -696,7 +682,7 @@ namespace ITPiPadSoln
 
 					iUtils.CreateFormGridItem Section10 = new iUtils.CreateFormGridItem();
 					UIView Section10Vw = new UIView();
-					Section10.SetDimensions(0f,0f, 450f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+					Section10.SetDimensions(0f,0f, 300f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
 					Section10.SetLabelText("BATTERIES");
 					Section10.SetBorderWidth(0.0f);
 					Section10.SetFontName("Verdana-Bold");
@@ -708,7 +694,30 @@ namespace ITPiPadSoln
 					arrItems4[0] = Section10Vw;
 					
 					
-					iUtils.CreateFormGridItem btnSave10 = new iUtils.CreateFormGridItem();
+                    if(BatteryFullyComplete())
+                    {
+                        bHideComplete = false;
+                    }
+                    else
+                    {
+                        bHideComplete = true;
+                    }
+
+                    iUtils.CreateFormGridItem SectionCompleteLabel = new iUtils.CreateFormGridItem();
+                    UIView SectionCompleteLabelVw = new UIView();
+                    SectionCompleteLabel.SetDimensions(300f,0f, 150f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+                    SectionCompleteLabel.SetLabelText("COMPLETED");
+                    SectionCompleteLabel.SetBorderWidth(0.0f);
+                    SectionCompleteLabel.SetFontName("Verdana-Bold");
+                    SectionCompleteLabel.SetTextColour("Bright Yellow");
+                    SectionCompleteLabel.SetFontSize(14f);
+                    SectionCompleteLabel.SetCellColour("DarkSlateGrey");
+                    SectionCompleteLabel.SetTag(iSectionCompleteLabelTagId * (ii+1));
+                    SectionCompleteLabel.SetHidden(bHideComplete);
+                    SectionCompleteLabelVw = SectionCompleteLabel.GetLabelCell();
+                    arrItems4[1] = SectionCompleteLabelVw;
+
+                    iUtils.CreateFormGridItem btnSave10 = new iUtils.CreateFormGridItem();
 					UIView btnSave10Vw = new UIView();
 					btnSave10.SetDimensions(450f,0f, 350f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
 					btnSave10.SetLabelText("Open Battery Details Screen");
@@ -723,25 +732,25 @@ namespace ITPiPadSoln
 					btnSave10Button = btnSave10.GetButton();
 					btnSave10Button.TouchUpInside += (sender,e) => {OpenBatteries(sender, e);};
 					
-					arrItems4[1] = btnSave10Vw;
+					arrItems4[2] = btnSave10Vw;
 					
 					UILabel hfSectionHeight = new UILabel();
 					hfSectionHeight.Tag = iSectionHeightTagId * (ii+1);
 					hfSectionHeight.Hidden = true;
 					hfSectionHeight.Text = "0";
-					arrItems4[2] = hfSectionHeight;
+					arrItems4[3] = hfSectionHeight;
 					
 					UILabel hfSectionRows = new UILabel();
 					hfSectionRows.Tag = iSectionRowsTagId * (ii+1);
 					hfSectionRows.Hidden = true;
 					hfSectionRows.Text = iPwrIdRows.ToString();
-					arrItems4[3] = hfSectionRows;
+					arrItems4[4] = hfSectionRows;
 					
 					UILabel hfSectionStatus = new UILabel();
 					hfSectionStatus.Tag = iSectionStatusTagId * (ii+1);
 					hfSectionStatus.Hidden = true;
 					hfSectionStatus.Text = "0";
-					arrItems4[4] = hfSectionStatus;
+					arrItems4[5] = hfSectionStatus;
 					
 
 					Section10Row.AddSubviews(arrItems4);
@@ -786,7 +795,7 @@ namespace ITPiPadSoln
                     
                     iUtils.CreateFormGridItem SectionEquipment = new iUtils.CreateFormGridItem();
                     UIView SectionEquipmentVw = new UIView();
-                    SectionEquipment.SetDimensions(0f,0f, 450f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+                    SectionEquipment.SetDimensions(0f,0f, 300f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
                     SectionEquipment.SetLabelText("POWER CONVERSION EQUIPMENT");
                     SectionEquipment.SetBorderWidth(0.0f);
                     SectionEquipment.SetFontName("Verdana-Bold");
@@ -798,6 +807,29 @@ namespace ITPiPadSoln
                     arrItems4[0] = SectionEquipmentVw;
                     
                     
+                    if(PowerConversionFullyComplete())
+                    {
+                        bHideComplete = false;
+                    }
+                    else
+                    {
+                        bHideComplete = true;
+                    }
+                    
+                    iUtils.CreateFormGridItem SectionCompleteLabel = new iUtils.CreateFormGridItem();
+                    UIView SectionCompleteLabelVw = new UIView();
+                    SectionCompleteLabel.SetDimensions(300f,0f, 150f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+                    SectionCompleteLabel.SetLabelText("COMPLETED");
+                    SectionCompleteLabel.SetBorderWidth(0.0f);
+                    SectionCompleteLabel.SetFontName("Verdana-Bold");
+                    SectionCompleteLabel.SetTextColour("Bright Yellow");
+                    SectionCompleteLabel.SetFontSize(14f);
+                    SectionCompleteLabel.SetCellColour("DarkSlateGrey");
+                    SectionCompleteLabel.SetTag(iSectionCompleteLabelTagId * (iii+1));
+                    SectionCompleteLabel.SetHidden(bHideComplete);
+                    SectionCompleteLabelVw = SectionCompleteLabel.GetLabelCell();
+                    arrItems4[1] = SectionCompleteLabelVw;
+
                     iUtils.CreateFormGridItem btnSaveEquipment = new iUtils.CreateFormGridItem();
                     UIView btnSaveEquipmentVw = new UIView();
                     btnSaveEquipment.SetDimensions(450f,0f, 350f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
@@ -813,25 +845,25 @@ namespace ITPiPadSoln
                     btnSaveEquipmentButton = btnSaveEquipment.GetButton();
                     btnSaveEquipmentButton.TouchUpInside += (sender,e) => {OpenPowerConversion(sender, e);};
                     
-                    arrItems4[1] = btnSaveEquipmentVw;
+                    arrItems4[2] = btnSaveEquipmentVw;
                     
                     UILabel hfSectionEquipmentHeight = new UILabel();
                     hfSectionEquipmentHeight.Tag = iSectionHeightTagId * (iii+1);
                     hfSectionEquipmentHeight.Hidden = true;
                     hfSectionEquipmentHeight.Text = "0";
-                    arrItems4[2] = hfSectionEquipmentHeight;
+                    arrItems4[3] = hfSectionEquipmentHeight;
                     
                     UILabel hfSectionEquipmentRows = new UILabel();
                     hfSectionEquipmentRows.Tag = iSectionRowsTagId * (iii+1);
                     hfSectionEquipmentRows.Hidden = true;
                     hfSectionEquipmentRows.Text = iPwrIdRows.ToString();
-                    arrItems4[3] = hfSectionEquipmentRows;
+                    arrItems4[4] = hfSectionEquipmentRows;
                     
                     UILabel hfSectionEquipmentStatus = new UILabel();
                     hfSectionEquipmentStatus.Tag = iSectionStatusTagId * (iii+1);
                     hfSectionEquipmentStatus.Hidden = true;
                     hfSectionEquipmentStatus.Text = "0";
-                    arrItems4[4] = hfSectionEquipmentStatus;
+                    arrItems4[5] = hfSectionEquipmentStatus;
                     
                     
                     SectionEquipmentRow.AddSubviews(arrItems4);
@@ -1412,7 +1444,7 @@ namespace ITPiPadSoln
 				View.AddSubview(layout);
 
                 //Now determine what is to be contrated by default
-                for(int iiii=0;iiii< m_iSections; iiii++)
+                for(int iiii=0;iiii< m_iQuestionSections; iiii++)
                 {
                     if(bHideSections[iiii])
                     {
@@ -1821,7 +1853,7 @@ namespace ITPiPadSoln
         public bool BatteryPwrIdComplete(string sPwrId)
         {
             clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
-            return DBQ.ProjectSection10PwrIdComplete(m_sPassedId, sPwrId);
+            return DBQ.ProjectSection10BatteryPwrIdComplete(m_sPassedId, sPwrId);
         }
 
         public void SaveAllSections ()
@@ -2238,6 +2270,18 @@ namespace ITPiPadSoln
             txtNext.BecomeFirstResponder();
 
             return true;
+        }
+
+        public bool BatteryFullyComplete()
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSection10BatteryComplete(m_sPassedId);
+        }
+        
+        public bool PowerConversionFullyComplete()
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSection10PowerConversionComplete(m_sPassedId);
         }
 
         public void OpenBatteries(object sender, EventArgs e)

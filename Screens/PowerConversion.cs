@@ -33,7 +33,8 @@ namespace ITPiPadSoln
         int iSectionHeightTagId = 10010;
         int iSectionRowsTagId = 10011;
         int iSectionStatusTagId = 10012;
-//        int ihfRowStatusTagId = 10100;
+        int iSectionCompleteLabelTagId = 10013;
+        //        int ihfRowStatusTagId = 10100;
 
         //Tags for heading Section
         int iPwrIdSectionTagId = 10010800;
@@ -98,6 +99,7 @@ namespace ITPiPadSoln
         int iEquipmentSerialNoTagId = 10017200;
         int iEquipmentDeleteBtnTagId = 10017400;
         
+        bool gbSuppressSecondCheck = false;
         string m_sSessionId = "";
         string m_sPassedId = "";
         string m_sProjDesc = "";
@@ -119,7 +121,9 @@ namespace ITPiPadSoln
         
         UITableView m_cmbSearch;
         UIButton m_btnSearching;
-        
+        object m_sender;
+        int m_iValidateType;
+
 
         public PowerConversion() : base ("PowerConversion", null)
         {
@@ -168,23 +172,6 @@ namespace ITPiPadSoln
             }
         }
         
-//        public override void ViewDidUnload ()
-//        {
-//            base.ViewDidUnload ();
-//            
-//            // Clear any references to subviews of the main view in order to
-//            // allow the Garbage Collector to collect them sooner.
-//            //
-//            // e.g. myOutlet.Dispose (); myOutlet = null;
-//            
-//            ReleaseDesignerOutlets ();
-//        }
-//        
-//        public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
-//        {
-//            // Return true for supported orientations
-//            return true;
-//        }
         public void DrawMenu()
         {
             UIView[] arrItems = new UIView[8];
@@ -302,7 +289,7 @@ namespace ITPiPadSoln
                 float iQuestionRowHeight = 30f;
                 float iTotalHeight = 0f;
                 float iHeightToAdd = iQuestionRowHeight;
-                UIView[] arrItems4 = new UIView[7];
+                UIView[] arrItems4 = new UIView[8];
                 UIView[] arrItems5 = new UIView[7];
 
                 
@@ -352,7 +339,7 @@ namespace ITPiPadSoln
                                     
                                     iUtils.CreateFormGridItem SectionEquipment = new iUtils.CreateFormGridItem();
                                     UIView SectionEquipmentVw = new UIView();
-                                    SectionEquipment.SetDimensions(0f,0f, 550f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+                                    SectionEquipment.SetDimensions(0f,0f, 400f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
                                     SectionEquipment.SetLabelText("POWER CONVERSION");
                                     SectionEquipment.SetBorderWidth(0.0f);
                                     SectionEquipment.SetFontName("Verdana-Bold");
@@ -363,7 +350,20 @@ namespace ITPiPadSoln
                                     SectionEquipmentVw = SectionEquipment.GetLabelCell();
                                     arrItems4[0] = SectionEquipmentVw;
                                     
-                                    
+                    iUtils.CreateFormGridItem SectionCompleteLabel = new iUtils.CreateFormGridItem();
+                    UIView SectionCompleteLabelVw = new UIView();
+                    SectionCompleteLabel.SetDimensions(400f,0f, 150f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+                    SectionCompleteLabel.SetLabelText("COMPLETED");
+                    SectionCompleteLabel.SetBorderWidth(0.0f);
+                    SectionCompleteLabel.SetFontName("Verdana-Bold");
+                    SectionCompleteLabel.SetTextColour("Royal Blue");
+                    SectionCompleteLabel.SetFontSize(12f);
+                    SectionCompleteLabel.SetCellColour("DarkSlateGrey");
+                    SectionCompleteLabel.SetTag(iSectionCompleteLabelTagId * (iii+1));
+                    SectionCompleteLabel.SetHidden(true);
+                    SectionCompleteLabelVw = SectionCompleteLabel.GetLabelCell();
+                    arrItems4[1] = SectionCompleteLabelVw;
+
                                     iUtils.CreateFormGridItem btnSaveEquipment = new iUtils.CreateFormGridItem();
                                     UIView btnSaveEquipmentVw = new UIView();
                                     btnSaveEquipment.SetDimensions(550f,0f, 150f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
@@ -379,7 +379,7 @@ namespace ITPiPadSoln
                                     btnSaveEquipmentButton = btnSaveEquipment.GetButton();
                                     btnSaveEquipmentButton.TouchUpInside += (sender,e) => {SaveThisSection(sender, e);};
                                     
-                                    arrItems4[1] = btnSaveEquipmentVw;
+                                    arrItems4[2] = btnSaveEquipmentVw;
                                     
                                     iUtils.CreateFormGridItem btnExpandEquipment = new iUtils.CreateFormGridItem();
                                     UIView btnExpandEquipmentVw = new UIView();
@@ -397,7 +397,7 @@ namespace ITPiPadSoln
                                     btnExpandEquipmentButton.Enabled = false;
                                     btnExpandEquipmentButton.TouchUpInside += (sender,e) => {ExpandSection(sender, e);};
                                     
-                                    arrItems4[2] = btnExpandEquipmentVw;
+                                    arrItems4[3] = btnExpandEquipmentVw;
                                     
                                     iUtils.CreateFormGridItem btnContractEquipment = new iUtils.CreateFormGridItem();
                                     UIView btnContractEquipmentVw = new UIView();
@@ -414,25 +414,25 @@ namespace ITPiPadSoln
                                     btnContractEquipmentButton = btnContractEquipment.GetButton();
                                     btnContractEquipmentButton.TouchUpInside += (sender,e) => {ContractSection(sender, e);};
                                     
-                                    arrItems4[3] = btnContractEquipmentVw;
+                                    arrItems4[4] = btnContractEquipmentVw;
                                     
                                     UILabel hfSectionEquipmentHeight = new UILabel();
                                     hfSectionEquipmentHeight.Tag = iSectionHeightTagId * (iii+1);
                                     hfSectionEquipmentHeight.Hidden = true;
                                     hfSectionEquipmentHeight.Text = "0";
-                                    arrItems4[4] = hfSectionEquipmentHeight;
+                                    arrItems4[5] = hfSectionEquipmentHeight;
                                     
                                     UILabel hfSectionEquipmentRows = new UILabel();
                                     hfSectionEquipmentRows.Tag = iSectionRowsTagId * (iii+1);
                                     hfSectionEquipmentRows.Hidden = true;
                                     hfSectionEquipmentRows.Text = iPwrIdRows.ToString();
-                                    arrItems4[5] = hfSectionEquipmentRows;
+                                    arrItems4[6] = hfSectionEquipmentRows;
                                     
                                     UILabel hfSectionEquipmentStatus = new UILabel();
                                     hfSectionEquipmentStatus.Tag = iSectionStatusTagId * (iii+1);
                                     hfSectionEquipmentStatus.Hidden = true;
                                     hfSectionEquipmentStatus.Text = "0";
-                                    arrItems4[6] = hfSectionEquipmentStatus;
+                                    arrItems4[7] = hfSectionEquipmentStatus;
                                     
                                     
                                     SectionEquipmentRow.AddSubviews(arrItems4);
@@ -1147,9 +1147,11 @@ namespace ITPiPadSoln
             UITextField txtFloorView = lblFloor.GetTextFieldView();
             txtFloorView.AutocorrectionType = UITextAutocorrectionType.No;
             txtFloorView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
+            txtFloorView.ShouldBeginEditing += (sender) => {
+                return SetGlobalEditItems(sender, 1);};
             txtFloorView.ReturnKeyType = UIReturnKeyType.Next;
             txtFloorView.ShouldEndEditing += (sender) => {
-                return ValidateFloor(sender);};
+                return ValidateFloor(sender, 0);};
             txtFloorView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 1);};
             
@@ -1183,9 +1185,11 @@ namespace ITPiPadSoln
             UITextField txtSuiteView = lblSuite.GetTextFieldView();
             txtSuiteView.AutocorrectionType = UITextAutocorrectionType.No;
             txtSuiteView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
+            txtSuiteView.ShouldBeginEditing += (sender) => {
+                return SetGlobalEditItems(sender, 2);};
             txtSuiteView.ReturnKeyType = UIReturnKeyType.Next;
             txtSuiteView.ShouldEndEditing += (sender) => {
-                return ValidateSuite(sender);};
+                return ValidateSuite(sender, 0);};
             txtSuiteView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 2);};
             
@@ -1219,9 +1223,11 @@ namespace ITPiPadSoln
             UITextField txtRackView = lblRack.GetTextFieldView();
             txtRackView.AutocorrectionType = UITextAutocorrectionType.No;
             txtRackView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
+            txtRackView.ShouldBeginEditing += (sender) => {
+                return SetGlobalEditItems(sender, 3);};
             txtRackView.ReturnKeyType = UIReturnKeyType.Next;
             txtRackView.ShouldEndEditing += (sender) => {
-                return ValidateRack(sender);};
+                return ValidateRack(sender, 0);};
             txtRackView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 3);};
             
@@ -1257,9 +1263,11 @@ namespace ITPiPadSoln
                 UITextField txtSubRackView = lblSubRack.GetTextFieldView();
                 txtSubRackView.AutocorrectionType = UITextAutocorrectionType.No;
                 txtSubRackView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
+                txtSubRackView.ShouldBeginEditing += (sender) => {
+                    return SetGlobalEditItems(sender, 4);};
                 txtSubRackView.ReturnKeyType = UIReturnKeyType.Next;
                 txtSubRackView.ShouldEndEditing += (sender) => {
-                    return ValidateSubRack(sender);};
+                    return ValidateSubRack(sender, 0);};
                 txtSubRackView.ShouldReturn += (sender) => {
                     return MoveNextTextField(sender, 4);};
                 
@@ -1316,9 +1324,11 @@ namespace ITPiPadSoln
                 UITextField txtPositionView = lblPosition.GetTextFieldView();
                 txtPositionView.AutocorrectionType = UITextAutocorrectionType.No;
                 txtPositionView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
+                txtPositionView.ShouldBeginEditing += (sender) => {
+                    return SetGlobalEditItems(sender, 5);};
                 txtPositionView.ReturnKeyType = UIReturnKeyType.Next;
                 txtPositionView.ShouldEndEditing += (sender) => {
-                    return ValidatePosition(sender);};
+                    return ValidatePosition(sender, 0);};
                 txtPositionView.ShouldReturn += (sender) => {
                     return MoveNextTextField(sender, 5);};
                 
@@ -2453,6 +2463,13 @@ namespace ITPiPadSoln
             vwSearch.AddSubview(m_cmbSearch);
         }
         
+        public bool SetGlobalEditItems(object sender, int iType)
+        {
+            m_sender = sender;
+            m_iValidateType = iType;
+            return true;
+        }
+
         //Here iType means 1 = Batteries, 2 = Solar strings
         public bool ValidateBankNo (object sender, int iType)
         {
@@ -2521,8 +2538,19 @@ namespace ITPiPadSoln
             }
         }
 
-        public bool ValidateFloor (object sender)
+        public bool ValidateFloor (object sender, int iFromBackButton)
         {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
+            
             UITextField txtFloor = (UITextField)sender;
             string sFloor = txtFloor.Text;
             sFloor = sFloor.ToUpper();
@@ -2555,24 +2583,30 @@ namespace ITPiPadSoln
                 SetAnyValueChanged(sender, null);
 
                 //Ask the question
-                int iSectionTagId = iEquipmentRowSectionCounterTagId * iPwrIdRow + iStringRow;
-                UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
-                int iSectionId = Convert.ToInt32(hfSectionId.Text);
-
-                int iPwrIdTagId = iEquipmentRowPwrIdTagId * iPwrIdRow + iStringRow;
-                UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
-                string sPwrId = hfPwrId.Text;
-
-                if(CheckSameFloorExists(sOldFloor,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                if(iFromBackButton == 0)
                 {
-                    iUtils.AlertBox alert2 = new iUtils.AlertBox();
-                    alert2.CreateAlertYesNoDialog();
-                    alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + sOldFloor + 
-                                           " to floor " +  sFloor + " ?");
-                    alert2.ShowAlertBox(); 
+                    int iSectionTagId = iEquipmentRowSectionCounterTagId * iPwrIdRow + iStringRow;
+                    UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
+                    int iSectionId = Convert.ToInt32(hfSectionId.Text);
                     
-                    UIAlertView alert3 = alert2.GetAlertDialog();
-                    alert3.Clicked += (sender2, e2)  => {CheckFloorChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, sOldFloor, iSectionId, iPwrIdRow);}; 
+                    int iPwrIdTagId = iEquipmentRowPwrIdTagId * iPwrIdRow + iStringRow;
+                    UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
+                    string sPwrId = hfPwrId.Text;
+                    
+                    if(sOldFloor != sFloor)
+                    {
+                        if(CheckSameFloorExists(sOldFloor,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                        {
+                            iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                            alert2.CreateAlertYesNoDialog();
+                            alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + sOldFloor + 
+                                                   " to floor " +  sFloor + " ?");
+                            alert2.ShowAlertBox(); 
+                            
+                            UIAlertView alert3 = alert2.GetAlertDialog();
+                            alert3.Clicked += (sender2, e2)  => {CheckFloorChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, sOldFloor, iSectionId, iPwrIdRow);}; 
+                        }
+                    }
                 }
                 return true;
             }
@@ -2624,6 +2658,9 @@ namespace ITPiPadSoln
                                 int iHiddenFloorId =  iEquipmentFloorHiddenTagId * iPwrIdCounter + (i+1);
                                 UILabel hfHiddenFloor = (UILabel)View.ViewWithTag (iHiddenFloorId);
                                 hfHiddenFloor.Text = sFloor;
+
+                                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdCounter + (i+1));
+                                hfRowStatus.Text = "1";
                             }
                         }
                     }
@@ -2633,8 +2670,18 @@ namespace ITPiPadSoln
             }
         }
         
-        public bool ValidateSuite (object sender)
+        public bool ValidateSuite (object sender, int iFromBackButton)
         {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
             UITextField txtSuite = (UITextField)sender;
             string sSuite = txtSuite.Text;
             sSuite = sSuite.ToUpper();
@@ -2646,7 +2693,8 @@ namespace ITPiPadSoln
             int iStringRow = iTagId - (iPwrIdRow * iEquipmentSuiteTagId);
             int iHiddenBankId =  iEquipmentSuiteHiddenTagId * iPwrIdRow + iStringRow;
             UILabel hfHiddenSuite = (UILabel)View.ViewWithTag (iHiddenBankId);
-            
+            string sOldSuite = hfHiddenSuite.Text;
+
             if (!bSuiteCheck) 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
@@ -2659,17 +2707,133 @@ namespace ITPiPadSoln
             } 
             else 
             {
-                hfHiddenSuite.Text = txtSuite.Text;
-                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdRow + iStringRow);
-                hfRowStatus.Text = "1";
-                SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
-                SetAnyValueChanged(sender, null);
+                if(sOldSuite != sSuite) //Only do something if there has been a chnage
+                {
+                    hfHiddenSuite.Text = txtSuite.Text;
+                    UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdRow + iStringRow);
+                    hfRowStatus.Text = "1";
+
+                    SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
+                    SetAnyValueChanged(sender, null);
+
+                    //Ask the question
+                    if(iFromBackButton == 0)
+                    {
+                        int iSectionTagId = iEquipmentRowSectionCounterTagId * iPwrIdRow + iStringRow;
+                        UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
+                        int iSectionId = Convert.ToInt32(hfSectionId.Text);
+                        
+                        int iPwrIdTagId = iEquipmentRowPwrIdTagId * iPwrIdRow + iStringRow;
+                        UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
+                        string sPwrId = hfPwrId.Text;
+                        
+                        int iFloorId =  iEquipmentFloorTagId * iPwrIdRow + iStringRow;
+                        UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                        string sFloor = txtFloor.Text;
+                        
+                        if(sOldSuite != sSuite)
+                        {
+                            if(CheckSameSuiteExists(sFloor, sOldSuite,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                            {
+                                iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                                alert2.CreateAlertYesNoDialog();
+                                alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + 
+                                                       sFloor + " and the suite " + sOldSuite + " to suite " +  sSuite + " ?");
+                                alert2.ShowAlertBox(); 
+                                
+                                UIAlertView alert3 = alert2.GetAlertDialog();
+                                alert3.Clicked += (sender2, e2)  => {
+                                    CheckSuiteChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, 
+                                                              sSuite, sOldSuite, iSectionId, iPwrIdRow);
+                                }; 
+                            }
+                        }
+                    }
+                }
                 return true;
             }
         }
         
-        public bool ValidateRack (object sender)
+        public bool CheckSameSuiteExists(string sFloor, string sSuite, int iSectionIdCounter, int iPwrIdCounter, string sPwrId, int iSourceRow)
         {
+            int iRowsTagId = (ihfPwrIdStringRowsTagId + (iPwrIdCounter)) * (iSectionIdCounter+1);
+            UILabel hfRowsCounter = (UILabel)View.ViewWithTag (iRowsTagId);
+            int iRows = Convert.ToInt32(hfRowsCounter.Text);
+            
+            for(int i=0;i<iRows;i++)
+            {
+                if((i+1) != iSourceRow)
+                {
+                    int iFloorId =  iEquipmentFloorTagId * iPwrIdCounter + (i+1);
+                    UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                    string sExistingFloor = txtFloor.Text;
+                    
+                    int iSuiteId =  iEquipmentSuiteTagId * iPwrIdCounter + (i+1);
+                    UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                    string sExistingSuite = txtSuite.Text;
+                    
+                    if(sExistingFloor == sFloor && sExistingSuite == sSuite)
+                    {
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+        
+        public void CheckSuiteChangesQuestion (object sender, EventArgs e, int iBtnIndex, int iSourceRow, string sPwrId, string sFloor, string sSuite, string sOldSuite, int iSectionIdCounter, int iPwrIdCounter)
+        {
+            switch (iBtnIndex) 
+            {
+                case 0: //Yes
+                    int iRowsTagId = (ihfPwrIdStringRowsTagId + (iPwrIdCounter)) * (iSectionIdCounter+1);
+                    UILabel hfRowsCounter = (UILabel)View.ViewWithTag (iRowsTagId);
+                    int iRows = Convert.ToInt32(hfRowsCounter.Text);
+                    
+                    for(int i=0;i<iRows;i++)
+                    {
+                        if((i+1) != iSourceRow)
+                        {
+                            int iFloorId =  iEquipmentFloorTagId * iPwrIdCounter + (i+1);
+                            UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                            string sExistingFloor = txtFloor.Text;
+                            
+                            int iSuiteId =  iEquipmentSuiteTagId * iPwrIdCounter + (i+1);
+                            UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                            string sExistingSuite = txtSuite.Text;
+                            
+                            if(sExistingFloor == sFloor && sExistingSuite == sOldSuite)
+                            {
+                                txtSuite.Text = sSuite;
+                                
+                                int iHiddenSuiteId =  iEquipmentSuiteHiddenTagId * iPwrIdCounter + (i+1);
+                                UILabel hfHiddenSuite = (UILabel)View.ViewWithTag (iHiddenSuiteId);
+                                hfHiddenSuite.Text = sSuite;
+                                
+                                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdCounter + (i+1));
+                                hfRowStatus.Text = "1";
+                            }
+                        }
+                    }
+                    break;
+                case 1: //No
+                    break;
+            }
+        }
+        
+        public bool ValidateRack (object sender, int iFromBackButton)
+        {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
             UITextField txtRack = (UITextField)sender;
             string sRack = txtRack.Text;
             sRack = sRack.ToUpper();
@@ -2681,7 +2845,8 @@ namespace ITPiPadSoln
             int iStringRow = iTagId - (iPwrIdRow * iEquipmentRackTagId);
             int iHiddenBankId =  iEquipmentRackHiddenTagId * iPwrIdRow + iStringRow;
             UILabel hfHiddenRack = (UILabel)View.ViewWithTag (iHiddenBankId);
-            
+            string sOldRack = hfHiddenRack.Text;
+
             if (!bRackCheck) 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
@@ -2699,12 +2864,139 @@ namespace ITPiPadSoln
                 hfRowStatus.Text = "1";
                 SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
                 SetAnyValueChanged(sender, null);
+                
+                //Ask the question
+                if(iFromBackButton == 0)
+                {
+                    int iSectionTagId = iEquipmentRowSectionCounterTagId * iPwrIdRow + iStringRow;
+                    UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
+                    int iSectionId = Convert.ToInt32(hfSectionId.Text);
+                    
+                    int iPwrIdTagId = iEquipmentRowPwrIdTagId * iPwrIdRow + iStringRow;
+                    UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
+                    string sPwrId = hfPwrId.Text;
+                    
+                    int iFloorId =  iEquipmentFloorTagId * iPwrIdRow + iStringRow;
+                    UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                    string sFloor = txtFloor.Text;
+                    
+                    int iSuiteId =  iEquipmentSuiteTagId * iPwrIdRow + iStringRow;
+                    UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                    string sSuite = txtSuite.Text;
+                    
+                    if(sOldRack != sRack)
+                    {
+                        if(CheckSameRackExists(sFloor, sSuite, sOldRack,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                        {
+                            iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                            alert2.CreateAlertYesNoDialog();
+                            alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + 
+                                                   sFloor + ", suite " + sSuite + " and rack " + sOldRack + " to rack " +  sRack + " ?");
+                            alert2.ShowAlertBox(); 
+                            
+                            UIAlertView alert3 = alert2.GetAlertDialog();
+                            alert3.Clicked += (sender2, e2)  => {
+                                CheckRackChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, 
+                                                         sSuite, sRack, sOldRack, iSectionId, iPwrIdRow);
+                            }; 
+                        }
+                    }
+                }
                 return true;
             }
         }
         
-        public bool ValidateSubRack (object sender)
+        public bool CheckSameRackExists(string sFloor, string sSuite, string sRack, int iSectionIdCounter, int iPwrIdCounter, string sPwrId, int iSourceRow)
         {
+            int iRowsTagId = (ihfPwrIdStringRowsTagId + (iPwrIdCounter)) * (iSectionIdCounter+1);
+            UILabel hfRowsCounter = (UILabel)View.ViewWithTag (iRowsTagId);
+            int iRows = Convert.ToInt32(hfRowsCounter.Text);
+            
+            for(int i=0;i<iRows;i++)
+            {
+                if((i+1) != iSourceRow)
+                {
+                    int iFloorId =  iEquipmentFloorTagId * iPwrIdCounter + (i+1);
+                    UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                    string sExistingFloor = txtFloor.Text;
+                    
+                    int iSuiteId =  iEquipmentSuiteTagId * iPwrIdCounter + (i+1);
+                    UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                    string sExistingSuite = txtSuite.Text;
+                    
+                    int iRackId =  iEquipmentRackTagId * iPwrIdCounter + (i+1);
+                    UITextField txtRack = (UITextField)View.ViewWithTag (iRackId);
+                    string sExistingRack = txtRack.Text;
+                    
+                    if(sExistingFloor == sFloor && sExistingSuite == sSuite && sExistingRack == sRack)
+                    {
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+        
+        public void CheckRackChangesQuestion (object sender, EventArgs e, int iBtnIndex, int iSourceRow, 
+                                              string sPwrId, string sFloor, string sSuite, string sRack, 
+                                              string sOldRack, int iSectionIdCounter, int iPwrIdCounter)
+        {
+            switch (iBtnIndex) 
+            {
+                case 0: //Yes
+                    int iRowsTagId = (ihfPwrIdStringRowsTagId + (iPwrIdCounter)) * (iSectionIdCounter+1);
+                    UILabel hfRowsCounter = (UILabel)View.ViewWithTag (iRowsTagId);
+                    int iRows = Convert.ToInt32(hfRowsCounter.Text);
+                    
+                    for(int i=0;i<iRows;i++)
+                    {
+                        if((i+1) != iSourceRow)
+                        {
+                            int iFloorId =  iEquipmentFloorTagId * iPwrIdCounter + (i+1);
+                            UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                            string sExistingFloor = txtFloor.Text;
+                            
+                            int iSuiteId =  iEquipmentSuiteTagId * iPwrIdCounter + (i+1);
+                            UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                            string sExistingSuite = txtSuite.Text;
+                            
+                            int iRackId =  iEquipmentRackTagId * iPwrIdCounter + (i+1);
+                            UITextField txtRack = (UITextField)View.ViewWithTag (iRackId);
+                            string sExistingRack = txtRack.Text;
+                            
+                            if(sExistingFloor == sFloor && sExistingSuite == sSuite && sExistingRack == sOldRack)
+                            {
+                                txtRack.Text = sRack;
+                                
+                                int iHiddenRackId =  iEquipmentRackHiddenTagId * iPwrIdCounter + (i+1);
+                                UILabel hfHiddenRack = (UILabel)View.ViewWithTag (iHiddenRackId);
+                                hfHiddenRack.Text = sRack;
+                                
+                                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdCounter + (i+1));
+                                hfRowStatus.Text = "1";
+                            }
+                        }
+                    }
+                    break;
+                case 1: //No
+                    break;
+            }
+        }
+        
+
+        public bool ValidateSubRack (object sender, int iFromBackButton)
+        {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
             UITextField txtSubRack = (UITextField)sender;
             string sSubRack = txtSubRack.Text;
             sSubRack = sSubRack.ToUpper();
@@ -2716,7 +3008,8 @@ namespace ITPiPadSoln
             int iStringRow = iTagId - (iPwrIdRow * iEquipmentSubRackTagId);
             int iHiddenBankId =  iEquipmentSubRackHiddenTagId * iPwrIdRow + iStringRow;
             UILabel hfHiddenSubRack = (UILabel)View.ViewWithTag (iHiddenBankId);
-            
+            string sOldSubRack = hfHiddenSubRack.Text;
+
             if (!bSubRackCheck) 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
@@ -2734,12 +3027,155 @@ namespace ITPiPadSoln
                 hfRowStatus.Text = "1";
                 SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
                 SetAnyValueChanged(sender, null);
+                
+                //Ask the question
+                if(iFromBackButton == 0)
+                {
+                    int iSectionTagId = iEquipmentRowSectionCounterTagId * iPwrIdRow + iStringRow;
+                    UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
+                    int iSectionId = Convert.ToInt32(hfSectionId.Text);
+                    
+                    int iPwrIdTagId = iEquipmentRowPwrIdTagId * iPwrIdRow + iStringRow;
+                    UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
+                    string sPwrId = hfPwrId.Text;
+                    
+                    int iFloorId =  iEquipmentFloorTagId * iPwrIdRow + iStringRow;
+                    UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                    string sFloor = txtFloor.Text;
+                    
+                    int iSuiteId =  iEquipmentSuiteTagId * iPwrIdRow + iStringRow;
+                    UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                    string sSuite = txtSuite.Text;
+                    
+                    int iRackId =  iEquipmentRackTagId * iPwrIdRow + iStringRow;
+                    UITextField txtRack = (UITextField)View.ViewWithTag (iRackId);
+                    string sRack = txtRack.Text;
+                    
+                    if(sOldSubRack != sSubRack)
+                    {
+                        if(CheckSameSubRackExists(sFloor, sSuite, sRack, sOldSubRack,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                        {
+                            iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                            alert2.CreateAlertYesNoDialog();
+                            alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + 
+                                                   sFloor + ", suite " + sSuite + ", rack " + sRack + 
+                                                   " and subrack " + sOldSubRack + " to subrack " +  sSubRack + " ?");
+                            
+                            alert2.ShowAlertBox(); 
+                            
+                            UIAlertView alert3 = alert2.GetAlertDialog();
+                            alert3.Clicked += (sender2, e2)  => {
+                                CheckSubRackChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, 
+                                                            sSuite, sRack, sSubRack, sOldSubRack, iSectionId, iPwrIdRow);
+                            }; 
+                        }
+                    }
+                }
                 return true;
             }
         }
         
-        public bool ValidatePosition (object sender)
+        public bool CheckSameSubRackExists(string sFloor, string sSuite, string sRack, string sSubRack, int iSectionIdCounter, 
+                                           int iPwrIdCounter, string sPwrId, int iSourceRow)
         {
+            int iRowsTagId = (ihfPwrIdStringRowsTagId + (iPwrIdCounter)) * (iSectionIdCounter+1);
+            UILabel hfRowsCounter = (UILabel)View.ViewWithTag (iRowsTagId);
+            int iRows = Convert.ToInt32(hfRowsCounter.Text);
+            
+            for(int i=0;i<iRows;i++)
+            {
+                if((i+1) != iSourceRow)
+                {
+                    int iFloorId =  iEquipmentFloorTagId * iPwrIdCounter + (i+1);
+                    UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                    string sExistingFloor = txtFloor.Text;
+                    
+                    int iSuiteId =  iEquipmentSuiteTagId * iPwrIdCounter + (i+1);
+                    UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                    string sExistingSuite = txtSuite.Text;
+                    
+                    int iRackId =  iEquipmentRackTagId * iPwrIdCounter + (i+1);
+                    UITextField txtRack = (UITextField)View.ViewWithTag (iRackId);
+                    string sExistingRack = txtRack.Text;
+                    
+                    int iSubRackId =  iEquipmentSubRackTagId * iPwrIdCounter + (i+1);
+                    UITextField txtSubRack = (UITextField)View.ViewWithTag (iSubRackId);
+                    string sExistingSubRack = txtSubRack.Text;
+                    
+                    if(sExistingFloor == sFloor && sExistingSuite == sSuite && sExistingRack == sRack && sExistingSubRack == sSubRack)
+                    {
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+        
+        public void CheckSubRackChangesQuestion (object sender, EventArgs e, int iBtnIndex, int iSourceRow, 
+                                                 string sPwrId, string sFloor, string sSuite, string sRack, 
+                                                 string sSubRack, string sOldSubRack, int iSectionIdCounter, 
+                                                 int iPwrIdCounter)
+        {
+            switch (iBtnIndex) 
+            {
+                case 0: //Yes
+                    int iRowsTagId = (ihfPwrIdStringRowsTagId + (iPwrIdCounter)) * (iSectionIdCounter+1);
+                    UILabel hfRowsCounter = (UILabel)View.ViewWithTag (iRowsTagId);
+                    int iRows = Convert.ToInt32(hfRowsCounter.Text);
+                    
+                    for(int i=0;i<iRows;i++)
+                    {
+                        if((i+1) != iSourceRow)
+                        {
+                            int iFloorId =  iEquipmentFloorTagId * iPwrIdCounter + (i+1);
+                            UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                            string sExistingFloor = txtFloor.Text;
+                            
+                            int iSuiteId =  iEquipmentSuiteTagId * iPwrIdCounter + (i+1);
+                            UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                            string sExistingSuite = txtSuite.Text;
+                            
+                            int iRackId =  iEquipmentRackTagId * iPwrIdCounter + (i+1);
+                            UITextField txtRack = (UITextField)View.ViewWithTag (iRackId);
+                            string sExistingRack = txtRack.Text;
+                            
+                            int iSubRackId =  iEquipmentSubRackTagId * iPwrIdCounter + (i+1);
+                            UITextField txtSubRack = (UITextField)View.ViewWithTag (iSubRackId);
+                            string sExistingSubRack = txtSubRack.Text;
+                            
+                            if(sExistingFloor == sFloor && sExistingSuite == sSuite && sExistingRack == sRack && 
+                               sExistingSubRack == sOldSubRack)
+                            {
+                                txtSubRack.Text = sSubRack;
+                                
+                                int iHiddenSubRackId =  iEquipmentSubRackHiddenTagId * iPwrIdCounter + (i+1);
+                                UILabel hfHiddenSubRack = (UILabel)View.ViewWithTag (iHiddenSubRackId);
+                                hfHiddenSubRack.Text = sSubRack;
+                                
+                                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdCounter + (i+1));
+                                hfRowStatus.Text = "1";
+                            }
+                        }
+                    }
+                    break;
+                case 1: //No
+                    break;
+            }
+        }
+        
+        public bool ValidatePosition (object sender, int iFromBackButton)
+        {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
             UITextField txtPosition = (UITextField)sender;
             string sPosition = txtPosition.Text;
             sPosition = sPosition.ToUpper();
@@ -2751,7 +3187,8 @@ namespace ITPiPadSoln
             int iStringRow = iTagId - (iPwrIdRow * iEquipmentPositionTagId);
             int iHiddenPositionId =  iEquipmentPositionHiddenTagId * iPwrIdRow + iStringRow;
             UILabel hfHiddenPosition = (UILabel)View.ViewWithTag (iHiddenPositionId);
-            
+            string sOldPosition = hfHiddenPosition.Text;
+
             if (!bPositionCheck) 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
@@ -2769,10 +3206,158 @@ namespace ITPiPadSoln
                 hfRowStatus.Text = "1";
                 SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
                 SetAnyValueChanged(sender, null);
+
+                //Ask the question
+                if(iFromBackButton == 0)
+                {
+                    int iSectionTagId = iEquipmentRowSectionCounterTagId * iPwrIdRow + iStringRow;
+                    UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
+                    int iSectionId = Convert.ToInt32(hfSectionId.Text);
+                    
+                    int iPwrIdTagId = iEquipmentRowPwrIdTagId * iPwrIdRow + iStringRow;
+                    UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
+                    string sPwrId = hfPwrId.Text;
+                    
+                    int iFloorId =  iEquipmentFloorTagId * iPwrIdRow + iStringRow;
+                    UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                    string sFloor = txtFloor.Text;
+                    
+                    int iSuiteId =  iEquipmentSuiteTagId * iPwrIdRow + iStringRow;
+                    UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                    string sSuite = txtSuite.Text;
+                    
+                    int iRackId =  iEquipmentRackTagId * iPwrIdRow + iStringRow;
+                    UITextField txtRack = (UITextField)View.ViewWithTag (iRackId);
+                    string sRack = txtRack.Text;
+                    
+                    int iSubRackId =  iEquipmentSubRackTagId * iPwrIdRow + iStringRow;
+                    UITextField txtSubRack = (UITextField)View.ViewWithTag (iSubRackId);
+                    string sSubRack = txtSubRack.Text;
+                    
+                    if(sOldPosition != sPosition)
+                    {
+                        if(CheckSamePositionExists(sFloor, sSuite, sRack, sSubRack, sOldPosition,
+                                                   iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                        {
+                            iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                            alert2.CreateAlertYesNoDialog();
+                            alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + 
+                                                   sFloor + ", suite " + sSuite + ", rack " + sRack + ", subrack " + sSubRack + 
+                                                   " and position " + sOldPosition + " to position " +  sPosition + " ?");
+                            
+                            alert2.ShowAlertBox(); 
+                            
+                            UIAlertView alert3 = alert2.GetAlertDialog();
+                            alert3.Clicked += (sender2, e2)  => {
+                                CheckPositionChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, 
+                                                            sSuite, sRack, sSubRack, sPosition, sOldPosition, iSectionId, iPwrIdRow);
+                            }; 
+                        }
+                    }
+                }
                 return true;
             }
         }
         
+        public bool CheckSamePositionExists(string sFloor, string sSuite, string sRack, string sSubRack, string sPosition, int iSectionIdCounter, 
+                                           int iPwrIdCounter, string sPwrId, int iSourceRow)
+        {
+            int iRowsTagId = (ihfPwrIdStringRowsTagId + (iPwrIdCounter)) * (iSectionIdCounter+1);
+            UILabel hfRowsCounter = (UILabel)View.ViewWithTag (iRowsTagId);
+            int iRows = Convert.ToInt32(hfRowsCounter.Text);
+            
+            for(int i=0;i<iRows;i++)
+            {
+                if((i+1) != iSourceRow)
+                {
+                    int iFloorId =  iEquipmentFloorTagId * iPwrIdCounter + (i+1);
+                    UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                    string sExistingFloor = txtFloor.Text;
+                    
+                    int iSuiteId =  iEquipmentSuiteTagId * iPwrIdCounter + (i+1);
+                    UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                    string sExistingSuite = txtSuite.Text;
+                    
+                    int iRackId =  iEquipmentRackTagId * iPwrIdCounter + (i+1);
+                    UITextField txtRack = (UITextField)View.ViewWithTag (iRackId);
+                    string sExistingRack = txtRack.Text;
+                    
+                    int iSubRackId =  iEquipmentSubRackTagId * iPwrIdCounter + (i+1);
+                    UITextField txtSubRack = (UITextField)View.ViewWithTag (iSubRackId);
+                    string sExistingSubRack = txtSubRack.Text;
+
+                    int iPositionId =  iEquipmentPositionTagId * iPwrIdCounter + (i+1);
+                    UITextField txtPosition = (UITextField)View.ViewWithTag (iPositionId);
+                    string sExistingPosition = txtPosition.Text;
+                    
+                    if(sExistingFloor == sFloor && sExistingSuite == sSuite && sExistingRack == sRack && 
+                       sExistingSubRack == sSubRack &&  sExistingPosition == sPosition)
+                    {
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+        
+        public void CheckPositionChangesQuestion (object sender, EventArgs e, int iBtnIndex, int iSourceRow, 
+                                                 string sPwrId, string sFloor, string sSuite, string sRack, 
+                                                 string sSubRack, string sPosition, string sOldPosition, 
+                                                 int iSectionIdCounter, int iPwrIdCounter)
+        {
+            switch (iBtnIndex) 
+            {
+                case 0: //Yes
+                    int iRowsTagId = (ihfPwrIdStringRowsTagId + (iPwrIdCounter)) * (iSectionIdCounter+1);
+                    UILabel hfRowsCounter = (UILabel)View.ViewWithTag (iRowsTagId);
+                    int iRows = Convert.ToInt32(hfRowsCounter.Text);
+                    
+                    for(int i=0;i<iRows;i++)
+                    {
+                        if((i+1) != iSourceRow)
+                        {
+                            int iFloorId =  iEquipmentFloorTagId * iPwrIdCounter + (i+1);
+                            UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                            string sExistingFloor = txtFloor.Text;
+                            
+                            int iSuiteId =  iEquipmentSuiteTagId * iPwrIdCounter + (i+1);
+                            UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                            string sExistingSuite = txtSuite.Text;
+                            
+                            int iRackId =  iEquipmentRackTagId * iPwrIdCounter + (i+1);
+                            UITextField txtRack = (UITextField)View.ViewWithTag (iRackId);
+                            string sExistingRack = txtRack.Text;
+                            
+                            int iSubRackId =  iEquipmentSubRackTagId * iPwrIdCounter + (i+1);
+                            UITextField txtSubRack = (UITextField)View.ViewWithTag (iSubRackId);
+                            string sExistingSubRack = txtSubRack.Text;
+                            
+                            int iPositionId =  iEquipmentPositionTagId * iPwrIdCounter + (i+1);
+                            UITextField txtPosition = (UITextField)View.ViewWithTag (iPositionId);
+                            string sExistingPosition = txtPosition.Text;
+                            
+                            if(sExistingFloor == sFloor && sExistingSuite == sSuite && sExistingRack == sRack && 
+                               sExistingSubRack == sSubRack &&  sExistingPosition == sOldPosition)
+                            {
+                                txtPosition.Text = sPosition;
+                                
+                                int iHiddenPositionId =  iEquipmentPositionHiddenTagId * iPwrIdCounter + (i+1);
+                                UILabel hfHiddenPosition = (UILabel)View.ViewWithTag (iHiddenPositionId);
+                                hfHiddenPosition.Text = sPosition;
+                                
+                                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdCounter + (i+1));
+                                hfRowStatus.Text = "1";
+                            }
+                        }
+                    }
+                    break;
+                case 1: //No
+                    break;
+            }
+        }
+        
+
 
 
         public bool SetStringEquipTypeChanged (object sender, EventArgs e)
@@ -3152,7 +3737,10 @@ namespace ITPiPadSoln
             string sId = m_sPassedId;
             clsTabletDB.ITPDocumentSection DB = new clsTabletDB.ITPDocumentSection();
             string[] sItemValues = new string[24];
-            
+            string sString = "";
+            string sSubRack = "";
+            string sPosition = "";
+
             //Get the number of PwrId's
             UILabel hfSectionPwrIds = (UILabel)View.ViewWithTag(iSectionRowsTagId * (m_iEquipmentSectionCounter + 1));
             int iTotalPwrIds = Convert.ToInt32(hfSectionPwrIds.Text);
@@ -3180,19 +3768,38 @@ namespace ITPiPadSoln
                         {
                             iAutoId = Convert.ToInt32(sAutoId);
                         }
-                        
+
+                        //Get the type so that we only look at the right level of hierarchy
+                        UILabel hfEquipmentType = (UILabel)View.ViewWithTag(iEquipmentTypeTagId * (i + 1) + (j + 1));
+                        int iEquipType = Convert.ToInt32(hfEquipmentType.Text);
+                                                
                         UILabel lblPwrId = (UILabel)View.ViewWithTag(iEquipmentRowPwrIdTagId * (i + 1) + (j + 1));
                         string sPwrId = lblPwrId.Text;
-                        UITextField txtBankNo = (UITextField)View.ViewWithTag(iEquipmentStringTagId * (i + 1) + (j + 1));
-                        string sBankNo = txtBankNo.Text;
+
                         UITextField txtFloor = (UITextField)View.ViewWithTag(iEquipmentFloorTagId * (i + 1) + (j + 1));
                         string sFloor = txtFloor.Text;
                         UITextField txtSuite = (UITextField)View.ViewWithTag(iEquipmentSuiteTagId * (i + 1) + (j + 1));
                         string sSuite = txtSuite.Text;
                         UITextField txtRack = (UITextField)View.ViewWithTag(iEquipmentRackTagId * (i + 1) + (j + 1));
                         string sRack = txtRack.Text;
-                        UITextField txtSubRack = (UITextField)View.ViewWithTag(iEquipmentSubRackTagId * (i + 1) + (j + 1));
-                        string sSubRack = txtSubRack.Text;
+                        if(iEquipType >= 4)
+                        {
+                            UITextField txtSubRack = (UITextField)View.ViewWithTag(iEquipmentSubRackTagId * (i + 1) + (j + 1));
+                            sSubRack = txtSubRack.Text;
+                        }
+
+                        if(iEquipType >= 5)
+                        {
+                            UITextField txtPosition = (UITextField)View.ViewWithTag(iEquipmentPositionTagId * (i + 1) + (j + 1));
+                            sPosition = txtPosition.Text;
+                        }
+
+                        if(iEquipType >= 6)
+                        {
+                            UITextField txtString = (UITextField)View.ViewWithTag(iEquipmentStringTagId * (i + 1) + (j + 1));
+                            sString = txtString.Text;
+                        }
+
                         UILabel lblMake = (UILabel)View.ViewWithTag(iEquipmentMakeTagId * (i + 1) + (j + 1));
                         string sMake = lblMake.Text;
                         UILabel lblModel = (UILabel)View.ViewWithTag(iEquipmentModelTagId * (i + 1) + (j + 1));
@@ -3271,12 +3878,12 @@ namespace ITPiPadSoln
                         //Get all the info for this string
                         sItemValues [0] = sId;
                         sItemValues [1] = sPwrId;
-                        sItemValues [2] = sBankNo;
+                        sItemValues [2] = sString; //This comes first because it was set up for battery strings initially
                         sItemValues [3] = sFloor;
                         sItemValues [4] = sSuite;
                         sItemValues [5] = sRack;
                         sItemValues [6] = sSubRack;
-                        sItemValues [7] = ""; //There is no position for a battery string
+                        sItemValues [7] = sPosition; //There is no position for a battery string but of course there could be for a power conversion item
                         sItemValues [8] = sMake;
                         sItemValues [9] = sModel;
                         sItemValues [10] = sSerialNo;
@@ -3291,10 +3898,10 @@ namespace ITPiPadSoln
                         sItemValues [19] = sEquipType;
                         sItemValues [20] = sSPN;
                         sItemValues [21] = sDuplicate;
-                        sItemValues [22] = "6"; //The equipemnt type is 6 for a battery string
+                        sItemValues [22] = iEquipType.ToString();
                         sItemValues [23] = iRowStatus.ToString();
                         
-                        if (sMake == "" || sModel == "" || sBankNo == "" || sEquipType == "")
+                        if (sMake == "" || sModel == "" || sEquipType == "" || iEquipType == -1)
                         {
                             bResetSectionFlag = false;
                             iUtils.AlertBox alert = new iUtils.AlertBox();
@@ -3373,6 +3980,46 @@ namespace ITPiPadSoln
         
         public void CheckUnsaved ()
         {
+            //First of all validate anything required
+            switch(m_iValidateType)
+            {
+                case 1: //Floor
+                    if(!ValidateFloor(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+                case 2: //Suite
+                    if(!ValidateSuite(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+                case 3: //Rack
+                    if(!ValidateRack(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+                case 4: //SubRack
+                    if(!ValidateSubRack(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+                case 5: //Position
+                    if(!ValidatePosition(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+            }
+
             UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
             int iStatus = Convert.ToInt32 (txtEditStatus.Text);
             if (iStatus == 0) 
