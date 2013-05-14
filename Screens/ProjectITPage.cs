@@ -255,15 +255,16 @@ namespace ITPiPadSoln
 				float iHeightToAdd = iQuestionRowHeight;
 				float iHeightToAdd2 = iHeightToAdd;
                 bool bDisableRow = false;
+                bool bFullyCommitted = false;
                 bool bHideComplete = true;
                 bool[] bHideSections = new bool[1];
-                UIView[] arrItems = new UIView[4];
+                UIView[] arrItems = new UIView[5];
 				UIView[] arrItems2 = new UIView[6];
 				UIView[] arrItems3 = new UIView[5];
                 UIView[] arrItems4 = new UIView[6];
                 UIView[] arrItems6 = new UIView[9];
                 UIView[] arrItems7 = new UIView[7];
-                UIView[] arrItems14 = new UIView[7];
+                UIView[] arrItems14 = new UIView[8];
 
 				UIScrollView layout = new UIScrollView();
 				layout.Frame = new RectangleF(0f,35f,1000f,620f);
@@ -304,7 +305,7 @@ namespace ITPiPadSoln
 						iUtils.CreateFormGridItem Section = new iUtils.CreateFormGridItem();
 						UIView SectionVw = new UIView();
 						iColNo = arrITPSections.Tables[0].Columns["Name"].Ordinal;
-						Section.SetDimensions(0f,0f, 550f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+						Section.SetDimensions(0f,0f, 300f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
 						Section.SetLabelText(arrITPSections.Tables[0].Rows[i].ItemArray[iColNo].ToString());
 						Section.SetBorderWidth(0.0f);
 						Section.SetFontName("Verdana-Bold");
@@ -316,7 +317,39 @@ namespace ITPiPadSoln
 						arrItems[0] = SectionVw;
 
 
-						iUtils.CreateFormGridItem btnSave = new iUtils.CreateFormGridItem();
+                        if(RFUFullyCommitted())
+                        {
+                            bFullyCommitted = true;
+                            bHideComplete = false;
+                        }
+                        else
+                        {
+                            bFullyCommitted = false;
+                            bHideComplete = true;
+                        }
+
+                        iUtils.CreateFormGridItem SectionCompleteLabel = new iUtils.CreateFormGridItem();
+                        UIView SectionCompleteLabelVw = new UIView();
+                        SectionCompleteLabel.SetDimensions(300f,0f, 250f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+                        if(bFullyCommitted)
+                        {
+                            SectionCompleteLabel.SetLabelText("COMMITTED");
+                        }
+                        else
+                        {
+                            SectionCompleteLabel.SetLabelText("COMPLETED");
+                        }
+                        SectionCompleteLabel.SetBorderWidth(0.0f);
+                        SectionCompleteLabel.SetFontName("Verdana-Bold");
+                        SectionCompleteLabel.SetTextColour("Bright Yellow");
+                        SectionCompleteLabel.SetFontSize(14f);
+                        SectionCompleteLabel.SetCellColour("DarkSlateGrey");
+                        SectionCompleteLabel.SetTag(iSectionCompleteLabelTagId * (i+1));
+                        SectionCompleteLabel.SetHidden(bHideComplete);
+                        SectionCompleteLabelVw = SectionCompleteLabel.GetLabelCell();
+                        arrItems[1] = SectionCompleteLabelVw;
+
+                        iUtils.CreateFormGridItem btnSave = new iUtils.CreateFormGridItem();
 						UIView btnSaveVw = new UIView();
 						btnSave.SetDimensions(550f,0f, 150f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
 						btnSave.SetLabelText("Save Section");
@@ -331,7 +364,7 @@ namespace ITPiPadSoln
 						btnSaveButton = btnSave.GetButton();
 						btnSaveButton.TouchUpInside += (sender,e) => {SaveThisSection(sender, e);};
 
-						arrItems[1] = btnSaveVw;
+						arrItems[2] = btnSaveVw;
 
 						iUtils.CreateFormGridItem btnExpand = new iUtils.CreateFormGridItem();
 						UIView btnExpandVw = new UIView();
@@ -349,7 +382,7 @@ namespace ITPiPadSoln
                         btnExpandButton.Enabled = false;
 						btnExpandButton.TouchUpInside += (sender,e) => {ExpandSection(sender, e);};
 						
-						arrItems[2] = btnExpandVw;
+						arrItems[3] = btnExpandVw;
 
 						iUtils.CreateFormGridItem btnContract = new iUtils.CreateFormGridItem();
 						UIView btnContractVw = new UIView();
@@ -366,7 +399,7 @@ namespace ITPiPadSoln
 						btnContractButton = btnContract.GetButton();
 						btnContractButton.TouchUpInside += (sender,e) => {ContractSection(sender, e);};
 						
-						arrItems[3] = btnContractVw;
+						arrItems[4] = btnContractVw;
 
 						SectionRow.AddSubviews(arrItems);
 
@@ -694,19 +727,35 @@ namespace ITPiPadSoln
 					arrItems4[0] = Section10Vw;
 					
 					
-                    if(BatteryFullyComplete())
+                    if(RFUFullyCommitted())
                     {
+                        bFullyCommitted = true;
                         bHideComplete = false;
                     }
                     else
                     {
-                        bHideComplete = true;
+                        bFullyCommitted = false;
+                        if(BatteryFullyComplete())
+                        {
+                            bHideComplete = false;
+                        }
+                        else
+                        {
+                            bHideComplete = true;
+                        }
                     }
 
                     iUtils.CreateFormGridItem SectionCompleteLabel = new iUtils.CreateFormGridItem();
                     UIView SectionCompleteLabelVw = new UIView();
                     SectionCompleteLabel.SetDimensions(300f,0f, 150f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
-                    SectionCompleteLabel.SetLabelText("COMPLETED");
+                    if(bFullyCommitted)
+                    {
+                        SectionCompleteLabel.SetLabelText("COMMITTED");
+                    }
+                    else
+                    {
+                        SectionCompleteLabel.SetLabelText("COMPLETED");
+                    }
                     SectionCompleteLabel.SetBorderWidth(0.0f);
                     SectionCompleteLabel.SetFontName("Verdana-Bold");
                     SectionCompleteLabel.SetTextColour("Bright Yellow");
@@ -807,19 +856,36 @@ namespace ITPiPadSoln
                     arrItems4[0] = SectionEquipmentVw;
                     
                     
-                    if(PowerConversionFullyComplete())
+                    if(RFUFullyCommitted())
                     {
+                        bFullyCommitted = true;
                         bHideComplete = false;
                     }
                     else
                     {
-                        bHideComplete = true;
+                        bFullyCommitted = false;
+                        if(PowerConversionFullyComplete())
+                        {
+                            bHideComplete = false;
+                        }
+                        else
+                        {
+                            bHideComplete = true;
+                        }
                     }
-                    
+
                     iUtils.CreateFormGridItem SectionCompleteLabel = new iUtils.CreateFormGridItem();
                     UIView SectionCompleteLabelVw = new UIView();
                     SectionCompleteLabel.SetDimensions(300f,0f, 150f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
-                    SectionCompleteLabel.SetLabelText("COMPLETED");
+                    if(bFullyCommitted)
+                    {
+                        SectionCompleteLabel.SetLabelText("COMMITTED");
+                    }
+                    else
+                    {
+                        SectionCompleteLabel.SetLabelText("COMPLETED");
+                    }
+
                     SectionCompleteLabel.SetBorderWidth(0.0f);
                     SectionCompleteLabel.SetFontName("Verdana-Bold");
                     SectionCompleteLabel.SetTextColour("Bright Yellow");
@@ -912,7 +978,7 @@ namespace ITPiPadSoln
                     
                     iUtils.CreateFormGridItem SectionRFU = new iUtils.CreateFormGridItem();
                     UIView SectionRFUVw = new UIView();
-                    SectionRFU.SetDimensions(0f,0f, 550f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+                    SectionRFU.SetDimensions(0f,0f, 300f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
                     SectionRFU.SetLabelText("READY FOR USE (RFU)");
                     SectionRFU.SetBorderWidth(0.0f);
                     SectionRFU.SetFontName("Verdana-Bold");
@@ -924,6 +990,29 @@ namespace ITPiPadSoln
                     arrItems14[0] = SectionRFUVw;
                     
                     
+                    if(RFUFullyCommitted())
+                    {
+                        bFullyCommitted = false;
+                    }
+                    else
+                    {
+                        bFullyCommitted = true;
+                    }
+                    
+                    iUtils.CreateFormGridItem SectionCompleteLabel = new iUtils.CreateFormGridItem();
+                    UIView SectionCompleteLabelVw = new UIView();
+                    SectionCompleteLabel.SetDimensions(300f,0f, 250f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+                    SectionCompleteLabel.SetLabelText("COMMITTED");
+                    SectionCompleteLabel.SetBorderWidth(0.0f);
+                    SectionCompleteLabel.SetFontName("Verdana-Bold");
+                    SectionCompleteLabel.SetTextColour("Bright Yellow");
+                    SectionCompleteLabel.SetFontSize(14f);
+                    SectionCompleteLabel.SetCellColour("DarkSlateGrey");
+                    SectionCompleteLabel.SetTag(iSectionCompleteLabelTagId * (ii+1));
+                    SectionCompleteLabel.SetHidden(bFullyCommitted);
+                    SectionCompleteLabelVw = SectionCompleteLabel.GetLabelCell();
+                    arrItems14[1] = SectionCompleteLabelVw;
+
                     iUtils.CreateFormGridItem btnSaveRFU = new iUtils.CreateFormGridItem();
                     UIView btnSaveRFUVw = new UIView();
                     btnSaveRFU.SetDimensions(550f,0f, 150f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
@@ -939,7 +1028,7 @@ namespace ITPiPadSoln
                     btnSaveRFUButton = btnSaveRFU.GetButton();
                     btnSaveRFUButton.TouchUpInside += (sender,e) => {SaveThisSection(sender, e);};
                     
-                    arrItems14[1] = btnSaveRFUVw;
+                    arrItems14[2] = btnSaveRFUVw;
                     
                     iUtils.CreateFormGridItem btnExpandRFU = new iUtils.CreateFormGridItem();
                     UIView btnExpandRFUVw = new UIView();
@@ -957,7 +1046,7 @@ namespace ITPiPadSoln
                     btnExpandRFUButton.Enabled = false;
                     btnExpandRFUButton.TouchUpInside += (sender,e) => {ExpandSection(sender, e);};
                     
-                    arrItems14[2] = btnExpandRFUVw;
+                    arrItems14[3] = btnExpandRFUVw;
                     
                     iUtils.CreateFormGridItem btnContractRFU = new iUtils.CreateFormGridItem();
                     UIView btnContractRFUVw = new UIView();
@@ -974,25 +1063,25 @@ namespace ITPiPadSoln
                     btnContractRFUButton = btnContractRFU.GetButton();
                     btnContractRFUButton.TouchUpInside += (sender,e) => {ContractSection(sender, e);};
                     
-                    arrItems14[3] = btnContractRFUVw;
+                    arrItems14[4] = btnContractRFUVw;
                     
                     UILabel hfSectionHeight = new UILabel();
                     hfSectionHeight.Tag = iSectionHeightTagId * (ii+1);
                     hfSectionHeight.Hidden = true;
                     hfSectionHeight.Text = "0";
-                    arrItems14[4] = hfSectionHeight;
+                    arrItems14[5] = hfSectionHeight;
                     
                     UILabel hfSectionRows = new UILabel();
                     hfSectionRows.Tag = iSectionRowsTagId * (ii+1);
                     hfSectionRows.Hidden = true;
                     hfSectionRows.Text = iPwrIdRowsRFU.ToString();
-                    arrItems14[5] = hfSectionRows;
+                    arrItems14[6] = hfSectionRows;
                     
                     UILabel hfSectionStatus = new UILabel();
                     hfSectionStatus.Tag = iSectionStatusTagId * (ii+1);
                     hfSectionStatus.Hidden = true;
                     hfSectionStatus.Text = "0";
-                    arrItems14[6] = hfSectionStatus;
+                    arrItems14[7] = hfSectionStatus;
                     
                     
                     SectionRFURow.AddSubviews(arrItems14);
@@ -1153,17 +1242,8 @@ namespace ITPiPadSoln
                         iColNo = arrITPRFUs.Tables[0].Columns["Commission"].Ordinal;
                         int iCommission = Convert.ToInt32(arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo]);
 
-                        if(sCutoverLoad != "0" && sCutoverLoad != "" &&
-                           sCutoverDate != "0" && sCutoverDate != "" &&
-                           (iDecommission == 1 || iCommission == 1))
-                        {
-                            bDisableRow = true;
-                        }
-                        else
-                        {
-                            bDisableRow = false;
-                        }
-                        
+                        bDisableRow = RFUPwrIdCommitted(sPwrId);
+
                         UILabel hfRowRFUStatus = new UILabel();
                         hfRowRFUStatus.Text = "0";
                         hfRowRFUStatus.Tag = (ihfRowRFUStatusTagId + (j+1)) * (ii+1);
@@ -1451,6 +1531,9 @@ namespace ITPiPadSoln
                         UIButton btnContract = (UIButton)View.ViewWithTag (iContractSectionBtnTagId * (iiii+1));
 
                         ContractSection(btnContract, null);
+                        //Also display the completed item
+                        UILabel lblComplete = (UILabel)View.ViewWithTag(iSectionCompleteLabelTagId * (iiii+1));
+                        lblComplete.Hidden = false;
                     }
                 }
 
@@ -1856,6 +1939,19 @@ namespace ITPiPadSoln
             return DBQ.ProjectSection10BatteryPwrIdComplete(m_sPassedId, sPwrId);
         }
 
+        public bool RFUPwrIdCommitted(string sPwrId)
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSectionRFUPwrIdCommitted(m_sPassedId, sPwrId);
+        }
+
+        public bool RFUFullyCommitted()
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSectionRFUFullyCommitted(m_sPassedId);
+        }
+
+
         public void SaveAllSections ()
 		{
 			//Cycle through each section
@@ -1941,6 +2037,10 @@ namespace ITPiPadSoln
 					int iAutoId = Convert.ToInt32(hfAutoId.Text);
 					DBQ.SetLocalITPSectionQuestion(iAutoId, m_sPassedId, iDBSectionId, iAnswer, sComments);
 					hfRowStatus.Text = "0";
+
+                    //And now disable the row
+                    radGrp.Enabled = false;
+                    txtComments.Editable = false;
 				}
 			}
 
@@ -2028,9 +2128,6 @@ namespace ITPiPadSoln
             UILabel hfBatteryCapacity = (UILabel)View.ViewWithTag((ihfRowRFUBatteryCapacityTagId + (iRow + 1)) * (m_iRFUSectionCounter + 1));
             string sBatteryCapacity = hfBatteryCapacity.Text;
 
-//            string[] colRFUItemsNames = { "ID", "PWRID", "DesignLoad", "CutoverLoad", "CutoverDate", "Decommission", 
-//                "Commission", "Audit_DateStamp", "BatteryCapacity"};
-            
             //Get all the info for this RFU row
             sItemValues [0] = sId;
             sItemValues [1] = sPwrId;
@@ -2056,6 +2153,8 @@ namespace ITPiPadSoln
             {
                 //Update the row status
                 hfRFURowStatus.Text = "0";
+                UIButton btnRFU = (UIButton)View.ViewWithTag((iRFUButtonSaveTagId + (iRow+1)) * (m_iRFUSectionCounter+1));
+                btnRFU.SetTitle("Committed", UIControlState.Normal);
             }
             else
             {
@@ -2157,9 +2256,83 @@ namespace ITPiPadSoln
 				UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
 				txtEditStatus.Text = "0";
 			}
+
+            ShowCompletedLabels();
 		}
 
-		public void CheckUnsaved ()
+        public void ShowCompletedLabels()
+        {
+            int i;
+            int iQuestionSections = m_iQuestionSections;
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            int iThisSectionDBTagId;
+            bool bAnyCommitted = DBQ.ProjectSectionRFUAnyPwrIdCommitted(m_sPassedId);
+            bool bAllCommittted = DBQ.ProjectSectionRFUFullyCommitted(m_sPassedId);
+
+            for(i=0;i<iQuestionSections;i++)
+            {
+                UILabel hfSectionDBId = (UILabel)View.ViewWithTag (iSectionDBIdTagId * (i+1));
+                iThisSectionDBTagId = Convert.ToInt32(hfSectionDBId.Text);
+                UILabel lblSectionComplete = (UILabel)View.ViewWithTag (iSectionCompleteLabelTagId * (i+1));
+                if(bAnyCommitted)
+                {
+                    lblSectionComplete.Text = "COMMITTED";
+                }
+                else
+                {
+                    lblSectionComplete.Text = "COMPLETED";
+                }
+
+                if(DBQ.ProjectQuestionsSectionFullyAnswered(m_sPassedId, iThisSectionDBTagId))
+                {
+                    lblSectionComplete.Hidden = false;
+                }
+                else
+                {
+                    lblSectionComplete.Hidden = true;
+                }
+            }
+
+            UILabel lblCompletedBatt = (UILabel)View.ViewWithTag (iSectionCompleteLabelTagId * (m_iBatterySectionCounter + 1));
+
+            if(BatteryFullyComplete())
+            {
+                if(bAllCommittted)
+                {
+                    lblCompletedBatt.Text = "COMMITTED";
+                }
+                else
+                {
+                    lblCompletedBatt.Text = "COMPLETED";
+                }
+                lblCompletedBatt.Hidden = false;                
+            }
+            else
+            {
+                lblCompletedBatt.Hidden = true;
+            }
+
+            UILabel lblCompletedPwrConv = (UILabel)View.ViewWithTag (iSectionCompleteLabelTagId * (m_iEquipmentSectionCounter+1));
+
+            if(PowerConversionFullyComplete())
+            {
+                if(bAllCommittted)
+                {
+                    lblCompletedPwrConv.Text = "COMMITTED";
+                }
+                else
+                {
+                    lblCompletedPwrConv.Text = "COMPLETED";
+                }
+                lblCompletedPwrConv.Hidden = false;                
+            }
+            else
+            {
+                lblCompletedPwrConv.Hidden = true;
+            }
+        }
+
+        public void CheckUnsaved ()
 		{
 			UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
 			int iStatus = Convert.ToInt32 (txtEditStatus.Text);

@@ -60,31 +60,8 @@ namespace ITPiPadSoln
 			
 			
 			View.Add(progVw);
-//			prog.Frame = new RectangleF(400f, 200f,20f, 20f);
-//			prog.ActivityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray;
-//			CGAffineTransform transfrom = CGAffineTransform.MakeScale(3.0f,3.0f);
-//			prog.Transform = transfrom;
-//			View.AddSubview(prog);
 		}
 		
-//		public override void ViewDidUnload ()
-//		{
-//			base.ViewDidUnload ();
-//			
-//			// Clear any references to subviews of the main view in order to
-//			// allow the Garbage Collector to collect them sooner.
-//			//
-//			// e.g. myOutlet.Dispose (); myOutlet = null;
-//			
-//			ReleaseDesignerOutlets ();
-//		}
-//		
-//		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
-//		{
-//			// Return true for supported orientations
-//			return true;
-//		}
-
 		public void DrawMenu()
 		{
 			UIView[] arrItems = new UIView[3];
@@ -466,6 +443,11 @@ namespace ITPiPadSoln
 				alert.ShowAlertBox(); 
 				return;
 			}
+            else
+            {
+                //Has the project been made available online again and if so you cannot upload
+
+            }
 			
 			iUtils.AlertBox alert2 = new iUtils.AlertBox();
 			alert2.CreateAlertYesNoDialog();
