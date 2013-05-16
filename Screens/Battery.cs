@@ -95,6 +95,9 @@ namespace ITPiPadSoln
         int i20MinTestBtnTagId = 10016900;
         int i20MinTestHiddenTagId = 10017100;
         int iDeleteBatteryStringBtnTagId = 10017200;
+        int iHiddenDOMTagId = 10017300;
+        int iHiddenRatingTagId = 10017400;
+        int iHiddenSerialNoTagId = 10017500;
 
         int iPwrIdExpandTagId = 10021100;
         int iPwrIdContractTagId = 10021200;
@@ -1165,8 +1168,8 @@ namespace ITPiPadSoln
             UIView hdrRow = new UIView();
             float iHdrVert = 0.0f;
             float iRowHeight = 40f;
-            UIView[] arrItems = new UIView[18];
-            UIView[] arrItems2 = new UIView[15];
+            UIView[] arrItems = new UIView[20];
+            UIView[] arrItems2 = new UIView[16];
             UIView[] arrItems3 = new UIView[4];
             
             UILabel hfSectionCounter = new UILabel();
@@ -1230,8 +1233,10 @@ namespace ITPiPadSoln
             txtBankNoView.AutocorrectionType = UITextAutocorrectionType.No;
             txtBankNoView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtBankNoView.ReturnKeyType = UIReturnKeyType.Next;
+            txtBankNoView.ShouldBeginEditing += (sender) => {
+                return SetGlobalEditItems(sender, 1);};
             txtBankNoView.ShouldEndEditing += (sender) => {
-                return ValidateBankNo(sender, 1);};
+                return ValidateBankNo(sender, 1, 0);};
             txtBankNoView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 1);};
             
@@ -1416,14 +1421,21 @@ namespace ITPiPadSoln
             txtDOMTextView.AutocorrectionType = UITextAutocorrectionType.No;
             txtDOMTextView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtDOMTextView.ReturnKeyType = UIReturnKeyType.Next;
+            txtDOMTextView.ShouldBeginEditing += (sender) => {
+                return SetGlobalEditItems(sender, 2);};
             txtDOMTextView.ShouldEndEditing += (sender) => {
-                return ValidateDOM(sender);};
+                return ValidateDOM(sender, 0);};
             txtDOMTextView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 2);};
             
-            arrItems [14] = txtDOMVw;
+            arrItems[14] = txtDOMVw;
             
-            
+            UILabel hfCurrentDOM = new UILabel();
+            hfCurrentDOM.Text = sDOMDisplay;
+            hfCurrentDOM.Tag = iHiddenDOMTagId * (iRowNo + 1) + (iStringRow + 1);
+            hfCurrentDOM.Hidden = true;
+            arrItems[15] = hfCurrentDOM;
+
             iUtils.CreateFormGridItem lblBankFuseOrCB = new iUtils.CreateFormGridItem();
             UIView lblBankFuseOrCBVw = new UIView();
             lblBankFuseOrCB.SetDimensions(776f, iHdrVert, 50f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
@@ -1443,7 +1455,7 @@ namespace ITPiPadSoln
             }
             
             lblBankFuseOrCBVw = lblBankFuseOrCB.GetLabelCell();
-            arrItems [15] = lblBankFuseOrCBVw;
+            arrItems[16] = lblBankFuseOrCBVw;
             
             iUtils.CreateFormGridItem btnFuseOrCBSearch = new iUtils.CreateFormGridItem();
             UIView btnFuseOrCBSearchVw = new UIView();
@@ -1468,7 +1480,7 @@ namespace ITPiPadSoln
             btnFuseOrCBSearchButton.TouchUpInside += (sender,e) => {
                 OpenFuseOrCBList(sender, e);};
             
-            arrItems [16] = btnFuseOrCBSearchVw;
+            arrItems[17] = btnFuseOrCBSearchVw;
             
             iUtils.CreateFormGridItem txtRating = new iUtils.CreateFormGridItem();
             UIView txtRatingVw = new UIView();
@@ -1493,13 +1505,21 @@ namespace ITPiPadSoln
             txtRatingTextView.AutocorrectionType = UITextAutocorrectionType.No;
             txtRatingTextView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtRatingTextView.ReturnKeyType = UIReturnKeyType.Next;
+            txtRatingTextView.ShouldBeginEditing += (sender) => {
+                return SetGlobalEditItems(sender, 3);};
             txtRatingTextView.ShouldEndEditing += (sender) => {
-                return ValidateRating(sender);};
+                return ValidateRating(sender, 0);};
             txtRatingTextView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 3);};
             
-            arrItems [17] = txtRatingVw;
+            arrItems[18] = txtRatingVw;
             
+            UILabel hfCurrentRating = new UILabel();
+            hfCurrentRating.Text = sRatingAmps;
+            hfCurrentRating.Tag = iHiddenRatingTagId * (iRowNo + 1) + (iStringRow + 1);
+            hfCurrentRating.Hidden = true;
+            arrItems[19] = hfCurrentRating;
+
             hdrRow.AddSubviews(arrItems);
             
             iHeightToAdd += iRowHeight; 
@@ -1680,7 +1700,7 @@ namespace ITPiPadSoln
             
             UISegmentedControl radEquipTypeRadio = new UISegmentedControl();
             radEquipTypeRadio = radEquipType.GetRadioGroup();
-            radEquipTypeRadio.TouchUpInside += (sender,e) => {
+            radEquipTypeRadio.ValueChanged += (sender,e) => {
                 SetStringEquipTypeChanged(sender, e);};
             
             radEquipTypeRadio.InsertSegment("New", 0, false);
@@ -1729,13 +1749,21 @@ namespace ITPiPadSoln
             txtSerialNoView.AutocorrectionType = UITextAutocorrectionType.No;
             txtSerialNoView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtSerialNoView.ReturnKeyType = UIReturnKeyType.Next;
+            txtSerialNoView.ShouldBeginEditing += (sender) => {
+                return SetGlobalEditItems(sender, 8);};
             txtSerialNoView.ShouldEndEditing += (sender) => {
-                return ValidateSerialNo(sender);};
+                return ValidateSerialNo(sender, 0);};
             txtSerialNoView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 8);};
             
             arrItems2 [9] = lblSerialNoVw;
             
+            UILabel hfCurrentSerialNo = new UILabel();
+            hfCurrentSerialNo.Text = sSerialNo;
+            hfCurrentSerialNo.Tag = iHiddenSerialNoTagId * (iRowNo + 1) + (iStringRow + 1);
+            hfCurrentSerialNo.Hidden = true;
+            arrItems2 [10] = hfCurrentSerialNo;
+
             iUtils.CreateFormGridItem btnLinkTest = new iUtils.CreateFormGridItem();
             UIView btnLinkTestVw = new UIView();
             btnLinkTest.SetDimensions(697f, iHdrVert, 80f, iRowHeight * 2f, 8f, iRowHeight / 2f, 8f, iRowHeight / 2f);
@@ -1761,13 +1789,13 @@ namespace ITPiPadSoln
             btnLinkTestButton.TouchUpInside += (sender,e) => {
                 OpenLinkTest(sender, e);};
             
-            arrItems2 [10] = btnLinkTestVw;
+            arrItems2 [11] = btnLinkTestVw;
             
             UILabel hfLinkTestStatus = new UILabel();
             hfLinkTestStatus.Text = iLinkTestStatus.ToString();
             hfLinkTestStatus.Tag = iLinkTestHiddenTagId * (iRowNo + 1) + (iStringRow + 1);
             hfLinkTestStatus.Hidden = true;
-            arrItems2 [11] = hfLinkTestStatus;
+            arrItems2 [12] = hfLinkTestStatus;
             
             iUtils.CreateFormGridItem btn20MinTest = new iUtils.CreateFormGridItem();
             UIView btn20MinTestVw = new UIView();
@@ -1794,13 +1822,13 @@ namespace ITPiPadSoln
             btn20MinTestButton.TouchUpInside += (sender,e) => {
                 Open20MinTest(sender, e);};
             
-            arrItems2 [12] = btn20MinTestVw;
+            arrItems2 [13] = btn20MinTestVw;
             
             UILabel hf20MinTestStatus = new UILabel();
             hf20MinTestStatus.Text = i20MinTest.ToString();
             hf20MinTestStatus.Tag = i20MinTestHiddenTagId * (iRowNo + 1) + (iStringRow + 1);
             hf20MinTestStatus.Hidden = true;
-            arrItems2 [13] = hf20MinTestStatus;
+            arrItems2 [14] = hf20MinTestStatus;
             
             iUtils.CreateFormGridItem btnDelete = new iUtils.CreateFormGridItem();
             UIView btnDeleteVw = new UIView();
@@ -1831,7 +1859,7 @@ namespace ITPiPadSoln
             {
                 btnDeleteButton.Enabled = false;
             }
-            arrItems2[14] = btnDeleteVw;
+            arrItems2[15] = btnDeleteVw;
             
             hdrRow.AddSubviews(arrItems2);
             
@@ -2436,8 +2464,18 @@ namespace ITPiPadSoln
         }
 
         //Here iType means 1 = Batteries, 2 = Solar strings
-        public bool ValidateBankNo (object sender, int iType)
+        public bool ValidateBankNo (object sender, int iType, int iFromBackButton)
         {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
             UITextField txtBankNo = (UITextField)sender;
             string sBankNo = txtBankNo.Text;
             sBankNo = sBankNo.ToUpper();
@@ -2462,26 +2500,52 @@ namespace ITPiPadSoln
             } 
             else 
             {
-                hfHiddenBankNo.Text = txtBankNo.Text;
+                if(hfHiddenBankNo.Text != txtBankNo.Text)
+                {
+                    hfHiddenBankNo.Text = txtBankNo.Text;
+                    UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
+                    hfRowStatus.Text = "1";
+                    SetSectionValueChanged(m_iBatterySectionCounter + 1);
+                    SetAnyValueChanged(sender, null);
+                }
+                return true;
+            }
+        }
+        
+        public bool ValidateDOM (object sender, int iFromBackButton)
+        {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
+            UITextField txtDOM = (UITextField)sender;
+            string sDOM = txtDOM.Text;
+            bool bDateCheck;
+            int iTagId = txtDOM.Tag;
+            int iPwrIdRow =  iTagId/ iBankDOMTagId;
+            int iStringRow = iTagId - (iPwrIdRow * iBankDOMTagId);
+            int iHiddenDOMId =  iHiddenDOMTagId * iPwrIdRow + iStringRow;
+            UILabel hfHiddenDOM = (UILabel)View.ViewWithTag (iHiddenDOMId);
+
+            if(sDOM == "")
+            {
                 UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
                 hfRowStatus.Text = "1";
                 SetSectionValueChanged(m_iBatterySectionCounter + 1);
                 SetAnyValueChanged(sender, null);
                 return true;
             }
-        }
-        
-        public bool ValidateDOM (object sender)
-        {
-            UITextField txtDOM = (UITextField)sender;
-            string sDOM = txtDOM.Text;
+
             DateClass dt = new DateClass ();
             DateTime dtDOM;
-            bool bDateCheck = dt.ValidateDate (sDOM, ref dtDOM);
-            int iTagId = txtDOM.Tag;
-            int iPwrIdRow =  iTagId/ iBankDOMTagId;
-            int iStringRow = iTagId - (iPwrIdRow * iBankDOMTagId);
-            
+            bDateCheck = dt.ValidateDate (sDOM, ref dtDOM);
+
             if (!bDateCheck) 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
@@ -2493,31 +2557,52 @@ namespace ITPiPadSoln
             } 
             else 
             {
-                string sDOMReturn = dt.Get_Date_String(dtDOM, "dd/mm/yy");
-                txtDOM.Text = sDOMReturn;
-                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
-                hfRowStatus.Text = "1";
-                SetSectionValueChanged(m_iBatterySectionCounter + 1);
-                SetAnyValueChanged(sender, null);
+                if(hfHiddenDOM.Text != txtDOM.Text)
+                {
+                    string sDOMReturn = dt.Get_Date_String(dtDOM, "dd/mm/yy");
+                    txtDOM.Text = sDOMReturn;
+                    hfHiddenDOM.Text = sDOMReturn;
+                    UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
+                    hfRowStatus.Text = "1";
+                    SetSectionValueChanged(m_iBatterySectionCounter + 1);
+                    SetAnyValueChanged(sender, null);
+                }
                 return true;
             }
         }
         
-        public bool ValidateRating (object sender)
+        public bool ValidateRating (object sender, int iFromBackButton)
         {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
             UITextField txtRating = (UITextField)sender;
             string sRating = txtRating.Text;
             int iTagId = txtRating.Tag;
             int iPwrIdRow =  iTagId/ iBankRatingTagId;
             int iStringRow = iTagId - (iPwrIdRow * iBankRatingTagId);
-            
+            int iHiddenRatingId =  iHiddenRatingTagId * iPwrIdRow + iStringRow;
+            UILabel hfHiddenRating = (UILabel)View.ViewWithTag (iHiddenRatingId);
+
             string sRatingReturn = Regex.Replace(sRating, @"[^\d]+","");
             txtRating.Text = sRatingReturn;
-            
-            UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
-            hfRowStatus.Text = "1";
-            SetSectionValueChanged(m_iBatterySectionCounter + 1);
-            SetAnyValueChanged(sender, null);
+
+            if(hfHiddenRating.Text != sRatingReturn)
+            {
+                hfHiddenRating.Text = sRatingReturn;
+                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
+                hfRowStatus.Text = "1";
+                SetSectionValueChanged(m_iBatterySectionCounter + 1);
+                SetAnyValueChanged(sender, null);
+            }
+
             return true;
         }
         
@@ -2559,39 +2644,41 @@ namespace ITPiPadSoln
             } 
             else 
             {
-                hfHiddenFloor.Text = txtFloor.Text;
-                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
-                hfRowStatus.Text = "1";
-                SetSectionValueChanged(m_iBatterySectionCounter + 1);
-                SetAnyValueChanged(sender, null);
-
-                //Ask the question
-                if(iFromBackButton == 0)
+                if(txtFloor.Text != hfHiddenFloor.Text)
                 {
-                    int iSectionTagId = iStringRowSectionCounterTagId * iPwrIdRow + iStringRow;
-                    UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
-                    int iSectionId = Convert.ToInt32(hfSectionId.Text);
-                    
-                    int iPwrIdTagId = iStringRowPwrIdTagId * iPwrIdRow + iStringRow;
-                    UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
-                    string sPwrId = hfPwrId.Text;
+                    hfHiddenFloor.Text = txtFloor.Text;
+                    UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
+                    hfRowStatus.Text = "1";
+                    SetSectionValueChanged(m_iBatterySectionCounter + 1);
+                    SetAnyValueChanged(sender, null);
 
-                    if(sOldFloor != sFloor)
+                    //Ask the question
+                    if(iFromBackButton == 0)
                     {
-                        if(CheckSameFloorExists(sOldFloor,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                        int iSectionTagId = iStringRowSectionCounterTagId * iPwrIdRow + iStringRow;
+                        UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
+                        int iSectionId = Convert.ToInt32(hfSectionId.Text);
+                        
+                        int iPwrIdTagId = iStringRowPwrIdTagId * iPwrIdRow + iStringRow;
+                        UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
+                        string sPwrId = hfPwrId.Text;
+
+                        if(sOldFloor != sFloor)
                         {
-                            iUtils.AlertBox alert2 = new iUtils.AlertBox();
-                            alert2.CreateAlertYesNoDialog();
-                            alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + sOldFloor + 
-                                                   " to floor " +  sFloor + " ?");
-                            alert2.ShowAlertBox(); 
-                            
-                            UIAlertView alert3 = alert2.GetAlertDialog();
-                            alert3.Clicked += (sender2, e2)  => {CheckFloorChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, sOldFloor, iSectionId, iPwrIdRow);}; 
+                            if(CheckSameFloorExists(sOldFloor,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                            {
+                                iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                                alert2.CreateAlertYesNoDialog();
+                                alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + sOldFloor + 
+                                                       " to floor " +  sFloor + " ?");
+                                alert2.ShowAlertBox(); 
+                                
+                                UIAlertView alert3 = alert2.GetAlertDialog();
+                                alert3.Clicked += (sender2, e2)  => {CheckFloorChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, sOldFloor, iSectionId, iPwrIdRow);}; 
+                            }
                         }
                     }
                 }
-
                 return true;
             }
         }
@@ -2691,42 +2778,45 @@ namespace ITPiPadSoln
             } 
             else 
             {
-                hfHiddenSuite.Text = txtSuite.Text;
-                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
-                hfRowStatus.Text = "1";
-                SetSectionValueChanged(m_iBatterySectionCounter + 1);
-                SetAnyValueChanged(sender, null);
-
-                //Ask the question
-                if(iFromBackButton == 0)
+                if(hfHiddenSuite.Text != txtSuite.Text)
                 {
-                    int iSectionTagId = iStringRowSectionCounterTagId * iPwrIdRow + iStringRow;
-                    UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
-                    int iSectionId = Convert.ToInt32(hfSectionId.Text);
-                    
-                    int iPwrIdTagId = iStringRowPwrIdTagId * iPwrIdRow + iStringRow;
-                    UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
-                    string sPwrId = hfPwrId.Text;
-                    
-                    int iFloorId =  iFloorTagId * iPwrIdRow + iStringRow;
-                    UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
-                    string sFloor = txtFloor.Text;
+                    hfHiddenSuite.Text = txtSuite.Text;
+                    UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
+                    hfRowStatus.Text = "1";
+                    SetSectionValueChanged(m_iBatterySectionCounter + 1);
+                    SetAnyValueChanged(sender, null);
 
-                    if(sOldSuite != sSuite)
+                    //Ask the question
+                    if(iFromBackButton == 0)
                     {
-                        if(CheckSameSuiteExists(sFloor, sOldSuite,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                        int iSectionTagId = iStringRowSectionCounterTagId * iPwrIdRow + iStringRow;
+                        UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
+                        int iSectionId = Convert.ToInt32(hfSectionId.Text);
+                        
+                        int iPwrIdTagId = iStringRowPwrIdTagId * iPwrIdRow + iStringRow;
+                        UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
+                        string sPwrId = hfPwrId.Text;
+                        
+                        int iFloorId =  iFloorTagId * iPwrIdRow + iStringRow;
+                        UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                        string sFloor = txtFloor.Text;
+
+                        if(sOldSuite != sSuite)
                         {
-                            iUtils.AlertBox alert2 = new iUtils.AlertBox();
-                            alert2.CreateAlertYesNoDialog();
-                            alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + 
-                                                   sFloor + " and the suite " + sOldSuite + " to suite " +  sSuite + " ?");
-                            alert2.ShowAlertBox(); 
-                            
-                            UIAlertView alert3 = alert2.GetAlertDialog();
-                            alert3.Clicked += (sender2, e2)  => {
-                                CheckSuiteChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, 
-                                                          sSuite, sOldSuite, iSectionId, iPwrIdRow);
-                            }; 
+                            if(CheckSameSuiteExists(sFloor, sOldSuite,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                            {
+                                iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                                alert2.CreateAlertYesNoDialog();
+                                alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + 
+                                                       sFloor + " and the suite " + sOldSuite + " to suite " +  sSuite + " ?");
+                                alert2.ShowAlertBox(); 
+                                
+                                UIAlertView alert3 = alert2.GetAlertDialog();
+                                alert3.Clicked += (sender2, e2)  => {
+                                    CheckSuiteChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, 
+                                                              sSuite, sOldSuite, iSectionId, iPwrIdRow);
+                                }; 
+                            }
                         }
                     }
                 }
@@ -2839,46 +2929,49 @@ namespace ITPiPadSoln
             } 
             else 
             {
-                hfHiddenRack.Text = txtRack.Text;
-                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
-                hfRowStatus.Text = "1";
-                SetSectionValueChanged(m_iBatterySectionCounter + 1);
-                SetAnyValueChanged(sender, null);
-
-                //Ask the question
-                if(iFromBackButton == 0)
+                if(hfHiddenRack.Text != txtRack.Text)
                 {
-                    int iSectionTagId = iStringRowSectionCounterTagId * iPwrIdRow + iStringRow;
-                    UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
-                    int iSectionId = Convert.ToInt32(hfSectionId.Text);
-                    
-                    int iPwrIdTagId = iStringRowPwrIdTagId * iPwrIdRow + iStringRow;
-                    UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
-                    string sPwrId = hfPwrId.Text;
-                    
-                    int iFloorId =  iFloorTagId * iPwrIdRow + iStringRow;
-                    UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
-                    string sFloor = txtFloor.Text;
+                    hfHiddenRack.Text = txtRack.Text;
+                    UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
+                    hfRowStatus.Text = "1";
+                    SetSectionValueChanged(m_iBatterySectionCounter + 1);
+                    SetAnyValueChanged(sender, null);
 
-                    int iSuiteId =  iSuiteTagId * iPwrIdRow + iStringRow;
-                    UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
-                    string sSuite = txtSuite.Text;
-
-                    if(sOldRack != sRack)
+                    //Ask the question
+                    if(iFromBackButton == 0)
                     {
-                        if(CheckSameRackExists(sFloor, sSuite, sOldRack,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                        int iSectionTagId = iStringRowSectionCounterTagId * iPwrIdRow + iStringRow;
+                        UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
+                        int iSectionId = Convert.ToInt32(hfSectionId.Text);
+                        
+                        int iPwrIdTagId = iStringRowPwrIdTagId * iPwrIdRow + iStringRow;
+                        UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
+                        string sPwrId = hfPwrId.Text;
+                        
+                        int iFloorId =  iFloorTagId * iPwrIdRow + iStringRow;
+                        UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                        string sFloor = txtFloor.Text;
+
+                        int iSuiteId =  iSuiteTagId * iPwrIdRow + iStringRow;
+                        UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                        string sSuite = txtSuite.Text;
+
+                        if(sOldRack != sRack)
                         {
-                            iUtils.AlertBox alert2 = new iUtils.AlertBox();
-                            alert2.CreateAlertYesNoDialog();
-                            alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + 
-                                                   sFloor + ", suite " + sSuite + " and rack " + sOldRack + " to rack " +  sRack + " ?");
-                            alert2.ShowAlertBox(); 
-                            
-                            UIAlertView alert3 = alert2.GetAlertDialog();
-                            alert3.Clicked += (sender2, e2)  => {
-                                CheckRackChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, 
-                                                          sSuite, sRack, sOldRack, iSectionId, iPwrIdRow);
-                            }; 
+                            if(CheckSameRackExists(sFloor, sSuite, sOldRack,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                            {
+                                iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                                alert2.CreateAlertYesNoDialog();
+                                alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + 
+                                                       sFloor + ", suite " + sSuite + " and rack " + sOldRack + " to rack " +  sRack + " ?");
+                                alert2.ShowAlertBox(); 
+                                
+                                UIAlertView alert3 = alert2.GetAlertDialog();
+                                alert3.Clicked += (sender2, e2)  => {
+                                    CheckRackChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, 
+                                                              sSuite, sRack, sOldRack, iSectionId, iPwrIdRow);
+                                }; 
+                            }
                         }
                     }
                 }
@@ -3001,52 +3094,55 @@ namespace ITPiPadSoln
             } 
             else 
             {
-                hfHiddenSubRack.Text = txtSubRack.Text;
-                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
-                hfRowStatus.Text = "1";
-                SetSectionValueChanged(m_iBatterySectionCounter + 1);
-                SetAnyValueChanged(sender, null);
-
-                //Ask the question
-                if(iFromBackButton == 0)
+                if(hfHiddenSubRack.Text != txtSubRack.Text)
                 {
-                    int iSectionTagId = iStringRowSectionCounterTagId * iPwrIdRow + iStringRow;
-                    UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
-                    int iSectionId = Convert.ToInt32(hfSectionId.Text);
-                    
-                    int iPwrIdTagId = iStringRowPwrIdTagId * iPwrIdRow + iStringRow;
-                    UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
-                    string sPwrId = hfPwrId.Text;
-                    
-                    int iFloorId =  iFloorTagId * iPwrIdRow + iStringRow;
-                    UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
-                    string sFloor = txtFloor.Text;
-                    
-                    int iSuiteId =  iSuiteTagId * iPwrIdRow + iStringRow;
-                    UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
-                    string sSuite = txtSuite.Text;
-                    
-                    int iRackId =  iRackTagId * iPwrIdRow + iStringRow;
-                    UITextField txtRack = (UITextField)View.ViewWithTag (iRackId);
-                    string sRack = txtRack.Text;
+                    hfHiddenSubRack.Text = txtSubRack.Text;
+                    UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
+                    hfRowStatus.Text = "1";
+                    SetSectionValueChanged(m_iBatterySectionCounter + 1);
+                    SetAnyValueChanged(sender, null);
 
-                    if(sOldSubRack != sSubRack)
+                    //Ask the question
+                    if(iFromBackButton == 0)
                     {
-                        if(CheckSameSubRackExists(sFloor, sSuite, sRack, sOldSubRack,iSectionId, iPwrIdRow, sPwrId, iStringRow))
-                        {
-                            iUtils.AlertBox alert2 = new iUtils.AlertBox();
-                            alert2.CreateAlertYesNoDialog();
-                            alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + 
-                                                   sFloor + ", suite " + sSuite + ", rack " + sRack + 
-                                                   " and subrack " + sOldSubRack + " to subrack " +  sSubRack + " ?");
+                        int iSectionTagId = iStringRowSectionCounterTagId * iPwrIdRow + iStringRow;
+                        UILabel hfSectionId = (UILabel)View.ViewWithTag (iSectionTagId);
+                        int iSectionId = Convert.ToInt32(hfSectionId.Text);
+                        
+                        int iPwrIdTagId = iStringRowPwrIdTagId * iPwrIdRow + iStringRow;
+                        UILabel hfPwrId = (UILabel)View.ViewWithTag (iPwrIdTagId);
+                        string sPwrId = hfPwrId.Text;
+                        
+                        int iFloorId =  iFloorTagId * iPwrIdRow + iStringRow;
+                        UITextField txtFloor = (UITextField)View.ViewWithTag (iFloorId);
+                        string sFloor = txtFloor.Text;
+                        
+                        int iSuiteId =  iSuiteTagId * iPwrIdRow + iStringRow;
+                        UITextField txtSuite = (UITextField)View.ViewWithTag (iSuiteId);
+                        string sSuite = txtSuite.Text;
+                        
+                        int iRackId =  iRackTagId * iPwrIdRow + iStringRow;
+                        UITextField txtRack = (UITextField)View.ViewWithTag (iRackId);
+                        string sRack = txtRack.Text;
 
-                            alert2.ShowAlertBox(); 
-                            
-                            UIAlertView alert3 = alert2.GetAlertDialog();
-                            alert3.Clicked += (sender2, e2)  => {
-                                CheckSubRackChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, 
-                                                         sSuite, sRack, sSubRack, sOldSubRack, iSectionId, iPwrIdRow);
-                            }; 
+                        if(sOldSubRack != sSubRack)
+                        {
+                            if(CheckSameSubRackExists(sFloor, sSuite, sRack, sOldSubRack,iSectionId, iPwrIdRow, sPwrId, iStringRow))
+                            {
+                                iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                                alert2.CreateAlertYesNoDialog();
+                                alert2.SetAlertMessage("Do you wish to change all other items on PwrId " + sPwrId + " on the floor " + 
+                                                       sFloor + ", suite " + sSuite + ", rack " + sRack + 
+                                                       " and subrack " + sOldSubRack + " to subrack " +  sSubRack + " ?");
+
+                                alert2.ShowAlertBox(); 
+                                
+                                UIAlertView alert3 = alert2.GetAlertDialog();
+                                alert3.Clicked += (sender2, e2)  => {
+                                    CheckSubRackChangesQuestion(sender2, e2, e2.ButtonIndex, iStringRow, sPwrId, sFloor, 
+                                                             sSuite, sRack, sSubRack, sOldSubRack, iSectionId, iPwrIdRow);
+                                }; 
+                            }
                         }
                     }
                 }
@@ -3157,13 +3253,26 @@ namespace ITPiPadSoln
             return true;
         }
         
-        public bool ValidateSerialNo(object sender)
+        public bool ValidateSerialNo(object sender, int iFromBackButton)
         {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+
             UITextField txtSerialNo = (UITextField)sender;
             string sSerialNo = txtSerialNo.Text;
             int iTagId = txtSerialNo.Tag;
             int iPwrIdRow =  iTagId/ iSerialNoTagId;
             int iStringRow = iTagId - (iPwrIdRow * iSerialNoTagId);
+            int iHiddenSerialId =  iHiddenSerialNoTagId * iPwrIdRow + iStringRow;
+            UILabel hfHiddenSerialNo = (UILabel)View.ViewWithTag (iHiddenSerialId);
+
             if (sSerialNo.Length > 15)
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
@@ -3175,10 +3284,15 @@ namespace ITPiPadSoln
                 m_bSuppressMove = true;
                 return false;
             }
-            UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
-            hfRowStatus.Text = "1";
-            SetSectionValueChanged(m_iBatterySectionCounter + 1);
-            SetAnyValueChanged(sender, null);
+
+            if(hfHiddenSerialNo.Text != sSerialNo)
+            {
+                hfHiddenSerialNo.Text = sSerialNo;
+                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iStringRowStatusTagId * iPwrIdRow + iStringRow);
+                hfRowStatus.Text = "1";
+                SetSectionValueChanged(m_iBatterySectionCounter + 1);
+                SetAnyValueChanged(sender, null);
+            }
             return true;
         }
         
@@ -3508,12 +3622,6 @@ namespace ITPiPadSoln
             
         }
 
-        public bool QuestionsComplete()
-        {
-            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
-            return DBQ.ProjectQuestionsFullyAnswered(m_sPassedId);
-        }
-        
         public bool BatteryFullyComplete()
         {
             clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
@@ -3816,6 +3924,8 @@ namespace ITPiPadSoln
             UILabel hfSectionPwrIds = (UILabel)View.ViewWithTag(iSectionRowsTagId * (m_iBatterySectionCounter+ 1));
             int iTotalPwrIds = Convert.ToInt32(hfSectionPwrIds.Text);
             UILabel lblCompleted = (UILabel)View.ViewWithTag (iSectionCompleteLabelTagId * (m_iBatterySectionCounter + 1));
+            ProjectITPage QuestionsScreen = new ProjectITPage ();
+            QuestionsScreen = GetProjectITPPage ();
             if(BatteryFullyComplete())
             {
                 lblCompleted.Hidden = false;
@@ -3825,6 +3935,9 @@ namespace ITPiPadSoln
                     UILabel lblPwrIdComplete = (UILabel)View.ViewWithTag ((iPwrIdSectionCompleteLabelTagId + (i+1)) * (m_iBatterySectionCounter+1));
                     lblPwrIdComplete.Hidden = false;
                 }
+
+                //Now also show it on the calling ITP screen
+                QuestionsScreen.SetBatteryCompleted(true);
             }
             else
             {
@@ -3843,6 +3956,8 @@ namespace ITPiPadSoln
                         lblPwrIdComplete.Hidden = true;
                     }
                 }
+                //Now also show it on the calling ITP screen
+                QuestionsScreen.SetBatteryCompleted(false);
             }
         }
 
@@ -3851,6 +3966,27 @@ namespace ITPiPadSoln
             //First of all validate anything required
             switch(m_iValidateType)
             {
+                case 1: //Bank No
+                    if(!ValidateBankNo(m_sender,1, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+                case 2: //DOM
+                    if(!ValidateDOM(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+                case 3: //Rating
+                    if(!ValidateRating(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
                 case 4: //Floor
                     if(!ValidateFloor(m_sender, 1))
                     {
@@ -3874,6 +4010,13 @@ namespace ITPiPadSoln
                     break;
                 case 7: //SubRack
                     if(!ValidateSubRack(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+                case 8: //SerialNo
+                    if(!ValidateSerialNo(m_sender, 1))
                     {
                         gbSuppressSecondCheck = false;
                         return;

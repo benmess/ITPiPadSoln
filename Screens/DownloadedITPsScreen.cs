@@ -25,6 +25,7 @@ namespace ITPiPadSoln
 		int iUploadBtnStatusTagId = 16053;
 		int iRemoveBtnTagId = 17019;
 		int iRemoveBtnStatusTagId = 18007;
+        int iBackupBtnTagId = 19031;
 
 		string m_sSessionId = "";
 		string m_sUser = "";
@@ -124,7 +125,7 @@ namespace ITPiPadSoln
 				float iRowHeight = 50f;
 				
 				//Place the headings
-				UIView[] arrItems = new UIView[6];
+				UIView[] arrItems = new UIView[7];
 				
 				//Create the headings
 				iUtils.CreateFormGridItem lblProjIdHdr = new iUtils.CreateFormGridItem();
@@ -143,7 +144,7 @@ namespace ITPiPadSoln
 				
 				iUtils.CreateFormGridItem lblDescHdr = new iUtils.CreateFormGridItem();
 				UIView lblDescHdrVw = new UIView();
-				lblDescHdr.SetDimensions(109f,iVert, 300f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
+				lblDescHdr.SetDimensions(109f,iVert, 250f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
 				lblDescHdr.SetLabelText("Description");
 				lblDescHdr.SetBorderWidth(1.0f);
 				lblDescHdr.SetFontName("Verdana-Bold");
@@ -157,7 +158,7 @@ namespace ITPiPadSoln
 				
 				iUtils.CreateFormGridItem lblOpenHdr = new iUtils.CreateFormGridItem();
 				UIView lblOpenHdrVw = new UIView();
-				lblOpenHdr.SetDimensions(408f,iVert,100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
+				lblOpenHdr.SetDimensions(358f,iVert,100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
 				lblOpenHdr.SetLabelText("Open");
 				lblOpenHdr.SetBorderWidth(1.0f);
 				lblOpenHdr.SetFontName("Verdana-Bold");
@@ -170,7 +171,7 @@ namespace ITPiPadSoln
 				
 				iUtils.CreateFormGridItem lblUploadHdr = new iUtils.CreateFormGridItem();
 				UIView lblUploadHdrVw = new UIView();
-				lblUploadHdr.SetDimensions(507f,iVert,100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
+				lblUploadHdr.SetDimensions(457f,iVert,100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
 				lblUploadHdr.SetLabelText("Upload");
 				lblUploadHdr.SetBorderWidth(1.0f);
 				lblUploadHdr.SetFontName("Verdana-Bold");
@@ -181,9 +182,22 @@ namespace ITPiPadSoln
 				lblUploadHdrVw = lblUploadHdr.GetLabelCell();
 				arrItems[3] = lblUploadHdrVw;
 
-				iUtils.CreateFormGridItem lblRemoveHdr = new iUtils.CreateFormGridItem();
+                iUtils.CreateFormGridItem lblBackupHdr = new iUtils.CreateFormGridItem();
+                UIView lblBackupHdrVw = new UIView();
+                lblBackupHdr.SetDimensions(556f,iVert,100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
+                lblBackupHdr.SetLabelText("Backup");
+                lblBackupHdr.SetBorderWidth(1.0f);
+                lblBackupHdr.SetFontName("Verdana-Bold");
+                lblBackupHdr.SetFontSize(12f);
+                lblBackupHdr.SetCellColour("DarkSlateGrey");
+                lblBackupHdr.SetTextColour("White");
+                lblBackupHdr.SetTextAlignment("centre");
+                lblBackupHdrVw = lblBackupHdr.GetLabelCell();
+                arrItems[4] = lblBackupHdrVw;
+
+                iUtils.CreateFormGridItem lblRemoveHdr = new iUtils.CreateFormGridItem();
 				UIView lblRemoveHdrVw = new UIView();
-				lblRemoveHdr.SetDimensions(606f,iVert,100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
+				lblRemoveHdr.SetDimensions(655f,iVert,100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
 				lblRemoveHdr.SetLabelText("Remove");
 				lblRemoveHdr.SetBorderWidth(1.0f);
 				lblRemoveHdr.SetFontName("Verdana-Bold");
@@ -192,11 +206,11 @@ namespace ITPiPadSoln
 				lblRemoveHdr.SetTextColour("White");
 				lblRemoveHdr.SetTextAlignment("centre");
 				lblRemoveHdrVw = lblRemoveHdr.GetLabelCell();
-				arrItems[4] = lblRemoveHdrVw;
+				arrItems[5] = lblRemoveHdrVw;
 
 				iUtils.CreateFormGridItem lblStatusHdr = new iUtils.CreateFormGridItem();
 				UIView lblStatusHdrVw = new UIView();
-				lblStatusHdr.SetDimensions(705f,iVert,300f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
+				lblStatusHdr.SetDimensions(754f,iVert,250f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
 				lblStatusHdr.SetLabelText("Status");
 				lblStatusHdr.SetBorderWidth(1.0f);
 				lblStatusHdr.SetFontName("Verdana-Bold");
@@ -205,7 +219,7 @@ namespace ITPiPadSoln
 				lblStatusHdr.SetTextColour("White");
 				lblStatusHdr.SetTextAlignment("centre");
 				lblStatusHdrVw = lblStatusHdr.GetLabelCell();
-				arrItems[5] = lblStatusHdrVw;
+				arrItems[6] = lblStatusHdrVw;
 
 				View.AddSubviews(arrItems);
 				
@@ -213,7 +227,7 @@ namespace ITPiPadSoln
 				DataSet arrITP = GetITPsDownloadedLocal();
 				if(arrITP.Tables.Count >0)
 				{
-					UIView[] arrItems2 = new UIView[9];
+					UIView[] arrItems2 = new UIView[10];
 					int iRows = arrITP.Tables[0].Rows.Count;
 					m_iProjectsInList = iRows;
 
@@ -237,7 +251,7 @@ namespace ITPiPadSoln
 						
 						iUtils.CreateFormGridItem lblDesc = new iUtils.CreateFormGridItem();
 						UIView lblDescVw = new UIView();
-						lblDesc.SetDimensions(109f,iVert, 300f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
+						lblDesc.SetDimensions(109f,iVert, 250f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
 						iColNo = arrITP.Tables[0].Columns["ProjectDesc"].Ordinal;
 						lblDesc.SetLabelText(arrITP.Tables[0].Rows[i].ItemArray[iColNo].ToString());
 						lblDesc.SetBorderWidth(1.0f);
@@ -254,7 +268,7 @@ namespace ITPiPadSoln
 
 						iUtils.CreateFormGridItem btnOpen = new iUtils.CreateFormGridItem();
 						UIView btnOpenVw = new UIView();
-						btnOpen.SetDimensions(408f,iVert, 100f, iRowHeight, 8f, 4f, 8f, 4f); //Set left to 1 less so border does not double up
+						btnOpen.SetDimensions(358f,iVert, 100f, iRowHeight, 8f, 4f, 8f, 4f); //Set left to 1 less so border does not double up
 						btnOpen.SetLabelText("Open");
 						btnOpen.SetBorderWidth(1.0f);
 						btnOpen.SetFontName("Verdana");
@@ -276,14 +290,14 @@ namespace ITPiPadSoln
 						}
 						else
 						{
-							sStatusText += "Ready for modification or upload.";
+							sStatusText += "Ready for modification, backup or upload.";
 						}
 
 						arrItems2[2] = btnOpenVw;
 
 						iUtils.CreateFormGridItem btnUpload = new iUtils.CreateFormGridItem();
 						UIView btnUploadVw = new UIView();
-						btnUpload.SetDimensions(507f,iVert, 100f, iRowHeight, 8f, 4f, 8f, 4f); //Set left to 1 less so border does not double up
+						btnUpload.SetDimensions(457f,iVert, 100f, iRowHeight, 8f, 4f, 8f, 4f); //Set left to 1 less so border does not double up
 						btnUpload.SetLabelText("Upload");
 						btnUpload.SetBorderWidth(1.0f);
 						btnUpload.SetFontName("Verdana");
@@ -293,13 +307,29 @@ namespace ITPiPadSoln
 						
 						UIButton btnUploadButton = new UIButton();
 						btnUploadButton = btnUpload.GetButton();
-						btnUploadButton.TouchUpInside += (sender,e) => {UploadITPQuestion(sender, e);};
+						btnUploadButton.TouchUpInside += (sender,e) => {UploadITPQuestion(sender, e, 1);};
 
 						iUploadBtnStatus = 1;
 
-						iUtils.CreateFormGridItem btnRemove = new iUtils.CreateFormGridItem();
+                        iUtils.CreateFormGridItem btnBackup = new iUtils.CreateFormGridItem();
+                        UIView btnBackupVw = new UIView();
+                        btnBackup.SetDimensions(556f,iVert, 100f, iRowHeight, 8f, 4f, 8f, 4f); //Set left to 1 less so border does not double up
+                        btnBackup.SetLabelText("Backup");
+                        btnBackup.SetBorderWidth(1.0f);
+                        btnBackup.SetFontName("Verdana");
+                        btnBackup.SetFontSize(14f);
+                        btnBackup.SetTag(iBackupBtnTagId * (i+1));
+                        btnBackupVw = btnBackup.GetButtonCell();
+                        
+                        UIButton btnBackupButton = new UIButton();
+                        btnBackupButton = btnBackup.GetButton();
+                        btnBackupButton.TouchUpInside += (sender,e) => {UploadITPQuestion(sender, e, 2);};
+                        
+                        //iBackupBtnStatus = 1;
+
+                        iUtils.CreateFormGridItem btnRemove = new iUtils.CreateFormGridItem();
 						UIView btnRemoveVw = new UIView();
-						btnRemove.SetDimensions(606f,iVert, 100f, iRowHeight, 8f, 4f, 8f, 4f); //Set left to 1 less so border does not double up
+						btnRemove.SetDimensions(655f,iVert, 100f, iRowHeight, 8f, 4f, 8f, 4f); //Set left to 1 less so border does not double up
 						btnRemove.SetLabelText("Remove");
 						btnRemove.SetBorderWidth(1.0f);
 						btnRemove.SetFontName("Verdana");
@@ -316,7 +346,8 @@ namespace ITPiPadSoln
 						if (m_sUser == "Not logged in to SCMS" )
 						{
 							btnUploadButton.Enabled = false;
-							iUploadBtnStatus = 0;
+                            btnBackupButton.Enabled = false;
+                            iUploadBtnStatus = 0;
 							if (iDownloaded != 1)
 							{
 								sStatusText += "You must login to upload.";
@@ -326,42 +357,44 @@ namespace ITPiPadSoln
 						if (iDownloaded == 1)
 						{
 							btnUploadButton.Enabled = false;
-							iUploadBtnStatus = 0;
+                            btnBackupButton.Enabled = false;
+                            iUploadBtnStatus = 0;
 							btnRemoveButton.Enabled = true;
 							iRemoveBtnStatus = 1;
 						}
 
 						arrItems2[3] = btnUploadVw;
-						arrItems2[4] = btnRemoveVw;
+                        arrItems2[4] = btnBackupVw;
+                        arrItems2[5] = btnRemoveVw;
 
 						iUtils.CreateFormGridItem lblStatus = new iUtils.CreateFormGridItem();
 						UIView lblStatusVw = new UIView();
-						lblStatus.SetDimensions(705f,iVert, 300f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
+						lblStatus.SetDimensions(754f,iVert, 250f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
 						lblStatus.SetLabelText(sStatusText);
 						lblStatus.SetBorderWidth(1.0f);
 						lblStatus.SetFontName("Verdana");
 						lblStatus.SetFontSize(12f);
 						lblStatus.SetTag(iProjStatusTagId * (i+1));
 						lblStatusVw = lblStatus.GetLabelCell();
-						arrItems2[5] = lblStatusVw;
+						arrItems2[6] = lblStatusVw;
 
 						UILabel hfOpenBtnStatus = new UILabel();
 						hfOpenBtnStatus.Tag = (iOpenBtnStatusTagId * (i+1));
 						hfOpenBtnStatus.Text = iOpenBtnStatus.ToString();
 						hfOpenBtnStatus.Hidden = true;
-						arrItems2[6] = hfOpenBtnStatus;
+						arrItems2[7] = hfOpenBtnStatus;
 
 						UILabel hfUploadBtnStatus = new UILabel();
 						hfUploadBtnStatus.Tag = (iUploadBtnStatusTagId * (i+1));
 						hfUploadBtnStatus.Text = iUploadBtnStatus.ToString();
 						hfUploadBtnStatus.Hidden = true;
-						arrItems2[7] = hfUploadBtnStatus;
+						arrItems2[8] = hfUploadBtnStatus;
 
 						UILabel hfRemoveBtnStatus = new UILabel();
 						hfRemoveBtnStatus.Tag = (iRemoveBtnStatusTagId * (i+1));
 						hfRemoveBtnStatus.Text = iRemoveBtnStatus.ToString();
 						hfRemoveBtnStatus.Hidden = true;
-						arrItems2[8] = hfRemoveBtnStatus;
+						arrItems2[9] = hfRemoveBtnStatus;
 
 						View.AddSubviews(arrItems2);
 						
@@ -426,13 +459,22 @@ namespace ITPiPadSoln
 			});
 		}
 
-		void UploadITPQuestion(object sender, EventArgs e)
+		void UploadITPQuestion(object sender, EventArgs e, int iMarkUploadType)
 		{
 			UIButton btnClicked = (UIButton)sender;
 			int iClicked = btnClicked.Tag;
 			UILabel projId = (UILabel)View.ViewWithTag (iClicked/iUploadBtnTagId*iProjectIdTagId);
 			string sId = projId.Text;
-			int iOpenBtnId = iClicked/iUploadBtnTagId*iOpenBtnTagId; 
+            int iOpenBtnId = -1;
+            if(iMarkUploadType == 1)
+            {
+			    iOpenBtnId = iClicked/iUploadBtnTagId*iOpenBtnTagId; 
+            }
+            else
+            {
+                iOpenBtnId = iClicked/iBackupBtnTagId*iOpenBtnTagId; 
+            }
+
 			var bConnStatus = GetConnectionStatus ();
 
 			if (!bConnStatus)
@@ -449,13 +491,24 @@ namespace ITPiPadSoln
 
             }
 			
-			iUtils.AlertBox alert2 = new iUtils.AlertBox();
-			alert2.CreateAlertYesNoDialog();
-			alert2.SetAlertMessage("This will upload ITP info for Project " + sId + " and lock you out from any further changes. Do you wish to continue?");
-			alert2.ShowAlertBox(); 
-
-			UIAlertView alert3 = alert2.GetAlertDialog();
-			alert3.Clicked += (sender2, e2)  => {CheckUploadQuestion(sender2, e2, e2.ButtonIndex, sId, iOpenBtnId);}; 
+            if(iMarkUploadType == 1)
+            {
+    			iUtils.AlertBox alert2 = new iUtils.AlertBox();
+    			alert2.CreateAlertYesNoDialog();
+    			alert2.SetAlertMessage("This will upload ITP info for Project " + sId + " and lock you out from any further changes. Do you wish to continue?");
+    			alert2.ShowAlertBox(); 
+                UIAlertView alert3 = alert2.GetAlertDialog();
+                alert3.Clicked += (sender2, e2)  => {CheckUploadQuestion(sender2, e2, e2.ButtonIndex, sId, iOpenBtnId);}; 
+            }
+            else
+            {
+                iUtils.AlertBox alert2 = new iUtils.AlertBox();
+                alert2.CreateAlertYesNoDialog();
+                alert2.SetAlertMessage("This will backup ITP info for Project " + sId + " and allow you to make further changes once comeplete. Do you wish to continue?");
+                alert2.ShowAlertBox(); 
+                UIAlertView alert3 = alert2.GetAlertDialog();
+                alert3.Clicked += (sender2, e2)  => {CheckUploadQuestion(sender2, e2, e2.ButtonIndex, sId, iOpenBtnId);}; 
+            }
 
 			return;
 		}

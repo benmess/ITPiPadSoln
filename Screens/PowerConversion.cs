@@ -48,24 +48,25 @@ namespace ITPiPadSoln
         int iPwrIdContractTagId = 10021200;
         int iPwrIdSectionInnerTagId = 10021300;
         int iPwrIdHeightTagId  = 10021400;
-        
+        int iPwrIdSectionCompleteLabelTagId  = 10021500;
+
         //Tags for equipment section
-        int iEquipmentFullRowTagId = 10021500;
-        int iFloorEquipLabelTagId = 10021600;
-        int iSuiteEquipLabelTagId = 10021700;
-        int iRackEquipLabelTagId = 10021800;
-        int iSubrackEquipLabelTagId = 10021900;
-        int iPositionEquipLabelTagId = 10022000;
-        int iStringEquipLabelTagId = 10022100;
-        int iEquipTypeEquipLabelTagId = 10022200;
-        int iDOMEquipLabelTagId = 10022300;
-        int iSerialNoEquipLabelTagId = 10022400;
-        int iMakeEquipLabelTagId = 10022500;
-        int iModelEquipLabelTagId = 10022600;
-        int iDeleteEquipLabelTagId = 10022700;
-        int iBlank1EquipLabelTagId = 10022800;
+        int iEquipmentFullRowTagId = 10021600;
+        int iFloorEquipLabelTagId = 10021700;
+        int iSuiteEquipLabelTagId = 10021800;
+        int iRackEquipLabelTagId = 10021900;
+        int iSubrackEquipLabelTagId = 10022000;
+        int iPositionEquipLabelTagId = 10022100;
+        int iStringEquipLabelTagId = 10022200;
+        int iEquipTypeEquipLabelTagId = 10022300;
+        int iDOMEquipLabelTagId = 10022400;
+        int iSerialNoEquipLabelTagId = 10022500;
+        int iMakeEquipLabelTagId = 10022600;
+        int iModelEquipLabelTagId = 10022700;
+        int iDeleteEquipLabelTagId = 10022800;
+        int iBlank1EquipLabelTagId = 10022900;
         
-        int iEquipmentRowSectionCounterTagId = 10013200;
+        int iEquipmentRowSectionCounterTagId = 10013100;
         int iEquipmentRowPwrIdTagId = 10013300;
         int iEquipmentRowStatusTagId = 10013400;
         int iEquipmentRowAutoIdTagId = 10013500;
@@ -98,7 +99,9 @@ namespace ITPiPadSoln
         int iEquipmentEquipTypeTagId = 10017100;
         int iEquipmentSerialNoTagId = 10017200;
         int iEquipmentDeleteBtnTagId = 10017400;
-        
+        int iEquipmentDOMHiddenTagId = 10017500;
+        int iEquipmentSerialNoHiddenTagId = 10017600;
+
         bool gbSuppressSecondCheck = false;
         string m_sSessionId = "";
         string m_sPassedId = "";
@@ -289,8 +292,10 @@ namespace ITPiPadSoln
                 float iQuestionRowHeight = 30f;
                 float iTotalHeight = 0f;
                 float iHeightToAdd = iQuestionRowHeight;
+                bool bHideComplete = true;
+                bool bHideSectionComplete = true;
                 UIView[] arrItems4 = new UIView[8];
-                UIView[] arrItems5 = new UIView[7];
+                UIView[] arrItems5 = new UIView[8];
 
                 
                 
@@ -350,19 +355,28 @@ namespace ITPiPadSoln
                                     SectionEquipmentVw = SectionEquipment.GetLabelCell();
                                     arrItems4[0] = SectionEquipmentVw;
                                     
-                    iUtils.CreateFormGridItem SectionCompleteLabel = new iUtils.CreateFormGridItem();
-                    UIView SectionCompleteLabelVw = new UIView();
-                    SectionCompleteLabel.SetDimensions(400f,0f, 150f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
-                    SectionCompleteLabel.SetLabelText("COMPLETED");
-                    SectionCompleteLabel.SetBorderWidth(0.0f);
-                    SectionCompleteLabel.SetFontName("Verdana-Bold");
-                    SectionCompleteLabel.SetTextColour("Royal Blue");
-                    SectionCompleteLabel.SetFontSize(12f);
-                    SectionCompleteLabel.SetCellColour("DarkSlateGrey");
-                    SectionCompleteLabel.SetTag(iSectionCompleteLabelTagId * (iii+1));
-                    SectionCompleteLabel.SetHidden(true);
-                    SectionCompleteLabelVw = SectionCompleteLabel.GetLabelCell();
-                    arrItems4[1] = SectionCompleteLabelVw;
+                                    if(PowerConversionFullyComplete())
+                                    {
+                                        bHideComplete = false;
+                                    }
+                                    else
+                                    {
+                                        bHideComplete = true;
+                                    }
+
+                                    iUtils.CreateFormGridItem SectionCompleteLabel = new iUtils.CreateFormGridItem();
+                                    UIView SectionCompleteLabelVw = new UIView();
+                                    SectionCompleteLabel.SetDimensions(400f,0f, 150f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+                                    SectionCompleteLabel.SetLabelText("COMPLETED");
+                                    SectionCompleteLabel.SetBorderWidth(0.0f);
+                                    SectionCompleteLabel.SetFontName("Verdana-Bold");
+                                    SectionCompleteLabel.SetTextColour("Bright Yellow");
+                                    SectionCompleteLabel.SetFontSize(12f);
+                                    SectionCompleteLabel.SetCellColour("DarkSlateGrey");
+                                    SectionCompleteLabel.SetTag(iSectionCompleteLabelTagId * (iii+1));
+                                    SectionCompleteLabel.SetHidden(bHideComplete);
+                                    SectionCompleteLabelVw = SectionCompleteLabel.GetLabelCell();
+                                    arrItems4[1] = SectionCompleteLabelVw;
 
                                     iUtils.CreateFormGridItem btnSaveEquipment = new iUtils.CreateFormGridItem();
                                     UIView btnSaveEquipmentVw = new UIView();
@@ -371,6 +385,7 @@ namespace ITPiPadSoln
                                     btnSaveEquipment.SetBorderWidth(0.0f);
                                     btnSaveEquipment.SetFontName("Verdana");
                                     btnSaveEquipment.SetFontSize(12f);
+                                    btnSaveEquipment.SetHidden(true);
                                     btnSaveEquipment.SetTag(iSaveSectionBtnTagId * (iii+1));
                                     btnSaveEquipment.SetCellColour("DarkSlateGrey");
                                     btnSaveEquipmentVw = btnSaveEquipment.GetButtonCell();
@@ -496,7 +511,7 @@ namespace ITPiPadSoln
                                         
                                         iUtils.CreateFormGridItem btnNewEquipment = new iUtils.CreateFormGridItem();
                                         UIView btnNewEquipmentVw = new UIView();
-                                        btnNewEquipment.SetDimensions(200f,iPwrIdRowVert, 350f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
+                                        btnNewEquipment.SetDimensions(200f,iPwrIdRowVert, 200f, iSectionHdrRowHeight, 8f, 4f, 8f, 4f);
                                         btnNewEquipment.SetLabelText("New Item");
                                         btnNewEquipment.SetBorderWidth(0.0f);
                                         btnNewEquipment.SetFontName("Verdana");
@@ -518,6 +533,37 @@ namespace ITPiPadSoln
                                         
                                         arrItems5[2] = btnNewEquipmentVw;
                                         
+                                        if(PowerConversionPwrIdComplete(sPwrId)) 
+                                        {
+                                            bHideSectionComplete = false;
+                                        }
+                                        else
+                                        {
+                                            bHideSectionComplete = true;
+                                        }
+                                        iUtils.CreateFormGridItem PwrIdCompleteLabel = new iUtils.CreateFormGridItem();
+                                        UIView PwrIdCompleteLabelVw = new UIView();
+                                        PwrIdCompleteLabel.SetDimensions(400f,0f, 150f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+                                        PwrIdCompleteLabel.SetLabelText("COMPLETED");
+                                        PwrIdCompleteLabel.SetBorderWidth(0.0f);
+                                        PwrIdCompleteLabel.SetFontName("Verdana-Bold");
+                                        PwrIdCompleteLabel.SetTextColour("Royal Blue");
+                                        PwrIdCompleteLabel.SetFontSize(14f);
+                                        if (jj % 2 == 0)
+                                        {
+                                            PwrIdCompleteLabel.SetCellColour("Pale Yellow");
+                                        }
+                                        else
+                                        {
+                                            PwrIdCompleteLabel.SetCellColour("Pale Orange");
+                                        }
+                                        PwrIdCompleteLabel.SetTag((iPwrIdSectionCompleteLabelTagId + (jj+1)) * (iii+1));
+                                        PwrIdCompleteLabel.SetHidden(bHideSectionComplete);
+                                        PwrIdCompleteLabelVw = PwrIdCompleteLabel.GetLabelCell();
+                                        arrItems5[3] = PwrIdCompleteLabelVw;
+                                        
+                                        
+
                                         iUtils.CreateFormGridItem rowPwrIdBlank = new iUtils.CreateFormGridItem();
                                         UIView rowPwrIdBlankVw = new UIView();
                                         rowPwrIdBlank.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
@@ -538,7 +584,7 @@ namespace ITPiPadSoln
                                         }
                                         
                                         rowPwrIdBlankVw = rowPwrIdBlank.GetLabelCell();
-                                        arrItems5[3] = rowPwrIdBlankVw;
+                                        arrItems5[4] = rowPwrIdBlankVw;
                                         
                                         iUtils.CreateFormGridItem btnExpandPwrId = new iUtils.CreateFormGridItem();
                                         UIView btnExpandPwrIdVw = new UIView();
@@ -563,7 +609,7 @@ namespace ITPiPadSoln
                                         btnExpandPwrIdButton.Enabled = false;
                                         btnExpandPwrIdButton.TouchUpInside += (sender,e) => {ExpandPwrId(sender, e, 2);};
                                         
-                                        arrItems5[4] = btnExpandPwrIdVw;
+                                        arrItems5[5] = btnExpandPwrIdVw;
                                         
                                         iUtils.CreateFormGridItem btnContractPwrId = new iUtils.CreateFormGridItem();
                                         UIView btnContractPwrIdVw = new UIView();
@@ -587,13 +633,13 @@ namespace ITPiPadSoln
                                         btnContractPwrIdButton = btnContractPwrId.GetButton();
                                         btnContractPwrIdButton.TouchUpInside += (sender,e) => {ContractPwrId(sender, e, 2);};
                                         
-                                        arrItems5[5] = btnContractPwrIdVw;
+                                        arrItems5[6] = btnContractPwrIdVw;
                                         
                                         UILabel hfPwrIdSectionHeight = new UILabel();
                                         hfPwrIdSectionHeight.Tag = (iPwrIdHeightTagId + (jj+1)) * (iii+1);
                                         hfPwrIdSectionHeight.Hidden = true;
                                         hfPwrIdSectionHeight.Text = "0";
-                                        arrItems5[6] = hfPwrIdSectionHeight;
+                                        arrItems5[7] = hfPwrIdSectionHeight;
                                         
                                         iHeightToAdd = iSectionHdrRowHeight;
                                         
@@ -1070,7 +1116,7 @@ namespace ITPiPadSoln
             float iHdrVert = 0.0f;
             float iRowHeight = 40f;
             UIView[] arrItems = new UIView[6];
-            UIView[] arrItems2 = new UIView[16];
+            UIView[] arrItems2 = new UIView[18];
             UIView[] arrItems3 = new UIView[6];
             UIView[] arrItems4 = new UIView[6];
             UIView vwBlank = new UIView();
@@ -1386,8 +1432,10 @@ namespace ITPiPadSoln
                 txtStringView.AutocorrectionType = UITextAutocorrectionType.No;
                 txtStringView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
                 txtStringView.ReturnKeyType = UIReturnKeyType.Next;
+                txtStringView.ShouldBeginEditing += (sender) => {
+                    return SetGlobalEditItems(sender, 6);};
                 txtStringView.ShouldEndEditing += (sender) => {
-                    return ValidateBankNo(sender, 2);};
+                    return ValidateBankNo(sender, 2, 0);};
                 txtStringView.ShouldReturn += (sender) => {
                     return MoveNextTextField(sender, 6);};
                 
@@ -1440,7 +1488,7 @@ namespace ITPiPadSoln
             
             UISegmentedControl radEquipTypeRadio = new UISegmentedControl();
             radEquipTypeRadio = radEquipType.GetRadioGroup();
-            radEquipTypeRadio.TouchUpInside += (sender,e) => {
+            radEquipTypeRadio.ValueChanged += (sender,e) => {
                 SetStringEquipTypeChanged(sender, e);};
             
             radEquipTypeRadio.InsertSegment("New", 0, false);
@@ -1495,14 +1543,21 @@ namespace ITPiPadSoln
             txtDOMTextView.AutocorrectionType = UITextAutocorrectionType.No;
             txtDOMTextView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtDOMTextView.ReturnKeyType = UIReturnKeyType.Next;
+            txtDOMTextView.ShouldBeginEditing += (sender) => {
+                return SetGlobalEditItems(sender, 7);};
             txtDOMTextView.ShouldEndEditing += (sender) => {
-                return ValidateDOM(sender);};
+                return ValidateDOM(sender, 0);};
             txtDOMTextView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 7);};
 
             arrItems2 [13] = txtDOMVw;
             
-            
+            UILabel hfCurrentDOM = new UILabel();
+            hfCurrentDOM.Text = sDOMDisplay;
+            hfCurrentDOM.Tag = iEquipmentDOMHiddenTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
+            hfCurrentDOM.Hidden = true;
+            arrItems2 [14] = hfCurrentDOM;
+
             iUtils.CreateFormGridItem lblSerialNo = new iUtils.CreateFormGridItem();
             UIView lblSerialNoVw = new UIView();
             lblSerialNo.SetDimensions(580f, iHdrVert, 300f, iRowHeight * 2f, 2f, iRowHeight / 2f, 2f, iRowHeight / 2f);
@@ -1526,13 +1581,21 @@ namespace ITPiPadSoln
             txtSerialNoView.AutocorrectionType = UITextAutocorrectionType.No;
             txtSerialNoView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
             txtSerialNoView.ReturnKeyType = UIReturnKeyType.Next;
+            txtSerialNoView.ShouldBeginEditing += (sender) => {
+                return SetGlobalEditItems(sender, 8);};
             txtSerialNoView.ShouldEndEditing += (sender) => {
-                return ValidateSerialNo(sender);};
+                return ValidateSerialNo(sender, 0);};
             txtSerialNoView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 8);};
             
-            arrItems2 [14] = lblSerialNoVw;
+            arrItems2 [15] = lblSerialNoVw;
             
+            UILabel hfCurrentSerialNo = new UILabel();
+            hfCurrentSerialNo.Text = sStringNo;
+            hfCurrentSerialNo.Tag = iEquipmentSerialNoHiddenTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
+            hfCurrentSerialNo.Hidden = true;
+            arrItems2 [16] = hfCurrentSerialNo;
+
             iUtils.CreateFormGridItem btnDelete = new iUtils.CreateFormGridItem();
             UIView btnDeleteVw = new UIView();
             btnDelete.SetDimensions(880f, iHdrVert, 120f, iRowHeight * 2f, 8f, iRowHeight / 2f, 8f, iRowHeight / 2f);
@@ -1562,7 +1625,7 @@ namespace ITPiPadSoln
             {
                 btnDeleteButton.Enabled = false;
             }
-            arrItems2[15] = btnDeleteVw;
+            arrItems2[17] = btnDeleteVw;
             
             hdrRow.AddSubviews(arrItems2);
             
@@ -2471,8 +2534,18 @@ namespace ITPiPadSoln
         }
 
         //Here iType means 1 = Batteries, 2 = Solar strings
-        public bool ValidateBankNo (object sender, int iType)
+        public bool ValidateBankNo (object sender, int iType, int iFromBackButton)
         {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
             UITextField txtBankNo = (UITextField)sender;
             string sBankNo = txtBankNo.Text;
             sBankNo = sBankNo.ToUpper();
@@ -2497,26 +2570,53 @@ namespace ITPiPadSoln
             } 
             else 
             {
-                hfHiddenBankNo.Text = txtBankNo.Text;
+                if(hfHiddenBankNo.Text != txtBankNo.Text)
+                {
+                    hfHiddenBankNo.Text = txtBankNo.Text;
+                    UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdRow + iStringRow);
+                    hfRowStatus.Text = "1";
+                    SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
+                    SetAnyValueChanged(sender, null);
+                }
+                return true;
+            }
+        }
+        
+        public bool ValidateDOM (object sender, int iFromBackButton)
+        {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
+            UITextField txtDOM = (UITextField)sender;
+            string sDOM = txtDOM.Text;
+            bool bDateCheck;
+
+            int iTagId = txtDOM.Tag;
+            int iPwrIdRow =  iTagId/ iEquipmentDOMTagId;
+            int iStringRow = iTagId - (iPwrIdRow * iEquipmentDOMTagId);
+            int iHiddenDOMId =  iEquipmentDOMHiddenTagId * iPwrIdRow + iStringRow;
+            UILabel hfHiddenDOM = (UILabel)View.ViewWithTag (iHiddenDOMId);
+
+            if(sDOM == "")
+            {
                 UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdRow + iStringRow);
                 hfRowStatus.Text = "1";
                 SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
                 SetAnyValueChanged(sender, null);
                 return true;
             }
-        }
-        
-        public bool ValidateDOM (object sender)
-        {
-            UITextField txtDOM = (UITextField)sender;
-            string sDOM = txtDOM.Text;
+
             DateClass dt = new DateClass ();
             DateTime dtDOM;
-            bool bDateCheck = dt.ValidateDate (sDOM, ref dtDOM);
-            int iTagId = txtDOM.Tag;
-            int iPwrIdRow =  iTagId/ iEquipmentDOMTagId;
-            int iStringRow = iTagId - (iPwrIdRow * iEquipmentDOMTagId);
-            
+            bDateCheck = dt.ValidateDate (sDOM, ref dtDOM);
+
             if (!bDateCheck) 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
@@ -2530,10 +2630,14 @@ namespace ITPiPadSoln
             {
                 string sDOMReturn = dt.Get_Date_String(dtDOM, "dd/mm/yy");
                 txtDOM.Text = sDOMReturn;
-                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdRow + iStringRow);
-                hfRowStatus.Text = "1";
-                SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
-                SetAnyValueChanged(sender, null);
+                if(hfHiddenDOM.Text != sDOMReturn)
+                {
+                    hfHiddenDOM.Text = sDOMReturn;
+                    UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdRow + iStringRow);
+                    hfRowStatus.Text = "1";
+                    SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
+                    SetAnyValueChanged(sender, null);
+                }
                 return true;
             }
         }
@@ -3374,13 +3478,26 @@ namespace ITPiPadSoln
             return true;
         }
         
-        public bool ValidateSerialNo(object sender)
+        public bool ValidateSerialNo(object sender, int iFromBackButton)
         {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
             UITextField txtSerialNo = (UITextField)sender;
             string sSerialNo = txtSerialNo.Text;
             int iTagId = txtSerialNo.Tag;
             int iPwrIdRow =  iTagId/ iEquipmentSerialNoTagId;
             int iStringRow = iTagId - (iPwrIdRow * iEquipmentSerialNoTagId);
+            int iHiddenSerialNoId =  iEquipmentSerialNoHiddenTagId * iPwrIdRow + iStringRow;
+            UILabel hfHiddenSerialNo = (UILabel)View.ViewWithTag (iHiddenSerialNoId);
+
             if (sSerialNo.Length > 15)
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
@@ -3392,10 +3509,15 @@ namespace ITPiPadSoln
                 m_bSuppressMove = true;
                 return false;
             }
-            UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdRow + iStringRow);
-            hfRowStatus.Text = "1";
-            SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
-            SetAnyValueChanged(sender, null);
+
+            if(hfHiddenSerialNo.Text != sSerialNo)
+            {
+                hfHiddenSerialNo.Text = sSerialNo;
+                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdRow + iStringRow);
+                hfRowStatus.Text = "1";
+                SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
+                SetAnyValueChanged(sender, null);
+            }
             return true;
         }
         
@@ -3698,7 +3820,17 @@ namespace ITPiPadSoln
             
         }
         
+        public bool PowerConversionFullyComplete()
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSection10PowerConversionComplete(m_sPassedId);
+        }
 
+        public bool PowerConversionPwrIdComplete(string sPwrId)
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSection10PwrIdPowerConversionComplete(m_sPassedId, sPwrId);
+        }
 
         public void SaveAllSections ()
         {
@@ -3951,6 +4083,11 @@ namespace ITPiPadSoln
             changes.Hidden = false;
             UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
             txtEditStatus.Text = "1";
+
+            //Enable the Save section button
+            UIButton btnSave = (UIButton)View.ViewWithTag (iSaveSectionBtnTagId * (m_iEquipmentSectionCounter+1));
+            btnSave.Hidden = false;
+            
         }
         
         public void SetAnyValueChangedOff ()
@@ -3976,8 +4113,59 @@ namespace ITPiPadSoln
                 UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
                 txtEditStatus.Text = "0";
             }
+
+            ShowCompletedLabels();
+            
+            //Disable the Save section button
+            UIButton btnSave = (UIButton)View.ViewWithTag (iSaveSectionBtnTagId * (m_iEquipmentSectionCounter+1));
+            btnSave.Hidden = true;
         }
         
+        public void ShowCompletedLabels()
+        {
+            int i;
+            UILabel hfSectionPwrIds = (UILabel)View.ViewWithTag(iSectionRowsTagId * (m_iEquipmentSectionCounter+ 1));
+            int iTotalPwrIds = Convert.ToInt32(hfSectionPwrIds.Text);
+            UILabel lblCompleted = (UILabel)View.ViewWithTag (iSectionCompleteLabelTagId * (m_iEquipmentSectionCounter + 1));
+            ProjectITPage QuestionsScreen = new ProjectITPage ();
+            QuestionsScreen = GetProjectITPPage ();
+            if(PowerConversionFullyComplete())
+            {
+                lblCompleted.Hidden = false;
+                
+                for(i = 0 ; i< iTotalPwrIds ; i++)
+                {
+                    UILabel lblPwrIdComplete = (UILabel)View.ViewWithTag ((iPwrIdSectionCompleteLabelTagId + (i+1)) * (m_iEquipmentSectionCounter+1));
+                    lblPwrIdComplete.Hidden = false;
+                }
+                
+                //Now also show it on the calling ITP screen
+                QuestionsScreen.SetPowerConversionCompleted(true);
+            }
+            else
+            {
+                lblCompleted.Hidden = true;
+                for(i = 0 ; i< iTotalPwrIds ; i++)
+                {
+                    UILabel lblPwrId = (UILabel)View.ViewWithTag ((iPwrIdRowLabelTagId + (i+1)) * (m_iEquipmentSectionCounter+1));
+                    string sPwrId = lblPwrId.Text;
+                    UILabel lblPwrIdComplete = (UILabel)View.ViewWithTag ((iPwrIdSectionCompleteLabelTagId + (i+1)) * (m_iEquipmentSectionCounter+1));
+                    if(PowerConversionPwrIdComplete(sPwrId))
+                    {
+                        lblPwrIdComplete.Hidden = false;
+                    }
+                    else
+                    {
+                        lblPwrIdComplete.Hidden = true;
+                    }
+                }
+
+                //Now also show it on the calling ITP screen
+                QuestionsScreen.SetPowerConversionCompleted(false);
+
+            }
+        }
+
         public void CheckUnsaved ()
         {
             //First of all validate anything required
@@ -4013,6 +4201,27 @@ namespace ITPiPadSoln
                     break;
                 case 5: //Position
                     if(!ValidatePosition(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+                case 6: //Solar String
+                    if(!ValidateBankNo(m_sender, 2, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+                case 7: //DOM
+                    if(!ValidateDOM(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+                case 8: //Serial No
+                    if(!ValidateSerialNo(m_sender, 1))
                     {
                         gbSuppressSecondCheck = false;
                         return;

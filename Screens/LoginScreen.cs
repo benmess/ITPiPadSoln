@@ -135,7 +135,7 @@ namespace ITPiPadSoln
 			{
 				iUtils.AlertBox alert = new iUtils.AlertBox();
 				alert.CreateErrorAlertDialog("Incorrect username and/or password");
-				homeScreen.SetLoginName ("");
+                homeScreen.SetLoginName ("Not logged in to SCMS");
 				homeScreen.SetSessionId ("");
 				homeScreen.SetLoggedInStatus("0");
 			}

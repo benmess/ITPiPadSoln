@@ -734,14 +734,22 @@ namespace ITPiPadSoln
                     }
                     else
                     {
-                        bFullyCommitted = false;
-                        if(BatteryFullyComplete())
+                        if(BatteryFullyCommitted())
                         {
+                            bFullyCommitted = true;
                             bHideComplete = false;
                         }
                         else
                         {
-                            bHideComplete = true;
+                            bFullyCommitted = false;
+                            if(BatteryFullyComplete())
+                            {
+                                bHideComplete = false;
+                            }
+                            else
+                            {
+                                bHideComplete = true;
+                            }
                         }
                     }
 
@@ -863,14 +871,22 @@ namespace ITPiPadSoln
                     }
                     else
                     {
-                        bFullyCommitted = false;
-                        if(PowerConversionFullyComplete())
+                        if(PowerConversionFullyCommitted())
                         {
+                            bFullyCommitted = true;
                             bHideComplete = false;
                         }
                         else
                         {
-                            bHideComplete = true;
+                            bFullyCommitted = false;
+                            if(PowerConversionFullyComplete())
+                            {
+                                bHideComplete = false;
+                            }
+                            else
+                            {
+                                bHideComplete = true;
+                            }
                         }
                     }
 
@@ -2303,7 +2319,14 @@ namespace ITPiPadSoln
                 }
                 else
                 {
-                    lblCompletedBatt.Text = "COMPLETED";
+                    if(BatteryFullyCommitted())
+                    {
+                        lblCompletedBatt.Text = "COMMITTED";
+                    }
+                    else
+                    {
+                        lblCompletedBatt.Text = "COMPLETED";
+                    }
                 }
                 lblCompletedBatt.Hidden = false;                
             }
@@ -2322,7 +2345,14 @@ namespace ITPiPadSoln
                 }
                 else
                 {
-                    lblCompletedPwrConv.Text = "COMPLETED";
+                    if(PowerConversionFullyCommitted())
+                    {
+                        lblCompletedPwrConv.Text = "COMMITTED";
+                    }
+                    else
+                    {
+                        lblCompletedPwrConv.Text = "COMPLETED";
+                    }
                 }
                 lblCompletedPwrConv.Hidden = false;                
             }
@@ -2330,6 +2360,20 @@ namespace ITPiPadSoln
             {
                 lblCompletedPwrConv.Hidden = true;
             }
+        }
+
+        public void SetBatteryCompleted(bool bOnOff)
+        {
+            UILabel lblCompletedBatt = (UILabel)View.ViewWithTag (iSectionCompleteLabelTagId * (m_iBatterySectionCounter + 1));
+            lblCompletedBatt.Text = "COMPLETED";
+            lblCompletedBatt.Hidden = !bOnOff;                
+        }
+
+        public void SetPowerConversionCompleted(bool bOnOff)
+        {
+            UILabel lblCompletedPwrConv = (UILabel)View.ViewWithTag (iSectionCompleteLabelTagId * (m_iEquipmentSectionCounter+1));
+            lblCompletedPwrConv.Text = "COMPLETED";
+            lblCompletedPwrConv.Hidden = !bOnOff;                
         }
 
         public void CheckUnsaved ()
@@ -2451,10 +2495,22 @@ namespace ITPiPadSoln
             return DBQ.ProjectSection10BatteryComplete(m_sPassedId);
         }
         
+        public bool BatteryFullyCommitted()
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSection10BatteryFullyCommitted(m_sPassedId);
+        }
+
         public bool PowerConversionFullyComplete()
         {
             clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
             return DBQ.ProjectSection10PowerConversionComplete(m_sPassedId);
+        }
+
+        public bool PowerConversionFullyCommitted()
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSection10PowerConversionFullyCommitted(m_sPassedId);
         }
 
         public void OpenBatteries(object sender, EventArgs e)
