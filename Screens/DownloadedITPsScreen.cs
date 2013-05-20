@@ -498,47 +498,50 @@ namespace ITPiPadSoln
     			alert2.SetAlertMessage("This will upload ITP info for Project " + sId + " and lock you out from any further changes. Do you wish to continue?");
     			alert2.ShowAlertBox(); 
                 UIAlertView alert3 = alert2.GetAlertDialog();
-                alert3.Clicked += (sender2, e2)  => {CheckUploadQuestion(sender2, e2, e2.ButtonIndex, sId, iOpenBtnId);}; 
+                alert3.Clicked += (sender2, e2)  => {CheckUploadQuestion(sender2, e2, e2.ButtonIndex, sId, iOpenBtnId, 0);}; 
             }
             else
             {
                 iUtils.AlertBox alert2 = new iUtils.AlertBox();
                 alert2.CreateAlertYesNoDialog();
-                alert2.SetAlertMessage("This will backup ITP info for Project " + sId + " and allow you to make further changes once comeplete. Do you wish to continue?");
+                alert2.SetAlertMessage("This will backup ITP info for Project " + sId + " and allow you to make further changes once complete. Do you wish to continue?");
                 alert2.ShowAlertBox(); 
                 UIAlertView alert3 = alert2.GetAlertDialog();
-                alert3.Clicked += (sender2, e2)  => {CheckUploadQuestion(sender2, e2, e2.ButtonIndex, sId, iOpenBtnId);}; 
+                alert3.Clicked += (sender2, e2)  => {CheckUploadQuestion(sender2, e2, e2.ButtonIndex, sId, iOpenBtnId, 1);}; 
             }
 
 			return;
 		}
 
-		public void CheckUploadQuestion (object sender, EventArgs e, int iBtnIndex, string sId, int iOpenBtnId)
+		public void CheckUploadQuestion (object sender, EventArgs e, int iBtnIndex, string sId, int iOpenBtnId, int iUploadOrBackup)
 		{
 			switch (iBtnIndex) 
 			{
 				case 0:
-					UploadITP(sId, iOpenBtnId);
+                    UploadITP(sId, iOpenBtnId, iUploadOrBackup);
 					break;
 				case 1:
 					break;
 			}
 		}
 
-		bool UploadITP(string sId, int iOpenBtnId)
+        bool UploadITP(string sId, int iOpenBtnId, int iUploadOrBackup)
 		{
 			string sUser = m_sUser;
 			string sSessionId = m_sSessionId;
 			clsITPFramework ITPFwrk = new clsITPFramework();
 			string sRtnMsg = "";
-			bool bUpload = ITPFwrk.UploadITPInfo(sSessionId, sUser, sId, ref sRtnMsg);
+            bool bUpload = ITPFwrk.UploadITPInfo(sSessionId, sUser, sId, iUploadOrBackup, ref sRtnMsg);
 			if (bUpload && sRtnMsg == "")
 			{
 				//Now also disable the open button for this project
-				UIButton btnOpen = (UIButton)View.ViewWithTag (iOpenBtnId);
-				btnOpen.Enabled = false;
-				UILabel hfbtnOpenStatus = (UILabel)View.ViewWithTag (iOpenBtnId/iOpenBtnTagId * iOpenBtnStatusTagId);
-				hfbtnOpenStatus.Text = "0";
+                if(iUploadOrBackup == 0)
+                {
+    				UIButton btnOpen = (UIButton)View.ViewWithTag (iOpenBtnId);
+    				btnOpen.Enabled = false;
+    				UILabel hfbtnOpenStatus = (UILabel)View.ViewWithTag (iOpenBtnId/iOpenBtnTagId * iOpenBtnStatusTagId);
+    				hfbtnOpenStatus.Text = "0";
+                }
 
 				UIButton btnUpload = (UIButton)View.ViewWithTag (iOpenBtnId/ iOpenBtnTagId * iUploadBtnTagId);
 				btnUpload.Enabled = false;
@@ -552,12 +555,22 @@ namespace ITPiPadSoln
                 hfbtnRemoveStatus.Text = "1";
 
                 //Change the status text too
-				UILabel lblStatus = (UILabel)View.ViewWithTag (iOpenBtnId/ iOpenBtnTagId * iProjStatusTagId);
-				lblStatus.Text = "Uploaded already. You must download again to make changes.";
+                if(iUploadOrBackup == 0)
+                {
+    				UILabel lblStatus = (UILabel)View.ViewWithTag (iOpenBtnId/ iOpenBtnTagId * iProjStatusTagId);
+    				lblStatus.Text = "Uploaded already. You must download again to make changes.";
+                }
 
 				iUtils.AlertBox alert = new iUtils.AlertBox();
 				alert.CreateAlertDialog();
-				alert.SetAlertMessage("ITP info for Project " + sId + " successfully uploaded.");
+                if(iUploadOrBackup == 0)
+                {
+				    alert.SetAlertMessage("ITP info for Project " + sId + " successfully uploaded.");
+                }
+                else
+                {
+                    alert.SetAlertMessage("ITP info for Project " + sId + " successfully backed up.");
+                }
 				alert.ShowAlertBox(); 
 			}
 			else
@@ -620,10 +633,12 @@ namespace ITPiPadSoln
 			{
 				UIButton btnOpen = (UIButton)View.ViewWithTag (iOpenBtnTagId * (i+1));
 				UIButton btnUpload = (UIButton)View.ViewWithTag (iUploadBtnTagId * (i+1));
-				UIButton btnRemove = (UIButton)View.ViewWithTag (iRemoveBtnTagId * (i+1));
+                UIButton btnBackup = (UIButton)View.ViewWithTag (iBackupBtnTagId * (i+1));
+                UIButton btnRemove = (UIButton)View.ViewWithTag (iRemoveBtnTagId * (i+1));
 				btnOpen.Enabled = false;
 				btnUpload.Enabled = false;
-				btnRemove.Enabled = false;
+                btnBackup.Enabled = false;
+                btnRemove.Enabled = false;
 			}
 		}
 
@@ -633,10 +648,11 @@ namespace ITPiPadSoln
 			{
 				UIButton btnOpen = (UIButton)View.ViewWithTag (iOpenBtnTagId * (i+1));
 				UIButton btnUpload = (UIButton)View.ViewWithTag (iUploadBtnTagId * (i+1));
-				UIButton btnRemove = (UIButton)View.ViewWithTag (iRemoveBtnTagId * (i+1));
+                UIButton btnBackup = (UIButton)View.ViewWithTag (iBackupBtnTagId * (i+1));
+                UIButton btnRemove = (UIButton)View.ViewWithTag (iRemoveBtnTagId * (i+1));
 				UILabel hfbtnOpenStatus = (UILabel)View.ViewWithTag (iOpenBtnStatusTagId * (i+1));
 				UILabel hfbtnUploadStatus = (UILabel)View.ViewWithTag (iUploadBtnStatusTagId * (i+1));
-				UILabel hfbtnRemoveStatus = (UILabel)View.ViewWithTag (iRemoveBtnStatusTagId * (i+1));
+                UILabel hfbtnRemoveStatus = (UILabel)View.ViewWithTag (iRemoveBtnStatusTagId * (i+1));
 				if (hfbtnOpenStatus.Text == "1")
 				{
 					btnOpen.Enabled = true;
@@ -644,6 +660,7 @@ namespace ITPiPadSoln
 				if (hfbtnUploadStatus.Text == "1")
 				{
 					btnUpload.Enabled = true;
+                    btnBackup.Enabled = true;
 				}
 				if (hfbtnRemoveStatus.Text == "1")
 				{

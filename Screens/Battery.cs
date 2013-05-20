@@ -110,6 +110,7 @@ namespace ITPiPadSoln
         string m_sProjDesc = "";
         int m_iSections = 0;
         int m_iBatterySectionCounter = 0;
+        int m_iPwrdIdRows = 0;
         float m_iBatteryRowHeight = 0f;
         string[] m_sBatteryMakes;
         string[] m_sBatteryModels;
@@ -307,6 +308,8 @@ namespace ITPiPadSoln
                 float iHeightToAdd = 0f;
                 bool bHideComplete = true;
                 bool bHideSectionComplete = true;
+                bool bFullyCommitted = false;
+                bool bRFUPwrIdCommitted = false;
                 UIView[] arrItems4 = new UIView[8];
                 UIView[] arrItems5 = new UIView[8];
 
@@ -331,6 +334,7 @@ namespace ITPiPadSoln
                     m_iSections++; //Add an extra one for the batteries section
                     m_iBatterySectionCounter = ii;
                     int iPwrIdRows = arrITPSection10PwrIds.Tables[0].Rows.Count;
+                    m_iPwrdIdRows = iPwrIdRows;
                     
                     //Add in the section title and buttons for each section header
                     UIView Section10Row = new UIView();
@@ -359,19 +363,35 @@ namespace ITPiPadSoln
                     Section10Vw = Section10.GetLabelCell();
                     arrItems4[0] = Section10Vw;
                     
-                    if(BatteryFullyComplete())
+                    if(BatteryFullyCommitted())
                     {
+                        bFullyCommitted = true;
                         bHideComplete = false;
                     }
                     else
                     {
-                        bHideComplete = true;
+                        bFullyCommitted = false;
+                        if(BatteryFullyComplete())
+                        {
+                            bHideComplete = false;
+                        }
+                        else
+                        {
+                            bHideComplete = true;
+                        }
                     }
 
                     iUtils.CreateFormGridItem SectionCompleteLabel = new iUtils.CreateFormGridItem();
                     UIView SectionCompleteLabelVw = new UIView();
                     SectionCompleteLabel.SetDimensions(400f,0f, 150f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
-                    SectionCompleteLabel.SetLabelText("COMPLETED");
+                    if(bFullyCommitted)
+                    {
+                        SectionCompleteLabel.SetLabelText("COMMITTED");
+                    }
+                    else
+                    {
+                        SectionCompleteLabel.SetLabelText("COMPLETED");
+                    }
                     SectionCompleteLabel.SetBorderWidth(0.0f);
                     SectionCompleteLabel.SetFontName("Verdana-Bold");
                     SectionCompleteLabel.SetTextColour("Bright Yellow");
@@ -508,6 +528,8 @@ namespace ITPiPadSoln
                         rowPwrIdLabelVw = rowPwrIdLabel.GetLabelCell();
                         iHeightToAdd = iSectionHdrRowHeight;
                         arrItems5[1] = rowPwrIdLabelVw;
+
+                        bRFUPwrIdCommitted = RFUPwrIdCommitted(sPwrId);
                         
                         iUtils.CreateFormGridItem btnNewBatteryString = new iUtils.CreateFormGridItem();
                         UIView btnNewBatteryStringVw = new UIView();
@@ -530,7 +552,10 @@ namespace ITPiPadSoln
                         UIButton btnNewBatteryStringButton = new UIButton();
                         btnNewBatteryStringButton = btnNewBatteryString.GetButton();
                         btnNewBatteryStringButton.TouchUpInside += (sender,e) => {AddNewBatteryString(sender, e);};
-                        
+                        if(bRFUPwrIdCommitted)
+                        {
+                            btnNewBatteryStringButton.Enabled = false;
+                        }
                         arrItems5[2] = btnNewBatteryStringVw;
 
                         if(BatteryPwrIdComplete(sPwrId)) 
@@ -544,7 +569,16 @@ namespace ITPiPadSoln
                         iUtils.CreateFormGridItem PwrIdCompleteLabel = new iUtils.CreateFormGridItem();
                         UIView PwrIdCompleteLabelVw = new UIView();
                         PwrIdCompleteLabel.SetDimensions(400f,0f, 150f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
-                        PwrIdCompleteLabel.SetLabelText("COMPLETED");
+                        if(bRFUPwrIdCommitted)
+                        {
+                            PwrIdCompleteLabel.SetLabelText("COMMITTED");
+                            bHideSectionComplete = false;
+                        }
+                        else
+                        {
+                            PwrIdCompleteLabel.SetLabelText("COMPLETED");
+                        }
+
                         PwrIdCompleteLabel.SetBorderWidth(0.0f);
                         PwrIdCompleteLabel.SetFontName("Verdana-Bold");
                         PwrIdCompleteLabel.SetTextColour("Royal Blue");
@@ -768,7 +802,7 @@ namespace ITPiPadSoln
                                                                                        sFuseOrCB, sRatingAmps, sFloor, 
                                                                                        sSuite, sRack, sSubRack, sEquipType,
                                                                                        sSerialNo, iLinkTest, iBatteryTest,
-                                                                                       false, ref iHeightToAdd);
+                                                                                       false, bRFUPwrIdCommitted,ref iHeightToAdd);
                                 BatteryStringRow.Frame = new RectangleF(0f, iPwrIdRowVertInner, 1000f, iHeightToAdd);
                                 BatteryStringRow.Tag = iStringFullRowTagId * (j + 1) + (k + 1);
                                 vwPwrInternalRowIdInnner.AddSubview(BatteryStringRow);
@@ -808,6 +842,21 @@ namespace ITPiPadSoln
                 hfScrollContentHeight.Hidden = true;
                 layout.AddSubview(hfScrollContentHeight);
                 View.AddSubview(layout);
+
+                //Contract all the power conversion PwrIds
+                for(int iiii=0;iiii< m_iPwrdIdRows; iiii++)
+                {
+                    UILabel lblPwrId = (UILabel)View.ViewWithTag ((iPwrIdRowLabelTagId + (iiii+1)) * (m_iBatterySectionCounter+1));                        
+                    string sPwrId = lblPwrId.Text;
+                    bRFUPwrIdCommitted = RFUPwrIdCommitted(sPwrId);
+                    if(bRFUPwrIdCommitted)
+                    {
+                        UIButton btnContract = (UIButton)View.ViewWithTag ((iPwrIdContractTagId + (iiii+1)) * (m_iBatterySectionCounter+1));                        
+                        ContractPwrId(btnContract, null, 1);
+                    }
+                }
+
+
             }
             catch (Exception except)
             {
@@ -1161,7 +1210,7 @@ namespace ITPiPadSoln
                                                    string sFuseOrCB, string sRatingAmps, string sFloor, string sSuite,
                                                    string sRack, string sSubRack, string sEquipType, string sSerialNo,
                                                    int iLinkTestStatus, int i20MinTest, 
-                                                   bool bNewRow, ref float iHeightToAdd)
+                                                   bool bNewRow, bool bReadOnly, ref float iHeightToAdd)
         {
             DateClass dt = new DateClass();
             iHeightToAdd = 0.0f;
@@ -1239,7 +1288,11 @@ namespace ITPiPadSoln
                 return ValidateBankNo(sender, 1, 0);};
             txtBankNoView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 1);};
-            
+
+            if(bReadOnly)
+            {
+                txtBankNoView.Enabled = false;
+            }
             arrItems [5] = lblBankNoVw;
             
             UILabel hfCurrentBankNo = new UILabel();
@@ -1271,6 +1324,11 @@ namespace ITPiPadSoln
             btnBankNoSearchButton.TouchUpInside += (sender,e) => {
                 OpenBankNoList(sender, e);};
             
+            if(bReadOnly)
+            {
+                btnBankNoSearchButton.Enabled = false;
+            }
+
             arrItems [7] = btnBankNoSearchVw;
             
             iUtils.CreateFormGridItem lblBankPlane = new iUtils.CreateFormGridItem();
@@ -1338,6 +1396,10 @@ namespace ITPiPadSoln
             btnMakeSearchButton.TouchUpInside += (sender,e) => {
                 OpenMakeList(sender, e);};
             
+            if(bReadOnly)
+            {
+                btnMakeSearchButton.Enabled = false;
+            }
             arrItems [10] = btnMakeSearchVw;
             
             iUtils.CreateFormGridItem lblBankModel = new iUtils.CreateFormGridItem();
@@ -1390,17 +1452,29 @@ namespace ITPiPadSoln
             btnModelSearchButton.TouchUpInside += (sender,e) => {
                 OpenModelList(sender, e);};
             
+            if(bReadOnly)
+            {
+                btnModelSearchButton.Enabled = false;
+            }
             arrItems [13] = btnModelSearchVw;
             
             iUtils.CreateFormGridItem txtDOM = new iUtils.CreateFormGridItem();
             UIView txtDOMVw = new UIView();
             txtDOM.SetDimensions(697f, iHdrVert, 80f, iRowHeight, 2f, 2f, 2f, 2f);
-            if (sDOM == "" || sDOM == "0")
+            if (sDOM == "0")
             {
                 sDOM = "01/01/1900";
             }
-            DateTime dtDOM = Convert.ToDateTime(sDOM);
-            string sDOMDisplay = dt.Get_Date_String(dtDOM, "dd/mm/yy");
+            string sDOMDisplay;
+            if(sDOM == "")
+            {
+                sDOMDisplay = sDOM;
+            }
+            else
+            {
+                DateTime dtDOM = Convert.ToDateTime(sDOM);
+                sDOMDisplay = dt.Get_Date_String(dtDOM, "dd/mm/yy");
+            }
             txtDOM.SetLabelText(sDOMDisplay);
             txtDOM.SetBorderWidth(0.0f);
             txtDOM.SetFontName("Verdana");
@@ -1428,6 +1502,10 @@ namespace ITPiPadSoln
             txtDOMTextView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 2);};
             
+            if(bReadOnly)
+            {
+                txtDOMTextView.Enabled = false;
+            }
             arrItems[14] = txtDOMVw;
             
             UILabel hfCurrentDOM = new UILabel();
@@ -1480,6 +1558,10 @@ namespace ITPiPadSoln
             btnFuseOrCBSearchButton.TouchUpInside += (sender,e) => {
                 OpenFuseOrCBList(sender, e);};
             
+            if(bReadOnly)
+            {
+                btnFuseOrCBSearchButton.Enabled = false;
+            }
             arrItems[17] = btnFuseOrCBSearchVw;
             
             iUtils.CreateFormGridItem txtRating = new iUtils.CreateFormGridItem();
@@ -1512,6 +1594,10 @@ namespace ITPiPadSoln
             txtRatingTextView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 3);};
             
+            if(bReadOnly)
+            {
+                txtRatingTextView.Enabled = false;
+            }
             arrItems[18] = txtRatingVw;
             
             UILabel hfCurrentRating = new UILabel();
@@ -1558,6 +1644,10 @@ namespace ITPiPadSoln
             txtFloorView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 4);};
             
+            if(bReadOnly)
+            {
+                txtFloorView.Enabled = false;
+            }
             arrItems2 [0] = lblFloorVw;
             
             UILabel hfCurrentFloor = new UILabel();
@@ -1596,6 +1686,10 @@ namespace ITPiPadSoln
             txtSuiteView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 5);};
             
+            if(bReadOnly)
+            {
+                txtSuiteView.Enabled = false;
+            }
             arrItems2 [2] = lblSuiteVw;
             
             UILabel hfCurrentSuite = new UILabel();
@@ -1634,6 +1728,10 @@ namespace ITPiPadSoln
             txtRackView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 6);};
             
+            if(bReadOnly)
+            {
+                txtRackView.Enabled = false;
+            }
             arrItems2 [4] = lblRackVw;
             
             UILabel hfCurrentRack = new UILabel();
@@ -1672,6 +1770,10 @@ namespace ITPiPadSoln
             txtSubRackView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 7);};
             
+            if(bReadOnly)
+            {
+                txtSubRackView.Enabled = false;
+            }
             arrItems2 [6] = lblSubRackVw;
             
             UILabel hfCurrentSubRack = new UILabel();
@@ -1724,6 +1826,11 @@ namespace ITPiPadSoln
                 radEquipTypeRadio.Enabled = false;
             }
             
+            if(bReadOnly)
+            {
+                radEquipTypeRadio.Enabled = false;
+            }
+
             arrItems2 [8] = radEquipTypeVw;
             
             iUtils.CreateFormGridItem lblSerialNo = new iUtils.CreateFormGridItem();
@@ -1756,6 +1863,10 @@ namespace ITPiPadSoln
             txtSerialNoView.ShouldReturn += (sender) => {
                 return MoveNextTextField(sender, 8);};
             
+            if(bReadOnly)
+            {
+                txtSerialNoView.Enabled = false;
+            }
             arrItems2 [9] = lblSerialNoVw;
             
             UILabel hfCurrentSerialNo = new UILabel();
@@ -1789,6 +1900,10 @@ namespace ITPiPadSoln
             btnLinkTestButton.TouchUpInside += (sender,e) => {
                 OpenLinkTest(sender, e);};
             
+            if(bReadOnly)
+            {
+                btnLinkTestButton.Enabled = false;
+            }
             arrItems2 [11] = btnLinkTestVw;
             
             UILabel hfLinkTestStatus = new UILabel();
@@ -1822,6 +1937,10 @@ namespace ITPiPadSoln
             btn20MinTestButton.TouchUpInside += (sender,e) => {
                 Open20MinTest(sender, e);};
             
+            if(bReadOnly)
+            {
+                btn20MinTestButton.Enabled = false;
+            }
             arrItems2 [13] = btn20MinTestVw;
             
             UILabel hf20MinTestStatus = new UILabel();
@@ -1859,6 +1978,10 @@ namespace ITPiPadSoln
             {
                 btnDeleteButton.Enabled = false;
             }
+            if(bReadOnly)
+            {
+                btnDeleteButton.Enabled = false;
+            }
             arrItems2[15] = btnDeleteVw;
             
             hdrRow.AddSubviews(arrItems2);
@@ -1892,6 +2015,10 @@ namespace ITPiPadSoln
             btnFloorSearchButton = btnFloorSearch.GetButton();
             btnFloorSearchButton.TouchUpInside += (sender,e) => {OpenSearchView(sender, e, 1);};
             
+            if(bReadOnly)
+            {
+                btnFloorSearchButton.Enabled = false;
+            }
             arrItems3[0] = btnFloorSearchVw;
             
             iUtils.CreateFormGridItem btnSuiteSearch = new iUtils.CreateFormGridItem();
@@ -1916,6 +2043,10 @@ namespace ITPiPadSoln
             btnSuiteSearchButton = btnSuiteSearch.GetButton();
             btnSuiteSearchButton.TouchUpInside += (sender,e) => {OpenSearchView(sender, e, 2);};
             
+            if(bReadOnly)
+            {
+                btnSuiteSearchButton.Enabled = false;
+            }
             arrItems3[1] = btnSuiteSearchVw;
             
             iUtils.CreateFormGridItem btnRackSearch = new iUtils.CreateFormGridItem();
@@ -1940,6 +2071,10 @@ namespace ITPiPadSoln
             btnRackSearchButton = btnRackSearch.GetButton();
             btnRackSearchButton.TouchUpInside += (sender,e) => {OpenSearchView(sender, e, 3);};
             
+            if(bReadOnly)
+            {
+                btnRackSearchButton.Enabled = false;
+            }
             arrItems3[2] = btnRackSearchVw;
             
             iUtils.CreateFormGridItem btnSubRackSearch = new iUtils.CreateFormGridItem();
@@ -1964,6 +2099,10 @@ namespace ITPiPadSoln
             btnSubRackSearchButton = btnSubRackSearch.GetButton();
             btnSubRackSearchButton.TouchUpInside += (sender,e) => {OpenSearchView(sender, e, 4);};
             
+            if(bReadOnly)
+            {
+                btnSubRackSearchButton.Enabled = false;
+            }
             arrItems3[3] = btnSubRackSearchVw;
             
             hdrRow.AddSubviews(arrItems3);
@@ -2092,6 +2231,8 @@ namespace ITPiPadSoln
             tabdata.SetUnsavedChangesHiddenLabel(lblUnsavedFlag);
             UILabel lblUnsavedSectionFlag = (UILabel)View.ViewWithTag ((iSectionCounterId + 1) * iSectionStatusTagId);
             tabdata.SetUnsavedChangesSectionHiddenLabel(lblUnsavedSectionFlag);
+            UIButton btnSectionSave = (UIButton)View.ViewWithTag ((iSectionCounterId + 1) * iSaveSectionBtnTagId);
+            tabdata.SetSectionSaveButton(btnSectionSave);
             UILabel lblViewModel = (UILabel)View.ViewWithTag (iBankModelTagId * (iPwrIdRow) + (iStringRow));
             tabdata.SetMakePostUpdate(1, lblViewModel);
             
@@ -2128,13 +2269,10 @@ namespace ITPiPadSoln
                 return;
             }
             
-            if (m_sBatteryModels == null) 
-            {
-                clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
-                string[] sBatteryModels = ITPInventory.GetBatteryModels (sSupplier);
-                m_sBatteryModels = sBatteryModels;
-            }
-            
+            clsTabletDB.ITPInventory ITPInventory = new clsTabletDB.ITPInventory ();
+            string[] sBatteryModels = ITPInventory.GetBatteryModels (sSupplier);
+            m_sBatteryModels = sBatteryModels;
+
             //Create a list and convert the string array to the list. Why the system cannot take a simple string array is beyond me!!!
             List<string> listModel = new List<string> ();
             Array.ForEach (m_sBatteryModels, value => listModel.Add (value.ToString ()));
@@ -2169,6 +2307,8 @@ namespace ITPiPadSoln
             //Also set the section flag to 1 that it has changed and the overall flag that it has changed
             UILabel lblUnsavedFlag = (UILabel)View.ViewWithTag (80);
             tabdata.SetUnsavedChangesHiddenLabel(lblUnsavedFlag);
+            UIButton btnSectionSave = (UIButton)View.ViewWithTag ((iSectionCounterId + 1) * iSaveSectionBtnTagId);
+            tabdata.SetSectionSaveButton(btnSectionSave);
             UILabel lblUnsavedSectionFlag = (UILabel)View.ViewWithTag ((iSectionCounterId + 1) * iSectionStatusTagId);
             tabdata.SetUnsavedChangesSectionHiddenLabel(lblUnsavedSectionFlag);
             
@@ -3462,8 +3602,14 @@ namespace ITPiPadSoln
             
             //And now enable the - button and new string button, disable the + button
             btnExpand.Enabled = false;
-            UIButton btnNewString = (UIButton)View.ViewWithTag((iPwrIdNewBtnTagId + iPwrIdRow) * (jSectionType + 1));
-            btnNewString.Enabled = true;
+            UILabel lblPwrId = (UILabel)View.ViewWithTag ((iPwrIdRowLabelTagId + (iPwrIdRow)) * (jSectionType+1));                        
+            string sPwrId = lblPwrId.Text;
+            bool bRFUPwrIdCommitted = RFUPwrIdCommitted(sPwrId);
+            if(!bRFUPwrIdCommitted)
+            {
+                UIButton btnNewString = (UIButton)View.ViewWithTag((iPwrIdNewBtnTagId + iPwrIdRow) * (jSectionType + 1));
+                btnNewString.Enabled = true;
+            }
             UIButton btnContract = (UIButton)View.ViewWithTag((iPwrIdContractTagId + iPwrIdRow) * (jSectionType + 1));
             btnContract.Enabled = true;
         }
@@ -3516,7 +3662,7 @@ namespace ITPiPadSoln
             
             UIView BatteryStringRow = BuildBatteryStringRowDetails(m_iBatterySectionCounter, iPwrIdRow - 1, iTotalStrings, 
                                                                    sPwrId, -1, -1, "", "", "","", "", "", "", "", "" ,"" , 
-                                                                   "","","N","", 0, 0, true, ref iHeightToAdd);
+                                                                   "","","N","", 0, 0, true, false, ref iHeightToAdd);
             //Get the position of the last row in this internal pwrId battery block
             UIView vwPwrInternalRowId = (UIView)View.ViewWithTag((iPwrIdSectionTagId + (iPwrIdRow)) * (m_iBatterySectionCounter+1));
             float iPwrIdRowVert = vwPwrInternalRowId.Frame.Height;
@@ -3628,12 +3774,24 @@ namespace ITPiPadSoln
             return DBQ.ProjectSection10BatteryComplete(m_sPassedId);
         }
         
+        public bool BatteryFullyCommitted()
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSection10BatteryFullyCommitted(m_sPassedId);
+        }
+
         public bool BatteryPwrIdComplete(string sPwrId)
         {
             clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
             return DBQ.ProjectSection10BatteryPwrIdComplete(m_sPassedId, sPwrId);
         }
 
+        public bool RFUPwrIdCommitted(string sPwrId)
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSectionRFUPwrIdCommitted(m_sPassedId, sPwrId);
+        }
+        
         public void SaveAllSections ()
         {
             //Cycle through each section
@@ -3722,7 +3880,7 @@ namespace ITPiPadSoln
                         string sSerialNo = txtSerialNo.Text;
                         UITextField txtDOM = (UITextField)View.ViewWithTag(iBankDOMTagId * (i + 1) + (j + 1));
                         string sDOM = txtDOM.Text;
-                        if (txtDOM.Text == "" || txtDOM.Text == "0")
+                        if (txtDOM.Text == "0")
                         {
                             sDOM = "01/01/1900";
                         }

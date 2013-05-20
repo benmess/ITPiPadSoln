@@ -316,8 +316,9 @@ namespace ITPiPadSoln
 						SectionVw = Section.GetLabelCell();
 						arrItems[0] = SectionVw;
 
+                        bool bAnyCommitted = ITPSection.ProjectSectionRFUAnyPwrIdCommitted(m_sPassedId);
 
-                        if(RFUFullyCommitted())
+                        if(bAnyCommitted)
                         {
                             bFullyCommitted = true;
                             bHideComplete = false;
@@ -1043,7 +1044,7 @@ namespace ITPiPadSoln
                     UIButton btnSaveRFUButton = new UIButton();
                     btnSaveRFUButton = btnSaveRFU.GetButton();
                     btnSaveRFUButton.TouchUpInside += (sender,e) => {SaveThisSection(sender, e);};
-                    
+                    btnSaveRFUButton.Hidden = true;
                     arrItems14[2] = btnSaveRFUVw;
                     
                     iUtils.CreateFormGridItem btnExpandRFU = new iUtils.CreateFormGridItem();
@@ -1575,6 +1576,10 @@ namespace ITPiPadSoln
             
             UILabel hfRowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + iStringRow) * iSection);
             hfRowStatus.Text = "1";
+
+//            UIButton btnSaveRFUSection = (UIButton)View.ViewWithTag(iSaveSectionBtnTagId * (m_iRFUSectionCounter+1));
+//            btnSaveRFUSection.Hidden = false;
+
             SetSectionValueChanged(m_iRFUSectionCounter + 1);
             SetAnyValueChanged(sender, null);
             return true;
@@ -1900,7 +1905,11 @@ namespace ITPiPadSoln
             //Before we do anything we must check if the RFU is complete
             if (RFUComplete(iStringRow))
             {
-                bReturn = SaveRFURow(m_sPassedId, iStringRow - 1, true);
+                bReturn = SaveRFURow(m_sPassedId, iStringRow - 1, true, false);
+                if(bReturn)
+                {
+                    ShowCompletedLabels();
+                }
             }
             else
             {
@@ -1917,6 +1926,14 @@ namespace ITPiPadSoln
             UILabel lblPwrId = (UILabel)View.ViewWithTag((iRFUPwrIdRowLabelTagId + iStringRow) * (iSectionId+1));
             string sPwrId = lblPwrId.Text;
             bool bBatteries = BatteryPwrIdComplete(sPwrId);
+            bool bPowerConversion = PowerConversionPwrIdComplete(sPwrId);
+
+            if (!bQuestion && !bBatteries && !bPowerConversion)
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox();
+                alert.CreateErrorAlertDialog("Some battery and power conversion information on PwrId " + sPwrId + " is incomplete and not all questions have been answered. You cannot commit the RFU at this stage.");
+                return false;
+            }
 
             if (!bQuestion && !bBatteries)
             {
@@ -1925,10 +1942,31 @@ namespace ITPiPadSoln
                 return false;
             }
 
+            if (!bQuestion && ! !bPowerConversion)
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox();
+                alert.CreateErrorAlertDialog("Some power conversion information on PwrId " + sPwrId + " is incomplete and not all questions have been answered. You cannot commit the RFU at this stage.");
+                return false;
+            }
+
+            if (!bBatteries && !bPowerConversion)
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox();
+                alert.CreateErrorAlertDialog("Some battery and power conversion information on PwrId " + sPwrId + " is incomplete. You cannot commit the RFU at this stage.");
+                return false;
+            }
+
             if (!bBatteries)
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox();
                 alert.CreateErrorAlertDialog("Some battery information on PwrId " + sPwrId + " is incomplete. You cannot commit the RFU at this stage.");
+                return false;
+            }
+
+            if (!bPowerConversion)
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox();
+                alert.CreateErrorAlertDialog("Some power conversion information on PwrId " + sPwrId + " is incomplete. You cannot commit the RFU at this stage.");
                 return false;
             }
 
@@ -1953,6 +1991,12 @@ namespace ITPiPadSoln
         {
             clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
             return DBQ.ProjectSection10BatteryPwrIdComplete(m_sPassedId, sPwrId);
+        }
+
+        public bool PowerConversionPwrIdComplete(string sPwrId)
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSection10PwrIdPowerConversionComplete(m_sPassedId, sPwrId);
         }
 
         public bool RFUPwrIdCommitted(string sPwrId)
@@ -2003,9 +2047,10 @@ namespace ITPiPadSoln
             string sComments;
             int iSectionNo = iBtnId / iSaveSectionBtnTagId;
 
-            if (iSectionNo == m_iRFUSectionCounter + 1) 
+            if (iSectionNo == (m_iBatterySectionCounter + 1) || iSectionNo == (m_iEquipmentSectionCounter + 1)  || iSectionNo == (m_iRFUSectionCounter + 1) )
             {
-                return SaveRFUSection(iBtnId);
+                return true;
+                //return SaveRFUSection(iBtnId);
                 
             }
 
@@ -2062,7 +2107,7 @@ namespace ITPiPadSoln
 
 			UILabel hfSectionStatus = (UILabel)View.ViewWithTag (iSectionStatusTagId * iSectionNo);
 			hfSectionStatus.Text = "0";
-			SetAnyValueChangedOff();
+			SetAnyValueChangedOff(false);
 			return true;
 		}
 
@@ -2070,6 +2115,7 @@ namespace ITPiPadSoln
         {
             int i;
             string sId = m_sPassedId;
+            bool bSaveOnly = false;
 
             //Get the number of PwrId's
             UILabel hfSectionPwrIds = (UILabel)View.ViewWithTag(iSectionRowsTagId * (m_iRFUSectionCounter + 1));
@@ -2081,10 +2127,21 @@ namespace ITPiPadSoln
                 //For each RFU  block in this PwrId save it if necessary
                 UILabel hfRFURowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + (i+1)) * (m_iRFUSectionCounter+1));
                 int iRowStatus = Convert.ToInt32(hfRFURowStatus.Text);
-                    
+
+                bool bQuestion = QuestionsComplete();
+                UILabel lblPwrId = (UILabel)View.ViewWithTag((iRFUPwrIdRowLabelTagId + (i+1)) * (m_iRFUSectionCounter+1));
+                string sPwrId = lblPwrId.Text;
+                bool bBatteries = BatteryPwrIdComplete(sPwrId);
+                bool bPowerConversion = PowerConversionPwrIdComplete(sPwrId);
+
+                if (bQuestion || bBatteries || bPowerConversion)
+                {
+                    bSaveOnly = true;
+                }
+
                 if (iRowStatus == 1)
                 {
-                    SaveRFURow(sId, i, false);
+                    SaveRFURow(sId, i, false, bSaveOnly);
                 }
                     
 
@@ -2094,7 +2151,11 @@ namespace ITPiPadSoln
             {
                 UILabel hfSectionStatus = (UILabel)View.ViewWithTag(iSectionStatusTagId * (m_iRFUSectionCounter + 1));
                 hfSectionStatus.Text = "0";
-                SetAnyValueChangedOff();
+
+//                UIButton btnSaveRFUSection = (UIButton)View.ViewWithTag(iSaveSectionBtnTagId * (m_iRFUSectionCounter+1));
+//                btnSaveRFUSection.Hidden = true;
+
+                SetAnyValueChangedOff(bSaveOnly);
                 return true;
             }
             else
@@ -2103,7 +2164,7 @@ namespace ITPiPadSoln
             }
         }
 
-        public bool SaveRFURow(string sId, int iRow, bool bCheckSectionStatus)
+        public bool SaveRFURow(string sId, int iRow, bool bCheckSectionStatus, bool bSaveOnly)
         {
             clsTabletDB.ITPDocumentSection DB = new clsTabletDB.ITPDocumentSection();
             string[] sItemValues = new string[9];
@@ -2164,13 +2225,18 @@ namespace ITPiPadSoln
                 alert.ShowAlertBox(); 
                 return false;
             }
+
             //Update or insert into the local DB
             if (DB.ITPRFUSetRecord(sId, sPwrId, sItemValues))
             {
                 //Update the row status
                 hfRFURowStatus.Text = "0";
-                UIButton btnRFU = (UIButton)View.ViewWithTag((iRFUButtonSaveTagId + (iRow+1)) * (m_iRFUSectionCounter+1));
-                btnRFU.SetTitle("Committed", UIControlState.Normal);
+
+                if(!bSaveOnly)
+                {
+                    UIButton btnRFU = (UIButton)View.ViewWithTag((iRFUButtonSaveTagId + (iRow+1)) * (m_iRFUSectionCounter+1));
+                    btnRFU.SetTitle("Committed", UIControlState.Normal);
+                }
             }
             else
             {
@@ -2200,7 +2266,7 @@ namespace ITPiPadSoln
                 {
                     UILabel hfSectionStatus = (UILabel)View.ViewWithTag(iSectionStatusTagId * (m_iRFUSectionCounter + 1));
                     hfSectionStatus.Text = "0";
-                    SetAnyValueChangedOff();
+                    SetAnyValueChangedOff(false);
                     return true;
                 }
             }
@@ -2249,7 +2315,7 @@ namespace ITPiPadSoln
 			txtEditStatus.Text = "1";
 		}
 		
-		public void SetAnyValueChangedOff ()
+		public void SetAnyValueChangedOff (bool bSkipLabels)
 		{
 			//Check all sections are saved and if so turn it off
 			bool bAllSectionsOff = true;
@@ -2273,7 +2339,10 @@ namespace ITPiPadSoln
 				txtEditStatus.Text = "0";
 			}
 
-            ShowCompletedLabels();
+            if(!bSkipLabels)
+            {
+                ShowCompletedLabels();
+            }
 		}
 
         public void ShowCompletedLabels()
@@ -2359,6 +2428,15 @@ namespace ITPiPadSoln
             else
             {
                 lblCompletedPwrConv.Hidden = true;
+            }
+
+
+            UILabel lblCompletedRFU = (UILabel)View.ViewWithTag (iSectionCompleteLabelTagId * (m_iRFUSectionCounter+1));
+
+            if(RFUFullyCommitted())
+            {
+                lblCompletedRFU.Text = "COMMITTED";
+                lblCompletedRFU.Hidden = false;                
             }
         }
 
