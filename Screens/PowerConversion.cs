@@ -70,6 +70,7 @@ namespace ITPiPadSoln
         int iEquipmentRowAutoIdTagId = 10013500;
         int iEquipmentRowMaximoAssetIdTagId = 10013600;
         int iEquipmentTypeTagId = 10013700;
+        int iDuplicateTagId = 10013800;
         int iEquipmentMakeTagId = 10014200;
         int iEquipmentMakeSearchTagId = 10014300;
         int iEquipmentModelTagId = 10014400;
@@ -99,6 +100,11 @@ namespace ITPiPadSoln
         int iEquipmentDeleteBtnTagId = 10017400;
         int iEquipmentDOMHiddenTagId = 10017500;
         int iEquipmentSerialNoHiddenTagId = 10017600;
+        int iEquipmentMaximoAssetTagId = 10018100;
+        int iEquipmentMaximoAssetHiddenTagId = 10018200;
+        int iEquipmentMaximoAssetTextViewTagId = 10018300;
+        int iEquipmentMaximoLblAssetTagId = 10018400;
+        int iEquipmentMaximoLblViewAssetTagId = 10018500;
 
         bool gbSuppressSecondCheck = false;
         string m_sSessionId = "";
@@ -760,7 +766,7 @@ namespace ITPiPadSoln
                                 {
                                     iMaximoAssetId = iMaximoPSAId;
                                 }
-                                else if(iMaximoTransferId > 0)
+                                else if(iMaximoTransferId > 0 || sMaximoTransferId == "0000000000")
                                 {
                                     iMaximoAssetId = iMaximoTransferId;
                                 }
@@ -772,12 +778,15 @@ namespace ITPiPadSoln
                                 iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["Equipment_Type"].Ordinal;
                                 int iEquipmentType = Convert.ToInt32(arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo]);
                                 
+                                iColNo = arrITPSection10PwrIdItems.Tables[0].Columns["Duplicate"].Ordinal;
+                                int iDuplicate = Convert.ToInt32(arrITPSection10PwrIdItems.Tables[0].Rows[kk].ItemArray[iColNo]);
+
                                 //Add in the row
                                 UIView EquipmentItemRow = BuildEquipmentItemRowDetails(iii, jj, kk, sPwrId, iAutoId,
                                                                                        iMaximoAssetId, sBankNo,
                                                                                        sMake, sModel, sSPN, sDOM,
                                                                                        sFloor, sSuite, sRack, sSubRack, sPosition, 
-                                                                                       sEquipType, sSerialNo, iEquipmentType,
+                                                                                       sEquipType, sSerialNo, iEquipmentType, iDuplicate,
                                                                                        false, bRFUPwrIdCommitted,ref iHeightToAdd);
                                 EquipmentItemRow.Frame = new RectangleF(0f, iPwrIdRowVertInner, 1000f, iHeightToAdd);
                                 EquipmentItemRow.Tag = iEquipmentFullRowTagId * (jj + 1) + (kk + 1);
@@ -1107,7 +1116,7 @@ namespace ITPiPadSoln
             iUtils.CreateFormGridItem lblBlank1 = new iUtils.CreateFormGridItem();
             UIView lblBlank1Vw = new UIView();
             lblBlank1.SetDimensions(900f,iHdrVert, 100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
-            lblBlank1.SetLabelText("");
+            lblBlank1.SetLabelText("Asset Id");
             lblBlank1.SetBorderWidth(1.0f);
             lblBlank1.SetFontName("Verdana");
             lblBlank1.SetFontSize(12f);
@@ -1138,17 +1147,17 @@ namespace ITPiPadSoln
                                                    string sMake, string sModel, string sSPN, string sDOM,
                                                    string sFloor, string sSuite,string sRack, string sSubRack, 
                                                    string sPosition, string sEquipType, string sSerialNo,
-                                                   int iEquipmentType,bool bNewRow, bool bReadOnly, ref float iHeightToAdd)
+                                                   int iEquipmentType, int iDuplicate, bool bNewRow, bool bReadOnly, ref float iHeightToAdd)
         {
             DateClass dt = new DateClass();
             iHeightToAdd = 0.0f;
             UIView hdrRow = new UIView();
             float iHdrVert = 0.0f;
             float iRowHeight = 40f;
-            UIView[] arrItems = new UIView[6];
+            UIView[] arrItems = new UIView[8];
             UIView[] arrItems2 = new UIView[18];
             UIView[] arrItems3 = new UIView[6];
-            UIView[] arrItems4 = new UIView[6];
+            UIView[] arrItems4 = new UIView[7];
             UIView vwBlank = new UIView();
 
             UILabel hfSectionCounter = new UILabel();
@@ -1194,6 +1203,12 @@ namespace ITPiPadSoln
             hfEquipmentTypeId.Tag = iEquipmentTypeTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
             hfEquipmentTypeId.Hidden = true;
             arrItems4[5] = hfEquipmentTypeId;
+
+            UILabel hfDuplicateId = new UILabel();
+            hfDuplicateId.Text = iDuplicate.ToString();
+            hfDuplicateId.Tag = iDuplicateTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
+            hfDuplicateId.Hidden = true;
+            arrItems4[6] = hfDuplicateId;
 
             hdrRow.AddSubviews(arrItems4);
 
@@ -1557,7 +1572,7 @@ namespace ITPiPadSoln
                 radEquipTypeRadio.SelectedSegment = 1;
             }
             
-            if (bNewRow || iMaximoAssetId < 0)
+            if (bNewRow || iDuplicate < 0)
             {
                 radEquipTypeRadio.Enabled = true;
             }
@@ -1570,6 +1585,7 @@ namespace ITPiPadSoln
             {
                 radEquipTypeRadio.Enabled = false;
             }
+
             arrItems2 [12] = radEquipTypeVw;
             
             iUtils.CreateFormGridItem txtDOM = new iUtils.CreateFormGridItem();
@@ -1657,7 +1673,7 @@ namespace ITPiPadSoln
             arrItems2 [15] = lblSerialNoVw;
             
             UILabel hfCurrentSerialNo = new UILabel();
-            hfCurrentSerialNo.Text = sStringNo;
+            hfCurrentSerialNo.Text = sSerialNo;
             hfCurrentSerialNo.Tag = iEquipmentSerialNoHiddenTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
             hfCurrentSerialNo.Hidden = true;
             arrItems2 [16] = hfCurrentSerialNo;
@@ -1687,7 +1703,7 @@ namespace ITPiPadSoln
             btnDeleteButton.TouchUpInside += (sender,e) => {
                 DeleteBatteryString(sender, e);};
             
-            if (iMaximoAssetId > 0)
+            if (iMaximoAssetId >= 0)
             {
                 btnDeleteButton.Enabled = false;
             }
@@ -2058,28 +2074,88 @@ namespace ITPiPadSoln
                 btnModelSearchButton.Enabled = false;
             }
             arrItems[4] = btnModelSearchVw;
-            
-            iUtils.CreateFormGridItem lblBlank2 = new iUtils.CreateFormGridItem();
-            UIView lblBlank2Vw = new UIView();
-            lblBlank2.SetDimensions(900f,iHdrVert, 100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
-            lblBlank2.SetLabelText("");
-            lblBlank2.SetBorderWidth(0.0f);
-            lblBlank2.SetFontName("Verdana");
-            lblBlank2.SetFontSize(12f);
-            lblBlank2.SetTag(iBlank1EquipLabelTagId * (iPwrIdRowNo+1));
-            
+
+            bool bAssetTextHidden = true;
+            string sMaximoAssetId = iMaximoAssetId.ToString();
+            if (sEquipType == "U")
+            {
+                bAssetTextHidden = false;
+                sMaximoAssetId = iMaximoAssetId.ToString().PadLeft(10,'0');
+            }
+
+            iUtils.CreateFormGridItem txtMaximoAssetId = new iUtils.CreateFormGridItem();
+            UIView txtMaximoAssetIdVw = new UIView();
+            txtMaximoAssetId.SetDimensions(900f,iHdrVert, 100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
+            txtMaximoAssetId.SetLabelText(sMaximoAssetId);
+            txtMaximoAssetId.SetBorderWidth(0.0f);
+            txtMaximoAssetId.SetFontName("Verdana");
+            txtMaximoAssetId.SetFontSize(12f);
+            txtMaximoAssetId.SetTextAlignment("right");
+            txtMaximoAssetId.SetHidden(bAssetTextHidden);
+            txtMaximoAssetId.SetTag(iEquipmentMaximoAssetTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
+
             if (iPwrIdRowNo % 2 == 0)
             {
-                lblBlank2.SetCellColour("Pale Yellow");
+                txtMaximoAssetId.SetCellColour("Pale Yellow");
             }
             else
             {
-                lblBlank2.SetCellColour("Pale Orange");
+                txtMaximoAssetId.SetCellColour("Pale Orange");
             }
+
+            txtMaximoAssetIdVw = txtMaximoAssetId.GetTextFieldCell();
+            txtMaximoAssetIdVw.Hidden = bAssetTextHidden;
+            txtMaximoAssetIdVw.Tag = iEquipmentMaximoAssetTextViewTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
+
+            UITextField txtMaximoAssetIdView = txtMaximoAssetId.GetTextFieldView();
+            txtMaximoAssetIdView.AutocorrectionType = UITextAutocorrectionType.No;
+            txtMaximoAssetIdView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
+            txtMaximoAssetIdView.ReturnKeyType = UIReturnKeyType.Next;
+            txtMaximoAssetIdView.ShouldBeginEditing += (sender) => {
+                return SetGlobalEditItems(sender, 9);};
+            txtMaximoAssetIdView.ShouldEndEditing += (sender) => {
+                return ValidateMaximoAssetId(sender, 0);};
+            txtMaximoAssetIdView.ShouldReturn += (sender) => {
+                return MoveNextTextField(sender, 9);};
             
-            lblBlank2Vw = lblBlank2.GetLabelCell();
-            arrItems[5] = lblBlank2Vw;
-            
+            if(bReadOnly)
+            {
+                txtMaximoAssetIdView.Enabled = false;
+            }
+
+            iUtils.CreateFormGridItem lblMaximoAssetId = new iUtils.CreateFormGridItem();
+            UIView lblMaximoAssetIdVw = new UIView();
+            lblMaximoAssetId.SetDimensions(900f,iHdrVert, 100f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
+            lblMaximoAssetId.SetLabelText(sMaximoAssetId);
+            lblMaximoAssetId.SetBorderWidth(0.0f);
+            lblMaximoAssetId.SetFontName("Verdana");
+            lblMaximoAssetId.SetFontSize(12f);
+            lblMaximoAssetId.SetTextAlignment("right");
+            lblMaximoAssetId.SetHidden(!bAssetTextHidden);
+            lblMaximoAssetId.SetTag(iEquipmentMaximoLblAssetTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1));
+
+            if (iPwrIdRowNo % 2 == 0)
+            {
+                lblMaximoAssetId.SetCellColour("Pale Yellow");
+            }
+            else
+            {
+                lblMaximoAssetId.SetCellColour("Pale Orange");
+            }
+
+            lblMaximoAssetIdVw = lblMaximoAssetId.GetLabelCell();
+            lblMaximoAssetIdVw.Hidden = !bAssetTextHidden;
+            lblMaximoAssetIdVw.Tag = iEquipmentMaximoLblViewAssetTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
+
+            arrItems[5] = txtMaximoAssetIdVw;
+            arrItems[6] = lblMaximoAssetIdVw;
+
+            UILabel hfCurrentMaximoAssetId = new UILabel();
+            hfCurrentMaximoAssetId.Text = sMaximoAssetId;
+            hfCurrentMaximoAssetId.Tag = iEquipmentMaximoAssetHiddenTagId * (iPwrIdRowNo + 1) + (iEquipRowNo + 1);
+            hfCurrentMaximoAssetId.Hidden = true;
+            arrItems[7] = hfCurrentMaximoAssetId;
+
             hdrRow.AddSubviews(arrItems);
             
             iHeightToAdd += iRowHeight; 
@@ -2667,7 +2743,7 @@ namespace ITPiPadSoln
             int iHiddenBankId =  iEquipmentStringHiddenTagId * iPwrIdRow + iStringRow;
             UILabel hfHiddenBankNo = (UILabel)View.ViewWithTag (iHiddenBankId);
             
-            if (!bBankCheck) 
+            if (!bBankCheck && sBankNo != "") 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
                 alert.CreateErrorAlertDialog ("Please enter a valid bank no or select from the list by using the button to the immediate right");
@@ -2777,7 +2853,7 @@ namespace ITPiPadSoln
             UILabel hfHiddenFloor = (UILabel)View.ViewWithTag (iHiddenBankId);
             string sOldFloor = hfHiddenFloor.Text;
             
-            if (!bFloorCheck) 
+            if (!bFloorCheck && sFloor != "") 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
                 alert.CreateErrorAlertDialog ("Please enter a valid floor or search from the list by using the button underneath");
@@ -2911,7 +2987,7 @@ namespace ITPiPadSoln
             UILabel hfHiddenSuite = (UILabel)View.ViewWithTag (iHiddenBankId);
             string sOldSuite = hfHiddenSuite.Text;
 
-            if (!bSuiteCheck) 
+            if (!bSuiteCheck && sSuite != "") 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
                 alert.CreateErrorAlertDialog ("Please enter a valid suite or search from the list by using the button underneath");
@@ -3063,7 +3139,7 @@ namespace ITPiPadSoln
             UILabel hfHiddenRack = (UILabel)View.ViewWithTag (iHiddenBankId);
             string sOldRack = hfHiddenRack.Text;
 
-            if (!bRackCheck) 
+            if (!bRackCheck && sRack != "") 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
                 alert.CreateErrorAlertDialog ("Please enter a valid rack or search from the list by using the button underneath");
@@ -3229,7 +3305,8 @@ namespace ITPiPadSoln
             UILabel hfHiddenSubRack = (UILabel)View.ViewWithTag (iHiddenBankId);
             string sOldSubRack = hfHiddenSubRack.Text;
 
-            if (!bSubRackCheck) 
+
+            if (!bSubRackCheck && sSubRack != "") 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
                 alert.CreateErrorAlertDialog ("Please enter a valid subrack or search from the list by using the button underneath");
@@ -3420,7 +3497,7 @@ namespace ITPiPadSoln
             UILabel hfHiddenPosition = (UILabel)View.ViewWithTag (iHiddenPositionId);
             string sOldPosition = hfHiddenPosition.Text;
 
-            if (!bPositionCheck) 
+            if (!bPositionCheck && sPosition != "") 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
                 alert.CreateErrorAlertDialog ("Please enter a valid position or search from the list by using the button underneath");
@@ -3614,10 +3691,50 @@ namespace ITPiPadSoln
             int iPwrIdRow =  iTagId/ iEquipmentEquipTypeTagId;
             int iStringRow = iTagId - (iPwrIdRow * iEquipmentEquipTypeTagId);
             
+            int iAnswerIndex = radGroup.SelectedSegment;
+            string sAnswer = "";
+
+            if (iAnswerIndex >= 0)
+            {
+                sAnswer = radGroup.TitleAt(iAnswerIndex);
+            }
+            else
+            {
+                sAnswer = "";
+            }
+            
+            UIView txtMaximoAssetIdView = (UIView)View.ViewWithTag(iEquipmentMaximoAssetTextViewTagId * (iPwrIdRow) + (iStringRow));
+            UITextField txtMaximoAssetId = (UITextField)View.ViewWithTag(iEquipmentMaximoAssetTagId * (iPwrIdRow) + (iStringRow));
+            UIView lblMaximoAssetIdView = (UIView)View.ViewWithTag(iEquipmentMaximoLblViewAssetTagId  * (iPwrIdRow) + (iStringRow));
+            UILabel lblMaximoAssetId = (UILabel)View.ViewWithTag(iEquipmentMaximoLblAssetTagId * (iPwrIdRow) + (iStringRow));
+
+            switch (sAnswer)
+            {
+                case "New": //Turn off the text box and turn on the label view
+                    txtMaximoAssetIdView.Hidden = true;
+                    txtMaximoAssetId.Hidden = true;
+                    lblMaximoAssetIdView.Hidden = false;
+                    lblMaximoAssetId.Hidden = false;
+                    break;
+                case "Used":
+                    txtMaximoAssetIdView.Hidden = false;
+                    txtMaximoAssetId.Hidden = false;
+                    lblMaximoAssetIdView.Hidden = true;
+                    lblMaximoAssetId.Hidden = true;
+                    break;
+                default:
+                    txtMaximoAssetIdView.Hidden = true;
+                    txtMaximoAssetId.Hidden = true;
+                    lblMaximoAssetIdView.Hidden = false;
+                    lblMaximoAssetId.Hidden = false;
+                    break;
+            }
+
             UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdRow + iStringRow);
             hfRowStatus.Text = "1";
             SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
             SetAnyValueChanged(sender, null);
+            
             return true;
         }
         
@@ -3663,7 +3780,53 @@ namespace ITPiPadSoln
             }
             return true;
         }
-        
+
+        public bool ValidateMaximoAssetId(object sender, int iFromBackButton)
+        {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
+            UITextField txtMaximoAssetId = (UITextField)sender;
+            string sMaximoAssetId = txtMaximoAssetId.Text;
+            sMaximoAssetId = Regex.Replace(sMaximoAssetId, @"[^\d]+","");
+            sMaximoAssetId = sMaximoAssetId.PadLeft(10,'0');
+            int iTagId = txtMaximoAssetId.Tag;
+            int iPwrIdRow =  iTagId/ iEquipmentMaximoAssetTagId;
+            int iStringRow = iTagId - (iPwrIdRow * iEquipmentMaximoAssetTagId);
+            int iHiddenMaxAssetId =  iEquipmentMaximoAssetHiddenTagId * iPwrIdRow + iStringRow;
+            UILabel hfHiddenMaxAssetId = (UILabel)View.ViewWithTag (iHiddenMaxAssetId);
+            txtMaximoAssetId.Text = sMaximoAssetId;
+
+            if (sMaximoAssetId.Length > 10)
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox ();
+                alert.CreateErrorAlertDialog ("The maximo asset id number cannot be more than 10 characters. It has been truncated. Please enter a valid 10 character or less asset number.");
+                string sMaximoAssetReturn = sMaximoAssetId.Substring(0,10);
+                txtMaximoAssetId.Text = sMaximoAssetReturn;
+                txtMaximoAssetId.ResignFirstResponder();
+                txtMaximoAssetId.BecomeFirstResponder();
+                m_bSuppressMove = true;
+                return false;
+            }
+            
+            if(hfHiddenMaxAssetId.Text != sMaximoAssetId)
+            {
+                hfHiddenMaxAssetId.Text = sMaximoAssetId;
+                UILabel hfRowStatus = (UILabel)View.ViewWithTag(iEquipmentRowStatusTagId * iPwrIdRow + iStringRow);
+                hfRowStatus.Text = "1";
+                SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
+                SetAnyValueChanged(sender, null);
+            }
+            return true;
+        }
+
         //Open a new page with the link test details
         public void OpenLinkTest(object sender, EventArgs e)
         {
@@ -3899,12 +4062,9 @@ namespace ITPiPadSoln
                                                                    -1, "",
                                                                    "", "", "", "",
                                                                    "", "", "", "", "", 
-                                                                   "N", "", iEquipmentType,
+                                                                   "N", "", iEquipmentType, -1, 
                                                                    false, false,ref iHeightToAdd);
             
-            //            UIView EquipmentRow = BuildBatteryStringRowDetails(m_iBatterySectionCounter, iPwrIdRow - 1, iTotalStrings, 
-            //                                                                   sPwrId, -1, -1, "", "", "","", "", "", "", "", "" ,"" , 
-            //                                                                   "","","N","", 0, 0, true, false, ref iHeightToAdd);
             //Get the position of the last row in this internal pwrId battery block
             UIView vwPwrInternalRowId = (UIView)View.ViewWithTag((iPwrIdSectionTagId + (iPwrIdRow)) * (m_iEquipmentSectionCounter+1));
             float iPwrIdRowVert = vwPwrInternalRowId.Frame.Height;
@@ -4133,6 +4293,77 @@ namespace ITPiPadSoln
         {
             UIButton btnSave = (UIButton)sender;
             int iBtnId = btnSave.Tag;
+
+            //Now check to see if we are in a field and haven't ended editing yet
+            if(m_iValidateType > 0)
+            {
+                switch(m_iValidateType)
+                {
+                    case 1: //Floor
+                        if(!ValidateFloor(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 2: //Suite
+                        if(!ValidateSuite(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 3: //Rack
+                        if(!ValidateRack(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 4: //SubRack
+                        if(!ValidateSubRack(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 5: //Position
+                        if(!ValidatePosition(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 6: //Solar String
+                        if(!ValidateBankNo(m_sender, 2, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 7: //DOM
+                        if(!ValidateDOM(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 8: //Serial No
+                        if(!ValidateSerialNo(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 9: //Maximo Asset Id
+                        if(!ValidateMaximoAssetId(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                }
+            }
             return SaveSection(iBtnId);
         }
         
@@ -4152,6 +4383,7 @@ namespace ITPiPadSoln
             string sString = "";
             string sSubRack = "";
             string sPosition = "";
+            bool bTransferIdBad = false;
 
             //Get the number of PwrId's
             UILabel hfSectionPwrIds = (UILabel)View.ViewWithTag(iSectionRowsTagId * (m_iEquipmentSectionCounter + 1));
@@ -4238,12 +4470,15 @@ namespace ITPiPadSoln
                         string sAnswer = "";
                         string sEquipType = "";
                         
-                        UILabel hfMaximoAssetId = (UILabel)View.ViewWithTag(iEquipmentRowMaximoAssetIdTagId * (i + 1) + (j + 1));
+                        UILabel hfMaximoAssetId = (UILabel)View.ViewWithTag(iEquipmentMaximoAssetHiddenTagId * (i + 1) + (j + 1));
                         string sMaximoAssetId = hfMaximoAssetId.Text;
                         string sTransferAssetId = "";
                         string sPSAAssetId = "";
-                        string sDuplicate = "0";
-                        
+
+                        UILabel hfDuplicate = (UILabel)View.ViewWithTag(iDuplicateTagId * (i + 1) + (j + 1));
+                        string sDuplicate = hfDuplicate.Text;
+
+
                         if (s20MinTest == "")
                         {
                             s20MinTest = "0";
@@ -4257,7 +4492,9 @@ namespace ITPiPadSoln
                         {
                             sAnswer = "";
                         }
-                        
+
+                        bTransferIdBad = false;
+
                         switch (sAnswer)
                         {
                             case "New":
@@ -4269,9 +4506,13 @@ namespace ITPiPadSoln
                                     sDuplicate = "-1";
                                 }
                                 break;
-                            case "User":
+                            case "Used":
                                 sEquipType = "U";
                                 sTransferAssetId = sMaximoAssetId;
+                                if(sTransferAssetId == "-1")
+                                {
+                                    bTransferIdBad= true;
+                                }
                                 sPSAAssetId = "";
                                 break;
                             default:
@@ -4313,12 +4554,23 @@ namespace ITPiPadSoln
                         sItemValues [22] = iEquipType.ToString();
                         sItemValues [23] = iRowStatus.ToString();
                         
-                        if (sMake == "" || sModel == "" || sEquipType == "" || iEquipType == -1)
+                        if (sMake == "" || sModel == "" || sEquipType == "" || iEquipType == -1 || bTransferIdBad)
                         {
                             bResetSectionFlag = false;
                             iUtils.AlertBox alert = new iUtils.AlertBox();
                             alert.CreateAlertDialog();
-                            alert.SetAlertMessage("An item in PwrId " + sPwrId + " is not fully filled out. The system cannot save this item.");
+                            if(bTransferIdBad)
+                            {
+                                alert.SetAlertMessage("An item in PwrId " + sPwrId + " is not fully filled out. You must provide an Asset Id for used equipment typically " + 
+                                                      "found from Structure Builder. If you do not know the asset id, please provide a number between 0 and 10 " +
+                                                      "(it will be padded with zeros to make a 10 character id) and the " + 
+                                                      "relevant asset id will be determined at final RFU submission stage. " +
+                                                      "The system cannot save this item.");
+                            }
+                            else
+                            {
+                                alert.SetAlertMessage("An item in PwrId " + sPwrId + " is not fully filled out. The system cannot save this item.");
+                            }
                             alert.ShowAlertBox(); 
                         }
                         else
@@ -4342,10 +4594,12 @@ namespace ITPiPadSoln
                 UILabel hfSectionStatus = (UILabel)View.ViewWithTag(iSectionStatusTagId * (m_iEquipmentSectionCounter + 1));
                 hfSectionStatus.Text = "0";
                 SetAnyValueChangedOff();    
+                gbSuppressSecondCheck = false;
                 return true;
             }
             else
             {
+                gbSuppressSecondCheck = false;
                 return false;
             }
         }
@@ -4399,6 +4653,7 @@ namespace ITPiPadSoln
             //Disable the Save section button
             UIButton btnSave = (UIButton)View.ViewWithTag (iSaveSectionBtnTagId * (m_iEquipmentSectionCounter+1));
             btnSave.Hidden = true;
+            m_iValidateType = -1;
         }
         
         public void ShowCompletedLabels()
@@ -4507,6 +4762,13 @@ namespace ITPiPadSoln
                         return;
                     }
                     break;
+                case 9: //Maximo Asset Id
+                    if(!ValidateMaximoAssetId(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
             }
 
             UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
@@ -4558,6 +4820,7 @@ namespace ITPiPadSoln
             int iTagId = txtField.Tag;
             int iTextTagId = 0;
             int iSectionCounterId = m_iEquipmentSectionCounter;
+            bool bMaximoAssetIdOn = false;
             
             switch (iTextFieldIndex)
             {
@@ -4585,6 +4848,9 @@ namespace ITPiPadSoln
                 case 8:
                     iTextTagId = iEquipmentSerialNoTagId;
                     break;
+                case 9:
+                    iTextTagId = iEquipmentMaximoAssetTagId;
+                    break;
             }
             
             int iPwrIdRow;
@@ -4600,6 +4866,13 @@ namespace ITPiPadSoln
             //Get the equipment type because sometimes we need to skip some fields
             UILabel lblEquipmentType = (UILabel)View.ViewWithTag (iEquipmentTypeTagId * (iPwrIdRow) + (iStringRow));
             int iEquipmentType = Convert.ToInt32(lblEquipmentType.Text);
+
+            //Get the equipment type because sometimes we need to skip some fields
+            UITextField txtMaximoAssetId = (UITextField)View.ViewWithTag (iEquipmentMaximoAssetTagId * (iPwrIdRow) + (iStringRow));
+            if(txtMaximoAssetId != null)
+            {
+                bMaximoAssetIdOn = true;
+            }
 
             switch (iTextFieldIndex) 
             {
@@ -4697,6 +4970,31 @@ namespace ITPiPadSoln
                         m_bSuppressMove = false;
                         return false;
                     }
+
+                    if(bMaximoAssetIdOn)
+                    {
+                        txtNext = (UITextField)View.ViewWithTag (iEquipmentMaximoAssetTagId * (iPwrIdRow) + (iStringRow)); //Go to the next item
+                        break;
+                    }
+                    else
+                    {
+                        //Make sure we are not on the last string because there is no extra row to go to so go to the first one again
+                        if((iStringRow + 1) > iTotalStringRows)
+                        {
+                            txtNext = (UITextField)View.ViewWithTag (iEquipmentFloorTagId * (iPwrIdRow) + 1); //Cycle back to the first row
+                        }
+                        else
+                        {
+                            txtNext = (UITextField)View.ViewWithTag (iEquipmentFloorTagId * (iPwrIdRow) + (iStringRow + 1)); //Go to the next string, hence the + 1 here
+                        }
+                    }
+                    break;
+                case 9: //Coming from maximo asset id and going to floor
+                    if(m_bSuppressMove) //This is required on the validate because the endediting and return delegates both fire
+                    {
+                        m_bSuppressMove = false;
+                        return false;
+                    }
                     
                     //Make sure we are not on the last string because there is no extra row to go to so go to the first one again
                     if((iStringRow + 1) > iTotalStringRows)
@@ -4708,7 +5006,7 @@ namespace ITPiPadSoln
                         txtNext = (UITextField)View.ViewWithTag (iEquipmentFloorTagId * (iPwrIdRow) + (iStringRow + 1)); //Go to the next string, hence the + 1 here
                     }
                     break;
-                    
+
             }
             
             txtNext.BecomeFirstResponder();

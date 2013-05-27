@@ -224,6 +224,22 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="IsITPUploadable">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sId" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsITPUploadableResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="IsITPUploadableResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="SetITPUploadInfo">
         <xs:complexType>
           <xs:sequence>
@@ -326,6 +342,12 @@
   <message name="GetITPInventoryInfoSoapOut">
     <part name="parameters" element="tns:GetITPInventoryInfoResponse" />
   </message>
+  <message name="IsITPUploadableSoapIn">
+    <part name="parameters" element="tns:IsITPUploadable" />
+  </message>
+  <message name="IsITPUploadableSoapOut">
+    <part name="parameters" element="tns:IsITPUploadableResponse" />
+  </message>
   <message name="SetITPUploadInfoSoapIn">
     <part name="parameters" element="tns:SetITPUploadInfo" />
   </message>
@@ -388,6 +410,10 @@
     <operation name="GetITPInventoryInfo">
       <input message="tns:GetITPInventoryInfoSoapIn" />
       <output message="tns:GetITPInventoryInfoSoapOut" />
+    </operation>
+    <operation name="IsITPUploadable">
+      <input message="tns:IsITPUploadableSoapIn" />
+      <output message="tns:IsITPUploadableSoapOut" />
     </operation>
     <operation name="SetITPUploadInfo">
       <input message="tns:SetITPUploadInfoSoapIn" />
@@ -515,6 +541,15 @@
     </operation>
     <operation name="GetITPInventoryInfo">
       <soap:operation soapAction="http://scms.silcar.com.au/GetITPInventoryInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="IsITPUploadable">
+      <soap:operation soapAction="http://scms.silcar.com.au/IsITPUploadable" style="document" />
       <input>
         <soap:body use="literal" />
       </input>
@@ -653,6 +688,15 @@
     </operation>
     <operation name="GetITPInventoryInfo">
       <soap12:operation soapAction="http://scms.silcar.com.au/GetITPInventoryInfo" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="IsITPUploadable">
+      <soap12:operation soapAction="http://scms.silcar.com.au/IsITPUploadable" style="document" />
       <input>
         <soap12:body use="literal" />
       </input>

@@ -69,6 +69,8 @@ namespace ITPiPadSoln
         int iPwrIdContractTagId = 10021200;
         int iPwrIdSectionInnerTagId = 10021300;
         int iPwrIdHeightTagId  = 10021400;
+        int ihfCutoverLoadRowLabelTagId = 10022300;
+        int ihfCutoverDateRowLabelTagId = 10022400;
 
 
         string m_sSessionId = "";
@@ -80,6 +82,9 @@ namespace ITPiPadSoln
         int m_iEquipmentSectionCounter = 0;
         int m_iRFUSectionCounter = 0;
         bool m_bSuppressMove = false;
+        object m_sender;
+        int m_iValidateType;
+        bool gbSuppressSecondCheck = false;
 
 		public enum QuestionsBitMask {NA = 1, No = 2, Yes = 4};
 
@@ -262,7 +267,7 @@ namespace ITPiPadSoln
 				UIView[] arrItems2 = new UIView[6];
 				UIView[] arrItems3 = new UIView[5];
                 UIView[] arrItems4 = new UIView[6];
-                UIView[] arrItems6 = new UIView[9];
+                UIView[] arrItems6 = new UIView[11];
                 UIView[] arrItems7 = new UIView[7];
                 UIView[] arrItems14 = new UIView[8];
 
@@ -638,7 +643,9 @@ namespace ITPiPadSoln
 								iHeightToAdd2 = rowComments.GetCellHeight();
 								UITextView rowCommentsTextVw = new UITextView();
 								rowCommentsTextVw = rowComments.GetTextView();
-								rowCommentsTextVw.Changed += (sender,e) => {SetRowEditTextChanged(sender, e);};
+                                rowCommentsTextVw.ShouldBeginEditing += (sender) => {
+                                    return SetGlobalEditItems(sender, 11);};
+                                rowCommentsTextVw.Changed += (sender,e) => {SetRowEditTextChanged(sender, e);};
 
                                 if(bQuestionSet)
                                 {
@@ -1341,8 +1348,10 @@ namespace ITPiPadSoln
                         UITextField txtCutoverLoadView = txtCutoverLoad.GetTextFieldView();
                         txtCutoverLoadView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
                         txtCutoverLoadView.ReturnKeyType = UIReturnKeyType.Next;
+                        txtCutoverLoadView.ShouldBeginEditing += (sender) => {
+                            return SetGlobalEditItems(sender, 9);};
                         txtCutoverLoadView.ShouldEndEditing += (sender) => {
-                            return ValidateCutoverLoad(sender);};
+                            return ValidateCutoverLoad(sender, 0);};
                         txtCutoverLoadView.ShouldReturn += (sender) => {
                             return MoveNextTextField(sender, 9);};
 
@@ -1351,6 +1360,12 @@ namespace ITPiPadSoln
                             txtCutoverLoadView.Enabled = false;
                         }
                         arrItems6[3] = txtCutoverLoadVw;
+
+                        UILabel hfCurrentCutoverLoad = new UILabel();
+                        hfCurrentCutoverLoad.Text = sCutoverLoad;
+                        hfCurrentCutoverLoad.Tag = (ihfCutoverLoadRowLabelTagId + (j + 1)) * (ii + 1);
+                        hfCurrentCutoverLoad.Hidden = true;
+                        arrItems6 [4] = hfCurrentCutoverLoad;
 
                         iUtils.CreateFormGridItem txtCutoverDate = new iUtils.CreateFormGridItem();
                         UIView txtCutoverDateVw = new UIView();
@@ -1381,8 +1396,10 @@ namespace ITPiPadSoln
                         UITextField txtCutoverDateView = txtCutoverDate.GetTextFieldView();
                         txtCutoverDateView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
                         txtCutoverDateView.ReturnKeyType = UIReturnKeyType.Next;
+                        txtCutoverDateView.ShouldBeginEditing += (sender) => {
+                            return SetGlobalEditItems(sender, 10);};
                         txtCutoverDateView.ShouldEndEditing += (sender) => {
-                            return ValidateCutoverDate(sender);};
+                            return ValidateCutoverDate(sender, 0);};
                         txtCutoverDateView.ShouldReturn += (sender) => {
                             return MoveNextTextField(sender, 10);};
 
@@ -1391,7 +1408,13 @@ namespace ITPiPadSoln
                             txtCutoverDateView.Enabled = false;
                         }
 
-                        arrItems6[4] = txtCutoverDateVw;
+                        arrItems6[5] = txtCutoverDateVw;
+
+                        UILabel hfCurrentCutoverDate = new UILabel();
+                        hfCurrentCutoverDate.Text = sCutoverDisplay;
+                        hfCurrentCutoverDate.Tag = (ihfCutoverDateRowLabelTagId + (j + 1)) * (ii + 1);
+                        hfCurrentCutoverDate.Hidden = true;
+                        arrItems6[6] = hfCurrentCutoverDate;
 
                         iUtils.CreateFormGridItem chkDecommission = new iUtils.CreateFormGridItem();
                         UIView chkDecommissionVw = new UIView();
@@ -1427,7 +1450,7 @@ namespace ITPiPadSoln
                             chkDecommissionCheck.Enabled = false;
                         }
 
-                        arrItems6[5] = chkDecommissionVw;
+                        arrItems6[7] = chkDecommissionVw;
 
                         iUtils.CreateFormGridItem chkCommission = new iUtils.CreateFormGridItem();
                         UIView chkCommissionVw = new UIView();
@@ -1460,7 +1483,7 @@ namespace ITPiPadSoln
                             chkCommissionCheck.Enabled = false;
                         }
                         
-                        arrItems6[6] = chkCommissionVw;
+                        arrItems6[8] = chkCommissionVw;
 
                         iUtils.CreateFormGridItem btnRFU = new iUtils.CreateFormGridItem();
                         UIView btnRFUVw = new UIView();
@@ -1498,7 +1521,7 @@ namespace ITPiPadSoln
                             btnRFUButton.Enabled = false;
                         }
 
-                        arrItems6[7] = btnRFUVw;
+                        arrItems6[9] = btnRFUVw;
                         
 
                         iColNo = arrITPRFUs.Tables[0].Columns["BatteryCapacity"].Ordinal;
@@ -1507,7 +1530,7 @@ namespace ITPiPadSoln
                         hfRFUBatteryCapacity.Text = sBatteryCapacity;
                         hfRFUBatteryCapacity.Tag = (ihfRowRFUBatteryCapacityTagId + (j+1)) * (ii+1);
                         hfRFUBatteryCapacity.Hidden = true;
-                        arrItems6[8] = hfRFUBatteryCapacity;
+                        arrItems6[10] = hfRFUBatteryCapacity;
                         
                         //Now add the row details into the view
                         vwPwrInternalRowId.AddSubviews(arrItems6);
@@ -1529,7 +1552,7 @@ namespace ITPiPadSoln
                     hfSectionHeight.Text = iSectionRFUHeight.ToString();
                 }
 
-                iTotalHeight = iVert + 280f;
+                iTotalHeight = iVert + 380f;
 				SizeF layoutSize = new SizeF(1000f, iTotalHeight);
 				layout.ContentSize = layoutSize;
 
@@ -1563,30 +1586,60 @@ namespace ITPiPadSoln
             }
 		}
 
-        public bool ValidateCutoverLoad (object sender)
+        public bool SetGlobalEditItems(object sender, int iType)
         {
+            m_sender = sender;
+            m_iValidateType = iType;
+            return true;
+        }
+
+        public bool ValidateCutoverLoad (object sender, int iFromBackButton)
+        {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
             UITextField txtCutoverLoad = (UITextField)sender;
             string sRating = txtCutoverLoad.Text;
             int iTagId = txtCutoverLoad.Tag;
             int iSection =  m_iRFUSectionCounter + 1;
             int iStringRow = iTagId/iSection - iRFUCutoverLoadRowLabelTagId;
-            
+            UILabel hfCutoverLoad = (UILabel)View.ViewWithTag((ihfCutoverLoadRowLabelTagId + iStringRow) * iSection);
+
             string sLoadReturn = Regex.Replace(sRating, @"[^\d]+","");
+            sLoadReturn = Convert.ToDouble(sLoadReturn).ToString();
             txtCutoverLoad.Text = sLoadReturn;
             
-            UILabel hfRowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + iStringRow) * iSection);
-            hfRowStatus.Text = "1";
+            if(hfCutoverLoad.Text != sLoadReturn)
+            {
+                hfCutoverLoad.Text = sLoadReturn;
+                UILabel hfRowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + iStringRow) * iSection);
+                hfRowStatus.Text = "1";
 
-//            UIButton btnSaveRFUSection = (UIButton)View.ViewWithTag(iSaveSectionBtnTagId * (m_iRFUSectionCounter+1));
-//            btnSaveRFUSection.Hidden = false;
-
-            SetSectionValueChanged(m_iRFUSectionCounter + 1);
-            SetAnyValueChanged(sender, null);
+                SetSectionValueChanged(m_iRFUSectionCounter + 1);
+                SetAnyValueChanged(sender, null);
+            }
             return true;
         }
 
-        public bool ValidateCutoverDate (object sender)
+        public bool ValidateCutoverDate (object sender, int iFromBackButton)
         {
+            if(gbSuppressSecondCheck)
+            {
+                return true;
+            }
+            
+            if(iFromBackButton == 1)
+            {
+                gbSuppressSecondCheck = true;
+            }
+            
             UITextField txtCODate = (UITextField)sender;
             string sCODate = txtCODate.Text;
             DateClass dt = new DateClass ();
@@ -1595,6 +1648,7 @@ namespace ITPiPadSoln
             int iTagId = txtCODate.Tag;
             int iSection =  m_iRFUSectionCounter + 1;
             int iStringRow = iTagId/iSection - iRFUCutoverDateRowLabelTagId;
+            UILabel hfCutoverDate = (UILabel)View.ViewWithTag((ihfCutoverDateRowLabelTagId + iStringRow) * iSection);
 
             if (!bDateCheck) 
             {
@@ -1609,10 +1663,15 @@ namespace ITPiPadSoln
             {
                 string sCOReturn = dt.Get_Date_String(dtCO, "dd/mm/yy");
                 txtCODate.Text = sCOReturn;
-                UILabel hfRowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + iStringRow) * iSection);
-                hfRowStatus.Text = "1";
-                SetSectionValueChanged(m_iRFUSectionCounter + 1);
-                SetAnyValueChanged(sender, null);
+
+                if(hfCutoverDate.Text != sCOReturn)
+                {
+                    hfCutoverDate.Text = sCOReturn;
+                    UILabel hfRowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + iStringRow) * iSection);
+                    hfRowStatus.Text = "1";
+                    SetSectionValueChanged(m_iRFUSectionCounter + 1);
+                    SetAnyValueChanged(sender, null);
+                }
                 return true;
             }
         }
@@ -1896,6 +1955,25 @@ namespace ITPiPadSoln
 
         public bool CommitRFU(object sender, EventArgs e)
         {
+            //First of all validate anything required
+            switch(m_iValidateType)
+            {
+                case 9: //Cutover Load
+                    if(!ValidateCutoverLoad(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return false;
+                    }
+                    break;
+                case 10: //Cutover Date
+                    if(!ValidateCutoverDate(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return false;
+                    }
+                    break;
+            }
+
             UIButton btnRFUSave = (UIButton)sender;
             int iTagId = btnRFUSave.Tag;
             int iSectionId = m_iRFUSectionCounter + 1;
@@ -2454,9 +2532,28 @@ namespace ITPiPadSoln
             lblCompletedPwrConv.Hidden = !bOnOff;                
         }
 
-        public void CheckUnsaved ()
+        public void CheckUnsaved()
 		{
-			UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
+            //First of all validate anything required
+            switch(m_iValidateType)
+            {
+                case 9: //Cutover Load
+                    if(!ValidateCutoverLoad(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+                case 10: //Cutover Date
+                    if(!ValidateCutoverDate(m_sender, 1))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+            }
+
+            UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
 			int iStatus = Convert.ToInt32 (txtEditStatus.Text);
 			if (iStatus == 0) 
 			{
@@ -2469,7 +2566,7 @@ namespace ITPiPadSoln
 				//Ask the question
 				iUtils.AlertBox alert2 = new iUtils.AlertBox();
 				alert2.CreateAlertYesNoCancelDialog();
-				alert2.SetAlertMessage("You have unsaved changes. Do you wish to save these changes before going back to the downloaded screen?");
+				alert2.SetAlertMessage("You have unsaved changes. Only chnages to questions will be saved. RFU changes must be committed using the buttons. Do you wish to save these changes before going back to the downloaded screen?");
 				alert2.ShowAlertBox(); 
 				
 				UIAlertView alert3 = alert2.GetAlertDialog();

@@ -488,7 +488,14 @@ namespace ITPiPadSoln
             else
             {
                 //Has the project been made available online again and if so you cannot upload
-
+                clsITPFramework ITPFwrk = new clsITPFramework();
+                object[] objUploadable = ITPFwrk.IsITPUploadable(m_sSessionId, m_sUser, sId);
+                if (objUploadable[0].ToString() != "Success")
+                {
+                    iUtils.AlertBox alert4 = new iUtils.AlertBox();
+                    alert4.CreateErrorAlertDialog(objUploadable[1].ToString());
+                    return;
+                }
             }
 			
             if(iMarkUploadType == 1)
@@ -541,18 +548,23 @@ namespace ITPiPadSoln
     				btnOpen.Enabled = false;
     				UILabel hfbtnOpenStatus = (UILabel)View.ViewWithTag (iOpenBtnId/iOpenBtnTagId * iOpenBtnStatusTagId);
     				hfbtnOpenStatus.Text = "0";
+
+                    UIButton btnUpload = (UIButton)View.ViewWithTag (iOpenBtnId/ iOpenBtnTagId * iUploadBtnTagId);
+                    btnUpload.Enabled = false;
+                    UILabel hfbtnUploadStatus = (UILabel)View.ViewWithTag (iOpenBtnId/iOpenBtnTagId * iUploadBtnStatusTagId);
+                    hfbtnUploadStatus.Text = "0";
+
+                    UIButton btnBackup = (UIButton)View.ViewWithTag (iOpenBtnId/ iOpenBtnTagId * iBackupBtnTagId);
+                    btnBackup.Enabled = false;
+
+                    //Enable the remove button
+                    UIButton btnRemove = (UIButton)View.ViewWithTag (iOpenBtnId/ iOpenBtnTagId * iRemoveBtnTagId);
+                    btnRemove.Enabled = true;
+                    UILabel hfbtnRemoveStatus = (UILabel)View.ViewWithTag (iOpenBtnId/iOpenBtnTagId * iRemoveBtnStatusTagId);
+                    hfbtnRemoveStatus.Text = "1";
                 }
 
-				UIButton btnUpload = (UIButton)View.ViewWithTag (iOpenBtnId/ iOpenBtnTagId * iUploadBtnTagId);
-				btnUpload.Enabled = false;
-				UILabel hfbtnUploadStatus = (UILabel)View.ViewWithTag (iOpenBtnId/iOpenBtnTagId * iUploadBtnStatusTagId);
-				hfbtnUploadStatus.Text = "0";
 
-                //Enable the remove button
-                UIButton btnRemove = (UIButton)View.ViewWithTag (iOpenBtnId/ iOpenBtnTagId * iRemoveBtnTagId);
-                btnRemove.Enabled = true;
-                UILabel hfbtnRemoveStatus = (UILabel)View.ViewWithTag (iOpenBtnId/iOpenBtnTagId * iRemoveBtnStatusTagId);
-                hfbtnRemoveStatus.Text = "1";
 
                 //Change the status text too
                 if(iUploadOrBackup == 0)

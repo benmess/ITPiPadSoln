@@ -3813,6 +3813,70 @@ namespace ITPiPadSoln
         {
             UIButton btnSave = (UIButton)sender;
             int iBtnId = btnSave.Tag;
+
+            //Now check to see if we are in a field and haven't ended editing yet
+            if(m_iValidateType > 0)
+            {
+                switch(m_iValidateType)
+                {
+                    case 1: //Bank No
+                        if(!ValidateBankNo(m_sender,1, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 2: //DOM
+                        if(!ValidateDOM(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 3: //Rating
+                        if(!ValidateRating(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 4: //Floor
+                        if(!ValidateFloor(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 5: //Suite
+                        if(!ValidateSuite(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 6: //Rack
+                        if(!ValidateRack(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 7: //SubRack
+                        if(!ValidateSubRack(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 8: //SerialNo
+                        if(!ValidateSerialNo(m_sender, 1))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                }
+            }
             return SaveSection(iBtnId);
         }
         
@@ -3944,7 +4008,7 @@ namespace ITPiPadSoln
                                     sDuplicate = "-1";
                                 }
                                 break;
-                            case "User":
+                            case "Used":
                                 sEquipType = "U";
                                 sTransferAssetId = sMaximoAssetId;
                                 sPSAAssetId = "";
@@ -4017,10 +4081,12 @@ namespace ITPiPadSoln
                 UILabel hfSectionStatus = (UILabel)View.ViewWithTag(iSectionStatusTagId * (m_iBatterySectionCounter + 1));
                 hfSectionStatus.Text = "0";
                 SetAnyValueChangedOff();
+                gbSuppressSecondCheck = false;
                 return true;
             }
             else
             {
+                gbSuppressSecondCheck = false;
                 return false;
             }
         }
@@ -4074,6 +4140,7 @@ namespace ITPiPadSoln
             //Disable the Save section button
             UIButton btnSave = (UIButton)View.ViewWithTag (iSaveSectionBtnTagId * (m_iBatterySectionCounter+1));
             btnSave.Hidden = true;
+            m_iValidateType = -1;
         }
 
         public void ShowCompletedLabels()

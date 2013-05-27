@@ -1,3 +1,4 @@
 IP: 10.1.177.57
+IP: 10.1.177.53
 USB Debugging: 1
 Port: 10000

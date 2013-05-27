@@ -45,6 +45,8 @@ namespace ITPiPadSoln.ITPExternal {
         
         private System.Threading.SendOrPostCallback GetITPInventoryInfoOperationCompleted;
         
+        private System.Threading.SendOrPostCallback IsITPUploadableOperationCompleted;
+        
         private System.Threading.SendOrPostCallback SetITPUploadInfoOperationCompleted;
         
         public wbsITP_External() {
@@ -82,6 +84,8 @@ namespace ITPiPadSoln.ITPExternal {
         public event GetITPProjectRFUInfoCompletedEventHandler GetITPProjectRFUInfoCompleted;
         
         public event GetITPInventoryInfoCompletedEventHandler GetITPInventoryInfoCompleted;
+        
+        public event IsITPUploadableCompletedEventHandler IsITPUploadableCompleted;
         
         public event SetITPUploadInfoCompletedEventHandler SetITPUploadInfoCompleted;
         
@@ -652,6 +656,48 @@ namespace ITPiPadSoln.ITPExternal {
             }
         }
         
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://scms.silcar.com.au/IsITPUploadable", RequestNamespace="http://scms.silcar.com.au/", ResponseNamespace="http://scms.silcar.com.au/", ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped, Use=System.Web.Services.Description.SoapBindingUse.Literal)]
+        public object[] IsITPUploadable(string sSessionId, string sUsername, string sId) {
+            object[] results = this.Invoke("IsITPUploadable", new object[] {
+                        sSessionId,
+                        sUsername,
+                        sId});
+            return ((object[])(results[0]));
+        }
+        
+        public System.IAsyncResult BeginIsITPUploadable(string sSessionId, string sUsername, string sId, System.AsyncCallback callback, object asyncState) {
+            return this.BeginInvoke("IsITPUploadable", new object[] {
+                        sSessionId,
+                        sUsername,
+                        sId}, callback, asyncState);
+        }
+        
+        public object[] EndIsITPUploadable(System.IAsyncResult asyncResult) {
+            object[] results = this.EndInvoke(asyncResult);
+            return ((object[])(results[0]));
+        }
+        
+        public void IsITPUploadableAsync(string sSessionId, string sUsername, string sId) {
+            this.IsITPUploadableAsync(sSessionId, sUsername, sId, null);
+        }
+        
+        public void IsITPUploadableAsync(string sSessionId, string sUsername, string sId, object userState) {
+            if ((this.IsITPUploadableOperationCompleted == null)) {
+                this.IsITPUploadableOperationCompleted = new System.Threading.SendOrPostCallback(this.OnIsITPUploadableCompleted);
+            }
+            this.InvokeAsync("IsITPUploadable", new object[] {
+                        sSessionId,
+                        sUsername,
+                        sId}, this.IsITPUploadableOperationCompleted, userState);
+        }
+        
+        private void OnIsITPUploadableCompleted(object arg) {
+            if ((this.IsITPUploadableCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.IsITPUploadableCompleted(this, new IsITPUploadableCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://scms.silcar.com.au/SetITPUploadInfo", RequestNamespace="http://scms.silcar.com.au/", ResponseNamespace="http://scms.silcar.com.au/", ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped, Use=System.Web.Services.Description.SoapBindingUse.Literal)]
         public object[] SetITPUploadInfo(string sSessionId, string sUsername, string sSendString) {
             object[] results = this.Invoke("SetITPUploadInfo", new object[] {
@@ -960,6 +1006,25 @@ namespace ITPiPadSoln.ITPExternal {
     }
     
     public delegate void GetITPInventoryInfoCompletedEventHandler(object sender, GetITPInventoryInfoCompletedEventArgs args);
+    
+    public partial class IsITPUploadableCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal IsITPUploadableCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public object[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((object[])(this.results[0]));
+            }
+        }
+    }
+    
+    public delegate void IsITPUploadableCompletedEventHandler(object sender, IsITPUploadableCompletedEventArgs args);
     
     public partial class SetITPUploadInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         

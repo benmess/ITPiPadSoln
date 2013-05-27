@@ -1,0 +1,1 @@
+--debug --aot=mtriple=armv7-darwin,full,static,asmonly,direct-icalls,no-direct-calls,iphone-abi,outfile=/System.Core.dll.armv7.s "/Users/benmessenger/Projects/ITPiPadSoln/ITPiPadSoln/bin/iPhone/Debug/SilcarESITP.app/System.Core.dll"
