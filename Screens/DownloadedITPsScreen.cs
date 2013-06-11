@@ -425,7 +425,7 @@ namespace ITPiPadSoln
 			prog.SetActivityIndicatorTitle("Opening ITP");
 			ScreenUtils scnUtils = new ScreenUtils();
 			scnUtils.GetAbsolutePosition(btnOpen);
-			float iTop = scnUtils.GetPositionTop();
+            float iTop = scnUtils.GetPositionTop();
 			float iLeft = scnUtils.GetPositionLeft();
 			prog.SetActivityIndicatorPosition(iLeft,iTop);
 			prog.ShowActivityIndicator();

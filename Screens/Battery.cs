@@ -3503,6 +3503,16 @@ namespace ITPiPadSoln
                 hfRowStatus.Text = "3"; //Means deleted, so no save required
                 ReduceHeightAfter(m_iBatteryRowHeight, iPwrIdRow, iStringRow, 1);
                 
+                UIView vwPwrInternalRowId = (UIView)View.ViewWithTag((iPwrIdSectionInnerTagId + (iPwrIdRow)) * (m_iBatterySectionCounter+1));
+                RectangleF frame1 = vwPwrInternalRowId.Frame;
+                frame1.Height -= m_iBatteryRowHeight;
+                vwPwrInternalRowId.Frame = frame1;
+
+                //Now increase the view height for this new row (The whole section height is handled in the ReduceHeightAfter function)
+                UILabel hfPwrIdSectionHeight = (UILabel)View.ViewWithTag((iPwrIdHeightTagId + iPwrIdRow ) * (m_iBatterySectionCounter + 1));
+                int iPwrIdHeight = Convert.ToInt32(hfPwrIdSectionHeight.Text);
+                hfPwrIdSectionHeight.Text = (iPwrIdHeight - m_iBatteryRowHeight).ToString();
+
                 //Set the unsaved tags on (do this even though the record is removed for consistency)
                 SetSectionValueChanged(m_iBatterySectionCounter + 1);
                 SetAnyValueChanged(sender, null);
@@ -3664,12 +3674,20 @@ namespace ITPiPadSoln
                                                                    sPwrId, -1, -1, "", "", "","", "", "", "", "", "" ,"" , 
                                                                    "","","N","", 0, 0, true, false, ref iHeightToAdd);
             //Get the position of the last row in this internal pwrId battery block
-            UIView vwPwrInternalRowId = (UIView)View.ViewWithTag((iPwrIdSectionTagId + (iPwrIdRow)) * (m_iBatterySectionCounter+1));
+            UIView vwPwrInternalRowId = (UIView)View.ViewWithTag((iPwrIdSectionInnerTagId + (iPwrIdRow)) * (m_iBatterySectionCounter+1));
             float iPwrIdRowVert = vwPwrInternalRowId.Frame.Height;
             BatteryStringRow.Frame = new RectangleF(0f, iPwrIdRowVert, 1000f, iHeightToAdd);
             BatteryStringRow.Tag = iStringFullRowTagId * (iPwrIdRow) + (iTotalStrings + 1);
             vwPwrInternalRowId.AddSubview(BatteryStringRow);
-            
+            RectangleF frame1 = vwPwrInternalRowId.Frame;
+            frame1.Height += iHeightToAdd;
+            vwPwrInternalRowId.Frame = frame1;
+
+            //Now increase the view height for this new row (the whole section height is managed in the ReduceHeightAfter function)
+            UILabel hfPwrIdSectionHeight = (UILabel)View.ViewWithTag((iPwrIdHeightTagId + iPwrIdRow ) * (m_iBatterySectionCounter + 1));
+            int iPwrIdHeight = Convert.ToInt32(hfPwrIdSectionHeight.Text);
+            hfPwrIdSectionHeight.Text = (iPwrIdHeight + iHeightToAdd).ToString();
+
             //Now increase the number of strings in the PwrId by 1
             iTotalStrings++;
             hfThisPwrIdStringRows.Text = iTotalStrings.ToString();

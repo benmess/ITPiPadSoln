@@ -1701,7 +1701,7 @@ namespace ITPiPadSoln
             UIButton btnDeleteButton = new UIButton();
             btnDeleteButton = btnDelete.GetButton();
             btnDeleteButton.TouchUpInside += (sender,e) => {
-                DeleteBatteryString(sender, e);};
+                DeleteEquipmentRow(sender, e);};
             
             if (iMaximoAssetId >= 0)
             {
@@ -3839,7 +3839,7 @@ namespace ITPiPadSoln
             return;
         }
         
-        public void DeleteBatteryString(object sender, EventArgs e)
+        public void DeleteEquipmentRow(object sender, EventArgs e)
         {
             string sRtnMsg = "";
             clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
@@ -3868,11 +3868,6 @@ namespace ITPiPadSoln
             UILabel hfEquipmentType = (UILabel)View.ViewWithTag(iEquipmentTypeTagId * (iPwrIdRow) + (iStringRow));
             int iEquipmentType = Convert.ToInt32(hfEquipmentType.Text);
 
-            //            if (sBankNo == "")
-//            {
-//                sBankNo = "0";
-//            }
-//            int iBankNo = Convert.ToInt32(sBankNo);
             string sRack = "";
             string sSubRack = "";
             string sPosition = "";
@@ -3941,6 +3936,16 @@ namespace ITPiPadSoln
                 hfRowStatus.Text = "3"; //Means deleted, so no save required
                 ReduceHeightAfter(m_iEquipmentRowHeight, iPwrIdRow, iStringRow, 2);
                 
+                UIView vwPwrInternalRowId = (UIView)View.ViewWithTag((iPwrIdSectionInnerTagId + (iPwrIdRow)) * (m_iEquipmentSectionCounter+1));
+                RectangleF frame1 = vwPwrInternalRowId.Frame;
+                frame1.Height -= m_iEquipmentRowHeight;
+                vwPwrInternalRowId.Frame = frame1;
+
+                //Now increase the view height for this new row (The whole section height is handled in the ReduceHeightAfter function)
+                UILabel hfPwrIdSectionHeight = (UILabel)View.ViewWithTag((iPwrIdHeightTagId + iPwrIdRow ) * (m_iEquipmentSectionCounter + 1));
+                int iPwrIdHeight = Convert.ToInt32(hfPwrIdSectionHeight.Text);
+                hfPwrIdSectionHeight.Text = (iPwrIdHeight - m_iEquipmentRowHeight).ToString();
+
                 //Set the unsaved tags on (do this even though the record is removed for consistency)
                 SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
                 SetAnyValueChanged(sender, null);
@@ -4066,12 +4071,20 @@ namespace ITPiPadSoln
                                                                    false, false,ref iHeightToAdd);
             
             //Get the position of the last row in this internal pwrId battery block
-            UIView vwPwrInternalRowId = (UIView)View.ViewWithTag((iPwrIdSectionTagId + (iPwrIdRow)) * (m_iEquipmentSectionCounter+1));
+            UIView vwPwrInternalRowId = (UIView)View.ViewWithTag((iPwrIdSectionInnerTagId + (iPwrIdRow)) * (m_iEquipmentSectionCounter+1));
             float iPwrIdRowVert = vwPwrInternalRowId.Frame.Height;
             EquipmentItemRow.Frame = new RectangleF(0f, iPwrIdRowVert, 1000f, iHeightToAdd);
             EquipmentItemRow.Tag = iEquipmentFullRowTagId * (iPwrIdRow) + (iTotalStrings + 1);
             vwPwrInternalRowId.AddSubview(EquipmentItemRow);
-            
+            RectangleF frame1 = vwPwrInternalRowId.Frame;
+            frame1.Height += iHeightToAdd;
+            vwPwrInternalRowId.Frame = frame1;
+
+            //Now increase the view height for this new row (the whole section height is managed in the ReduceHeightAfter function)
+            UILabel hfPwrIdSectionHeight = (UILabel)View.ViewWithTag((iPwrIdHeightTagId + iPwrIdRow ) * (m_iEquipmentSectionCounter + 1));
+            int iPwrIdHeight = Convert.ToInt32(hfPwrIdSectionHeight.Text);
+            hfPwrIdSectionHeight.Text = (iPwrIdHeight + iHeightToAdd).ToString();
+
             //Now increase the number of strings in the PwrId by 1
             iTotalStrings++;
             hfThisPwrIdStringRows.Text = iTotalStrings.ToString();

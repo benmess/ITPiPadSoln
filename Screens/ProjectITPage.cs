@@ -1612,7 +1612,7 @@ namespace ITPiPadSoln
             int iStringRow = iTagId/iSection - iRFUCutoverLoadRowLabelTagId;
             UILabel hfCutoverLoad = (UILabel)View.ViewWithTag((ihfCutoverLoadRowLabelTagId + iStringRow) * iSection);
 
-            string sLoadReturn = Regex.Replace(sRating, @"[^\d]+","");
+            string sLoadReturn = Regex.Replace(sRating, @"[^0-9\.]+","");
             sLoadReturn = Convert.ToDouble(sLoadReturn).ToString();
             txtCutoverLoad.Text = sLoadReturn;
             
@@ -2020,7 +2020,7 @@ namespace ITPiPadSoln
                 return false;
             }
 
-            if (!bQuestion && ! !bPowerConversion)
+            if (!bQuestion && !bPowerConversion)
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox();
                 alert.CreateErrorAlertDialog("Some power conversion information on PwrId " + sPwrId + " is incomplete and not all questions have been answered. You cannot commit the RFU at this stage.");
@@ -2695,7 +2695,10 @@ namespace ITPiPadSoln
             prog.SetActivityIndicatorTitle("Open Batteries");
             ScreenUtils scnUtils = new ScreenUtils();
             scnUtils.GetAbsolutePosition(btnOpen);
-            float iTop = scnUtils.GetPositionTop();
+            UIScrollView scrollVw = (UIScrollView)View.ViewWithTag (2);
+            PointF layoutOffset = scrollVw.ContentOffset;
+            float iVertOffset = layoutOffset.Y;
+            float iTop = scnUtils.GetPositionTop() - iVertOffset;
             float iLeft = scnUtils.GetPositionLeft();
             prog.SetActivityIndicatorPosition(iLeft,iTop);
             prog.ShowActivityIndicator();
@@ -2727,7 +2730,10 @@ namespace ITPiPadSoln
             prog.SetActivityIndicatorTitle("Open Pwr Conv");
             ScreenUtils scnUtils = new ScreenUtils();
             scnUtils.GetAbsolutePosition(btnOpen);
-            float iTop = scnUtils.GetPositionTop();
+            UIScrollView scrollVw = (UIScrollView)View.ViewWithTag (2);
+            PointF layoutOffset = scrollVw.ContentOffset;
+            float iVertOffset = layoutOffset.Y;
+            float iTop = scnUtils.GetPositionTop() - iVertOffset;
             float iLeft = scnUtils.GetPositionLeft();
             prog.SetActivityIndicatorPosition(iLeft,iTop);
             prog.ShowActivityIndicator();
