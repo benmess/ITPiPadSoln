@@ -120,10 +120,15 @@ namespace ITPiPadSoln
 				int iColNo = 0;
 				string sId = "";
 				int iOpenBtnId = -1;
+                float iTotalHeight = 0.0f;
 
 				float iVert = 100.0f;
 				float iRowHeight = 50f;
-				
+                UIScrollView layout = new UIScrollView();
+                layout.Frame = new RectangleF(0f,0f,1000f,620f);
+                layout.Tag = 2;
+                View.AddSubview(layout);
+
 				//Place the headings
 				UIView[] arrItems = new UIView[7];
 				
@@ -210,7 +215,7 @@ namespace ITPiPadSoln
 
 				iUtils.CreateFormGridItem lblStatusHdr = new iUtils.CreateFormGridItem();
 				UIView lblStatusHdrVw = new UIView();
-				lblStatusHdr.SetDimensions(754f,iVert,250f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
+				lblStatusHdr.SetDimensions(754f,iVert,246f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
 				lblStatusHdr.SetLabelText("Status");
 				lblStatusHdr.SetBorderWidth(1.0f);
 				lblStatusHdr.SetFontName("Verdana-Bold");
@@ -221,7 +226,7 @@ namespace ITPiPadSoln
 				lblStatusHdrVw = lblStatusHdr.GetLabelCell();
 				arrItems[6] = lblStatusHdrVw;
 
-				View.AddSubviews(arrItems);
+				layout.AddSubviews(arrItems);
 				
 				//Loop around for each item and place in the psuedo table
 				DataSet arrITP = GetITPsDownloadedLocal();
@@ -230,6 +235,7 @@ namespace ITPiPadSoln
 					UIView[] arrItems2 = new UIView[10];
 					int iRows = arrITP.Tables[0].Rows.Count;
 					m_iProjectsInList = iRows;
+                    iTotalHeight = (iRows+1) * iRowHeight;
 
 					for (int i = 0; i < iRows; i++)
 					{
@@ -369,7 +375,7 @@ namespace ITPiPadSoln
 
 						iUtils.CreateFormGridItem lblStatus = new iUtils.CreateFormGridItem();
 						UIView lblStatusVw = new UIView();
-						lblStatus.SetDimensions(754f,iVert, 250f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
+						lblStatus.SetDimensions(754f,iVert, 246f, iRowHeight, 2f, 2f, 2f, 2f); //Set left to 1 less so border does not double up
 						lblStatus.SetLabelText(sStatusText);
 						lblStatus.SetBorderWidth(1.0f);
 						lblStatus.SetFontName("Verdana");
@@ -396,11 +402,14 @@ namespace ITPiPadSoln
 						hfRemoveBtnStatus.Hidden = true;
 						arrItems2[9] = hfRemoveBtnStatus;
 
-						View.AddSubviews(arrItems2);
+						layout.AddSubviews(arrItems2);
 						
 					}
 				}
 								
+                //And reduce the content size of the main scroll view by the same amount
+                SizeF layoutSize = new SizeF(1000f, iTotalHeight);
+                layout.ContentSize = layoutSize;
 
 			} 
 			catch (Exception except) 
@@ -425,7 +434,10 @@ namespace ITPiPadSoln
 			prog.SetActivityIndicatorTitle("Opening ITP");
 			ScreenUtils scnUtils = new ScreenUtils();
 			scnUtils.GetAbsolutePosition(btnOpen);
-            float iTop = scnUtils.GetPositionTop();
+            UIScrollView scrollVw = (UIScrollView)View.ViewWithTag (2);
+            PointF layoutOffset = scrollVw.ContentOffset;
+            float iVertOffset = layoutOffset.Y;
+            float iTop = scnUtils.GetPositionTop() - iVertOffset;
 			float iLeft = scnUtils.GetPositionLeft();
 			prog.SetActivityIndicatorPosition(iLeft,iTop);
 			prog.ShowActivityIndicator();

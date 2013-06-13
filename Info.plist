@@ -19,7 +19,12 @@
 	<string>au.com.silcar.itpapp</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>1.1</string>
 </dict>
 </plist>

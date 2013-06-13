@@ -77,7 +77,7 @@
     <IpaPackageName />
     <MtouchI18n />
     <MtouchArch>ARMv7</MtouchArch>
-    <CodesignProvision>E40CDACF-580A-44A3-A038-071580B0FB90</CodesignProvision>
+    <CodesignProvision>9AF5ED2B-6EBA-4B23-B7A0-7DA1F041236C</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>none</DebugType>

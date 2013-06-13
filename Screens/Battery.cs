@@ -3697,6 +3697,20 @@ namespace ITPiPadSoln
             SetSectionValueChanged(m_iBatterySectionCounter + 1);
             SetAnyValueChanged(sender, null);
             
+            //Take off the completed or committed flags and also on the questions screen
+            UILabel lblCompleted = (UILabel)View.ViewWithTag (iSectionCompleteLabelTagId * (m_iBatterySectionCounter + 1));
+            lblCompleted.Hidden = true;
+            UILabel lblPwrIdComplete = (UILabel)View.ViewWithTag ((iPwrIdSectionCompleteLabelTagId + (iPwrIdRow)) * (m_iBatterySectionCounter+1));
+            lblPwrIdComplete.Hidden = true;
+            ProjectITPage QuestionsScreen = new ProjectITPage ();
+            QuestionsScreen = GetProjectITPPage ();
+            QuestionsScreen.SetBatteryCompleted(false);
+
+            //Enable the Save section button
+            UIButton btnSave = (UIButton)View.ViewWithTag (iSaveSectionBtnTagId * (m_iBatterySectionCounter+1));
+            btnSave.Hidden = false;
+            m_iValidateType = -1;
+
             //And move to the position
             UIScrollView scrollVw = (UIScrollView)View.ViewWithTag (2);
             float iTotalPosn = iPwrIdRowVert + scrollVw.ContentOffset.Y;

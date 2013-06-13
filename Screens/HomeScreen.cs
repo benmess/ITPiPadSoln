@@ -32,38 +32,54 @@ namespace ITPiPadSoln
 			
 			// Release any cached data, images, etc that aren't in use.
 		}
-		
+		public override void ViewWillAppear(bool animated)
+        {
+            var bConnStatus = GetConnectionStatus ();
+            UIImageView imgConnectionStatus = (UIImageView)View.ViewWithTag (651);
+            if (!bConnStatus) 
+            {
+                imgConnectionStatus.Image = imageRedBlock;
+            } 
+            else 
+            {
+                imgConnectionStatus.Image = imageGreenBlock;
+            }
+
+        }
+
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 			
-			// Perform any additional setup after loading the view, typically from a nib.
-			//Add 4 buttons on the main home page
-//			UIScrollView vwScroll = new UIScrollView();
-//			vwScroll.Frame = new RectangleF(0f, 0f, 1000f, 1000f);
-//			vwScroll.MaximumZoomScale = 5.0f;
-//			vwScroll.MinimumZoomScale = 0.5f;
+            NSDictionary info = NSBundle.MainBundle.InfoDictionary;
+            string versionId = info["CFBundleVersion"].ToString();
 
-			UIView[] arrButts = new UIView[10];
+			UIView[] arrButts = new UIView[11];
 
 
-			UILabel lblLogin = new UILabel ();
-			lblLogin.Tag = 500;
-			lblLogin.Frame = new RectangleF (120f, 100f, 100f, 30f);
-			lblLogin.Text = "Login Name:";
-			arrButts [0] = lblLogin;
+			UILabel lblVersion = new UILabel ();
+            lblVersion.Tag = 100;
+            lblVersion.Frame = new RectangleF (820f, 10f, 100f, 30f);
+            lblVersion.Text = "Version: " + versionId;
+            arrButts [0] = lblVersion;
 
-			UILabel lblLoginName = new UILabel ();
+            UILabel lblLogin = new UILabel ();
+            lblLogin.Tag = 500;
+            lblLogin.Frame = new RectangleF (120f, 100f, 100f, 30f);
+            lblLogin.Text = "Login Name:";
+            arrButts [1] = lblLogin;
+
+            UILabel lblLoginName = new UILabel ();
 			lblLoginName.Tag = 600;
 			lblLoginName.Frame = new RectangleF (230f, 100f, 200f, 30f);
 			lblLoginName.Text = m_sLogin;
-			arrButts [1] = lblLoginName;
+			arrButts [2] = lblLoginName;
 
 			UILabel lblConnStatus = new UILabel ();
 			lblConnStatus.Tag = 650;
 			lblConnStatus.Frame = new RectangleF (450f, 100f, 150f, 30f);
 			lblConnStatus.Text = "Connection Status:";
-			arrButts [2] = lblConnStatus;
+			arrButts [3] = lblConnStatus;
 
 			var bConnStatus = GetConnectionStatus ();
 			UIImageView imgConnectionStatus = new UIImageView ();
@@ -76,21 +92,22 @@ namespace ITPiPadSoln
 				imgConnectionStatus.Image = imageGreenBlock;
 			}
 			imgConnectionStatus.Frame = new RectangleF (620f, 100f, 30f, 30f);
-			arrButts[3] = imgConnectionStatus;
+            imgConnectionStatus.Tag = 651;
+			arrButts[4] = imgConnectionStatus;
 
 			UILabel hfSessionId = new UILabel();
 			hfSessionId.Tag = 700;
 			hfSessionId.Frame = new RectangleF(230f,100f,200f,30f);
 			hfSessionId.Text = m_sSessionId;
 			hfSessionId.Hidden = true;
-			arrButts[4] = hfSessionId;
+			arrButts[5] = hfSessionId;
 
 			UILabel hfLoggedIn = new UILabel();
 			hfLoggedIn.Tag = 800;
 			hfLoggedIn.Frame = new RectangleF(230f,100f,200f,30f);
 			hfLoggedIn.Text = m_sLoggedIn;
 			hfLoggedIn.Hidden = true;
-			arrButts[5] = hfLoggedIn;
+			arrButts[6] = hfLoggedIn;
 
 			var btnExit = UIButton.FromType(UIButtonType.Custom);
 			btnExit.Frame = new RectangleF(120f,150f,100f,30f);
@@ -100,25 +117,25 @@ namespace ITPiPadSoln
 			btnExit.Font = UIFont.FromName("Verdana-Bold", 12f);
 			btnExit.Layer.CornerRadius = 8;
 			btnExit.TouchUpInside += (sender,e) => {ExitApp(sender, e);};
-			arrButts[6] = btnExit;
+			arrButts[7] = btnExit;
 
 			var btnLogin = UIButton.FromType(UIButtonType.RoundedRect);
 			btnLogin.Frame = new RectangleF(230f,150f,100f,30f);
 			btnLogin.SetTitle("Login", UIControlState.Normal);
 			btnLogin.TouchUpInside += (sender,e) => {OpenLoginScreen(sender, e);};
-			arrButts[7] = btnLogin;
+			arrButts[8] = btnLogin;
 
 			var btnDownload = UIButton.FromType(UIButtonType.RoundedRect);
 			btnDownload.Frame = new RectangleF(340f,150f,200f,30f);
 			btnDownload.SetTitle("Download ITPs", UIControlState.Normal);
 			btnDownload.TouchUpInside += (sender,e) => {OpenDownloadITPScreen(sender, e);};
-			arrButts[8] = btnDownload;
+			arrButts[9] = btnDownload;
 
 			var btnOpenDownload = UIButton.FromType(UIButtonType.RoundedRect);
 			btnOpenDownload.Frame = new RectangleF(550f,150f,250f,30f);
 			btnOpenDownload.SetTitle("Open Downloaded ITPs", UIControlState.Normal);
 			btnOpenDownload.TouchUpInside += (sender,e) => {OpenDownloadedITPsScreen(sender, e);};
-			arrButts[9] = btnOpenDownload;
+			arrButts[10] = btnOpenDownload;
 			
 			View.AddSubviews(arrButts);
 //			View.Add(vwScroll);

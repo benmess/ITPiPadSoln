@@ -1591,12 +1591,20 @@ namespace ITPiPadSoln
             iUtils.CreateFormGridItem txtDOM = new iUtils.CreateFormGridItem();
             UIView txtDOMVw = new UIView();
             txtDOM.SetDimensions(500f, iHdrVert, 80f, iRowHeight * 2, 2f, iRowHeight / 2f, 2f, iRowHeight / 2f);
-            if (sDOM == "" || sDOM == "0")
+            if (sDOM == "0")
             {
                 sDOM = "01/01/1900";
             }
-            DateTime dtDOM = Convert.ToDateTime(sDOM);
-            string sDOMDisplay = dt.Get_Date_String(dtDOM, "dd/mm/yy");
+            string sDOMDisplay;
+            if(sDOM == "")
+            {
+                sDOMDisplay = sDOM;
+            }
+            else
+            {
+                DateTime dtDOM = Convert.ToDateTime(sDOM);
+                sDOMDisplay = dt.Get_Date_String(dtDOM, "dd/mm/yy");
+            }
             txtDOM.SetLabelText(sDOMDisplay);
             txtDOM.SetBorderWidth(0.0f);
             txtDOM.SetFontName("Verdana");
@@ -4094,6 +4102,15 @@ namespace ITPiPadSoln
             SetSectionValueChanged(m_iEquipmentSectionCounter + 1);
             SetAnyValueChanged(sender, null);
             
+            //Take off the completed or committed flags and also on the questions screen
+            UILabel lblCompleted = (UILabel)View.ViewWithTag (iSectionCompleteLabelTagId * (m_iEquipmentSectionCounter + 1));
+            lblCompleted.Hidden = true;
+            UILabel lblPwrIdComplete = (UILabel)View.ViewWithTag ((iPwrIdSectionCompleteLabelTagId + (iPwrIdRow)) * (m_iEquipmentSectionCounter+1));
+            lblPwrIdComplete.Hidden = true;
+            ProjectITPage QuestionsScreen = new ProjectITPage ();
+            QuestionsScreen = GetProjectITPPage ();
+            QuestionsScreen.SetPowerConversionCompleted(false);
+
             //And move to the position
             UIScrollView scrollVw = (UIScrollView)View.ViewWithTag(2);
             float iTotalPosn = iPwrIdRowVert + scrollVw.ContentOffset.Y;
