@@ -71,6 +71,7 @@ namespace ITPiPadSoln
         int iPwrIdHeightTagId  = 10021400;
         int ihfCutoverLoadRowLabelTagId = 10022300;
         int ihfCutoverDateRowLabelTagId = 10022400;
+        int iRFUCommentsTagId = 10022500;
 
 
         string m_sSessionId = "";
@@ -269,6 +270,7 @@ namespace ITPiPadSoln
                 UIView[] arrItems4 = new UIView[6];
                 UIView[] arrItems6 = new UIView[11];
                 UIView[] arrItems7 = new UIView[7];
+                UIView[] arrItems8 = new UIView[2];
                 UIView[] arrItems14 = new UIView[8];
 
 				UIScrollView layout = new UIScrollView();
@@ -1265,6 +1267,8 @@ namespace ITPiPadSoln
                         int iDecommission = Convert.ToInt32(arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo]);
                         iColNo = arrITPRFUs.Tables[0].Columns["Commission"].Ordinal;
                         int iCommission = Convert.ToInt32(arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo]);
+                        iColNo = arrITPRFUs.Tables[0].Columns["Comments"].Ordinal;
+                        string sComments =arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo].ToString();
 
                         bDisableRow = RFUPwrIdCommitted(sPwrId);
 
@@ -1539,7 +1543,76 @@ namespace ITPiPadSoln
                         iRFURowVert += iHeightToAdd;
                         iVert += iHeightToAdd;
 
+                        //Now put in a second row for the comments
+                        iUtils.CreateFormGridItem lblRFUComments = new iUtils.CreateFormGridItem();
+                        UIView lblRFUCommentsVw = new UIView();
+                        lblRFUComments.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
+                        lblRFUComments.SetDimensions(0f,iRFURowVert, 100f, iSectionHdrRowHeight * 2, 2f, 2.5f, 2f, 2.5f);
+                        lblRFUComments.SetLabelText("Comments");
+                        lblRFUComments.SetBorderWidth(0.0f);
+                        lblRFUComments.SetFontName("Verdana");
+                        lblRFUComments.SetFontSize(14f);
+                        lblRFUComments.SetTag((iRFUPwrIdRowLabelTagId + (j+1)) * (ii+1));
+
+                        if (j % 2 == 0)
+                        {
+                            lblRFUComments.SetCellColour("Pale Blue");
+                        }
+                        else
+                        {
+                            lblRFUComments.SetCellColour("Sky Blue");
+                        }
+
+                        lblRFUCommentsVw = lblRFUComments.GetLabelCell();
+                        iHeightToAdd = iSectionHdrRowHeight * 2;
+                        arrItems8[0] = lblRFUCommentsVw;
+
+                        iUtils.CreateFormGridItem txtRFUComments = new iUtils.CreateFormGridItem();
+                        UIView txtRFUCommentsVw = new UIView();
+                        txtRFUComments.SetDimensions(100f,iRFURowVert, 730f, iSectionHdrRowHeight * 2, 15f, 2.5f, 15f, 2.5f);
+                        txtRFUComments.SetLabelText(sComments);
+                        txtRFUComments.SetTextAlignment("left");
+                        txtRFUComments.SetBorderWidth(0.0f);
+                        txtRFUComments.SetFontName("Verdana");
+                        txtRFUComments.SetFontSize(14f);
+                        txtRFUComments.SetTag((iRFUCommentsTagId + (j+1)) * (ii+1));
+
+                        if (j % 2 == 0)
+                        {
+                            txtRFUComments.SetCellColour("Pale Blue");
+                        }
+                        else
+                        {
+                            txtRFUComments.SetCellColour("Sky Blue");
+                        }
+
+                        txtRFUCommentsVw = txtRFUComments.GetTextCell();
+
+                        UITextView txtRFUCommentsView = txtRFUComments.GetTextView();
+                        txtRFUCommentsView.KeyboardType = UIKeyboardType.Default;
+                        txtRFUCommentsView.ReturnKeyType = UIReturnKeyType.Default;
+                        txtRFUCommentsView.ShouldBeginEditing += (sender) => {
+                            return SetGlobalEditItems(sender, 11);};
+//                        txtRFUCommentsView.ShouldEndEditing += (sender) => {
+//                            return ValidateCutoverLoad(sender, 0);};
+//                        txtRFUCommentsView.ShouldReturn += (sender) => {
+//                            return MoveNextTextField(sender, 14);};
+                        txtRFUCommentsView.Changed += (sender,e) => {SetRFURowEditTextChanged(sender, e);};
+
+                        if(bDisableRow)
+                        {
+                            txtRFUCommentsView.Editable = false;
+                        }
+                        arrItems8[1] = txtRFUCommentsVw;
+
                             
+                        //Now add the row details into the view
+                        vwPwrInternalRowId.AddSubviews(arrItems8);
+
+                        iSectionRFUHeight += iHeightToAdd;
+                        iRFURowVert += iHeightToAdd;
+                        iVert += iHeightToAdd;
+
                         vwPwrInternalRowId.Frame = new RectangleF(0f, iRFURowInnerTop, 1000f, iRFURowVert);
                         RFUTableRow.AddSubview(vwPwrInternalRowId);
                         iRFURowInnerTop += iRFURowVert;
@@ -2378,7 +2451,19 @@ namespace ITPiPadSoln
 			SetAnyValueChanged(sender, e);
 		}
 
-		//Send through just the section counter NOT the section Id. So 1 NOT 10000 etc
+        public void SetRFURowEditTextChanged(object sender, EventArgs e)
+        {
+            UITextView edtText = (UITextView)sender;
+            int iTagId = edtText.Tag;
+            int iSection =  m_iRFUSectionCounter + 1;
+            int iStringRow = iTagId/iSection - iRFUCommentsTagId;
+            UILabel hfRowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + iStringRow) * iSection);
+            hfRowStatus.Text = "1";
+            SetSectionValueChanged(m_iRFUSectionCounter + 1);
+            SetAnyValueChanged(sender, null);
+        }
+
+        //Send through just the section counter NOT the section Id. So 1 NOT 10000 etc
 		public void SetSectionValueChanged(int iSectionId)
 		{
 			UILabel txtEditStatus = (UILabel)View.ViewWithTag (iSectionId * iSectionStatusTagId);

@@ -39,8 +39,12 @@ namespace ITPiPadSoln
         iUtils.ProgressBar progBarProjITPRFUVw = new iUtils.ProgressBar();
         UIView progBarProjITPRFU = new UIView();
 
+        int iProjIdTag = 100010000;
+        int iProjDescTag = 100011000;
+        int iDownloadButtonTag = 100012000;
+        int iStatusButtonTag = 100013000;
 
-		int iProjectsInList = 0;
+        int iProjectsInList = 0;
 
 		public DownloadITPScreen () : base ("DownloadITPScreen", null)
 		{
@@ -130,8 +134,13 @@ namespace ITPiPadSoln
 		{
 			try 
 			{
+                UIScrollView layout = new UIScrollView();
+                layout.Frame = new RectangleF(0f,0f,1000f,620f);
+                layout.Tag = 2;
+                View.AddSubview(layout);
 				float iVert = 100.0f;
 				float iRowHeight = 50f;
+                float iTotalHeight = iRowHeight;
 
 				//Place the headings
 				UIView[] arrItems = new UIView[3];
@@ -175,16 +184,18 @@ namespace ITPiPadSoln
 				lblDownloadHdrVw = lblDownloadHdr.GetLabelCell();
 				arrItems[2] = lblDownloadHdrVw;
 
-				View.AddSubviews(arrItems);
+                layout.AddSubviews(arrItems);
 
 				//Loop around for each item and place in the psuedo table
 				object[] arrITP = GetITPsForDownloadLocal();
-				if(arrITP[0].ToString() == "Success")
+
+                if(arrITP[0].ToString() == "Success")
 				{
 					object[] arrIdList = (object[])arrITP[1];
 					object[] arrDescList = (object[])arrITP[2];
 					UIView[] arrItems2 = new UIView[4];
 					iProjectsInList = arrIdList.Length;
+                    iTotalHeight = (iProjectsInList) * iRowHeight;
 
 					for(int i=0; i< arrIdList.Length; i++)
 					{
@@ -196,7 +207,7 @@ namespace ITPiPadSoln
 						lblProjId2.SetBorderWidth(1.0f);
 						lblProjId2.SetFontName("Verdana");
 						lblProjId2.SetFontSize(14f);
-						lblProjId2.SetTag(10000 * (i+1));
+                        lblProjId2.SetTag(iProjIdTag * (i+1));
 						lblProjIdVw = lblProjId2.GetLabelCell();
 						arrItems2[0] = lblProjIdVw;
 
@@ -207,7 +218,7 @@ namespace ITPiPadSoln
 						lblDesc.SetBorderWidth(1.0f);
 						lblDesc.SetFontName("Verdana");
 						lblDesc.SetFontSize(14f);
-						lblDesc.SetTag(11000 * (i+1));
+                        lblDesc.SetTag(iProjDescTag * (i+1));
 						lblDescVw = lblDesc.GetLabelCell();
 						arrItems2[1] = lblDescVw;
 
@@ -218,7 +229,7 @@ namespace ITPiPadSoln
 						btnDownload.SetBorderWidth(1.0f);
 						btnDownload.SetFontName("Verdana");
 						btnDownload.SetFontSize(14f);
-						btnDownload.SetTag(12000 * (i+1));
+                        btnDownload.SetTag(iDownloadButtonTag * (i+1));
 						btnDownloadVw = btnDownload.GetButtonCell();
 
 						UIButton btnDownloadButton = new UIButton();
@@ -227,16 +238,21 @@ namespace ITPiPadSoln
 						arrItems2[2] = btnDownloadVw;
 
 						UILabel btnStatus = new UILabel();
-						btnStatus.Tag = 13000 * (i+1);
+						btnStatus.Tag = iStatusButtonTag * (i+1);
 						btnStatus.Text = "0";
 						btnStatus.Hidden = true;
 						arrItems2[3] = btnStatus;
 
-						View.AddSubviews(arrItems2);
+                        layout.AddSubviews(arrItems2);
 
 					}
 				}
-				progBarQuestions = progBarQuestionVw.CreateProgressBar();
+
+                //And reduce the content size of the main scroll view by the same amount
+                SizeF layoutSize = new SizeF(1000f, iTotalHeight);
+                layout.ContentSize = layoutSize;
+
+                progBarQuestions = progBarQuestionVw.CreateProgressBar();
 				progBarQuestionVw.SetProgressBarTitle("Downloading suite of questions");
 
 				progBarTypes = progBarTypesVw.CreateProgressBar();
@@ -304,10 +320,10 @@ namespace ITPiPadSoln
 			string sSessionId = hfSessionId.Text;
 			UIButton button = (UIButton)sender;
 
-			var txtId = (UILabel)View.ViewWithTag (button.Tag / 12000 * 10000);
+            var txtId = (UILabel)View.ViewWithTag (button.Tag / iDownloadButtonTag * iProjIdTag);
 			string sId = txtId.Text;
 
-			var txtDesc = (UILabel)View.ViewWithTag (button.Tag / 12000 * 11000);
+            var txtDesc = (UILabel)View.ViewWithTag (button.Tag / iDownloadButtonTag * iProjDescTag);
 			string sDesc = txtDesc.Text;
 
 			if (!HasConnectionStatus ()) {
@@ -319,7 +335,7 @@ namespace ITPiPadSoln
 			//Now disable the download button for all projects so the user cannot click whilst an existing download is in progress
 			for(int i=0; i < iProjectsInList;i++)
 			{
-				UIButton btnDownload = (UIButton)View.ViewWithTag (12000 * (i+1));
+                UIButton btnDownload = (UIButton)View.ViewWithTag (iDownloadButtonTag * (i+1));
 				btnDownload.Enabled = false;
 			}
 		}
@@ -338,7 +354,7 @@ namespace ITPiPadSoln
 						alert.SetAlertMessage("Cannot download ITP info for Project " + sId);
 						alert.ShowAlertBox(); 
 						ReEnableButtons();
-						UILabel btnStatus = (UILabel)View.ViewWithTag (button.Tag /12000 * 13000);
+                        UILabel btnStatus = (UILabel)View.ViewWithTag (button.Tag /iDownloadButtonTag * iStatusButtonTag);
 						button.Enabled = false; btnStatus.Text = "1"; });
 					return false;
 				}
@@ -352,7 +368,7 @@ namespace ITPiPadSoln
 							alert.SetAlertMessage("Cannot mark ITP info for Project " + sId + " as successfully downloaded. Please contact SCMS admin for help.");
 							alert.ShowAlertBox(); 
 							ReEnableButtons();
-							UILabel btnStatus = (UILabel)View.ViewWithTag (button.Tag /12000 * 13000);
+                            UILabel btnStatus = (UILabel)View.ViewWithTag (button.Tag /iDownloadButtonTag * iStatusButtonTag);
 							button.Enabled = false; btnStatus.Text = "1"; });
 						return false;
 					}
@@ -364,7 +380,7 @@ namespace ITPiPadSoln
 							alert.SetAlertMessage("ITP info for Project " + sId + " successfully downloaded. You can now work offline.");
 							alert.ShowAlertBox(); 
 							ReEnableButtons();
-							UILabel btnStatus = (UILabel)View.ViewWithTag (button.Tag /12000 * 13000);
+                            UILabel btnStatus = (UILabel)View.ViewWithTag (button.Tag /iDownloadButtonTag * iStatusButtonTag);
 							button.Enabled = false; btnStatus.Text = "1"; });
 						return true;
 					}
@@ -389,8 +405,8 @@ namespace ITPiPadSoln
 		{
 			for (int i = 0; i < iProjectsInList; i++)
 			{
-					UIButton btnDownload = (UIButton)View.ViewWithTag (12000 * (i+1));
-					UILabel btnStatus = (UILabel)View.ViewWithTag (13000 * (i+1));
+                    UIButton btnDownload = (UIButton)View.ViewWithTag (iDownloadButtonTag * (i+1));
+                    UILabel btnStatus = (UILabel)View.ViewWithTag (iStatusButtonTag * (i+1));
 					if (btnStatus.Text == "0")
 					{
 						btnDownload.Enabled = true;

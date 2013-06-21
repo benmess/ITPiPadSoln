@@ -51,6 +51,7 @@ namespace ITPiPadSoln
 		{
 			base.ViewDidLoad ();
 			
+            //string sTest = "Test";
             NSDictionary info = NSBundle.MainBundle.InfoDictionary;
             string versionId = info["CFBundleVersion"].ToString();
 
