@@ -60,7 +60,7 @@ namespace ITPiPadSoln
 
 			UILabel lblVersion = new UILabel ();
             lblVersion.Tag = 100;
-            lblVersion.Frame = new RectangleF (820f, 10f, 100f, 30f);
+            lblVersion.Frame = new RectangleF (620f, 10f, 300f, 30f);
             lblVersion.Text = "Version: " + versionId;
             arrButts [0] = lblVersion;
 
