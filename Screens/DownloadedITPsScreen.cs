@@ -499,13 +499,37 @@ namespace ITPiPadSoln
 			}
             else
             {
-                //Has the project been made available online again and if so you cannot upload
                 clsITPFramework ITPFwrk = new clsITPFramework();
-                object[] objUploadable = ITPFwrk.IsITPUploadable(m_sSessionId, m_sUser, sId);
-                if (objUploadable[0].ToString() != "Success")
+
+                //Check to see if the user is still logged in
+                object[] objLoggedIn = ITPFwrk.IsUserLoggedIn(m_sSessionId, m_sUser);
+
+                if (Convert.ToBoolean(objLoggedIn[0]))
                 {
-                    iUtils.AlertBox alert4 = new iUtils.AlertBox();
-                    alert4.CreateErrorAlertDialog(objUploadable[1].ToString());
+
+                    //Has the project been made available online again and if so you cannot upload
+                    object[] objUploadable = ITPFwrk.IsITPUploadable(m_sSessionId, m_sUser, sId);
+                    if (objUploadable [0].ToString() != "Success")
+                    {
+                        iUtils.AlertBox alert4 = new iUtils.AlertBox();
+                        alert4.CreateErrorAlertDialog(objUploadable [1].ToString());
+                        return;
+                    }
+                }
+                else
+                {
+                    iUtils.AlertBox alert5 = new iUtils.AlertBox();
+                    alert5.CreateErrorAlertDialog("You are no longer logged in to the SCMS. You must login again before you can upload or backup a project.");
+                    HomeScreen home = GetHomeScreen();
+                    home.SetLoginName("Not logged in to SCMS");
+                    m_sUser = "Not logged in to SCMS";
+                    home.SetSessionId("");
+                    m_sSessionId = "";
+                    UILabel Username = (UILabel)View.ViewWithTag (20);
+                    Username.Text = "Not logged in to SCMS";
+                    UILabel Session = (UILabel)View.ViewWithTag (70);
+                    Session.Text = "";
+                    home.SetLoggedInStatus("0");
                     return;
                 }
             }

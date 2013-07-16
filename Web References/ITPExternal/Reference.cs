@@ -19,6 +19,8 @@ namespace ITPiPadSoln.ITPExternal {
         
         private System.Threading.SendOrPostCallback CookieLoginOperationCompleted;
         
+        private System.Threading.SendOrPostCallback IsUserLoggedInOperationCompleted;
+        
         private System.Threading.SendOrPostCallback GetSubcontractorITPsForDownloadOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetITPDownloadInfoOperationCompleted;
@@ -43,6 +45,8 @@ namespace ITPiPadSoln.ITPExternal {
         
         private System.Threading.SendOrPostCallback GetITPProjectRFUInfoOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetITPProjectBatteryAcceptTestInfoOperationCompleted;
+        
         private System.Threading.SendOrPostCallback GetITPInventoryInfoOperationCompleted;
         
         private System.Threading.SendOrPostCallback IsITPUploadableOperationCompleted;
@@ -58,6 +62,8 @@ namespace ITPiPadSoln.ITPExternal {
         }
         
         public event CookieLoginCompletedEventHandler CookieLoginCompleted;
+        
+        public event IsUserLoggedInCompletedEventHandler IsUserLoggedInCompleted;
         
         public event GetSubcontractorITPsForDownloadCompletedEventHandler GetSubcontractorITPsForDownloadCompleted;
         
@@ -82,6 +88,8 @@ namespace ITPiPadSoln.ITPExternal {
         public event GetITPProjectSection10InfoCompletedEventHandler GetITPProjectSection10InfoCompleted;
         
         public event GetITPProjectRFUInfoCompletedEventHandler GetITPProjectRFUInfoCompleted;
+        
+        public event GetITPProjectBatteryAcceptTestInfoCompletedEventHandler GetITPProjectBatteryAcceptTestInfoCompleted;
         
         public event GetITPInventoryInfoCompletedEventHandler GetITPInventoryInfoCompleted;
         
@@ -125,6 +133,45 @@ namespace ITPiPadSoln.ITPExternal {
             if ((this.CookieLoginCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.CookieLoginCompleted(this, new CookieLoginCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://scms.silcar.com.au/IsUserLoggedIn", RequestNamespace="http://scms.silcar.com.au/", ResponseNamespace="http://scms.silcar.com.au/", ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped, Use=System.Web.Services.Description.SoapBindingUse.Literal)]
+        public object[] IsUserLoggedIn(string sSessionId, string sUsername) {
+            object[] results = this.Invoke("IsUserLoggedIn", new object[] {
+                        sSessionId,
+                        sUsername});
+            return ((object[])(results[0]));
+        }
+        
+        public System.IAsyncResult BeginIsUserLoggedIn(string sSessionId, string sUsername, System.AsyncCallback callback, object asyncState) {
+            return this.BeginInvoke("IsUserLoggedIn", new object[] {
+                        sSessionId,
+                        sUsername}, callback, asyncState);
+        }
+        
+        public object[] EndIsUserLoggedIn(System.IAsyncResult asyncResult) {
+            object[] results = this.EndInvoke(asyncResult);
+            return ((object[])(results[0]));
+        }
+        
+        public void IsUserLoggedInAsync(string sSessionId, string sUsername) {
+            this.IsUserLoggedInAsync(sSessionId, sUsername, null);
+        }
+        
+        public void IsUserLoggedInAsync(string sSessionId, string sUsername, object userState) {
+            if ((this.IsUserLoggedInOperationCompleted == null)) {
+                this.IsUserLoggedInOperationCompleted = new System.Threading.SendOrPostCallback(this.OnIsUserLoggedInCompleted);
+            }
+            this.InvokeAsync("IsUserLoggedIn", new object[] {
+                        sSessionId,
+                        sUsername}, this.IsUserLoggedInOperationCompleted, userState);
+        }
+        
+        private void OnIsUserLoggedInCompleted(object arg) {
+            if ((this.IsUserLoggedInCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.IsUserLoggedInCompleted(this, new IsUserLoggedInCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -617,6 +664,48 @@ namespace ITPiPadSoln.ITPExternal {
             }
         }
         
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://scms.silcar.com.au/GetITPProjectBatteryAcceptTestInfo", RequestNamespace="http://scms.silcar.com.au/", ResponseNamespace="http://scms.silcar.com.au/", ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped, Use=System.Web.Services.Description.SoapBindingUse.Literal)]
+        public object[] GetITPProjectBatteryAcceptTestInfo(string sSessionId, string sUsername, string sId) {
+            object[] results = this.Invoke("GetITPProjectBatteryAcceptTestInfo", new object[] {
+                        sSessionId,
+                        sUsername,
+                        sId});
+            return ((object[])(results[0]));
+        }
+        
+        public System.IAsyncResult BeginGetITPProjectBatteryAcceptTestInfo(string sSessionId, string sUsername, string sId, System.AsyncCallback callback, object asyncState) {
+            return this.BeginInvoke("GetITPProjectBatteryAcceptTestInfo", new object[] {
+                        sSessionId,
+                        sUsername,
+                        sId}, callback, asyncState);
+        }
+        
+        public object[] EndGetITPProjectBatteryAcceptTestInfo(System.IAsyncResult asyncResult) {
+            object[] results = this.EndInvoke(asyncResult);
+            return ((object[])(results[0]));
+        }
+        
+        public void GetITPProjectBatteryAcceptTestInfoAsync(string sSessionId, string sUsername, string sId) {
+            this.GetITPProjectBatteryAcceptTestInfoAsync(sSessionId, sUsername, sId, null);
+        }
+        
+        public void GetITPProjectBatteryAcceptTestInfoAsync(string sSessionId, string sUsername, string sId, object userState) {
+            if ((this.GetITPProjectBatteryAcceptTestInfoOperationCompleted == null)) {
+                this.GetITPProjectBatteryAcceptTestInfoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetITPProjectBatteryAcceptTestInfoCompleted);
+            }
+            this.InvokeAsync("GetITPProjectBatteryAcceptTestInfo", new object[] {
+                        sSessionId,
+                        sUsername,
+                        sId}, this.GetITPProjectBatteryAcceptTestInfoOperationCompleted, userState);
+        }
+        
+        private void OnGetITPProjectBatteryAcceptTestInfoCompleted(object arg) {
+            if ((this.GetITPProjectBatteryAcceptTestInfoCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetITPProjectBatteryAcceptTestInfoCompleted(this, new GetITPProjectBatteryAcceptTestInfoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://scms.silcar.com.au/GetITPInventoryInfo", RequestNamespace="http://scms.silcar.com.au/", ResponseNamespace="http://scms.silcar.com.au/", ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped, Use=System.Web.Services.Description.SoapBindingUse.Literal)]
         public object[] GetITPInventoryInfo(string sSessionId, string sUsername) {
             object[] results = this.Invoke("GetITPInventoryInfo", new object[] {
@@ -759,6 +848,25 @@ namespace ITPiPadSoln.ITPExternal {
     }
     
     public delegate void CookieLoginCompletedEventHandler(object sender, CookieLoginCompletedEventArgs args);
+    
+    public partial class IsUserLoggedInCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal IsUserLoggedInCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public object[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((object[])(this.results[0]));
+            }
+        }
+    }
+    
+    public delegate void IsUserLoggedInCompletedEventHandler(object sender, IsUserLoggedInCompletedEventArgs args);
     
     public partial class GetSubcontractorITPsForDownloadCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
@@ -987,6 +1095,25 @@ namespace ITPiPadSoln.ITPExternal {
     }
     
     public delegate void GetITPProjectRFUInfoCompletedEventHandler(object sender, GetITPProjectRFUInfoCompletedEventArgs args);
+    
+    public partial class GetITPProjectBatteryAcceptTestInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetITPProjectBatteryAcceptTestInfoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public object[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((object[])(this.results[0]));
+            }
+        }
+    }
+    
+    public delegate void GetITPProjectBatteryAcceptTestInfoCompletedEventHandler(object sender, GetITPProjectBatteryAcceptTestInfoCompletedEventArgs args);
     
     public partial class GetITPInventoryInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         

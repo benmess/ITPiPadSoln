@@ -17,6 +17,26 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="IsUserLoggedIn">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsUserLoggedInResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="IsUserLoggedInResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="ArrayOfAnyType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
+        </xs:sequence>
+      </xs:complexType>
       <xs:element name="GetSubcontractorITPsForDownload">
         <xs:complexType>
           <xs:sequence>
@@ -32,11 +52,6 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:complexType name="ArrayOfAnyType">
-        <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
-        </xs:sequence>
-      </xs:complexType>
       <xs:element name="GetITPDownloadInfo">
         <xs:complexType>
           <xs:sequence>
@@ -209,6 +224,22 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="GetITPProjectBatteryAcceptTestInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="sSessionId" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sUsername" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="sId" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetITPProjectBatteryAcceptTestInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetITPProjectBatteryAcceptTestInfoResult" type="tns:ArrayOfAnyType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="GetITPInventoryInfo">
         <xs:complexType>
           <xs:sequence>
@@ -263,6 +294,12 @@
   </message>
   <message name="CookieLoginSoapOut">
     <part name="parameters" element="tns:CookieLoginResponse" />
+  </message>
+  <message name="IsUserLoggedInSoapIn">
+    <part name="parameters" element="tns:IsUserLoggedIn" />
+  </message>
+  <message name="IsUserLoggedInSoapOut">
+    <part name="parameters" element="tns:IsUserLoggedInResponse" />
   </message>
   <message name="GetSubcontractorITPsForDownloadSoapIn">
     <part name="parameters" element="tns:GetSubcontractorITPsForDownload" />
@@ -336,6 +373,12 @@
   <message name="GetITPProjectRFUInfoSoapOut">
     <part name="parameters" element="tns:GetITPProjectRFUInfoResponse" />
   </message>
+  <message name="GetITPProjectBatteryAcceptTestInfoSoapIn">
+    <part name="parameters" element="tns:GetITPProjectBatteryAcceptTestInfo" />
+  </message>
+  <message name="GetITPProjectBatteryAcceptTestInfoSoapOut">
+    <part name="parameters" element="tns:GetITPProjectBatteryAcceptTestInfoResponse" />
+  </message>
   <message name="GetITPInventoryInfoSoapIn">
     <part name="parameters" element="tns:GetITPInventoryInfo" />
   </message>
@@ -358,6 +401,10 @@
     <operation name="CookieLogin">
       <input message="tns:CookieLoginSoapIn" />
       <output message="tns:CookieLoginSoapOut" />
+    </operation>
+    <operation name="IsUserLoggedIn">
+      <input message="tns:IsUserLoggedInSoapIn" />
+      <output message="tns:IsUserLoggedInSoapOut" />
     </operation>
     <operation name="GetSubcontractorITPsForDownload">
       <input message="tns:GetSubcontractorITPsForDownloadSoapIn" />
@@ -407,6 +454,10 @@
       <input message="tns:GetITPProjectRFUInfoSoapIn" />
       <output message="tns:GetITPProjectRFUInfoSoapOut" />
     </operation>
+    <operation name="GetITPProjectBatteryAcceptTestInfo">
+      <input message="tns:GetITPProjectBatteryAcceptTestInfoSoapIn" />
+      <output message="tns:GetITPProjectBatteryAcceptTestInfoSoapOut" />
+    </operation>
     <operation name="GetITPInventoryInfo">
       <input message="tns:GetITPInventoryInfoSoapIn" />
       <output message="tns:GetITPInventoryInfoSoapOut" />
@@ -424,6 +475,15 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <operation name="CookieLogin">
       <soap:operation soapAction="http://scms.silcar.com.au/CookieLogin" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="IsUserLoggedIn">
+      <soap:operation soapAction="http://scms.silcar.com.au/IsUserLoggedIn" style="document" />
       <input>
         <soap:body use="literal" />
       </input>
@@ -539,6 +599,15 @@
         <soap:body use="literal" />
       </output>
     </operation>
+    <operation name="GetITPProjectBatteryAcceptTestInfo">
+      <soap:operation soapAction="http://scms.silcar.com.au/GetITPProjectBatteryAcceptTestInfo" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
     <operation name="GetITPInventoryInfo">
       <soap:operation soapAction="http://scms.silcar.com.au/GetITPInventoryInfo" style="document" />
       <input>
@@ -571,6 +640,15 @@
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <operation name="CookieLogin">
       <soap12:operation soapAction="http://scms.silcar.com.au/CookieLogin" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="IsUserLoggedIn">
+      <soap12:operation soapAction="http://scms.silcar.com.au/IsUserLoggedIn" style="document" />
       <input>
         <soap12:body use="literal" />
       </input>
@@ -679,6 +757,15 @@
     </operation>
     <operation name="GetITPProjectRFUInfo">
       <soap12:operation soapAction="http://scms.silcar.com.au/GetITPProjectRFUInfo" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetITPProjectBatteryAcceptTestInfo">
+      <soap12:operation soapAction="http://scms.silcar.com.au/GetITPProjectBatteryAcceptTestInfo" style="document" />
       <input>
         <soap12:body use="literal" />
       </input>

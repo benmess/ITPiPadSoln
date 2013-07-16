@@ -320,24 +320,50 @@ namespace ITPiPadSoln
 			string sSessionId = hfSessionId.Text;
 			UIButton button = (UIButton)sender;
 
-            var txtId = (UILabel)View.ViewWithTag (button.Tag / iDownloadButtonTag * iProjIdTag);
-			string sId = txtId.Text;
+            clsITPFramework ITPFwrk = new clsITPFramework();
 
-            var txtDesc = (UILabel)View.ViewWithTag (button.Tag / iDownloadButtonTag * iProjDescTag);
-			string sDesc = txtDesc.Text;
+            //Check to see if the user is still logged in
+            object[] objLoggedIn = ITPFwrk.IsUserLoggedIn(m_sSessionId, m_sUser);
 
-			if (!HasConnectionStatus ()) {
-			}
-			//Start the downlaod task. It has to be run as a separate thread for some reason otherwise it won't show. What a pain!!!
-			taskA = new Task(() => RunDownload(sId,sDesc, button, sUser, sSessionId));
-			taskA.Start();
+            if (Convert.ToBoolean(objLoggedIn [0]))
+            {
 
-			//Now disable the download button for all projects so the user cannot click whilst an existing download is in progress
-			for(int i=0; i < iProjectsInList;i++)
-			{
-                UIButton btnDownload = (UIButton)View.ViewWithTag (iDownloadButtonTag * (i+1));
-				btnDownload.Enabled = false;
-			}
+                var txtId = (UILabel)View.ViewWithTag(button.Tag / iDownloadButtonTag * iProjIdTag);
+                string sId = txtId.Text;
+
+                var txtDesc = (UILabel)View.ViewWithTag(button.Tag / iDownloadButtonTag * iProjDescTag);
+                string sDesc = txtDesc.Text;
+
+                if (!HasConnectionStatus())
+                {
+                }
+                //Start the downlaod task. It has to be run as a separate thread for some reason otherwise it won't show. What a pain!!!
+                taskA = new Task(() => RunDownload(sId, sDesc, button, sUser, sSessionId));
+                taskA.Start();
+
+                //Now disable the download button for all projects so the user cannot click whilst an existing download is in progress
+                for (int i=0; i < iProjectsInList; i++)
+                {
+                    UIButton btnDownload = (UIButton)View.ViewWithTag(iDownloadButtonTag * (i + 1));
+                    btnDownload.Enabled = false;
+                }
+            }
+            else
+            {
+                iUtils.AlertBox alert5 = new iUtils.AlertBox();
+                alert5.CreateErrorAlertDialog("You are no longer logged in to the SCMS. You must login again before you can upload or backup a project.");
+                HomeScreen home = GetHomeScreen();
+                home.SetLoginName("Not logged in to SCMS");
+                m_sUser = "Not logged in to SCMS";
+                home.SetSessionId("");
+                m_sSessionId = "";
+                UILabel Username = (UILabel)View.ViewWithTag (20);
+                Username.Text = "Not logged in to SCMS";
+                UILabel Session = (UILabel)View.ViewWithTag (70);
+                Session.Text = "";
+                home.SetLoggedInStatus("0");
+                return;
+            }
 		}
 
 		//This is all in a separate thread so to display anything you have to use the RunOnUiThread method
