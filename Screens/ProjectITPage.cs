@@ -1637,7 +1637,7 @@ namespace ITPiPadSoln
 				layout.AddSubview(hfScrollContentHeight);
 				View.AddSubview(layout);
 
-                //Now determine what is to be contrated by default
+                //Now determine what is to be contracted by default
                 for(int iiii=0;iiii< m_iQuestionSections; iiii++)
                 {
                     if(bHideSections[iiii])

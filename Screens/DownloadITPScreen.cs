@@ -38,6 +38,8 @@ namespace ITPiPadSoln
 		UIView progBarProjITPSection10= new UIView();
         iUtils.ProgressBar progBarProjITPRFUVw = new iUtils.ProgressBar();
         UIView progBarProjITPRFU = new UIView();
+        iUtils.ProgressBar progBarProjBattTestDischCurrentVw = new iUtils.ProgressBar();
+        UIView progBarProjBattTestDischCurrent = new UIView();
 
         int iProjIdTag = 100010000;
         int iProjDescTag = 100011000;
@@ -97,7 +99,7 @@ namespace ITPiPadSoln
 			//Create a table view
 			iUtils.CreateFormGridItem lblUsername = new iUtils.CreateFormGridItem();
 			UIView lblUsernameVw = new UIView();
-			lblUsername.SetDimensions(100f,40f, 100f, 25f, 2f, 2f, 2f, 2f);
+			lblUsername.SetDimensions(100f,5f, 100f, 25f, 2f, 2f, 2f, 2f);
 			lblUsername.SetLabelText("Username:");
 			lblUsername.SetBorderWidth(0.0f);
 			lblUsername.SetFontName("Verdana");
@@ -109,7 +111,7 @@ namespace ITPiPadSoln
 
 			iUtils.CreateFormGridItem txtUsername = new iUtils.CreateFormGridItem();
 			UIView txtUsernameVw = new UIView();
-			txtUsername.SetDimensions(200f,40f, 200f, 25f, 2f, 2f, 2f, 2f);
+			txtUsername.SetDimensions(200f,5f, 200f, 25f, 2f, 2f, 2f, 2f);
 			txtUsername.SetLabelText(sUsername);
 			txtUsername.SetBorderWidth(0.0f);
 			txtUsername.SetFontName("Verdana");
@@ -135,10 +137,10 @@ namespace ITPiPadSoln
 			try 
 			{
                 UIScrollView layout = new UIScrollView();
-                layout.Frame = new RectangleF(0f,0f,1000f,620f);
+                layout.Frame = new RectangleF(0f,35f,1000f,620f);
                 layout.Tag = 2;
                 View.AddSubview(layout);
-				float iVert = 100.0f;
+				float iVert = 5.0f;
 				float iRowHeight = 50f;
                 float iTotalHeight = iRowHeight;
 
@@ -249,6 +251,7 @@ namespace ITPiPadSoln
 				}
 
                 //And reduce the content size of the main scroll view by the same amount
+                iTotalHeight += 200f;
                 SizeF layoutSize = new SizeF(1000f, iTotalHeight);
                 layout.ContentSize = layoutSize;
 
@@ -275,6 +278,8 @@ namespace ITPiPadSoln
 				progBarProjITPSection10 = progBarProjITPSection10Vw.CreateProgressBar();
                 progBarProjITPRFU = progBarProjITPRFUVw.CreateProgressBar();
 
+                progBarProjBattTestDischCurrent = progBarProjBattTestDischCurrentVw.CreateProgressBar();
+
 
 				View.Add(progBarQuestions);
 				View.Add(progBarTypes);
@@ -287,6 +292,7 @@ namespace ITPiPadSoln
                 View.Add(progBarProjITPSection10);
                 View.Add(progBarProjITPRFU);
 
+                View.Add(progBarProjBattTestDischCurrent);
 			} 
 			catch (Exception except) 
 			{
@@ -453,6 +459,7 @@ namespace ITPiPadSoln
 				clsITPFramework csITP = new clsITPFramework();
 				clsTabletDB.ITPHeaderTable clsTabDB = new clsTabletDB.ITPHeaderTable();
 				clsTabletDB.ITPDocumentSection clsITPSection = new clsTabletDB.ITPDocumentSection();
+                clsTabletDB.ITPBatteryTest clsITPBatteryTest = new clsTabletDB.ITPBatteryTest();
 				string sRtnMsg = "";
 				
 				//****************************************************************************************//
@@ -652,7 +659,62 @@ namespace ITPiPadSoln
                                     }
                                 }
                             }
-                            return true;
+
+                            //****************************************************************************************//
+                            //                      BATTERY DISCHARGE TEST INFO                                                   //
+                            //****************************************************************************************//
+                            object[] objITPBatteryInfo = csITP.DownloadProjectITPBatteryDischargeTest(sSessionId, sUser, sId);
+
+                            //Get any RFU info already raised on the website version into the local DB
+                            if (objITPBatteryInfo[0].ToString() == "Success")
+                            {
+                                string sDischargeCurrentTableName = clsITPBatteryTest.sITPBatteryAcceptTestDischargeCurrentTableName;
+                                if (clsITPBatteryTest.TableITPBatteryAcceptTestDeleteAllRecords(sDischargeCurrentTableName,sId, ref sRtnMsg))
+                                {
+                                    string sDischargeCurrentString = objITPBatteryInfo[1].ToString();
+                                    string[] sDischargeCurrentInfo = sDischargeCurrentString.Split('~');
+                                    if (sDischargeCurrentInfo[0] == "ITPProjectBattAcceptTest_DischrgCurrent")
+                                    {
+                                        string[] delimiters6 = new string[] { "||" };
+                                        string[] sDischargeCurrentItems = sDischargeCurrentInfo[1].Split(delimiters6, StringSplitOptions.RemoveEmptyEntries);
+                                        int iHeaderCount6 = sDischargeCurrentItems.Length;
+                                        if (iHeaderCount6 > 0)
+                                        {
+                                            //First check if the discharge current table exists and if not create it
+                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                            if (ITPBattTest.CheckITPBatteryAcceptTest_DischargeCurrentTable())
+                                            {
+                                                this.InvokeOnMainThread(() => { 
+                                                    progBarProjBattTestDischCurrentVw.SetProgressBarTitle("Downloading ITP RFU PwrId items for project " + sId);
+                                                    progBarProjBattTestDischCurrentVw.ShowProgressBar(iHeaderCount6); 
+                                                });
+                                                for (int i = 0; i < iHeaderCount6; i++)
+                                                {
+                                                    string[] delimiters7 = new string[] { "^" };
+                                                    string[] sBattTestDischCurrentItemArray = sDischargeCurrentItems[i].Split(delimiters7, StringSplitOptions.None);
+                                                    ITPBattTest.ITPBattTestAddRecord(sBattTestDischCurrentItemArray, sDischargeCurrentTableName, 1);
+                                                    this.InvokeOnMainThread(() => { progBarProjBattTestDischCurrentVw.UpdateProgressBar(i + 1); });
+                                                }
+                                                this.InvokeOnMainThread(() => { progBarProjBattTestDischCurrentVw.CloseProgressBar(); });
+                                            }
+                                        }
+                                    }
+                                    return true;
+                                }
+                                else
+                                {
+                                    this.InvokeOnMainThread(() => { 
+                                        iUtils.AlertBox alert = new iUtils.AlertBox();
+                                        alert.SetAlertMessage(sRtnMsg);
+                                        alert.ShowAlertBox(); 
+                                    });
+                                    return false;
+                                } 
+                            }
+                            else
+                            {
+                                return false;
+                            } //Close the if block for success on project ITP RFU
                         }
                         else
                         {
@@ -662,12 +724,12 @@ namespace ITPiPadSoln
                                 alert.ShowAlertBox(); 
                             });
                             return false;
-                        }
+                        } 
                     }
                     else
                     {
                         return false;
-                    } //Close the if block for success on project ITP section 10
+                    } //Close the if block for success on project ITP RFU
                 }
 				else
 				{

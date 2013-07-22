@@ -75,7 +75,7 @@ namespace ITPiPadSoln
 			//Create a table view
 			iUtils.CreateFormGridItem lblUsername = new iUtils.CreateFormGridItem();
 			UIView lblUsernameVw = new UIView();
-			lblUsername.SetDimensions(100f,40f, 100f, 25f, 2f, 2f, 2f, 2f);
+			lblUsername.SetDimensions(100f,5f, 100f, 25f, 2f, 2f, 2f, 2f);
 			lblUsername.SetLabelText("Username:");
 			lblUsername.SetBorderWidth(0.0f);
 			lblUsername.SetFontName("Verdana");
@@ -87,7 +87,7 @@ namespace ITPiPadSoln
 			
 			iUtils.CreateFormGridItem txtUsername = new iUtils.CreateFormGridItem();
 			UIView txtUsernameVw = new UIView();
-			txtUsername.SetDimensions(200f,40f, 200f, 25f, 2f, 2f, 2f, 2f);
+			txtUsername.SetDimensions(200f,5f, 200f, 25f, 2f, 2f, 2f, 2f);
 			txtUsername.SetLabelText(sUsername);
 			txtUsername.SetBorderWidth(0.0f);
 			txtUsername.SetFontName("Verdana");
@@ -122,10 +122,10 @@ namespace ITPiPadSoln
 				int iOpenBtnId = -1;
                 float iTotalHeight = 0.0f;
 
-				float iVert = 100.0f;
+				float iVert = 5.0f;
 				float iRowHeight = 50f;
                 UIScrollView layout = new UIScrollView();
-                layout.Frame = new RectangleF(0f,0f,1000f,620f);
+                layout.Frame = new RectangleF(0f,35f,1000f,620f);
                 layout.Tag = 2;
                 View.AddSubview(layout);
 
@@ -408,6 +408,7 @@ namespace ITPiPadSoln
 				}
 								
                 //And reduce the content size of the main scroll view by the same amount
+                iTotalHeight += 200f;
                 SizeF layoutSize = new SizeF(1000f, iTotalHeight);
                 layout.ContentSize = layoutSize;
 

@@ -2187,6 +2187,7 @@ namespace ITPiPadSoln
         public void OpenMakeList (object sender, EventArgs e)
         {
             UIButton btnMakeSearch = (UIButton)sender;
+            btnMakeSearch.Enabled = false;
             ScreenUtils scnUtils = new ScreenUtils ();
             scnUtils.GetAbsolutePosition (btnMakeSearch);
             float iTop = scnUtils.GetPositionTop ();
@@ -2234,7 +2235,7 @@ namespace ITPiPadSoln
             UIButton btnSectionSave = (UIButton)View.ViewWithTag ((iSectionCounterId + 1) * iSaveSectionBtnTagId);
             tabdata.SetSectionSaveButton(btnSectionSave);
             UILabel lblViewModel = (UILabel)View.ViewWithTag (iBankModelTagId * (iPwrIdRow) + (iStringRow));
-            tabdata.SetMakePostUpdate(1, lblViewModel);
+            tabdata.SetMakePostUpdate(1, lblViewModel, btnMakeSearch);
             
             cmbMake.Source = tabdata;
             iUtils.SESTable thistable = new iUtils.SESTable();
@@ -2249,6 +2250,7 @@ namespace ITPiPadSoln
         public void OpenModelList (object sender, EventArgs e)
         {
             UIButton btnModelSearch = (UIButton)sender;
+            btnModelSearch.Enabled = false;
             ScreenUtils scnUtils = new ScreenUtils ();
             scnUtils.GetAbsolutePosition (btnModelSearch);
             float iTop = scnUtils.GetPositionTop ();
@@ -2261,7 +2263,9 @@ namespace ITPiPadSoln
             int iSectionCounterId = Convert.ToInt32 (hfSectionCounter.Text);
             UILabel lblSupplier = (UILabel)View.ViewWithTag (iBankMakeTagId * (iPwrIdRow) + (iStringRow));
             string sSupplier = lblSupplier.Text;
-            
+            UIButton btnMakeSearch = (UIButton)View.ViewWithTag (iBankMakeSearchTagId * (iPwrIdRow) + (iStringRow));
+            btnMakeSearch.Enabled = false;
+
             if (sSupplier == "") 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
@@ -2302,7 +2306,7 @@ namespace ITPiPadSoln
             tabdata.SetShowUnsavedOnChange(true);
             UILabel hfRowStatus = (UILabel)View.ViewWithTag (iStringRowStatusTagId * (iPwrIdRow) + (iStringRow));
             UILabel lblSPN = (UILabel)View.ViewWithTag (iSPNHiddenTagId * (iPwrIdRow) + (iStringRow));
-            tabdata.SetModelPostUpdate(6, hfRowStatus, lblSPN, sSupplier);
+            tabdata.SetModelPostUpdate(6, hfRowStatus, lblSPN, sSupplier, btnMakeSearch, btnModelSearch);
             
             //Also set the section flag to 1 that it has changed and the overall flag that it has changed
             UILabel lblUnsavedFlag = (UILabel)View.ViewWithTag (80);
