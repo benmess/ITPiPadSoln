@@ -3,6 +3,7 @@ using System;
 using System.Drawing;
 using System.Data;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -16,6 +17,10 @@ namespace ITPiPadSoln
 {
     public partial class Battery : UIViewController
     {
+        iUtils.ActivityIndicator prog = new iUtils.ActivityIndicator();
+        UIView progVw = new UIView();
+        Task taskA;
+
         //Set the tag id constants.
         int iSearchTextTagId = 90;
         int iSearchButtonTagId = 91;
@@ -117,6 +122,8 @@ namespace ITPiPadSoln
         bool m_bSuppressMove = false;
         bool gbSuppressSecondCheck = false;
         UIView m_vwSearch;
+        int m_BankNo = -1;
+        string m_PwrId = "";
         
         UITableView m_cmbSearch;
         UIButton m_btnSearching;
@@ -161,6 +168,8 @@ namespace ITPiPadSoln
             try
             {
                 DrawOpeningPage();
+                progVw = prog.CreateActivityIndicator();
+                View.Add(progVw);
             }
             catch (Exception ex)
             {
@@ -3449,9 +3458,49 @@ namespace ITPiPadSoln
         //Open a new page with the 20 minute test details
         public void Open20MinTest(object sender, EventArgs e)
         {
-            return;
+            //Show the progress indicator and position at top left of button
+            UIButton btnOpen = (UIButton)sender;
+            int iTagId = btnOpen.Tag;
+            int iPwrIdRow = iTagId / i20MinTestBtnTagId;
+            int iStringRow = iTagId - (iPwrIdRow * i20MinTestBtnTagId);
+
+            UILabel PwrId = (UILabel)View.ViewWithTag ((iPwrIdRowLabelTagId + (iPwrIdRow)) * (m_iBatterySectionCounter+1));
+            string sPwrId = PwrId.Text;
+            m_PwrId = sPwrId;
+
+            //iBankNoTagId * (iRowNo + 1) + (iStringRow + 1)
+
+            UITextField BankNo = (UITextField)View.ViewWithTag (iBankNoTagId * (iPwrIdRow) + (iStringRow));
+            int iBankNo = Convert.ToInt32(BankNo.Text);
+            m_BankNo = iBankNo;
+
+            prog.SetActivityIndicatorTitle("20 Min Test");
+            ScreenUtils scnUtils = new ScreenUtils();
+            scnUtils.GetAbsolutePosition(btnOpen);
+            UIScrollView scrollVw = (UIScrollView)View.ViewWithTag (2);
+            PointF layoutOffset = scrollVw.ContentOffset;
+            float iVertOffset = layoutOffset.Y;
+            float iTop = scnUtils.GetPositionTop() - iVertOffset;
+            float iLeft = scnUtils.GetPositionLeft();
+            prog.SetActivityIndicatorPosition(iLeft,iTop);
+            prog.ShowActivityIndicator();
+            prog.StartAnimating();
+
+            taskA = new Task (() => Open20MinTestTask (sender, e));
+            taskA.Start ();
         }
         
+        public void Open20MinTestTask(object sender, EventArgs e)
+        {
+            this.InvokeOnMainThread(() => 
+                                    {
+                Battery20MinTest projBattery20MinScreen = new Battery20MinTest();
+                this.NavigationController.PushViewController(projBattery20MinScreen, true);
+                prog.StopAnimating();
+                prog.CloseActivityIndicator();
+            });
+        }
+
         public void DeleteBatteryString(object sender, EventArgs e)
         {
             string sRtnMsg = "";
@@ -4503,6 +4552,16 @@ namespace ITPiPadSoln
             return null;
         }
         
+        public string GetSelectedPwrId()
+        {
+            return m_PwrId;
+        }
+
+        public int GetSelectedBankNo()
+        {
+            return m_BankNo;
+        }
+
         public bool GetConnectionStatus ()
         {
             

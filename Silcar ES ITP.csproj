@@ -169,6 +169,10 @@
     <Compile Include="Screens\PowerConversion.designer.cs">
       <DependentUpon>PowerConversion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Screens\Battery20MinTest.cs" />
+    <Compile Include="Screens\Battery20MinTest.designer.cs">
+      <DependentUpon>Battery20MinTest.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -183,6 +187,7 @@
     <InterfaceDefinition Include="Screens\ProjectITPage.xib" />
     <InterfaceDefinition Include="Screens\Battery.xib" />
     <InterfaceDefinition Include="Screens\PowerConversion.xib" />
+    <InterfaceDefinition Include="Screens\Battery20MinTest.xib" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\Green_Block.JPG" />

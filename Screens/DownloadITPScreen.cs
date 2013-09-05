@@ -40,6 +40,19 @@ namespace ITPiPadSoln
         UIView progBarProjITPRFU = new UIView();
         iUtils.ProgressBar progBarProjBattTestDischCurrentVw = new iUtils.ProgressBar();
         UIView progBarProjBattTestDischCurrent = new UIView();
+        iUtils.ProgressBar progBarProjBattTestDischVoltVw = new iUtils.ProgressBar();
+        UIView progBarProjBattTestDischVolt = new UIView();
+        iUtils.ProgressBar progBarProjBattTestFloatRecordVw = new iUtils.ProgressBar();
+        UIView progBarProjBattTestFloatRecord = new UIView();
+        iUtils.ProgressBar progBarProjBattTestLink1to3Vw = new iUtils.ProgressBar();
+        UIView progBarProjBattTestLink1to3 = new UIView();
+        iUtils.ProgressBar progBarProjBattTestLink2to3Vw = new iUtils.ProgressBar();
+        UIView progBarProjBattTestLink2to3 = new UIView();
+        iUtils.ProgressBar progBarProjBattTestLink3to3Vw = new iUtils.ProgressBar();
+        UIView progBarProjBattTestLink3to3 = new UIView();
+
+        iUtils.ProgressBar progBarProjBattTestHeaderVw = new iUtils.ProgressBar();
+        UIView progBarProjBattTestHeader = new UIView();
 
         int iProjIdTag = 100010000;
         int iProjDescTag = 100011000;
@@ -279,6 +292,12 @@ namespace ITPiPadSoln
                 progBarProjITPRFU = progBarProjITPRFUVw.CreateProgressBar();
 
                 progBarProjBattTestDischCurrent = progBarProjBattTestDischCurrentVw.CreateProgressBar();
+                progBarProjBattTestDischVolt = progBarProjBattTestDischVoltVw.CreateProgressBar();
+                progBarProjBattTestFloatRecord = progBarProjBattTestFloatRecordVw.CreateProgressBar();
+                progBarProjBattTestHeader = progBarProjBattTestHeaderVw.CreateProgressBar();
+                progBarProjBattTestLink1to3 = progBarProjBattTestLink1to3Vw.CreateProgressBar();
+                progBarProjBattTestLink2to3 = progBarProjBattTestLink2to3Vw.CreateProgressBar();
+                progBarProjBattTestLink3to3 = progBarProjBattTestLink3to3Vw.CreateProgressBar();
 
 
 				View.Add(progBarQuestions);
@@ -293,7 +312,14 @@ namespace ITPiPadSoln
                 View.Add(progBarProjITPRFU);
 
                 View.Add(progBarProjBattTestDischCurrent);
-			} 
+                View.Add(progBarProjBattTestDischVolt);
+                View.Add(progBarProjBattTestFloatRecord);
+                View.Add(progBarProjBattTestHeader);
+                View.Add(progBarProjBattTestLink1to3);
+                View.Add(progBarProjBattTestLink2to3);
+                View.Add(progBarProjBattTestLink3to3);
+
+} 
 			catch (Exception except) 
 			{
 				iUtils.AlertBox alert = new iUtils.AlertBox();
@@ -665,7 +691,7 @@ namespace ITPiPadSoln
                             //****************************************************************************************//
                             object[] objITPBatteryInfo = csITP.DownloadProjectITPBatteryDischargeTest(sSessionId, sUser, sId);
 
-                            //Get any RFU info already raised on the website version into the local DB
+                            //Get any Battery Discharge Test info already raised on the website version into the local DB
                             if (objITPBatteryInfo[0].ToString() == "Success")
                             {
                                 string sDischargeCurrentTableName = clsITPBatteryTest.sITPBatteryAcceptTestDischargeCurrentTableName;
@@ -685,7 +711,7 @@ namespace ITPiPadSoln
                                             if (ITPBattTest.CheckITPBatteryAcceptTest_DischargeCurrentTable())
                                             {
                                                 this.InvokeOnMainThread(() => { 
-                                                    progBarProjBattTestDischCurrentVw.SetProgressBarTitle("Downloading ITP RFU PwrId items for project " + sId);
+                                                    progBarProjBattTestDischCurrentVw.SetProgressBarTitle("Downloading ITP Battery Discharge Test items for project " + sId);
                                                     progBarProjBattTestDischCurrentVw.ShowProgressBar(iHeaderCount6); 
                                                 });
                                                 for (int i = 0; i < iHeaderCount6; i++)
@@ -699,7 +725,6 @@ namespace ITPiPadSoln
                                             }
                                         }
                                     }
-                                    return true;
                                 }
                                 else
                                 {
@@ -709,12 +734,266 @@ namespace ITPiPadSoln
                                         alert.ShowAlertBox(); 
                                     });
                                     return false;
-                                } 
+                                } //End Battery Test Discharge Current Load
+
+                                string sDischargeVoltTableName = clsITPBatteryTest.sITPBatteryAcceptTestDischargeVoltTableName;
+                                if (clsITPBatteryTest.TableITPBatteryAcceptTestDeleteAllRecords(sDischargeVoltTableName,sId, ref sRtnMsg))
+                                {
+                                    string sDischargeVoltString = objITPBatteryInfo[2].ToString();
+                                    string[] sDischargeVoltInfo = sDischargeVoltString.Split('~');
+                                    if (sDischargeVoltInfo[0] == "ITPProjectBattAcceptTest_DischrgVolt")
+                                    {
+                                        string[] delimiters6 = new string[] { "||" };
+                                        string[] sDischargeVoltItems = sDischargeVoltInfo[1].Split(delimiters6, StringSplitOptions.RemoveEmptyEntries);
+                                        int iHeaderCount6 = sDischargeVoltItems.Length;
+                                        if (iHeaderCount6 > 0)
+                                        {
+                                            //First check if the batt test header table exists and if not create it
+                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                            if (ITPBattTest.CheckITPBatteryAcceptTest_DischargeVoltTable())
+                                            {
+                                                this.InvokeOnMainThread(() => { 
+                                                    progBarProjBattTestDischVoltVw.SetProgressBarTitle("Downloading ITP Battery Test Discharge Volt items for project " + sId);
+                                                    progBarProjBattTestDischVoltVw.ShowProgressBar(iHeaderCount6); 
+                                                });
+                                                for (int i = 0; i < iHeaderCount6; i++)
+                                                {
+                                                    string[] delimiters7 = new string[] { "^" };
+                                                    string[] sBattTestDischargeVoltItemArray = sDischargeVoltItems[i].Split(delimiters7, StringSplitOptions.None);
+                                                    ITPBattTest.ITPBattTestAddRecord(sBattTestDischargeVoltItemArray, sDischargeVoltTableName, 1);
+                                                    this.InvokeOnMainThread(() => { progBarProjBattTestDischVoltVw.UpdateProgressBar(i + 1); });
+                                                }
+                                                this.InvokeOnMainThread(() => { progBarProjBattTestDischVoltVw.CloseProgressBar(); });
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    this.InvokeOnMainThread(() => { 
+                                        iUtils.AlertBox alert = new iUtils.AlertBox();
+                                        alert.SetAlertMessage(sRtnMsg);
+                                        alert.ShowAlertBox(); 
+                                    });
+                                    return false;
+                                } //End Battery Test Discharge Volt Load
+
+                                string sFloatRecordTableName = clsITPBatteryTest.sITPBatteryAcceptTestFloatRecordTableName;
+                                if (clsITPBatteryTest.TableITPBatteryAcceptTestDeleteAllRecords(sFloatRecordTableName,sId, ref sRtnMsg))
+                                {
+                                    string sFloatRecordString = objITPBatteryInfo[3].ToString();
+                                    string[] sFloatRecordInfo = sFloatRecordString.Split('~');
+                                    if (sFloatRecordInfo[0] == "ITPProjectBattAcceptTest_FloatRecord")
+                                    {
+                                        string[] delimiters6 = new string[] { "||" };
+                                        string[] sFloatRecordItems = sFloatRecordInfo[1].Split(delimiters6, StringSplitOptions.RemoveEmptyEntries);
+                                        int iHeaderCount6 = sFloatRecordItems.Length;
+                                        if (iHeaderCount6 > 0)
+                                        {
+                                            //First check if the batt test header table exists and if not create it
+                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                            if (ITPBattTest.CheckITPBatteryAcceptTest_FloatRecordTable())
+                                            {
+                                                this.InvokeOnMainThread(() => { 
+                                                    progBarProjBattTestFloatRecordVw.SetProgressBarTitle("Downloading ITP Battery Test Float Record items for project " + sId);
+                                                    progBarProjBattTestFloatRecordVw.ShowProgressBar(iHeaderCount6); 
+                                                });
+                                                for (int i = 0; i < iHeaderCount6; i++)
+                                                {
+                                                    string[] delimiters7 = new string[] { "^" };
+                                                    string[] sBattTestFloatRecordItemArray = sFloatRecordItems[i].Split(delimiters7, StringSplitOptions.None);
+                                                    ITPBattTest.ITPBattTestAddRecord(sBattTestFloatRecordItemArray, sFloatRecordTableName, 2);
+                                                    this.InvokeOnMainThread(() => { progBarProjBattTestFloatRecordVw.UpdateProgressBar(i + 1); });
+                                                }
+                                                this.InvokeOnMainThread(() => { progBarProjBattTestFloatRecordVw.CloseProgressBar(); });
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    this.InvokeOnMainThread(() => { 
+                                        iUtils.AlertBox alert = new iUtils.AlertBox();
+                                        alert.SetAlertMessage(sRtnMsg);
+                                        alert.ShowAlertBox(); 
+                                    });
+                                    return false;
+                                } //End Battery Test Float Record Load
+
+                                string sBattTestHdrTableName = clsITPBatteryTest.sITPBatteryAcceptTestHeaderTableName;
+                                if (clsITPBatteryTest.TableITPBatteryAcceptTestDeleteAllRecords(sBattTestHdrTableName,sId, ref sRtnMsg))
+                                {
+                                    string sBattTestHdrString = objITPBatteryInfo[4].ToString();
+                                    string[] sBattTestHdrInfo = sBattTestHdrString.Split('~');
+                                    if (sBattTestHdrInfo[0] == "ITPProjectBattAcceptTest_Header")
+                                    {
+                                        string[] delimiters6 = new string[] { "||" };
+                                        string[] sBattTestHdrItems = sBattTestHdrInfo[1].Split(delimiters6, StringSplitOptions.RemoveEmptyEntries);
+                                        int iHeaderCount6 = sBattTestHdrItems.Length;
+                                        if (iHeaderCount6 > 0)
+                                        {
+                                            //First check if the batt test header table exists and if not create it
+                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                            if (ITPBattTest.CheckITPBatteryAcceptTest_HeaderTable())
+                                            {
+                                                this.InvokeOnMainThread(() => { 
+                                                    progBarProjBattTestHeaderVw.SetProgressBarTitle("Downloading ITP Battery Test Header items for project " + sId);
+                                                    progBarProjBattTestHeaderVw.ShowProgressBar(iHeaderCount6); 
+                                                });
+                                                for (int i = 0; i < iHeaderCount6; i++)
+                                                {
+                                                    string[] delimiters7 = new string[] { "^" };
+                                                    string[] sBattTestHeaderItemArray = sBattTestHdrItems[i].Split(delimiters7, StringSplitOptions.None);
+                                                    ITPBattTest.ITPBattTestAddRecord(sBattTestHeaderItemArray, sBattTestHdrTableName, 4);
+                                                    this.InvokeOnMainThread(() => { progBarProjBattTestHeaderVw.UpdateProgressBar(i + 1); });
+                                                }
+                                                this.InvokeOnMainThread(() => { progBarProjBattTestHeaderVw.CloseProgressBar(); });
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    this.InvokeOnMainThread(() => { 
+                                        iUtils.AlertBox alert = new iUtils.AlertBox();
+                                        alert.SetAlertMessage(sRtnMsg);
+                                        alert.ShowAlertBox(); 
+                                    });
+                                    return false;
+                                } //End Battery Test Header Load
+
+                                string sLink1to3TableName = clsITPBatteryTest.sITPBatteryAcceptTestLink1To3TableName;
+                                if (clsITPBatteryTest.TableITPBatteryAcceptTestDeleteAllRecords(sLink1to3TableName,sId, ref sRtnMsg))
+                                {
+                                    string sLink1to3String = objITPBatteryInfo[5].ToString();
+                                    string[] sLink1to3Info = sLink1to3String.Split('~');
+                                    if (sLink1to3Info[0] == "ITPProjectBattAcceptTest_Link1To3")
+                                    {
+                                        string[] delimiters6 = new string[] { "||" };
+                                        string[] sLink1to3Items = sLink1to3Info[1].Split(delimiters6, StringSplitOptions.RemoveEmptyEntries);
+                                        int iHeaderCount6 = sLink1to3Items.Length;
+                                        if (iHeaderCount6 > 0)
+                                        {
+                                            //First check if the batt test header table exists and if not create it
+                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                            if (ITPBattTest.CheckITPBatteryAcceptTest_Link1To3Table())
+                                            {
+                                                this.InvokeOnMainThread(() => { 
+                                                    progBarProjBattTestLink1to3Vw.SetProgressBarTitle("Downloading ITP Battery Test Link 1 to 3 items for project " + sId);
+                                                    progBarProjBattTestLink1to3Vw.ShowProgressBar(iHeaderCount6); 
+                                                });
+                                                for (int i = 0; i < iHeaderCount6; i++)
+                                                {
+                                                    string[] delimiters7 = new string[] { "^" };
+                                                    string[] sBattTestLink1to3ItemArray = sLink1to3Items[i].Split(delimiters7, StringSplitOptions.None);
+                                                    ITPBattTest.ITPBattTestAddRecord(sBattTestLink1to3ItemArray, sLink1to3TableName, 3);
+                                                    this.InvokeOnMainThread(() => { progBarProjBattTestLink1to3Vw.UpdateProgressBar(i + 1); });
+                                                }
+                                                this.InvokeOnMainThread(() => { progBarProjBattTestLink1to3Vw.CloseProgressBar(); });
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    this.InvokeOnMainThread(() => { 
+                                        iUtils.AlertBox alert = new iUtils.AlertBox();
+                                        alert.SetAlertMessage(sRtnMsg);
+                                        alert.ShowAlertBox(); 
+                                    });
+                                    return false;
+                                } //End Battery Test Link 1 to 3 Load
+
+                                string sLink2to3TableName = clsITPBatteryTest.sITPBatteryAcceptTestLink2To3TableName;
+                                if (clsITPBatteryTest.TableITPBatteryAcceptTestDeleteAllRecords(sLink2to3TableName,sId, ref sRtnMsg))
+                                {
+                                    string sLink2to3String = objITPBatteryInfo[5].ToString();
+                                    string[] sLink2to3Info = sLink2to3String.Split('~');
+                                    if (sLink2to3Info[0] == "ITPProjectBattAcceptTest_Link2To3")
+                                    {
+                                        string[] delimiters6 = new string[] { "||" };
+                                        string[] sLink2to3Items = sLink2to3Info[1].Split(delimiters6, StringSplitOptions.RemoveEmptyEntries);
+                                        int iHeaderCount6 = sLink2to3Items.Length;
+                                        if (iHeaderCount6 > 0)
+                                        {
+                                            //First check if the batt test header table exists and if not create it
+                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                            if (ITPBattTest.CheckITPBatteryAcceptTest_Link2To3Table())
+                                            {
+                                                this.InvokeOnMainThread(() => { 
+                                                    progBarProjBattTestLink2to3Vw.SetProgressBarTitle("Downloading ITP Battery Test Link 2 to 3 items for project " + sId);
+                                                    progBarProjBattTestLink2to3Vw.ShowProgressBar(iHeaderCount6); 
+                                                });
+                                                for (int i = 0; i < iHeaderCount6; i++)
+                                                {
+                                                    string[] delimiters7 = new string[] { "^" };
+                                                    string[] sBattTestLink2to3ItemArray = sLink2to3Items[i].Split(delimiters7, StringSplitOptions.None);
+                                                    ITPBattTest.ITPBattTestAddRecord(sBattTestLink2to3ItemArray, sLink2to3TableName, 3);
+                                                    this.InvokeOnMainThread(() => { progBarProjBattTestLink2to3Vw.UpdateProgressBar(i + 1); });
+                                                }
+                                                this.InvokeOnMainThread(() => { progBarProjBattTestLink2to3Vw.CloseProgressBar(); });
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    this.InvokeOnMainThread(() => { 
+                                        iUtils.AlertBox alert = new iUtils.AlertBox();
+                                        alert.SetAlertMessage(sRtnMsg);
+                                        alert.ShowAlertBox(); 
+                                    });
+                                    return false;
+                                } //End Battery Test Link 2 to 3 Load
+
+                                string sLink3to3TableName = clsITPBatteryTest.sITPBatteryAcceptTestLink3To3TableName;
+                                if (clsITPBatteryTest.TableITPBatteryAcceptTestDeleteAllRecords(sLink3to3TableName,sId, ref sRtnMsg))
+                                {
+                                    string sLink3to3String = objITPBatteryInfo[5].ToString();
+                                    string[] sLink3to3Info = sLink3to3String.Split('~');
+                                    if (sLink3to3Info[0] == "ITPProjectBattAcceptTest_Link3To3")
+                                    {
+                                        string[] delimiters6 = new string[] { "||" };
+                                        string[] sLink3to3Items = sLink3to3Info[1].Split(delimiters6, StringSplitOptions.RemoveEmptyEntries);
+                                        int iHeaderCount6 = sLink3to3Items.Length;
+                                        if (iHeaderCount6 > 0)
+                                        {
+                                            //First check if the batt test header table exists and if not create it
+                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                            if (ITPBattTest.CheckITPBatteryAcceptTest_Link3To3Table())
+                                            {
+                                                this.InvokeOnMainThread(() => { 
+                                                    progBarProjBattTestLink3to3Vw.SetProgressBarTitle("Downloading ITP Battery Test Link 3 to 3 items for project " + sId);
+                                                    progBarProjBattTestLink3to3Vw.ShowProgressBar(iHeaderCount6); 
+                                                });
+                                                for (int i = 0; i < iHeaderCount6; i++)
+                                                {
+                                                    string[] delimiters7 = new string[] { "^" };
+                                                    string[] sBattTestLink3to3ItemArray = sLink3to3Items[i].Split(delimiters7, StringSplitOptions.None);
+                                                    ITPBattTest.ITPBattTestAddRecord(sBattTestLink3to3ItemArray, sLink3to3TableName, 3);
+                                                    this.InvokeOnMainThread(() => { progBarProjBattTestLink3to3Vw.UpdateProgressBar(i + 1); });
+                                                }
+                                                this.InvokeOnMainThread(() => { progBarProjBattTestLink3to3Vw.CloseProgressBar(); });
+                                            }
+                                        }
+                                    }
+                                    return true; //Remove this and leave just in the last download
+                                }
+                                else
+                                {
+                                    this.InvokeOnMainThread(() => { 
+                                        iUtils.AlertBox alert = new iUtils.AlertBox();
+                                        alert.SetAlertMessage(sRtnMsg);
+                                        alert.ShowAlertBox(); 
+                                    });
+                                    return false;
+                                } //End Battery Test Link 3 to 3 Load
                             }
                             else
                             {
                                 return false;
-                            } //Close the if block for success on project ITP RFU
+                            } //Close the if block for success on Discharge Test Info (this is the main outer block. 
+                              //There are several inner blocks for each table)
                         }
                         else
                         {
