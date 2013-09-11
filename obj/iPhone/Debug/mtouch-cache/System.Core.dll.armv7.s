@@ -16,7 +16,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 4,1
-	.asciz "Mono AOT Compiler 3.2.2 (mono-3-2/314dfb3 Tue Aug 13 05:12:45 EDT 2013)"
+	.asciz "Mono AOT Compiler 3.3.0 (monotouch-6.4.4-branch/1fbc219 Mon Aug 26 14:09:46 EDT 2013)"
 	.asciz "JITted code"
 	.asciz ""
 
@@ -258,13 +258,13 @@ bl _p_7
 	.byte 0,0,159,231,1,16,160,227
 bl _p_8
 
-	.byte 24,0,139,229,5,0,160,225,0,16,149,229,15,224,160,225,92,240,145,229,28,0,139,229,34,2,0,227
+	.byte 24,0,139,229,5,0,160,225,0,16,149,229,15,224,160,225,92,240,145,229,28,0,139,229,108,15,160,227
 bl _p_9
 
 	.byte 0,16,160,225,24,0,155,229,28,32,155,229,8,32,129,229
 bl _p_10
 
-	.byte 0,16,160,225,36,2,0,227,0,2,64,227
+	.byte 0,16,160,225,178,1,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_11
 
@@ -347,13 +347,13 @@ bl _p_7
 	.byte 0,0,159,231,1,16,160,227
 bl _p_8
 
-	.byte 16,0,139,229,5,0,160,225,0,16,149,229,15,224,160,225,92,240,145,229,20,0,139,229,34,2,0,227
+	.byte 16,0,139,229,5,0,160,225,0,16,149,229,15,224,160,225,92,240,145,229,20,0,139,229,108,15,160,227
 bl _p_9
 
 	.byte 0,16,160,225,16,0,155,229,20,32,155,229,8,32,129,229
 bl _p_10
 
-	.byte 0,16,160,225,36,2,0,227,0,2,64,227
+	.byte 0,16,160,225,178,1,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_11
 
@@ -420,14 +420,14 @@ got_info_offsets:
 
 	.long 9,10,1,2
 	.short 0
-	.byte 22,2,1,1,1,7,9,5,5
+	.byte 22,2,1,1,1,7,9,4,4
 .section __TEXT, __const
 	.align 3
 ex_info_offsets:
 
 	.long 6,10,1,2
 	.short 0
-	.byte 128,202,17,31,31,128,181,255,255,255,254,50
+	.byte 128,200,17,31,31,128,181,255,255,255,254,52
 .section __TEXT, __const
 	.align 3
 unwind_info:
@@ -442,7 +442,7 @@ class_info_offsets:
 
 	.long 2,10,1,2
 	.short 0
-	.byte 130,120,7
+	.byte 130,118,7
 
 .text
 	.align 4
@@ -453,67 +453,67 @@ plt_System_Security_Cryptography_Aes__ctor:
 _p_1:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Core_got - . + 36,62
+	.long _mono_aot_System_Core_got - . + 36,60
 	.no_dead_strip plt_Mono_Security_Cryptography_KeyBuilder_IV_int
 plt_Mono_Security_Cryptography_KeyBuilder_IV_int:
 _p_2:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Core_got - . + 40,67
+	.long _mono_aot_System_Core_got - . + 40,65
 	.no_dead_strip plt_Mono_Security_Cryptography_KeyBuilder_Key_int
 plt_Mono_Security_Cryptography_KeyBuilder_Key_int:
 _p_3:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Core_got - . + 44,72
+	.long _mono_aot_System_Core_got - . + 44,70
 	.no_dead_strip plt_Crimson_CommonCrypto_Cryptor_Create_Crimson_CommonCrypto_CCOperation_Crimson_CommonCrypto_CCAlgorithm_Crimson_CommonCrypto_CCOptions_byte___byte__
 plt_Crimson_CommonCrypto_Cryptor_Create_Crimson_CommonCrypto_CCOperation_Crimson_CommonCrypto_CCAlgorithm_Crimson_CommonCrypto_CCOptions_byte___byte__:
 _p_4:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Core_got - . + 48,77
+	.long _mono_aot_System_Core_got - . + 48,75
 	.no_dead_strip plt__jit_icall_mono_object_new_specific
 plt__jit_icall_mono_object_new_specific:
 _p_5:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Core_got - . + 52,82
+	.long _mono_aot_System_Core_got - . + 52,80
 	.no_dead_strip plt_Crimson_CommonCrypto_FastCryptorTransform__ctor_intptr_System_Security_Cryptography_SymmetricAlgorithm_bool_byte__
 plt_Crimson_CommonCrypto_FastCryptorTransform__ctor_intptr_System_Security_Cryptography_SymmetricAlgorithm_bool_byte__:
 _p_6:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Core_got - . + 56,109
+	.long _mono_aot_System_Core_got - . + 56,107
 	.no_dead_strip plt_Crimson_CommonCrypto_CryptorTransform__ctor_intptr_intptr_System_Security_Cryptography_SymmetricAlgorithm_bool_byte__
 plt_Crimson_CommonCrypto_CryptorTransform__ctor_intptr_intptr_System_Security_Cryptography_SymmetricAlgorithm_bool_byte__:
 _p_7:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Core_got - . + 60,114
+	.long _mono_aot_System_Core_got - . + 60,112
 	.no_dead_strip plt__jit_icall_mono_helper_ldstr
 plt__jit_icall_mono_helper_ldstr:
 _p_8:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Core_got - . + 64,119
+	.long _mono_aot_System_Core_got - . + 64,117
 	.no_dead_strip plt__jit_icall_mono_helper_newobj_mscorlib
 plt__jit_icall_mono_helper_newobj_mscorlib:
 _p_9:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Core_got - . + 68,139
+	.long _mono_aot_System_Core_got - . + 68,137
 	.no_dead_strip plt_string_Format_string_object
 plt_string_Format_string_object:
 _p_10:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Core_got - . + 72,169
+	.long _mono_aot_System_Core_got - . + 72,167
 	.no_dead_strip plt__jit_icall_mono_arch_throw_exception
 plt__jit_icall_mono_arch_throw_exception:
 _p_11:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Core_got - . + 76,174
+	.long _mono_aot_System_Core_got - . + 76,172
 plt_end:
 .section __TEXT, __const
 	.align 3
@@ -521,14 +521,14 @@ image_table:
 
 	.long 2
 	.asciz "System.Core"
-	.asciz "62713071-3AB5-44E7-92E3-421E7EB7AAFC"
+	.asciz "45B1AC24-D268-4DCD-B103-28D73603E503"
 	.asciz ""
 	.asciz "7cec85d7bea7798e"
 	.align 3
 
 	.long 1,2,0,5,0
 	.asciz "mscorlib"
-	.asciz "10599FF9-5543-4AA5-BF3F-02197C7342D1"
+	.asciz "E9372A6F-D667-45E5-8B8B-47F495CA8C3C"
 	.asciz ""
 	.asciz "7cec85d7bea7798e"
 	.align 3
@@ -542,7 +542,7 @@ got_end:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "62713071-3AB5-44E7-92E3-421E7EB7AAFC"
+	.asciz "45B1AC24-D268-4DCD-B103-28D73603E503"
 .section __TEXT, __const
 	.align 2
 runtime_version:
@@ -555,7 +555,7 @@ assembly_name:
 	.align 3
 _mono_aot_file_info:
 
-	.long 90,0
+	.long 93,0
 	.align 2
 	.long _mono_aot_System_Core_got
 	.align 2
@@ -617,10 +617,11 @@ _mono_aot_file_info:
 	.align 2
 	.long unbox_trampolines_end
 
-	.long 9,84,12,6,10,118565375,0,730
+	.long 9,84,12,6,10,118565375,0,728
 	.long 0,0,0,0,0,0,0,0
-	.long 0,0,0,0,128,4,4
+	.long 0,0,0,0,128,4,4,14
 	.globl _mono_aot_module_System_Core_info
+	.align 2
 _mono_aot_module_System_Core_info:
 	.align 2
 	.long _mono_aot_file_info
@@ -628,29 +629,29 @@ _mono_aot_module_System_Core_info:
 	.align 3
 blob:
 
-	.byte 0,0,0,0,0,0,0,0,5,4,5,6,6,7,0,6,4,8,6,6,4,7,12,0,39,42,47,16,2,128,148,1
-	.byte 130,60,8,4,124,128,208,129,156,129,36,14,2,130,223,1,14,2,130,222,1,8,4,120,128,204,129,148,129,32,3,193
-	.byte 0,16,238,3,193,0,1,9,3,193,0,1,8,3,193,0,21,180,7,24,109,111,110,111,95,111,98,106,101,99,116,95
-	.byte 110,101,119,95,115,112,101,99,105,102,105,99,0,3,193,0,21,187,3,193,0,21,183,7,17,109,111,110,111,95,104,101
-	.byte 108,112,101,114,95,108,100,115,116,114,0,7,27,109,111,110,111,95,104,101,108,112,101,114,95,110,101,119,111,98,106,95
-	.byte 109,115,99,111,114,108,105,98,0,3,193,0,8,132,7,25,109,111,110,111,95,97,114,99,104,95,116,104,114,111,119,95
-	.byte 101,120,99,101,112,116,105,111,110,0,2,0,14,28,24,40,208,0,0,13,0,0,2,1,24,6,4,2,19,28,68,16
-	.byte 80,10,0,11,2,16,6,4,1,4,5,4,0,4,0,4,0,4,0,16,0,8,0,4,6,0,2,19,28,68,16,80
-	.byte 10,0,11,2,16,6,4,1,4,5,4,0,4,0,4,0,4,0,16,0,8,0,4,6,0,2,37,128,177,129,252,32
-	.byte 130,8,6,10,5,208,0,0,11,8,255,48,0,0,0,208,0,0,11,12,0,76,0,32,0,16,7,8,0,4,0,4
-	.byte 8,8,1,8,0,4,0,8,0,4,0,16,0,4,0,4,31,4,0,4,0,4,0,4,0,4,0,4,10,12,0,16
-	.byte 0,8,0,4,0,4,0,4,0,4,5,8,6,4,0,4,0,4,0,4,0,4,0,4,10,12,0,16,0,8,0,4
-	.byte 0,4,0,4,0,4,5,8,6,4,0,4,0,4,0,4,0,4,0,4,11,8,0,4,0,4,0,4,0,4,0,4
-	.byte 11,12,0,16,0,8,0,8,0,8,0,4,0,4,5,8,1,4,0,16,0,4,6,8,0,4,0,4,5,12,0,4
-	.byte 0,4,0,12,10,12,0,8,5,4,0,4,1,0,2,67,128,166,129,244,32,130,0,6,10,5,4,255,48,0,0,0
-	.byte 0,75,0,32,0,16,7,4,0,4,0,4,8,8,1,8,0,4,0,8,0,4,0,16,0,4,0,4,31,4,0,4
-	.byte 0,4,0,4,0,4,0,4,0,4,10,8,0,16,0,8,0,4,0,4,0,4,0,4,5,8,6,4,0,4,0,4
+	.byte 0,0,0,0,0,0,0,0,5,4,5,6,6,7,0,6,4,8,6,6,4,7,12,0,39,42,47,16,2,130,139,1
+	.byte 137,73,8,4,124,128,208,129,156,129,36,14,2,10,1,14,2,8,1,8,4,120,128,204,129,148,129,32,3,193,0,1
+	.byte 217,3,193,0,0,222,3,193,0,0,221,3,193,0,0,5,7,24,109,111,110,111,95,111,98,106,101,99,116,95,110,101
+	.byte 119,95,115,112,101,99,105,102,105,99,0,3,193,0,0,22,3,193,0,0,13,7,17,109,111,110,111,95,104,101,108,112
+	.byte 101,114,95,108,100,115,116,114,0,7,27,109,111,110,111,95,104,101,108,112,101,114,95,110,101,119,111,98,106,95,109,115
+	.byte 99,111,114,108,105,98,0,3,193,0,20,29,7,25,109,111,110,111,95,97,114,99,104,95,116,104,114,111,119,95,101,120
+	.byte 99,101,112,116,105,111,110,0,2,0,14,28,24,40,208,0,0,13,0,0,2,1,24,6,4,2,19,28,68,16,80,10
+	.byte 0,11,2,16,6,4,1,4,5,4,0,4,0,4,0,4,0,16,0,8,0,4,6,0,2,19,28,68,16,80,10,0
+	.byte 11,2,16,6,4,1,4,5,4,0,4,0,4,0,4,0,16,0,8,0,4,6,0,2,37,128,177,129,252,32,130,8
+	.byte 6,10,5,208,0,0,11,8,255,48,0,0,0,208,0,0,11,12,0,76,0,32,0,16,7,8,0,4,0,4,8,8
+	.byte 1,8,0,4,0,8,0,4,0,16,0,4,0,4,31,4,0,4,0,4,0,4,0,4,0,4,10,12,0,16,0,8
+	.byte 0,4,0,4,0,4,0,4,5,8,6,4,0,4,0,4,0,4,0,4,0,4,10,12,0,16,0,8,0,4,0,4
+	.byte 0,4,0,4,5,8,6,4,0,4,0,4,0,4,0,4,0,4,11,8,0,4,0,4,0,4,0,4,0,4,11,12
+	.byte 0,16,0,8,0,8,0,8,0,4,0,4,5,8,1,4,0,16,0,4,6,8,0,4,0,4,5,12,0,4,0,4
+	.byte 0,12,10,12,0,8,5,4,0,4,1,0,2,67,128,166,129,244,32,130,0,6,10,5,4,255,48,0,0,0,0,75
+	.byte 0,32,0,16,7,4,0,4,0,4,8,8,1,8,0,4,0,8,0,4,0,16,0,4,0,4,31,4,0,4,0,4
 	.byte 0,4,0,4,0,4,0,4,10,8,0,16,0,8,0,4,0,4,0,4,0,4,5,8,6,4,0,4,0,4,0,4
-	.byte 0,4,0,4,0,4,7,8,0,16,8,8,0,16,0,12,0,4,0,8,0,4,0,4,5,8,1,4,0,16,0,4
-	.byte 6,8,0,4,0,4,5,12,0,4,0,4,0,12,10,12,0,8,5,4,0,4,1,0,0,128,144,8,0,0,1,24
-	.byte 128,160,48,0,0,4,193,0,7,175,193,0,7,172,193,0,7,171,193,0,7,169,193,0,17,241,3,2,5,193,0,17
-	.byte 246,4,193,0,17,244,193,0,17,243,193,0,17,240,193,0,17,239,193,0,17,238,193,0,17,237,193,0,17,236,193,0
-	.byte 17,235,193,0,17,234,193,0,17,233,193,0,17,232,193,0,17,231,193,0,17,230,193,0,17,229,115,103,101,110,0
+	.byte 0,4,0,4,0,4,10,8,0,16,0,8,0,4,0,4,0,4,0,4,5,8,6,4,0,4,0,4,0,4,0,4
+	.byte 0,4,0,4,7,8,0,16,8,8,0,16,0,12,0,4,0,8,0,4,0,4,5,8,1,4,0,16,0,4,6,8
+	.byte 0,4,0,4,5,12,0,4,0,4,0,12,10,12,0,8,5,4,0,4,1,0,0,128,144,8,0,0,1,24,128,160
+	.byte 48,0,0,4,193,0,19,71,193,0,19,68,193,0,19,67,193,0,19,65,193,0,11,19,3,2,5,193,0,11,24,4
+	.byte 193,0,11,22,193,0,11,21,193,0,11,18,193,0,11,17,193,0,11,16,193,0,11,15,193,0,11,14,193,0,11,13
+	.byte 193,0,11,12,193,0,11,11,193,0,11,10,193,0,11,9,193,0,11,8,193,0,11,7,115,103,101,110,0
 .section __TEXT, __const
 	.align 3
 Lglobals_hash:

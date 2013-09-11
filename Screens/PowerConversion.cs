@@ -4277,8 +4277,6 @@ namespace ITPiPadSoln
             btnContract.Enabled = false;
             UIButton btnExpand = (UIButton)View.ViewWithTag (iBtnId / iContractSectionBtnTagId * iExpandSectionBtnTagId);
             btnExpand.Enabled = true;
-            
-            
         }
         
         public bool PowerConversionFullyComplete()
