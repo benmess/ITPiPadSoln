@@ -124,6 +124,7 @@ namespace ITPiPadSoln
         UIView m_vwSearch;
         int m_BankNo = -1;
         string m_PwrId = "";
+        string m_SPN = ""
         
         UITableView m_cmbSearch;
         UIButton m_btnSearching;
@@ -3473,6 +3474,9 @@ namespace ITPiPadSoln
             UITextField BankNo = (UITextField)View.ViewWithTag (iBankNoTagId * (iPwrIdRow) + (iStringRow));
             int iBankNo = Convert.ToInt32(BankNo.Text);
             m_BankNo = iBankNo;
+            UILabel SPN = (UILabel)View.ViewWithTag (iSPNHiddenTagId * (iPwrIdRow) + (iStringRow));
+            string sSPN = SPN.Text;
+            m_SPN = sSPN;
 
             prog.SetActivityIndicatorTitle("20 Min Test");
             ScreenUtils scnUtils = new ScreenUtils();
@@ -4555,6 +4559,11 @@ namespace ITPiPadSoln
         public string GetSelectedPwrId()
         {
             return m_PwrId;
+        }
+
+        public string GetSelectedSPN()
+        {
+            return m_SPN;
         }
 
         public int GetSelectedBankNo()

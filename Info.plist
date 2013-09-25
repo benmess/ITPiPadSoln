@@ -8,7 +8,7 @@
 		<string>Images/ITP App Artwork 144 x 144.png</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>3.2</string>
+	<string>4.1</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>2</integer>

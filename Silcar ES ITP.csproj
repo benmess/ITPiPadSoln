@@ -53,7 +53,6 @@
     <AssemblyName>ITPiPadSoln</AssemblyName>
     <MtouchDebug>true</MtouchDebug>
     <CodesignProvision>6F1A3D22-08EB-421A-803B-8487A678ECBA</CodesignProvision>
-    <MtouchLink>Full</MtouchLink>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -128,8 +127,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
-    <None Include="Web References\ITPExternal\wbsITP_External.wsdl" />
-    <None Include="Web References\ITPExternal\wbsITP_External.disco" />
+    <None Include="Web References\ITPExternal\TempConvert.wsdl" />
+    <None Include="Web References\ITPExternal\TempConvert.disco" />
     <None Include="Web References\ITPExternal\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -158,9 +157,6 @@
     <Compile Include="Screens\ProjectITPage.designer.cs">
       <DependentUpon>ProjectITPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Web References\ITPExternal\Reference.cs">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
     <Compile Include="Screens\Battery.cs" />
     <Compile Include="Screens\Battery.designer.cs">
       <DependentUpon>Battery.cs</DependentUpon>
@@ -172,6 +168,9 @@
     <Compile Include="Screens\Battery20MinTest.cs" />
     <Compile Include="Screens\Battery20MinTest.designer.cs">
       <DependentUpon>Battery20MinTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\ITPExternal\Reference.cs">
+      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -206,16 +205,6 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <WebReferences Include="Web References" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://silcar-ws11.silcar.com.au:8003/wbsITP_External.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\ITPExternal</RelPath>
-      <UpdateFromURL>http://silcar-ws11.silcar.com.au:8003/wbsITP_External.asmx</UpdateFromURL>
-    </WebReferenceUrl>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\clsiOS\clsiOS.csproj">
       <Project>{B51B0263-83AC-4DD2-B744-A14D484B149D}</Project>
       <Name>clsiOS</Name>
@@ -224,5 +213,15 @@
       <Project>{D9D9EE65-BB75-481F-9010-34C571C0C411}</Project>
       <Name>clsTabletCommon</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://www.w3schools.com/WebServices/TempConvert.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ITPExternal</RelPath>
+      <UpdateFromURL>http://www.w3schools.com/WebServices/TempConvert.asmx</UpdateFromURL>
+    </WebReferenceUrl>
   </ItemGroup>
 </Project>

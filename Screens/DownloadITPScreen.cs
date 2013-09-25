@@ -32,6 +32,8 @@ namespace ITPiPadSoln
 		UIView progBarInventoryItems = new UIView();
         iUtils.ProgressBar progBarBatteryFuseTypesVw = new iUtils.ProgressBar();
         UIView progBarBatteryFuseTypesItems = new UIView();
+        iUtils.ProgressBar progBarBatteryCellInfoVw = new iUtils.ProgressBar();
+        UIView progBarBatteryCellInfoItems = new UIView();
         iUtils.ProgressBar progBarValidHierarchyVw = new iUtils.ProgressBar();
         UIView progBarValidHierarchyItems = new UIView();
         iUtils.ProgressBar progBarProjITPSection10Vw = new iUtils.ProgressBar();
@@ -295,6 +297,9 @@ namespace ITPiPadSoln
                 progBarBatteryFuseTypesItems = progBarBatteryFuseTypesVw.CreateProgressBar();
                 progBarBatteryFuseTypesVw.SetProgressBarTitle("Downloading battery fuse types items");
 
+                progBarBatteryCellInfoItems = progBarBatteryCellInfoVw.CreateProgressBar();
+                progBarBatteryCellInfoVw.SetProgressBarTitle("Downloading battery cell info items");
+
                 progBarValidHierarchyItems = progBarValidHierarchyVw.CreateProgressBar();
                 progBarValidHierarchyVw.SetProgressBarTitle("Downloading valid hierarchy items");
 
@@ -325,6 +330,7 @@ namespace ITPiPadSoln
 				View.Add(progBarProjITPQuestions);
 				View.Add(progBarInventoryItems);
                 View.Add(progBarBatteryFuseTypesItems);
+                View.Add(progBarBatteryCellInfoItems);
                 View.Add(progBarValidHierarchyItems);
                 View.Add(progBarProjITPSection10);
                 View.Add(progBarProjITPRFU);
@@ -1351,17 +1357,6 @@ namespace ITPiPadSoln
 				return false;
 			}
 
-//            bReturn = FillITPInventoryMainTable(sSessionId, sUser, ref sRtnMsg);
-//            
-//            if (sRtnMsg != "")
-//            {
-//                this.InvokeOnMainThread(() => { 
-//                    iUtils.AlertBox alert = new iUtils.AlertBox();
-//                    alert.CreateErrorAlertDialog(sRtnMsg);
-//                });
-//                return false;
-//            }
-            
             bReturn = FillITPBatteryFuseTypesTable(sSessionId, sUser, ref sRtnMsg);
             
             if (sRtnMsg != "")
@@ -1373,6 +1368,17 @@ namespace ITPiPadSoln
                 return false;
             }
             
+            bReturn = FillITPBatteryCellInfoTable(sSessionId, sUser, ref sRtnMsg);
+
+            if (sRtnMsg != "")
+            {
+                this.InvokeOnMainThread(() => { 
+                    iUtils.AlertBox alert = new iUtils.AlertBox();
+                    alert.CreateErrorAlertDialog(sRtnMsg);
+                });
+                return false;
+            }
+
             bReturn = FillITPValidHierarchyTable(sSessionId, sUser, ref sRtnMsg);
             
             if (sRtnMsg != "")
@@ -1741,6 +1747,91 @@ namespace ITPiPadSoln
                     else
                     {
                         sRtnMsg = objBatteryFuseTypes[1].ToString();
+                        return false;
+                    }
+                }
+                else
+                {
+                    //This means you don't have to fill this static table
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                sRtnMsg = "Failure" + ex.Message.ToString();
+                return false;
+            }
+        }
+
+        public bool FillITPBatteryCellInfoTable(string sSessionId, string sUser, ref string sRtnMsg)
+        {
+            try
+            {
+                clsTabletDB.ITPStaticTable Static = new clsTabletDB.ITPStaticTable();
+                clsTabletDB.ITPBatteryCellInfo ITPBatteryCellInfo = new clsTabletDB.ITPBatteryCellInfo();
+                LocalDB DB = new LocalDB();
+                double dNewVersionNumber = 0.0;
+                DateTime dtLastVersionDate;
+                string sITPBatteryCellInfoTableName = ITPBatteryCellInfo.sITPBatteryCellInfoTableName;
+
+                //Only do all of this if the version has changed. So get the local version number and compare to that on the DB. If different do all of this. - WRITE LATER as a general function
+                bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPBatteryCellInfoTableName, ref dNewVersionNumber, ref dtLastVersionDate);
+
+                if (!DB.TableExists(sITPBatteryCellInfoTableName) || bNewVersion)
+                {
+                    clsLocalUtils util = new clsLocalUtils();
+                    string sURL = util.GetEnvironment_wbsURL("wbsITP_External");
+                    wbsITP_External ws = new wbsITP_External();
+                    ws.Url = sURL;
+                    object[] objBatteryCellInfo = ws.GetITPBatteryCellInfo(sSessionId, sUser);
+                    if (objBatteryCellInfo[0].ToString() == "Success")
+                    {
+                        if (ITPBatteryCellInfo.TableITPBatteryCellInfoDeleteAllRecords(ref sRtnMsg))
+                        {
+                            string sITPBatteryCellInfoInfo = objBatteryCellInfo[1].ToString();
+                            string[] sHeaderInfo = sITPBatteryCellInfoInfo.Split('~');
+                            if (sHeaderInfo[0] == "ITPBatteryCellInfo")
+                            {
+                                string[] delimiters = new string[] { "||" };
+                                string[] sITPBatteryCellInfoItems = sHeaderInfo[1].Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+                                int iBatteryCellInfoCount = sITPBatteryCellInfoItems.Length;
+                                if (iBatteryCellInfoCount > 0)
+                                {
+                                    this.InvokeOnMainThread(() => { progBarBatteryCellInfoVw.ShowProgressBar(iBatteryCellInfoCount); });
+                                    //First check if the ITPBatteryCellInfo table exists and if not create it
+                                    if (ITPBatteryCellInfo.CheckFullITPBatteryCellInfoTable())
+                                    {
+                                        for (int i = 0; i < iBatteryCellInfoCount; i++)
+                                        {
+                                            string[] delimiters2 = new string[] { "^" };
+                                            string[] sBatteryCellInfoItems = sITPBatteryCellInfoItems[i].Split(delimiters2, StringSplitOptions.None);
+                                            string sSPN = sBatteryCellInfoItems[0];
+                                            string sBatteryType = sBatteryCellInfoItems[1];
+                                            string sAmpereHours = sBatteryCellInfoItems[2];
+                                            string sCellsPerBlock = sBatteryCellInfoItems[3];
+                                            string sVoltsPerCell = sBatteryCellInfoItems[4];
+                                            Array.Resize<string>(ref sBatteryCellInfoItems, sBatteryCellInfoItems.Length + 1);
+                                            sBatteryCellInfoItems[sBatteryCellInfoItems.Length - 5] = sSPN;
+                                            sBatteryCellInfoItems[sBatteryCellInfoItems.Length - 4] = sBatteryType;
+                                            sBatteryCellInfoItems[sBatteryCellInfoItems.Length - 3] = sAmpereHours;
+                                            sBatteryCellInfoItems[sBatteryCellInfoItems.Length - 2] = sCellsPerBlock;
+                                            sBatteryCellInfoItems[sBatteryCellInfoItems.Length - 1] = sVoltsPerCell;
+                                            sBatteryCellInfoItems[0] = i.ToString();
+                                            ITPBatteryCellInfo.TableITPBatteryCellInfoAddRecord(sBatteryCellInfoItems);
+                                            this.InvokeOnMainThread(() => { progBarBatteryCellInfoVw.UpdateProgressBar(i + 1); });
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        //Update the version number locally
+                        Static.UpdateVersionNumber(sITPBatteryCellInfoTableName, dNewVersionNumber);
+                        this.InvokeOnMainThread(() => { progBarBatteryCellInfoVw.CloseProgressBar(); });
+                        return true;
+                    }
+                    else
+                    {
+                        sRtnMsg = objBatteryCellInfo[1].ToString();
                         return false;
                     }
                 }
