@@ -88,6 +88,11 @@ namespace ITPiPadSoln
         int iSummary20MinEndVoltResultTagId = 10015000;
         int iSummary20MinEndVoltUnitTagId = 10015100;
 
+        int iType1234CellContainerTagId = 10016000;
+        int iType1234CellBaseLabelId = 10016100;
+        int iType1234CellBaseId = 10016200;
+        int iType1234CellBaseHiddenId = 10016300;
+
         string[] m_sCellMbVoltages;
         string[] m_sCellMbPost;
 
@@ -97,6 +102,7 @@ namespace ITPiPadSoln
         string m_sProjDesc = "";
         string m_PwrId = "";
         int m_BankNo = -1;
+        string m_SPN = "";
         int m_iValidateType;
         object m_sender;
 
@@ -145,6 +151,7 @@ namespace ITPiPadSoln
             Battery BattScreen =   GetBatteryPage();
             m_BankNo = BattScreen.GetSelectedBankNo();
             m_PwrId = BattScreen.GetSelectedPwrId();
+            m_SPN = BattScreen.GetSelectedSPN();
 
             //Create a type of grid view
             iUtils.CreateFormGridItem lblProjIdLabel = new iUtils.CreateFormGridItem();
@@ -250,7 +257,9 @@ namespace ITPiPadSoln
             float iEditRowHeight = 40f;
             float iSectionHdrRowHeight = 40f;
             float iSectionHeightId = 0f;
+            float iThisHdrRowHeight = 40f;
             int iColNo = 0;
+            float iHeightToAdd = 0f;
             UIView[] arrItems = new UIView[7];
             UIView[] arrItems2 = new UIView[10];
             UIView[] arrItems3 = new UIView[5];
@@ -260,8 +269,18 @@ namespace ITPiPadSoln
 
             UIView hdrSection;
             UIView hdrSection2;
+            UIView hdrSection3;
+            UIView hdrSection4; //Not used because 2 sub headers and we want to keep things synchronised
+            UIView hdrSection5;
+            UIView hdrSection6; //Not used because 2 sub headers and we want to keep things synchronised
+            UIView hdrSubSection3;
+            UIView hdrSubSection4;
+            UIView hdrSubSection5;
+            UIView hdrSubSection6;
             UIView hdrPwrId;
             clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+            clsTabletDB.ITPBatteryCellInfo ITPCellInfo = new clsTabletDB.ITPBatteryCellInfo();
+            clsTabletDB.ITPHeaderTable ITPHeader = new clsTabletDB.ITPHeaderTable(); 
             string sInspectedBy = "";
             string sInspectDate = "";
             string sInspectDateDisplay = "";
@@ -303,7 +322,7 @@ namespace ITPiPadSoln
 
                 iLayoutVert += 40f;
 
-                hdrSection = BuildSectionHeader(m_iSections, "20 min Test Header Info", iLayoutVert, iSectionHdrRowHeight,1);
+                hdrSection = BuildSectionHeader(m_iSections, "20 min Test Header Info", iLayoutVert, ref iSectionHdrRowHeight,1);
                 layout.AddSubview(hdrSection);
 
                 iLayoutVert += iSectionHdrRowHeight;
@@ -314,6 +333,10 @@ namespace ITPiPadSoln
 
                 iVert = 0f;
                 iSectionHeightId = 0f;
+
+                //Get the base block voltage
+                double dDefaultVoltage = ITPCellInfo.GetBatteryBlockVoltage(m_SPN);
+                double dSystemVoltage = ITPHeader.GetSystemVolts(m_sPassedId, m_PwrId);
 
                 //Now get the data from the DB
                 DataSet arrTestHeader = ITPBattTest.GetBatteryAcceptTestType4KeyRecord(m_sPassedId, "ITPBattAcceptTest_Header", m_PwrId, m_BankNo);
@@ -354,11 +377,16 @@ namespace ITPiPadSoln
                     if(clsUtil.IsNumeric(sCellMbVoltage))
                     {
                         dCellMbVoltage = Convert.ToDouble(sCellMbVoltage);
+                        if(dCellMbVoltage == 0.0)
+                        {
+                            dCellMbVoltage = dDefaultVoltage;
+                        }
                     }
                     else
                     {
-                        dCellMbVoltage = 0.0;
+                        dCellMbVoltage = dDefaultVoltage;
                     }
+
                     iColNo = arrTestHeader.Tables[0].Columns["BatteryStringCapacity"].Ordinal;
                     sBatteryCapacity = arrTestHeader.Tables[0].Rows[0].ItemArray[iColNo].ToString();
                     if(clsUtil.IsNumeric(sBatteryCapacity))
@@ -384,10 +412,14 @@ namespace ITPiPadSoln
                     if(clsUtil.IsNumeric(sCellMbPost))
                     {
                         dCellMbPost = Convert.ToDouble(sCellMbPost);
+                        if(dCellMbPost == 0.0)
+                        {
+                            dCellMbPost = dDefaultVoltage;
+                        }
                     }
                     else
                     {
-                        dCellMbPost = 0.0;
+                        dCellMbPost = dDefaultVoltage;
                     }
                 
                     iColNo = arrTestHeader.Tables[0].Columns["BMP_BPU_CB_Alarm"].Ordinal;
@@ -1159,14 +1191,19 @@ namespace ITPiPadSoln
 
                 iLayoutVert += iSectionHeightId;
 
-                //this UILabel is created int BuildPwrIdHeader BuildPwrIdHeader function
+                //this UILabel is created int BuildPwrIdHeader function
                 UILabel hfSectionEquipmentHeight = (UILabel)View.ViewWithTag (iSectionHeightTagId * (m_iSections));
                 hfSectionEquipmentHeight.Text = iSectionHeightId.ToString();
+
+                //Resize the main frame for the section
+                RectangleF frame1 = SectionTableRow.Frame;
+                frame1.Height = iSectionHeightId;
+                SectionTableRow.Frame = frame1;
 
                 /********************************************************************************/
                 //              O/C Volts when Unpacked                                         //
                 /********************************************************************************/
-                hdrSection2 = BuildSectionHeader(m_iSections, "O/C Voltage When Unpacked", iLayoutVert, iSectionHdrRowHeight,1);
+                hdrSection2 = BuildSectionHeader(m_iSections, "O/C Voltage When Unpacked", iLayoutVert, ref iSectionHdrRowHeight,1);
                 layout.AddSubview(hdrSection2);
 
                 iLayoutVert += iSectionHdrRowHeight;
@@ -1178,25 +1215,146 @@ namespace ITPiPadSoln
                 iVert = 0.0f; //Reset for this section
                 iSectionHeightId = 0.0f; //Reset for this section
 
+                //Now add in all the cell headings and details
+                int iNoCells = Convert.ToInt32(dSystemVoltage / (ITPCellInfo.GetBatteryBlockNoOfCells(m_SPN) * dDefaultVoltage));
+                DataSet dsUnpacked = ITPBattTest.GetBatteryAcceptTestType2Records(m_sPassedId, m_PwrId, m_BankNo, ITPBattTest.sITPBatteryAcceptTestUnpackedTableName);
+                UIView vwOCUnpacked = BuildType2Row(iVert, 1, m_iSections,dsUnpacked,iNoCells, bReadOnly, "Pale Yellow", ref iHeightToAdd);
+                SectionTableRow2.AddSubview(vwOCUnpacked);
                 layout.AddSubview(SectionTableRow2);
 
-                iLayoutVert += iSectionHeightId;
+                iVert += iHeightToAdd;
+                iSectionHeightId += iHeightToAdd;
+                iLayoutVert += iHeightToAdd;
 
-                //this UILabel is created int BuildPwrIdHeader BuildPwrIdHeader function
+                //this UILabel is created int BuildPwrIdHeader function
                 UILabel hfSectionEquipmentHeight2 = (UILabel)View.ViewWithTag (iSectionHeightTagId * (m_iSections));
                 hfSectionEquipmentHeight2.Text = iSectionHeightId.ToString();
+
+                //Resize the main frame for the section
+                RectangleF frame2 = SectionTableRow2.Frame;
+                frame2.Height = iSectionHeightId;
+                SectionTableRow2.Frame = frame2;
+
+                /********************************************************************************/
+                //              Float Voltage                                                   //
+                /********************************************************************************/
+                iThisHdrRowHeight = 40f;
+                hdrSection3 = BuildSectionHeader(m_iSections, "Cell/Float Record (Float batteries for 24 Hrs and take reading while still connected to charger)", iLayoutVert, ref iThisHdrRowHeight,1);
+                layout.AddSubview(hdrSection3);
+
+                iLayoutVert += iThisHdrRowHeight;
+
+                UIView SectionTableRow3 = new UIView();
+                SectionTableRow3.Frame = new RectangleF(0f,iLayoutVert,1000f,iThisHdrRowHeight);
+                SectionTableRow3.Tag = iContainerSectionTagId * (m_iSections);
+
+                iVert = 0.0f; //Reset for this section
+                iSectionHeightId = 0.0f; //Reset for this section
+
+                hdrSubSection3 = BuildSubHeader("Float Voltage [V]", "Pale Yellow", 960f, iVert);
+                SectionTableRow3.AddSubview(hdrSubSection3);
+                iVert += iSectionHdrRowHeight;
+                iSectionHeightId += iSectionHdrRowHeight;
+                iLayoutVert += iSectionHdrRowHeight;
+
+                //Now add in all the cell headings and details
+                DataSet dsFloatVolts = ITPBattTest.GetBatteryAcceptTestType2Records(m_sPassedId, m_PwrId, m_BankNo, ITPBattTest.sITPBatteryAcceptTestFloatRecordTableName);
+                UIView vwFloatVolts = BuildType2Row(iVert, 2, m_iSections,dsFloatVolts,iNoCells, bReadOnly, "Pale Yellow", ref iHeightToAdd);
+                SectionTableRow3.AddSubview(vwFloatVolts);
+
+                iVert += iHeightToAdd;
+                iSectionHeightId += iHeightToAdd;
+                iLayoutVert += iHeightToAdd;
+
+                hdrSubSection4 = BuildSubHeader("O/C Voltage 0.5 Hr [V]", "Pale Orange", 960f, iVert);
+                SectionTableRow3.AddSubview(hdrSubSection4);
+                iVert += iSectionHdrRowHeight;
+                iSectionHeightId += iSectionHdrRowHeight;
+                iLayoutVert += iSectionHdrRowHeight;
+
+                //Now add in all the cell headings and details
+                DataSet dsOCVolts05 = ITPBattTest.GetBatteryAcceptTestType2Records(m_sPassedId, m_PwrId, m_BankNo, ITPBattTest.sITPBatteryAcceptTestOCVolts05HrTableName);
+                UIView vwOCVolts05 = BuildType2Row(iVert, 3, m_iSections,dsOCVolts05,iNoCells, bReadOnly, "Pale Orange", ref iHeightToAdd);
+                SectionTableRow3.AddSubview(vwOCVolts05);
+                layout.AddSubview(SectionTableRow3);
+
+                iVert += iHeightToAdd;
+                iSectionHeightId += iHeightToAdd;
+                iLayoutVert += iHeightToAdd;
+
+                //this UILabel is created int BuildPwrIdHeader function
+                UILabel hfSectionEquipmentHeight3 = (UILabel)View.ViewWithTag (iSectionHeightTagId * (m_iSections));
+                hfSectionEquipmentHeight3.Text = iSectionHeightId.ToString();
+
+                //Resize the main frame for the section
+                RectangleF frame3 = SectionTableRow3.Frame;
+                frame3.Height = iSectionHeightId;
+                SectionTableRow3.Frame = frame3;
+
+                /********************************************************************************/
+                //              Short Discharge Tests at 20 Min                                 //
+                /********************************************************************************/
+                iThisHdrRowHeight = 40f;
+                hdrSection5 = BuildSectionHeader(m_iSections, "20 Minute Short Discharge Test. Overall String Voltage: Mandatory to Record All Intervals", iLayoutVert, ref iThisHdrRowHeight,1);
+                layout.AddSubview(hdrSection5);
+
+                iLayoutVert += iThisHdrRowHeight;
+
+                UIView SectionTableRow5 = new UIView();
+                SectionTableRow5.Frame = new RectangleF(0f,iLayoutVert,1000f,iThisHdrRowHeight);
+                SectionTableRow5.Tag = iContainerSectionTagId * (m_iSections);
+
+                iVert = 0.0f; //Reset for this section
+                iSectionHeightId = 0.0f; //Reset for this section
+
+                hdrSubSection6 = BuildSubHeader("Discharge Voltage [V] at 20 minutes", "Pale Yellow", 960f, iVert);
+                SectionTableRow5.AddSubview(hdrSubSection6);
+                iVert += iSectionHdrRowHeight;
+                iSectionHeightId += iSectionHdrRowHeight;
+                iLayoutVert += iSectionHdrRowHeight;
+
+                //Now add in all the cell headings and details
+                DataSet dsDischargeVolts = ITPBattTest.GetBatteryAcceptTestType1Records(m_sPassedId, m_PwrId, m_BankNo, ITPBattTest.sITPBatteryAcceptTestDischargeVoltTableName);
+                UIView vwDischargeVolts = BuildType1Row(iVert, 4, m_iSections,dsDischargeVolts, bReadOnly, "Pale Yellow", ref iHeightToAdd);
+                SectionTableRow5.AddSubview(vwDischargeVolts);
+
+                iVert += iHeightToAdd;
+                iSectionHeightId += iHeightToAdd;
+                iLayoutVert += iHeightToAdd;
+
+                hdrSubSection6 = BuildSubHeader("Discharge Current [A] at 20 Minutes", "Pale Orange", 960f, iVert);
+                SectionTableRow5.AddSubview(hdrSubSection6);
+                iVert += iSectionHdrRowHeight;
+                iSectionHeightId += iSectionHdrRowHeight;
+                iLayoutVert += iSectionHdrRowHeight;
+
+                //Now add in all the cell headings and details
+                DataSet dsDischargeCurrent = ITPBattTest.GetBatteryAcceptTestType1Records(m_sPassedId, m_PwrId, m_BankNo, ITPBattTest.sITPBatteryAcceptTestDischargeCurrentTableName);
+                UIView vwDischargeCurrent = BuildType1Row(iVert, 5, m_iSections,dsDischargeCurrent, bReadOnly, "Pale Orange", ref iHeightToAdd);
+                SectionTableRow5.AddSubview(vwDischargeCurrent);
+                layout.AddSubview(SectionTableRow5);
+
+                iVert += iHeightToAdd;
+                iSectionHeightId += iHeightToAdd;
+                iLayoutVert += iHeightToAdd;
+
+                //this UILabel is created int BuildPwrIdHeader function
+                UILabel hfSectionEquipmentHeight5 = (UILabel)View.ViewWithTag (iSectionHeightTagId * (m_iSections));
+                hfSectionEquipmentHeight5.Text = iSectionHeightId.ToString();
+
+                //Resize the main frame for the section
+                RectangleF frame5 = SectionTableRow5.Frame;
+                frame5.Height = iSectionHeightId;
+                SectionTableRow5.Frame = frame5;
+
 
                 /********************************************************************************/
                 //              RESIZING AND HOLDING INFO IN HIDDEN FIELDS                      //
                 /********************************************************************************/
-                //Resize the main frame for the section
-                RectangleF frame1 = SectionTableRow.Frame;
-                frame1.Height = iSectionHeightId;
-                SectionTableRow.Frame = frame1;
 
 
                 //Resize the scroll frame
-                iTotalHeight = iVert + 280f;
+                iTotalHeight = iLayoutVert + 300f;
                 SizeF layoutSize = new SizeF(1000f, iTotalHeight);
                 layout.ContentSize = layoutSize;
 
@@ -1296,8 +1454,36 @@ namespace ITPiPadSoln
             return SectionPwrIdRow;
         }
 
-        //The SectionId is a number for the section 1, 2, 3 etc
-        public UIView BuildSectionHeader(int iSectionId, string sSectionDesc, float iVertPosition, float iSectionHdrRowHeight, int iRows)
+        public UIView BuildSubHeader(string sHeaderDescription, string sColour, float iWidth, float iVertPositionWithinSection)
+        {
+            float iSectionHdrRowHeight = 40f;
+            UIView[] arrItems = new UIView[1];
+
+            //Add in the section title and buttons for each section header
+            UIView SectionSubHdrRow = new UIView();
+            SectionSubHdrRow.Frame = new RectangleF(0f,iVertPositionWithinSection,iWidth,iSectionHdrRowHeight);
+            SectionSubHdrRow.Tag = iPwrIdHdrRowTagId;
+
+
+            iUtils.CreateFormGridItem SectionPwrIdLabel = new iUtils.CreateFormGridItem();
+            UIView SectionPwrIdLabelVw = new UIView();
+            SectionPwrIdLabel.SetDimensions(0f,0f, iWidth, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+            SectionPwrIdLabel.SetLabelText(sHeaderDescription);
+            SectionPwrIdLabel.SetBorderWidth(0.0f);
+            SectionPwrIdLabel.SetFontName("Verdana-Bold");
+            SectionPwrIdLabel.SetTextColour("Black");
+            SectionPwrIdLabel.SetFontSize(16f);
+            SectionPwrIdLabel.SetCellColour(sColour);
+            SectionPwrIdLabel.SetTag(iPwrIdHdrLabelTagId);
+            SectionPwrIdLabelVw = SectionPwrIdLabel.GetLabelCell();
+            arrItems[0] = SectionPwrIdLabelVw;
+
+            SectionSubHdrRow.AddSubviews(arrItems);
+
+            return SectionSubHdrRow;
+        }
+
+        public UIView BuildSectionHeader(int iSectionId, string sSectionDesc, float iVertPosition, ref float iSectionHdrRowHeight, int iRows)
         {
             float iVert = iVertPosition;
             UIView[] arrItems4 = new UIView[9];
@@ -1326,8 +1512,9 @@ namespace ITPiPadSoln
 
             iUtils.CreateFormGridItem SectionEquipment = new iUtils.CreateFormGridItem();
             UIView SectionEquipmentVw = new UIView();
-            SectionEquipment.SetDimensions(0f,0f, 400f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+            SectionEquipment.SetDimensions(0f,0f, 650f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
             SectionEquipment.SetLabelText(sSectionDesc);
+            SectionEquipment.SetLabelWrap(1);
             SectionEquipment.SetBorderWidth(0.0f);
             SectionEquipment.SetFontName("Verdana-Bold");
             SectionEquipment.SetTextColour("White");
@@ -1335,6 +1522,7 @@ namespace ITPiPadSoln
             SectionEquipment.SetCellColour("DarkSlateGrey");
             SectionEquipment.SetTag(iSectionDescTagId * (iSectionId+1));
             SectionEquipmentVw = SectionEquipment.GetLabelCell();
+            iSectionHdrRowHeight = SectionEquipment.GetCellHeight();
             arrItems4[1] = SectionEquipmentVw;
 
             if(SectionFullyCommitted(iSectionId))
@@ -1357,7 +1545,7 @@ namespace ITPiPadSoln
 
             iUtils.CreateFormGridItem SectionCompleteLabel = new iUtils.CreateFormGridItem();
             UIView SectionCompleteLabelVw = new UIView();
-            SectionCompleteLabel.SetDimensions(400f,0f, 350f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
+            SectionCompleteLabel.SetDimensions(650f,0f, 100f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
             if(bFullyCommitted)
             {
                 SectionCompleteLabel.SetLabelText("COMMITTED");
@@ -1453,6 +1641,253 @@ namespace ITPiPadSoln
             m_iSections++;
 
             return SectionEquipmentRow;
+        }
+
+        public UIView BuildType1Row(float iSectionVertical, int iUniqueRowId, int iSectionId, DataSet ds, bool bReadOnly, string sColour, ref float iTotalRowHeight)
+        {
+            int iNoOfCells = 24; //Here the cell count is text box cells not battery cells (just using the same variable name for convenience)
+            int i;
+            int j;
+            float iHrdRowHeight = 20f;
+            float iEditRowHeight = 40f;
+            UIView[] arrItems = new UIView[3];
+            float iVert = 0.0f;
+            UIView vwContainer = new UIView();
+            int iColNo = 0;
+            double dCellValue = 0.0;
+            string sCellValue = "";
+            clsLocalUtils clsUtil = new clsLocalUtils();
+
+            string[] sCellColumn = new string[24];
+            sCellColumn [0] = "Sec0";
+            sCellColumn [1] = "Sec15";
+            sCellColumn [2] = "Sec30";
+            sCellColumn [3] = "Sec45";
+            sCellColumn [4] = "Min1";
+            sCellColumn [5] = "Min1_15";
+            sCellColumn [6] = "Min1_30";
+            sCellColumn [7] = "Min1_45";
+            sCellColumn [8] = "Min2";
+            sCellColumn [9] = "Min2_15";
+            sCellColumn [10] = "Min2_30";
+            sCellColumn [11] = "Min2_45";
+            sCellColumn [12] = "Min3";
+            sCellColumn [13] = "Min4";
+            sCellColumn [14] = "Min5";
+            sCellColumn [15] = "Min6";
+            sCellColumn [16] = "Min7";
+            sCellColumn [17] = "Min8";
+            sCellColumn [18] = "Min10";
+            sCellColumn [19] = "Min12";
+            sCellColumn [20] = "Min14";
+            sCellColumn [21] = "Min16";
+            sCellColumn [22] = "Min18";
+            sCellColumn [23] = "Min20";
+
+            string[] sCellHeader = new string[24];
+            sCellHeader [0] = "0 sec";
+            sCellHeader [1] = "15 sec";
+            sCellHeader [2] = "30 sec";
+            sCellHeader [3] = "45 sec";
+            sCellHeader [4] = "1 min";
+            sCellHeader [5] = "1 m 15 s";
+            sCellHeader [6] = "1 min 30 s";
+            sCellHeader [7] = "1 min 45 s";
+            sCellHeader [8] = "2 min";
+            sCellHeader [9] = "2 m 15 s";
+            sCellHeader [10] = "2 m 30 s";
+            sCellHeader [11] = "2 m 45 s";
+            sCellHeader [12] = "3 min";
+            sCellHeader [13] = "4 min";
+            sCellHeader [14] = "5 min";
+            sCellHeader [15] = "6 min";
+            sCellHeader [16] = "7 min";
+            sCellHeader [17] = "8 min";
+            sCellHeader [18] = "10 min";
+            sCellHeader [19] = "12 min";
+            sCellHeader [20] = "14 min";
+            sCellHeader [21] = "16 min";
+            sCellHeader [22] = "18 min";
+            sCellHeader [23] = "20 min";
+
+            for (i=0; i<iNoOfCells; i++)
+            {
+                j = i;
+                if (i == 12)
+                {
+                    iVert += iHrdRowHeight + iEditRowHeight;
+                }
+
+                if (i >= 12)
+                {
+                    j = i - 12;
+                }
+
+                iUtils.CreateFormGridItem lblCellLabel = new iUtils.CreateFormGridItem();
+                UIView lblCellLabelVw = new UIView();
+                lblCellLabel.SetDimensions(80f * j,iVert, 80f, iHrdRowHeight, 2f, 2f, 2f, 2f);
+                lblCellLabel.SetLabelText(sCellHeader[i]);
+                lblCellLabel.SetBorderWidth(1.0f);
+                lblCellLabel.SetHideBorder(false, false, true, false);
+                lblCellLabel.SetFontName("Verdana");
+                lblCellLabel.SetFontSize(12f);
+                lblCellLabel.SetTag((iType1234CellBaseLabelId * iUniqueRowId) + (i+1));
+                lblCellLabel.SetCellColour(sColour);
+                lblCellLabelVw = lblCellLabel.GetLabelCell();
+                arrItems [0] = lblCellLabelVw;
+
+                iColNo = ds.Tables[0].Columns[sCellColumn[i]].Ordinal;
+                sCellValue = ds.Tables[0].Rows[0].ItemArray[iColNo].ToString();
+                if(clsUtil.IsNumeric(sCellValue))
+                {
+                    dCellValue = Convert.ToDouble(sCellValue);
+                }
+                else
+                {
+                    dCellValue = 0.0;
+                }
+
+                iUtils.CreateFormGridItem lblCell = new iUtils.CreateFormGridItem();
+                UIView lblCellVw = new UIView();
+                lblCell.SetDimensions(80f * j, iVert + iHrdRowHeight, 80f, iEditRowHeight, 5f, 3f, 5f, 3f);
+                lblCell.SetLabelText(dCellValue.ToString());
+                lblCell.SetBorderWidth(1.0f);
+                lblCell.SetFontName("Verdana");
+                lblCell.SetFontSize(12f);
+                lblCell.SetTag((iType1234CellBaseId * iUniqueRowId) + (i+1));
+                lblCell.SetCellColour(sColour);
+
+                lblCellVw = lblCell.GetTextFieldCell();
+                UITextField txtCellView = lblCell.GetTextFieldView();
+                txtCellView.AutocorrectionType = UITextAutocorrectionType.No;
+                txtCellView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
+                txtCellView.ReturnKeyType = UIReturnKeyType.Next;
+                txtCellView.ShouldBeginEditing += (sender) => {
+                    return SetGlobalEditItems(sender, (100 * iSectionId));};
+                txtCellView.ShouldEndEditing += (sender) => {
+                    return ValidateNumberOnly(sender,0, iSectionId - 1);};
+                txtCellView.ShouldReturn += (sender) => {
+                    return MoveNextTextField(sender, (100 * iUniqueRowId));};
+
+                if(bReadOnly)
+                {
+                    txtCellView.Enabled = false;
+                }
+
+                arrItems[1] = lblCellVw;
+
+                UILabel hfCurrentCell = new UILabel();
+                hfCurrentCell.Text = dCellValue.ToString();
+                hfCurrentCell.Tag = (iType1234CellBaseId * iUniqueRowId) + (i+1) + (iType1234CellBaseHiddenId - iType1234CellBaseId);
+                hfCurrentCell.Hidden = true;
+                arrItems[2] = hfCurrentCell;
+
+                vwContainer.AddSubviews(arrItems);
+
+            }
+
+            iTotalRowHeight = iVert + iHrdRowHeight + iEditRowHeight;
+            vwContainer.Frame = new RectangleF(0f,iSectionVertical,1000f,iTotalRowHeight);
+            vwContainer.Tag = iType1234CellContainerTagId * iUniqueRowId;
+            return vwContainer;
+        }
+
+        public UIView BuildType2Row(float iSectionVertical, int iUniqueRowId, int iSectionId, DataSet ds, int iNoOfCells, bool bReadOnly, string sColour, ref float iTotalRowHeight)
+        {
+            int i;
+            int j;
+            float iHrdRowHeight = 20f;
+            float iEditRowHeight = 40f;
+            UIView[] arrItems = new UIView[3];
+            float iVert = 0.0f;
+            UIView vwContainer = new UIView();
+            int iColNo = 0;
+            string sCellNo = "";
+            double dCellValue = 0.0;
+            string sCellValue = "";
+            clsLocalUtils clsUtil = new clsLocalUtils();
+
+            for (i=0; i<iNoOfCells; i++)
+            {
+                sCellNo = (i + 1).ToString();
+                j = i;
+                if (i == 12)
+                {
+                    iVert += iHrdRowHeight + iEditRowHeight;
+                }
+
+                if (i >= 12)
+                {
+                    j = i - 12;
+                }
+
+                iUtils.CreateFormGridItem lblCellLabel = new iUtils.CreateFormGridItem();
+                UIView lblCellLabelVw = new UIView();
+                lblCellLabel.SetDimensions(80f * j,iVert, 80f, iHrdRowHeight, 2f, 2f, 2f, 2f);
+                lblCellLabel.SetLabelText(sCellNo);
+                lblCellLabel.SetBorderWidth(1.0f);
+                lblCellLabel.SetHideBorder(false, false, true, false);
+                lblCellLabel.SetFontName("Verdana");
+                lblCellLabel.SetFontSize(12f);
+                lblCellLabel.SetTag((iType1234CellBaseLabelId * iUniqueRowId) + (i+1));
+                lblCellLabel.SetCellColour(sColour);
+                lblCellLabelVw = lblCellLabel.GetLabelCell();
+                arrItems [0] = lblCellLabelVw;
+
+                iColNo = ds.Tables[0].Columns["Cell" + sCellNo].Ordinal;
+                sCellValue = ds.Tables[0].Rows[0].ItemArray[iColNo].ToString();
+                if(clsUtil.IsNumeric(sCellValue))
+                {
+                    dCellValue = Convert.ToDouble(sCellValue);
+                }
+                else
+                {
+                    dCellValue = 0.0;
+                }
+
+                iUtils.CreateFormGridItem lblCell = new iUtils.CreateFormGridItem();
+                UIView lblCellVw = new UIView();
+                lblCell.SetDimensions(80f * j, iVert + iHrdRowHeight, 80f, iEditRowHeight, 5f, 3f, 5f, 3f);
+                lblCell.SetLabelText(dCellValue.ToString());
+                lblCell.SetBorderWidth(1.0f);
+                lblCell.SetFontName("Verdana");
+                lblCell.SetFontSize(12f);
+                lblCell.SetTag((iType1234CellBaseId * iUniqueRowId) + (i+1));
+                lblCell.SetCellColour(sColour);
+
+                lblCellVw = lblCell.GetTextFieldCell();
+                UITextField txtCellView = lblCell.GetTextFieldView();
+                txtCellView.AutocorrectionType = UITextAutocorrectionType.No;
+                txtCellView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
+                txtCellView.ReturnKeyType = UIReturnKeyType.Next;
+                txtCellView.ShouldBeginEditing += (sender) => {
+                    return SetGlobalEditItems(sender, (100 * iSectionId));};
+                txtCellView.ShouldEndEditing += (sender) => {
+                    return ValidateNumberOnly(sender,0, iSectionId - 1);};
+                txtCellView.ShouldReturn += (sender) => {
+                    return MoveNextTextField(sender, (100 * iUniqueRowId));};
+
+                if(bReadOnly)
+                {
+                    txtCellView.Enabled = false;
+                }
+
+                arrItems[1] = lblCellVw;
+
+                UILabel hfCurrentCell = new UILabel();
+                hfCurrentCell.Text = dCellValue.ToString();
+                hfCurrentCell.Tag = (iType1234CellBaseId * iUniqueRowId) + (i+1) + (iType1234CellBaseHiddenId - iType1234CellBaseId);
+                hfCurrentCell.Hidden = true;
+                arrItems[2] = hfCurrentCell;
+
+                vwContainer.AddSubviews(arrItems);
+
+            }
+
+            iTotalRowHeight = iVert + iHrdRowHeight + iEditRowHeight;
+            vwContainer.Frame = new RectangleF(0f,iSectionVertical,1000f,iTotalRowHeight);
+            vwContainer.Tag = iType1234CellContainerTagId * iUniqueRowId;
+            return vwContainer;
         }
 
         public void OpenCellMbVoltageList (object sender, EventArgs e)
@@ -1573,6 +2008,14 @@ namespace ITPiPadSoln
 
         public void CheckUnsaved ()
         {
+        int iSectionId = -1;
+
+            if (m_iValidateType >= 100 && m_iValidateType <= 5000)
+            {
+                iSectionId = m_iValidateType / 100;
+                m_iValidateType = 100;
+            }
+
             //First of all validate anything required
             switch(m_iValidateType)
             {
@@ -1601,6 +2044,14 @@ namespace ITPiPadSoln
                         return;
                     }
                     break;
+                case 100: //Cell type items
+                    if(!ValidateNumberOnly(m_sender, 1, iSectionId))
+                    {
+                        gbSuppressSecondCheck = false;
+                        return;
+                    }
+                    break;
+
             }
 
             UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
@@ -1770,7 +2221,6 @@ namespace ITPiPadSoln
         public void SetCommentsTextChanged(object sender, EventArgs e)
         {
             UITextView edtText = (UITextView)sender;
-            int iTagId = edtText.Tag;
             int iSection =  m_i20MinSection;
             SetSectionValueChanged(iSection + 1);
             SetAnyValueChanged(sender, null, iSection);
@@ -1799,13 +2249,8 @@ namespace ITPiPadSoln
 
             if (sNumberFieldHidden != sNumberReturn)
             {
-                switch (iSectionId)
-                {
-                    case 0: //Header section
-                        UILabel lblUnsavedSectionFlag = (UILabel)View.ViewWithTag((m_i20MinSection + 1) * iSectionStatusTagId);
-                        lblUnsavedSectionFlag.Text = "1";
-                        break;
-                }
+                UILabel lblUnsavedSectionFlag = (UILabel)View.ViewWithTag((iSectionId + 1) * iSectionStatusTagId);
+                lblUnsavedSectionFlag.Text = "1";
                 SetAnyValueChanged(sender, null, iSectionId);
             }
 
@@ -1815,8 +2260,6 @@ namespace ITPiPadSoln
         public bool CheckboxChanged(object sender, EventArgs e, int iCheckboxIndex, int iSectionId)
         {
             UISwitch checkbox = (UISwitch)sender;
-            int iTagId = checkbox.Tag;
-
             SetSectionValueChanged(iSectionId + 1);
             SetAnyValueChanged(sender, null, iSectionId);
             return true;
@@ -2046,27 +2489,26 @@ namespace ITPiPadSoln
         {
             UITextField txtField = (UITextField)sender;
             UITextField txtNext;
+            int iUniqueRowId = 0;
+            int iCellNo = 0;
+            int iNextCellId = 0;
             txtField.ResignFirstResponder();
-//            int iTextTagId = 0;
-//
-//            switch (iTextFieldIndex)
-//            {
-//                case 1:
-//                    iTextTagId = iInspectedByTagId;
-//                    break;
-//                case 2:
-//                    iTextTagId = iInspectedDateTagId;
-//                    break;
-//                case 3:
-//                    iTextTagId = iTestDateTagId;
-//                    break;
-//                case 4:
-//                    iTextTagId = iFloatVoltPriorTagId;
-//                    break;
-//                case 5:
-//                    iTextTagId = iChargePeriodPriorTagId;
-//                    break;
-//            }
+            int iTextTagId = txtField.Tag;
+
+            if (iTextFieldIndex >= 100 && iTextFieldIndex <= 5000) //This allow for about 49 battery test rows
+            {
+                iUniqueRowId = iTextFieldIndex / 100;
+                iCellNo = iTextTagId - (iUniqueRowId * iType1234CellBaseId);
+                iTextFieldIndex = 100;
+                if (iCellNo >= 24)
+                {
+                    iNextCellId = (iUniqueRowId * iType1234CellBaseId) + 1; //Go back to the 1st cell
+                }
+                else
+                {
+                    iNextCellId = (iUniqueRowId * iType1234CellBaseId) + (iCellNo + 1);
+                }
+            }
 
             switch (iTextFieldIndex) 
             {
@@ -2117,7 +2559,17 @@ namespace ITPiPadSoln
 
                     txtNext = (UITextField)View.ViewWithTag (iBatteryCapacityTagId);
                     break;
-                case 6: //Coming from battery capacity back to inspected by
+                case 6: //Coming from battery capacity to discharge load
+                    if(m_bSuppressMove) //This is required on the validate because the endediting and return delegates both fire
+                    {
+                        m_bSuppressMove = false;
+                        return false;
+                    }
+
+                    txtNext = (UITextField)View.ViewWithTag (iDischargeLoadTagId);
+                    break;
+
+                case 7: //Coming from discharge load back to inspected by
                     if(m_bSuppressMove) //This is required on the validate because the endediting and return delegates both fire
                     {
                         m_bSuppressMove = false;
@@ -2126,7 +2578,17 @@ namespace ITPiPadSoln
 
                     txtNext = (UITextField)View.ViewWithTag (iInspectedByTagId);
                     break;
-}
+
+                case 100:
+                    if(m_bSuppressMove) //This is required on the validate because the endediting and return delegates both fire
+                    {
+                        m_bSuppressMove = false;
+                        return false;
+                    }
+
+                    txtNext = (UITextField)View.ViewWithTag (iNextCellId);
+                    break;
+            }
 
             txtNext.BecomeFirstResponder();
 

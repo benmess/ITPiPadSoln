@@ -124,7 +124,7 @@ namespace ITPiPadSoln
         UIView m_vwSearch;
         int m_BankNo = -1;
         string m_PwrId = "";
-        string m_SPN = ""
+        string m_SPN = "";
         
         UITableView m_cmbSearch;
         UIButton m_btnSearching;
