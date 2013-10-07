@@ -16,7 +16,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 4,1
-	.asciz "Mono AOT Compiler 3.2.3 (monotouch-7.0-branch/e94dd8d Wed Sep 18 16:31:38 EDT 2013)"
+	.asciz "Mono AOT Compiler 3.2.3 (monotouch-7.0.1-branch/6d04712 Fri Sep 20 23:02:48 EDT 2013)"
 	.asciz "JITted code"
 	.asciz ""
 
@@ -40384,36 +40384,36 @@ extra_method_info_offsets:
 class_name_table:
 
 	.short 109, 27, 116, 0, 0, 0, 0, 0
-	.short 0, 0, 0, 50, 0, 0, 0, 0
+	.short 0, 0, 0, 0, 0, 0, 0, 0
 	.short 0, 0, 0, 9, 0, 5, 0, 17
 	.short 109, 20, 0, 15, 119, 0, 0, 0
 	.short 0, 0, 0, 0, 0, 45, 0, 0
-	.short 0, 0, 0, 0, 0, 0, 0, 32
+	.short 0, 51, 121, 0, 0, 0, 0, 32
 	.short 114, 3, 0, 0, 0, 35, 0, 0
 	.short 0, 0, 0, 0, 0, 12, 0, 0
-	.short 0, 0, 0, 0, 0, 0, 0, 4
+	.short 0, 53, 0, 0, 0, 0, 0, 4
 	.short 110, 33, 0, 11, 113, 7, 0, 0
 	.short 0, 46, 0, 10, 0, 0, 0, 0
 	.short 0, 19, 0, 1, 0, 29, 0, 0
 	.short 0, 0, 0, 23, 117, 0, 0, 0
 	.short 0, 0, 0, 0, 0, 0, 0, 0
-	.short 0, 0, 0, 16, 121, 0, 0, 43
+	.short 0, 0, 0, 16, 0, 0, 0, 43
 	.short 0, 21, 111, 2, 0, 0, 0, 0
 	.short 0, 0, 0, 48, 0, 26, 0, 0
 	.short 0, 28, 0, 0, 0, 0, 0, 0
 	.short 0, 0, 0, 0, 0, 0, 0, 13
-	.short 0, 52, 0, 14, 0, 0, 0, 0
+	.short 0, 0, 0, 14, 0, 0, 0, 0
 	.short 0, 0, 0, 0, 0, 0, 0, 41
 	.short 0, 0, 0, 34, 0, 0, 0, 30
 	.short 120, 0, 0, 0, 0, 0, 0, 0
 	.short 0, 0, 0, 8, 0, 0, 0, 40
 	.short 0, 0, 0, 0, 0, 0, 0, 0
-	.short 0, 0, 0, 6, 0, 0, 0, 0
+	.short 0, 0, 0, 6, 0, 0, 0, 50
 	.short 0, 0, 0, 18, 0, 0, 0, 0
 	.short 0, 0, 0, 22, 0, 24, 112, 25
 	.short 115, 31, 0, 36, 0, 37, 118, 38
-	.short 0, 39, 122, 42, 0, 44, 0, 47
-	.short 0, 49, 0, 51, 0, 53, 0
+	.short 0, 39, 0, 42, 0, 44, 0, 47
+	.short 0, 49, 0, 52, 0
 .section __TEXT, __const
 	.align 3
 got_info_offsets:
@@ -44623,28 +44623,28 @@ image_table:
 
 	.long 5
 	.asciz "Mono.Data.Sqlite"
-	.asciz "E997D0E6-DB3A-4C8A-85FA-FF7C9BF76249"
+	.asciz "6A00E226-AB41-4461-8F64-21A6914B600E"
 	.asciz ""
 	.asciz "0738eb9f132ed756"
 	.align 3
 
 	.long 1,2,0,5,0
 	.asciz "mscorlib"
-	.asciz "27786CD3-BF6F-4FDC-94A5-3FBB53715D9A"
+	.asciz "03838153-D010-4B88-8A4B-CD078C3CB16D"
 	.asciz ""
 	.asciz "7cec85d7bea7798e"
 	.align 3
 
 	.long 1,2,0,5,0
 	.asciz "System.Data"
-	.asciz "67F46404-096C-460D-87A6-17234DC2282A"
+	.asciz "8BD3EED4-B02C-4C3B-9232-B1FF6B6CEC9B"
 	.asciz ""
 	.asciz "b77a5c561934e089"
 	.align 3
 
 	.long 1,2,0,5,0
 	.asciz "System"
-	.asciz "424E87C8-BD71-49C4-95D7-E2E4FAAE7F3D"
+	.asciz "80C80020-5DD5-4D8A-A27B-326D9166B102"
 	.asciz ""
 	.asciz "7cec85d7bea7798e"
 	.align 3
@@ -44665,7 +44665,7 @@ got_end:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "E997D0E6-DB3A-4C8A-85FA-FF7C9BF76249"
+	.asciz "6A00E226-AB41-4461-8F64-21A6914B600E"
 .section __TEXT, __const
 	.align 2
 runtime_version:

@@ -504,11 +504,6 @@ namespace ITPiPadSoln
 		
 		public bool DownloadProjectITPInfo(string sId, string sDescription, string sUser, string sSessionId)
 		{
-//			var txtName = (UILabel)View.ViewWithTag (20);
-//			string sUser = txtName.Text;
-//			var hfSessionId = (UILabel)View.ViewWithTag (70);
-//			string sSessionId = hfSessionId.Text;
-		
 			//First get all the static info
 			if (DownloadStaticTables(sUser, sSessionId))
 			{
@@ -535,12 +530,12 @@ namespace ITPiPadSoln
 							string[] delimiters = new string[] { "||" };
 							string[] sHeaderItems = sHeaderInfo[1].Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
 							int iHeaderCount = sHeaderItems.Length;
-							if (iHeaderCount > 0)
-							{
-								//First check if the header table exists and if not create it
-								clsTabletDB.ITPHeaderTable ITPDB = new clsTabletDB.ITPHeaderTable();
-								if (ITPDB.CheckHeaderTable())
-								{
+                            //First check if the header table exists and if not create it
+                            clsTabletDB.ITPHeaderTable ITPDB = new clsTabletDB.ITPHeaderTable();
+                            if (ITPDB.CheckHeaderTable())
+                            {
+    							if (iHeaderCount > 0)
+    							{
 									this.InvokeOnMainThread(() => { 
 										progBarProjITPHeaderVw.SetProgressBarTitle("Downloading ITP header info for project " + sId);
 										progBarProjITPHeaderVw.ShowProgressBar(iHeaderCount); 
@@ -586,12 +581,12 @@ namespace ITPiPadSoln
 								string[] delimiters3 = new string[] { "||" };
 								string[] sProjectQuestions = sProjQuestionInfo[1].Split(delimiters3, StringSplitOptions.RemoveEmptyEntries);
 								int iHeaderCount3 = sProjectQuestions.Length;
-								if (iHeaderCount3 > 0)
-								{
-									//First check if the question master table exists and if not create it
-									clsTabletDB.ITPDocumentSection ITPQuest = new clsTabletDB.ITPDocumentSection();
-									if (ITPQuest.CheckQuestionTableMst())
-									{
+                                //First check if the question master table exists and if not create it
+                                clsTabletDB.ITPDocumentSection ITPQuest = new clsTabletDB.ITPDocumentSection();
+                                if (ITPQuest.CheckQuestionTableMst())
+                                {
+    								if (iHeaderCount3 > 0)
+    								{
 										this.InvokeOnMainThread(() => { 
 											progBarProjITPQuestionsVw.SetProgressBarTitle("Downloading ITP questions for project " + sId);
 											progBarProjITPQuestionsVw.ShowProgressBar(iHeaderCount3); 
@@ -640,12 +635,12 @@ namespace ITPiPadSoln
 								string[] delimiters5 = new string[] { "||" };
 								string[] sProjectSection10Items = sProjSection10Info[1].Split(delimiters5, StringSplitOptions.RemoveEmptyEntries);
 								int iHeaderCount5 = sProjectSection10Items.Length;
-								if (iHeaderCount5 > 0)
-								{
-									//First check if the section 10 table exists and if not create it
-									clsTabletDB.ITPDocumentSection ITPSection10 = new clsTabletDB.ITPDocumentSection();
-									if (ITPSection10.CheckSection10Table())
-									{
+                                //First check if the section 10 table exists and if not create it
+                                clsTabletDB.ITPDocumentSection ITPSection10 = new clsTabletDB.ITPDocumentSection();
+                                if (ITPSection10.CheckSection10Table())
+                                {
+    								if (iHeaderCount5 > 0)
+    								{
 										this.InvokeOnMainThread(() => { 
 											progBarProjITPSection10Vw.SetProgressBarTitle("Downloading ITP section 10 items for project " + sId);
 											progBarProjITPSection10Vw.ShowProgressBar(iHeaderCount5); 
@@ -694,11 +689,11 @@ namespace ITPiPadSoln
                                 string[] delimiters5 = new string[] { "||" };
                                 string[] sProjectRFUItems = sProjRFUInfo[1].Split(delimiters5, StringSplitOptions.RemoveEmptyEntries);
                                 int iHeaderCount5 = sProjectRFUItems.Length;
-                                if (iHeaderCount5 > 0)
+                                //First check if the RFU table exists and if not create it
+                                clsTabletDB.ITPDocumentSection ITPRFU = new clsTabletDB.ITPDocumentSection();
+                                if (ITPRFU.CheckRFUTable())
                                 {
-                                    //First check if the RFU table exists and if not create it
-                                    clsTabletDB.ITPDocumentSection ITPRFU = new clsTabletDB.ITPDocumentSection();
-                                    if (ITPRFU.CheckRFUTable())
+                                    if (iHeaderCount5 > 0)
                                     {
                                         this.InvokeOnMainThread(() => { 
                                             progBarProjITPRFUVw.SetProgressBarTitle("Downloading ITP RFU PwrId items for project " + sId);
@@ -734,11 +729,11 @@ namespace ITPiPadSoln
                                         string[] delimiters16 = new string[] { "||" };
                                         string[] sDischargeCurrentItems = sDischargeCurrentInfo[1].Split(delimiters16, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount16 = sDischargeCurrentItems.Length;
-                                        if (iHeaderCount16 > 0)
+                                        //First check if the discharge current table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_DischargeCurrentTable())
                                         {
-                                            //First check if the discharge current table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_DischargeCurrentTable())
+                                            if (iHeaderCount16 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestDischCurrentVw.SetProgressBarTitle("Downloading ITP Battery Discharge Test items for project " + sId);
@@ -776,11 +771,11 @@ namespace ITPiPadSoln
                                         string[] delimiters26 = new string[] { "||" };
                                         string[] sDischargeVoltItems = sDischargeVoltInfo[1].Split(delimiters26, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount26 = sDischargeVoltItems.Length;
-                                        if (iHeaderCount26 > 0)
+                                        //First check if the batt test discharge voltage table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_DischargeVoltTable())
                                         {
-                                            //First check if the batt test discharge voltage table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_DischargeVoltTable())
+                                            if (iHeaderCount26 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestDischVoltVw.SetProgressBarTitle("Downloading ITP Battery Test Discharge Volt items for project " + sId);
@@ -818,11 +813,11 @@ namespace ITPiPadSoln
                                         string[] delimiters36 = new string[] { "||" };
                                         string[] sFloatRecordItems = sFloatRecordInfo[1].Split(delimiters36, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount36 = sFloatRecordItems.Length;
-                                        if (iHeaderCount36 > 0)
+                                        //First check if the batt test float record table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_FloatRecordTable())
                                         {
-                                            //First check if the batt test float record table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_FloatRecordTable())
+                                            if (iHeaderCount36 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestFloatRecordVw.SetProgressBarTitle("Downloading ITP Battery Test Float Record items for project " + sId);
@@ -860,11 +855,11 @@ namespace ITPiPadSoln
                                         string[] delimiters46 = new string[] { "||" };
                                         string[] sBattTestHdrItems = sBattTestHdrInfo[1].Split(delimiters46, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount46 = sBattTestHdrItems.Length;
-                                        if (iHeaderCount46 > 0)
+                                        //First check if the batt test header table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_HeaderTable())
                                         {
-                                            //First check if the batt test header table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_HeaderTable())
+                                            if (iHeaderCount46 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestHeaderVw.SetProgressBarTitle("Downloading ITP Battery Test Header items for project " + sId);
@@ -902,11 +897,11 @@ namespace ITPiPadSoln
                                         string[] delimiters56 = new string[] { "||" };
                                         string[] sLink1to3Items = sLink1to3Info[1].Split(delimiters56, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount56 = sLink1to3Items.Length;
-                                        if (iHeaderCount56 > 0)
+                                        //First check if the batt test link 1 to 3 table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_Link1To3Table())
                                         {
-                                            //First check if the batt test link 1 to 3 table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_Link1To3Table())
+                                            if (iHeaderCount56 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestLink1to3Vw.SetProgressBarTitle("Downloading ITP Battery Test Link 1 to 3 items for project " + sId);
@@ -944,11 +939,11 @@ namespace ITPiPadSoln
                                         string[] delimiters66 = new string[] { "||" };
                                         string[] sLink2to3Items = sLink2to3Info[1].Split(delimiters66, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount66 = sLink2to3Items.Length;
-                                        if (iHeaderCount66 > 0)
+                                        //First check if the batt test link 2 to 3 table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_Link2To3Table())
                                         {
-                                            //First check if the batt test link 2 to 3 table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_Link2To3Table())
+                                            if (iHeaderCount66 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestLink2to3Vw.SetProgressBarTitle("Downloading ITP Battery Test Link 2 to 3 items for project " + sId);
@@ -986,11 +981,11 @@ namespace ITPiPadSoln
                                         string[] delimiters76 = new string[] { "||" };
                                         string[] sLink3to3Items = sLink3to3Info[1].Split(delimiters76, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount76 = sLink3to3Items.Length;
-                                        if (iHeaderCount76 > 0)
+                                        //First check if the batt test link 3 to 3 table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_Link3To3Table())
                                         {
-                                            //First check if the batt test link 3 to 3 table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_Link3To3Table())
+                                            if (iHeaderCount76 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestLink3to3Vw.SetProgressBarTitle("Downloading ITP Battery Test Link 3 to 3 items for project " + sId);
@@ -1028,11 +1023,11 @@ namespace ITPiPadSoln
                                         string[] delimiters86 = new string[] { "||" };
                                         string[] sOCVolts05HrItems = sOCVolts05HrInfo[1].Split(delimiters86, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount86 = sOCVolts05HrItems.Length;
-                                        if (iHeaderCount86 > 0)
+                                        //First check if the batt test OC Volts 05Hr table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_OCVolts05HrTable())
                                         {
-                                            //First check if the batt test OC Volts 05Hr table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_OCVolts05HrTable())
+                                            if (iHeaderCount86 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestOCVolts05HrVw.SetProgressBarTitle("Downloading ITP Battery Test OC Volatge at 0.5 hr items for project " + sId);
@@ -1070,11 +1065,11 @@ namespace ITPiPadSoln
                                         string[] delimiters96 = new string[] { "||" };
                                         string[] sUnpackedItems = sUnpackedInfo[1].Split(delimiters96, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount96 = sUnpackedItems.Length;
-                                        if (iHeaderCount96 > 0)
+                                        //First check if the batt test unpacked table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_UnpackedTable())
                                         {
-                                            //First check if the batt test unpacked table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_UnpackedTable())
+                                            if (iHeaderCount96 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestUnpackedVw.SetProgressBarTitle("Downloading ITP Battery Test Unpacked items for project " + sId);
@@ -1112,11 +1107,11 @@ namespace ITPiPadSoln
                                         string[] delimiters106 = new string[] { "||" };
                                         string[] sVolts5MinItems = sVolts5MinInfo[1].Split(delimiters106, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount106 = sVolts5MinItems.Length;
-                                        if (iHeaderCount106 > 0)
+                                        //First check if the batt test Volts 5 Min table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_Volts5MinTable())
                                         {
-                                            //First check if the batt test Volts 5 Min table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_Volts5MinTable())
+                                            if (iHeaderCount106 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestVolts5MinVw.SetProgressBarTitle("Downloading ITP Battery Test Voltage at 5 min items for project " + sId);
@@ -1154,11 +1149,11 @@ namespace ITPiPadSoln
                                         string[] delimiters116 = new string[] { "||" };
                                         string[] sVolts10MinItems = sVolts10MinInfo[1].Split(delimiters116, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount116 = sVolts10MinItems.Length;
-                                        if (iHeaderCount116 > 0)
+                                        //First check if the batt test Volts 10 Min table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_Volts10MinTable())
                                         {
-                                            //First check if the batt test Volts 10 Min table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_Volts10MinTable())
+                                            if (iHeaderCount116 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestVolts10MinVw.SetProgressBarTitle("Downloading ITP Battery Test Voltage at 10 min items for project " + sId);
@@ -1196,11 +1191,11 @@ namespace ITPiPadSoln
                                         string[] delimiters126 = new string[] { "||" };
                                         string[] sVolts15MinItems = sVolts15MinInfo[1].Split(delimiters126, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount126 = sVolts15MinItems.Length;
-                                        if (iHeaderCount126 > 0)
+                                        //First check if the batt test Volts 15 Min table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_Volts15MinTable())
                                         {
-                                            //First check if the batt test Volts 15 Min table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_Volts15MinTable())
+                                            if (iHeaderCount126 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestVolts15MinVw.SetProgressBarTitle("Downloading ITP Battery Test Volateg at 15 min items for project " + sId);
@@ -1238,11 +1233,11 @@ namespace ITPiPadSoln
                                         string[] delimiters136 = new string[] { "||" };
                                         string[] sVolts20MinItems = sVolts20MinInfo[1].Split(delimiters136, StringSplitOptions.RemoveEmptyEntries);
                                         int iHeaderCount136 = sVolts20MinItems.Length;
-                                        if (iHeaderCount136 > 0)
+                                        //First check if the batt test Volts 20 Min table exists and if not create it
+                                        clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
+                                        if (ITPBattTest.CheckITPBatteryAcceptTest_Volts20MinTable())
                                         {
-                                            //First check if the batt test Volts 20 Min table exists and if not create it
-                                            clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
-                                            if (ITPBattTest.CheckITPBatteryAcceptTest_Volts20MinTable())
+                                            if (iHeaderCount136 > 0)
                                             {
                                                 this.InvokeOnMainThread(() => { 
                                                     progBarProjBattTestVolts20MinVw.SetProgressBarTitle("Downloading ITP Battery Test Voltage at 20 min items for project " + sId);

@@ -16,7 +16,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 4,1
-	.asciz "Mono AOT Compiler 3.2.3 (monotouch-7.0-branch/e94dd8d Wed Sep 18 16:31:38 EDT 2013)"
+	.asciz "Mono AOT Compiler 3.2.3 (monotouch-7.0.1-branch/6d04712 Fri Sep 20 23:02:48 EDT 2013)"
 	.asciz "JITted code"
 	.asciz ""
 
@@ -2569,7 +2569,7 @@ image_table:
 
 	.long 1,2,0,5,0
 	.asciz "mscorlib"
-	.asciz "27786CD3-BF6F-4FDC-94A5-3FBB53715D9A"
+	.asciz "03838153-D010-4B88-8A4B-CD078C3CB16D"
 	.asciz ""
 	.asciz "7cec85d7bea7798e"
 	.align 3

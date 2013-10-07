@@ -16,7 +16,7 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 4,1
-	.asciz "Mono AOT Compiler 3.2.3 (monotouch-7.0-branch/e94dd8d Wed Sep 18 16:31:38 EDT 2013)"
+	.asciz "Mono AOT Compiler 3.2.3 (monotouch-7.0.1-branch/6d04712 Fri Sep 20 23:02:48 EDT 2013)"
 	.asciz "JITted code"
 	.asciz ""
 
@@ -34909,12 +34909,12 @@ class_name_table:
 	.short 0, 0, 0, 41, 0, 0, 0, 0
 	.short 0, 125, 0, 0, 0, 0, 0, 0
 	.short 0, 73, 0, 0, 0, 65, 0, 98
-	.short 0, 0, 0, 0, 0, 25, 0, 78
+	.short 0, 141, 0, 0, 0, 25, 0, 78
 	.short 0, 0, 0, 6, 0, 97, 0, 0
 	.short 0, 0, 0, 0, 0, 1, 251, 15
 	.short 252, 36, 0, 118, 0, 0, 0, 105
 	.short 0, 0, 0, 0, 0, 0, 0, 122
-	.short 0, 0, 0, 3, 0, 35, 0, 0
+	.short 0, 140, 0, 3, 0, 35, 0, 0
 	.short 0, 0, 0, 0, 0, 0, 0, 79
 	.short 0, 62, 0, 39, 0, 80, 0, 70
 	.short 0, 0, 0, 0, 0, 0, 0, 0
@@ -34938,12 +34938,12 @@ class_name_table:
 	.short 0, 0, 0, 124, 270, 0, 0, 68
 	.short 0, 108, 0, 0, 0, 0, 0, 0
 	.short 0, 57, 0, 77, 0, 0, 0, 58
-	.short 0, 141, 0, 0, 0, 135, 0, 88
+	.short 0, 0, 0, 0, 0, 135, 0, 88
 	.short 0, 101, 0, 0, 0, 33, 0, 0
 	.short 0, 52, 0, 0, 0, 22, 0, 19
 	.short 0, 0, 0, 0, 0, 31, 0, 0
 	.short 0, 0, 0, 7, 255, 0, 0, 0
-	.short 0, 140, 0, 84, 0, 48, 261, 0
+	.short 0, 0, 0, 84, 0, 48, 261, 0
 	.short 0, 0, 0, 0, 0, 54, 0, 26
 	.short 0, 0, 0, 0, 0, 107, 0, 0
 	.short 0, 0, 0, 45, 0, 20, 272, 109
@@ -38291,28 +38291,28 @@ image_table:
 
 	.long 4
 	.asciz "System.Web.Services"
-	.asciz "875CDF8C-D424-4FCA-B5E7-B836160F4E4F"
+	.asciz "EE590ED1-C345-4831-A00B-2C8CF6724AA5"
 	.asciz ""
 	.asciz "b03f5f7f11d50a3a"
 	.align 3
 
 	.long 1,2,0,5,0
 	.asciz "mscorlib"
-	.asciz "27786CD3-BF6F-4FDC-94A5-3FBB53715D9A"
+	.asciz "03838153-D010-4B88-8A4B-CD078C3CB16D"
 	.asciz ""
 	.asciz "7cec85d7bea7798e"
 	.align 3
 
 	.long 1,2,0,5,0
 	.asciz "System.Xml"
-	.asciz "2012B3AB-0470-4F84-89C2-2F0E97B6BFCE"
+	.asciz "35914A2C-0D70-4C2C-BC50-E127F7AA7DFE"
 	.asciz ""
 	.asciz "7cec85d7bea7798e"
 	.align 3
 
 	.long 1,2,0,5,0
 	.asciz "System"
-	.asciz "424E87C8-BD71-49C4-95D7-E2E4FAAE7F3D"
+	.asciz "80C80020-5DD5-4D8A-A27B-326D9166B102"
 	.asciz ""
 	.asciz "7cec85d7bea7798e"
 	.align 3
@@ -38326,7 +38326,7 @@ got_end:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "875CDF8C-D424-4FCA-B5E7-B836160F4E4F"
+	.asciz "EE590ED1-C345-4831-A00B-2C8CF6724AA5"
 .section __TEXT, __const
 	.align 2
 runtime_version:

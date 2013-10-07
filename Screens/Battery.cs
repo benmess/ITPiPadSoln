@@ -3459,6 +3459,7 @@ namespace ITPiPadSoln
         //Open a new page with the 20 minute test details
         public void Open20MinTest(object sender, EventArgs e)
         {
+
             //Show the progress indicator and position at top left of button
             UIButton btnOpen = (UIButton)sender;
             int iTagId = btnOpen.Tag;
@@ -3469,7 +3470,18 @@ namespace ITPiPadSoln
             string sPwrId = PwrId.Text;
             m_PwrId = sPwrId;
 
-            //iBankNoTagId * (iRowNo + 1) + (iStringRow + 1)
+            //First check that the make and model are specified
+            UILabel lblMake = (UILabel)View.ViewWithTag(iBankMakeTagId * (iPwrIdRow) + (iStringRow));
+            string sMake = lblMake.Text;
+            UILabel lblModel = (UILabel)View.ViewWithTag(iBankModelTagId * (iPwrIdRow) + (iStringRow));
+            string sModel = lblModel.Text;
+
+            if (sMake == "" || sModel == "")
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox();
+                alert.CreateErrorAlertDialog("You must have both make and model specified before you can perform the 20 minute test");
+                return;
+            }
 
             UITextField BankNo = (UITextField)View.ViewWithTag (iBankNoTagId * (iPwrIdRow) + (iStringRow));
             int iBankNo = Convert.ToInt32(BankNo.Text);
