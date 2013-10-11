@@ -39,7 +39,8 @@ namespace ITPiPadSoln
         int iSectionCounterTagId = 10014;
 
         //Header tags Ids
-        int iHeaderRowStatusTagId = 10010700;
+        int iHeaderRowStatusTagId = 10010600;
+        int iAutoIdHeaderTagId = 10010700;
         int iInspectedByHdrLabel = 10010800;
         int iInspectedDateHdrLabel = 10010900;
         int iTestDateHdrLabel = 10011000;
@@ -61,19 +62,21 @@ namespace ITPiPadSoln
         int iBatteryCapacityHdrLabel = 10012200;
         int iDischargeLoadRateHdrLabel = 10012300;
         int iCellMbPostHdrLabel = 10012400;
-        int iBMPBPUCBAlarmHdrLabel = 10012500;
+        int iTestTypeHdrLabel = 10012500;
+        int iBMPBPUCBAlarmHdrLabel = 10012600;
 
-        int iCellMbVoltageTagId = 10012600;
-        int iCellMbVoltageSearchTagId = 10012700;
-        int iCellMbVoltageHiddenTagId = 10012800;
-        int iBatteryCapacityTagId = 10012900;
-        int iBatteryCapacityHiddenTagId = 10013000;
-        int iDischargeLoadTagId = 10013100;
-        int iDischargeLoadHiddenTagId = 10013200;
-        int iCellMbPostTagId = 10013300;
-        int iCellMbPostSearchTagId = 10013400;
-        int iCellMbPostHiddenTagId = 10013500;
-        int iBMPBPUCBTagId = 10013600;
+        int iCellMbVoltageTagId = 10012700;
+        int iCellMbVoltageSearchTagId = 10012800;
+        int iCellMbVoltageHiddenTagId = 10012900;
+        int iBatteryCapacityTagId = 10013000;
+        int iBatteryCapacityHiddenTagId = 10013100;
+        int iDischargeLoadTagId = 10013200;
+        int iDischargeLoadHiddenTagId = 10013300;
+        int iCellMbPostTagId = 10013400;
+        int iCellMbPostSearchTagId = 10013500;
+        int iCellMbPostHiddenTagId = 10013600;
+        int iTestTypeTagId = 10013700;
+        int iBMPBPUCBTagId = 10013800;
 
         int iCommentsHdrLabel = 10014000;
         int iSummaryHdrLabel = 10014100;
@@ -83,10 +86,11 @@ namespace ITPiPadSoln
         int iSummaryFloatVoltUnitTagId = 10014500;
         int iSummaryLoadCurrentLabelTagId = 10014600;
         int iSummaryLoadCurrentResultTagId = 10014700;
-        int iSummaryLoadCurrentUnitTagId = 10014800;
-        int iSummary20MinEndVoltLabelTagId = 10014900;
-        int iSummary20MinEndVoltResultTagId = 10015000;
-        int iSummary20MinEndVoltUnitTagId = 10015100;
+        int iSummaryLoadCurrentResultHiddenTagId = 10014800;
+        int iSummaryLoadCurrentUnitTagId = 10014900;
+        int iSummary20MinEndVoltLabelTagId = 10015000;
+        int iSummary20MinEndVoltResultTagId = 10015100;
+        int iSummary20MinEndVoltUnitTagId = 10015200;
 
         int iType1234CellContainerTagId = 10016000;
         int iType1234CellBaseLabelId = 10016100;
@@ -262,10 +266,10 @@ namespace ITPiPadSoln
             float iHeightToAdd = 0f;
             UIView[] arrItems = new UIView[7];
             UIView[] arrItems2 = new UIView[10];
-            UIView[] arrItems3 = new UIView[5];
-            UIView[] arrItems4 = new UIView[9];
+            UIView[] arrItems3 = new UIView[6];
+            UIView[] arrItems4 = new UIView[10];
             UIView[] arrItems5 = new UIView[2];
-            UIView[] arrItems6 = new UIView[10];
+            UIView[] arrItems6 = new UIView[11];
 
             UIView hdrSection;
             UIView hdrSection2;
@@ -295,6 +299,7 @@ namespace ITPiPadSoln
             clsTabletDB.ITPBatteryTest ITPBattTest = new clsTabletDB.ITPBatteryTest();
             clsTabletDB.ITPBatteryCellInfo ITPCellInfo = new clsTabletDB.ITPBatteryCellInfo();
             clsTabletDB.ITPHeaderTable ITPHeader = new clsTabletDB.ITPHeaderTable(); 
+            int iAutoId = -1;
             string sInspectedBy = "";
             string sInspectDate = "";
             string sInspectDateDisplay = "";
@@ -322,6 +327,11 @@ namespace ITPiPadSoln
             double dSum20MinEndVoltResult = 0;
             bool bReadOnly = false;
             string sComments = "";
+            string sSiteLoad = "";
+            int iSiteLoad = 0;
+            string sResistiveLoad = "";
+            int iResistiveLoad = 0;
+            int iTestType = 0;
 
             try
             {
@@ -356,6 +366,8 @@ namespace ITPiPadSoln
                 DataSet arrTestHeader = ITPBattTest.GetBatteryAcceptTestType4KeyRecord(m_sPassedId, "ITPBattAcceptTest_Header", m_PwrId, m_BankNo);
                 if(arrTestHeader.Tables[0].Rows.Count > 0)
                 {
+                    iColNo = arrTestHeader.Tables[0].Columns["AutoId"].Ordinal;
+                    iAutoId = Convert.ToInt32(arrTestHeader.Tables[0].Rows[0].ItemArray[iColNo]);
                     iColNo = arrTestHeader.Tables[0].Columns["InspectedBy"].Ordinal;
                     sInspectedBy = arrTestHeader.Tables[0].Rows[0].ItemArray[iColNo].ToString();
                     iColNo = arrTestHeader.Tables[0].Columns["InspectionDate"].Ordinal;
@@ -436,6 +448,39 @@ namespace ITPiPadSoln
                         dCellMbPost = dDefaultVoltage;
                     }
                 
+                    iColNo = arrTestHeader.Tables[0].Columns["SiteLoad"].Ordinal;
+                    sSiteLoad = arrTestHeader.Tables[0].Rows[0].ItemArray[iColNo].ToString();
+
+                    if(clsUtil.IsNumeric(sSiteLoad))
+                    {
+                        iSiteLoad = Convert.ToInt32(sSiteLoad);
+                    }
+                    else
+                    {
+                        iSiteLoad = 0;
+                    }
+
+                    iColNo = arrTestHeader.Tables[0].Columns["ResistiveLoad"].Ordinal;
+                    sResistiveLoad = arrTestHeader.Tables[0].Rows[0].ItemArray[iColNo].ToString();
+
+                    if(clsUtil.IsNumeric(sResistiveLoad))
+                    {
+                        iResistiveLoad = Convert.ToInt32(sResistiveLoad);
+                    }
+                    else
+                    {
+                        iResistiveLoad = 0;
+                    }
+
+                    if(iSiteLoad > 0)
+                    {
+                        iTestType = 1;
+                    }
+                    else
+                    {
+                        iTestType = 0;
+                    }
+
                     iColNo = arrTestHeader.Tables[0].Columns["BMP_BPU_CB_Alarm"].Ordinal;
                     sBMPBPUCB = arrTestHeader.Tables[0].Rows[0].ItemArray[iColNo].ToString();
                     if(clsUtil.IsNumeric(sBMPBPUCB))
@@ -489,11 +534,11 @@ namespace ITPiPadSoln
                 hfRow10Status.Hidden = true;
                 arrItems[0] = hfRow10Status;
 
-                UILabel hfSectionStatus = new UILabel();
-                hfSectionStatus.Text = "0";
-                hfSectionStatus.Tag = iSectionStatusTagId;
-                hfSectionStatus.Hidden = true;
-                arrItems[1] = hfSectionStatus;
+                UILabel hfAutoId = new UILabel();
+                hfAutoId.Text = iAutoId.ToString();
+                hfAutoId.Tag = iAutoIdHeaderTagId;
+                hfAutoId.Hidden = true;
+                arrItems[1] = hfAutoId;
 
                 /********************************************************************************/
                 //              ROW 1 HEADER                                                    //
@@ -751,8 +796,8 @@ namespace ITPiPadSoln
                 /********************************************************************************/
                 iUtils.CreateFormGridItem lblCellMbVoltageLabel = new iUtils.CreateFormGridItem();
                 UIView lblCellMbVoltageLabelVw = new UIView();
-                lblCellMbVoltageLabel.SetDimensions(0f,iVert, 200f, iRowHeight, 2f, 2f, 2f, 2f);
-                lblCellMbVoltageLabel.SetLabelText("Cell/Monoblock Voltage");
+                lblCellMbVoltageLabel.SetDimensions(0f,iVert, 100f, iRowHeight, 2f, 2f, 2f, 2f);
+                lblCellMbVoltageLabel.SetLabelText("Cell/Mb Voltage");
                 lblCellMbVoltageLabel.SetBorderWidth(1.0f);
                 lblCellMbVoltageLabel.SetFontName("Verdana");
                 lblCellMbVoltageLabel.SetFontSize(12f);
@@ -763,7 +808,7 @@ namespace ITPiPadSoln
 
                 iUtils.CreateFormGridItem lblBattStringCapacityLabel = new iUtils.CreateFormGridItem();
                 UIView lblBattStringCapacityLabelVw = new UIView();
-                lblBattStringCapacityLabel.SetDimensions(200f,iVert, 200f, iRowHeight, 2f, 2f, 2f, 2f);
+                lblBattStringCapacityLabel.SetDimensions(100f,iVert, 200f, iRowHeight, 2f, 2f, 2f, 2f);
                 lblBattStringCapacityLabel.SetLabelText("Battery String Capacity (AHr)");
                 lblBattStringCapacityLabel.SetBorderWidth(1.0f);
                 lblBattStringCapacityLabel.SetFontName("Verdana");
@@ -775,7 +820,7 @@ namespace ITPiPadSoln
 
                 iUtils.CreateFormGridItem lblDischargeLoadRateLabel = new iUtils.CreateFormGridItem();
                 UIView lblDischargeLoadRateLabelVw = new UIView();
-                lblDischargeLoadRateLabel.SetDimensions(400f,iVert, 200f, iRowHeight, 2f, 2f, 2f, 2f);
+                lblDischargeLoadRateLabel.SetDimensions(300f,iVert, 200f, iRowHeight, 2f, 2f, 2f, 2f);
                 lblDischargeLoadRateLabel.SetLabelText("Discharge Load Rate (A)");
                 lblDischargeLoadRateLabel.SetBorderWidth(1.0f);
                 lblDischargeLoadRateLabel.SetFontName("Verdana");
@@ -787,8 +832,8 @@ namespace ITPiPadSoln
 
                 iUtils.CreateFormGridItem lblCellMbPostLabel = new iUtils.CreateFormGridItem();
                 UIView lblCellMbPostLabelVw = new UIView();
-                lblCellMbPostLabel.SetDimensions(600f,iVert, 200f, iRowHeight, 2f, 2f, 2f, 2f);
-                lblCellMbPostLabel.SetLabelText("Cell/Monoblock Post");
+                lblCellMbPostLabel.SetDimensions(500f,iVert, 100f, iRowHeight, 2f, 2f, 2f, 2f);
+                lblCellMbPostLabel.SetLabelText("Cell/Mb Post");
                 lblCellMbPostLabel.SetBorderWidth(1.0f);
                 lblCellMbPostLabel.SetFontName("Verdana");
                 lblCellMbPostLabel.SetFontSize(12f);
@@ -797,17 +842,29 @@ namespace ITPiPadSoln
                 lblCellMbPostLabelVw = lblCellMbPostLabel.GetLabelCell();
                 arrItems3[3] = lblCellMbPostLabelVw;
 
+                iUtils.CreateFormGridItem lblTestTypeLabel = new iUtils.CreateFormGridItem();
+                UIView lblTestTypeLabelVw = new UIView();
+                lblTestTypeLabel.SetDimensions(600f,iVert, 200f, iRowHeight, 5f, 2f, 5f, 2f);
+                lblTestTypeLabel.SetLabelText("Type of Test");
+                lblTestTypeLabel.SetBorderWidth(1.0f);
+                lblTestTypeLabel.SetFontName("Verdana");
+                lblTestTypeLabel.SetFontSize(12f);
+                lblTestTypeLabel.SetTag(iTestTypeHdrLabel);
+                lblTestTypeLabel.SetCellColour("Pale Yellow");
+                lblTestTypeLabelVw = lblTestTypeLabel.GetLabelCell();
+                arrItems3[4] = lblTestTypeLabelVw;
+
                 iUtils.CreateFormGridItem lblBMPBPUCBAlarmLabel = new iUtils.CreateFormGridItem();
                 UIView lblBMPBPUCBAlarmLabelVw = new UIView();
                 lblBMPBPUCBAlarmLabel.SetDimensions(800f,iVert, 200f, iRowHeight, 2f, 2f, 2f, 2f);
-                lblBMPBPUCBAlarmLabel.SetLabelText("BMP/BPU CB ALarm Tested");
+                lblBMPBPUCBAlarmLabel.SetLabelText("BMP/BPU CB Alarm Tested");
                 lblBMPBPUCBAlarmLabel.SetBorderWidth(1.0f);
                 lblBMPBPUCBAlarmLabel.SetFontName("Verdana");
                 lblBMPBPUCBAlarmLabel.SetFontSize(12f);
                 lblBMPBPUCBAlarmLabel.SetTag(iBMPBPUCBAlarmHdrLabel);
                 lblBMPBPUCBAlarmLabel.SetCellColour("Pale Yellow");
                 lblBMPBPUCBAlarmLabelVw = lblBMPBPUCBAlarmLabel.GetLabelCell();
-                arrItems3[4] = lblBMPBPUCBAlarmLabelVw;
+                arrItems3[5] = lblBMPBPUCBAlarmLabelVw;
 
                 SectionTableRow.AddSubviews(arrItems3);
 
@@ -819,10 +876,10 @@ namespace ITPiPadSoln
                 /********************************************************************************/
                 iUtils.CreateFormGridItem lblCellMbVoltage = new iUtils.CreateFormGridItem();
                 UIView lblCellMbVoltageVw = new UIView();
-                lblCellMbVoltage.SetDimensions(0f,iVert, 200f, iEditRowHeight, 2f, 2f, 2f, 2f);
+                lblCellMbVoltage.SetDimensions(0f,iVert, 100f, iEditRowHeight, 2f, 2f, 2f, 2f);
                 lblCellMbVoltage.SetLabelText(dCellMbVoltage.ToString());
                 lblCellMbVoltage.SetTextAlignment("centre");
-                lblCellMbVoltage.SetHideBorder(false, false, true, false);
+//                lblCellMbVoltage.SetHideBorder(false, false, true, false);
                 lblCellMbVoltage.SetBorderWidth(1.0f);
                 lblCellMbVoltage.SetFontName("Verdana");
                 lblCellMbVoltage.SetFontSize(12f);
@@ -863,7 +920,7 @@ namespace ITPiPadSoln
 
                 iUtils.CreateFormGridItem lblBatteryCapacity = new iUtils.CreateFormGridItem();
                 UIView lblBatteryCapacityVw = new UIView();
-                lblBatteryCapacity.SetDimensions(200f, iVert, 200f, iEditRowHeight, 5f, 3f, 5f, 3f);
+                lblBatteryCapacity.SetDimensions(100f, iVert, 200f, iEditRowHeight, 5f, 3f, 5f, 3f);
                 lblBatteryCapacity.SetLabelText(dBatteryCapacity.ToString());
                 lblBatteryCapacity.SetBorderWidth(1.0f);
                 lblBatteryCapacity.SetFontName("Verdana");
@@ -898,7 +955,7 @@ namespace ITPiPadSoln
 
                 iUtils.CreateFormGridItem lblDischargeLoad = new iUtils.CreateFormGridItem();
                 UIView lblDischargeLoadVw = new UIView();
-                lblDischargeLoad.SetDimensions(400f, iVert, 200f, iEditRowHeight, 5f, 3f, 5f, 3f);
+                lblDischargeLoad.SetDimensions(300f, iVert, 200f, iEditRowHeight, 5f, 3f, 5f, 3f);
                 lblDischargeLoad.SetLabelText(dDischargeLoad.ToString());
                 lblDischargeLoad.SetBorderWidth(1.0f);
                 lblDischargeLoad.SetFontName("Verdana");
@@ -933,10 +990,10 @@ namespace ITPiPadSoln
 
                 iUtils.CreateFormGridItem lblCellMbPost = new iUtils.CreateFormGridItem();
                 UIView lblCellMbPostVw = new UIView();
-                lblCellMbPost.SetDimensions(600f,iVert, 200f, iEditRowHeight, 2f, 2f, 2f, 2f);
+                lblCellMbPost.SetDimensions(500f,iVert, 100f, iEditRowHeight, 2f, 2f, 2f, 2f);
                 lblCellMbPost.SetLabelText(dCellMbPost.ToString());
                 lblCellMbPost.SetTextAlignment("centre");
-                lblCellMbPost.SetHideBorder(false, false, true, false);
+//                lblCellMbPost.SetHideBorder(false, false, true, false);
                 lblCellMbPost.SetBorderWidth(1.0f);
                 lblCellMbPost.SetFontName("Verdana");
                 lblCellMbPost.SetFontSize(12f);
@@ -976,6 +1033,27 @@ namespace ITPiPadSoln
                 arrItems4[7] = hfCurrentCellMbPost;
 
 
+                iUtils.CreateFormGridItem radGrp = new iUtils.CreateFormGridItem();
+                UIView radGrpVw = new UIView();
+                radGrp.SetDimensions(600f,iVert, 200f, iEditRowHeight, 2f, 2f, 2f, 2f);
+                radGrp.SetFontName("Verdana");
+                radGrp.SetBorderWidth(1.0f);
+                radGrp.SetFontSize(12f);
+                radGrp.SetTag(iTestTypeTagId);
+                radGrp.SetCellColour("Pale Yellow");
+
+                radGrpVw = radGrp.GetRadioButtonCell();
+
+                UISegmentedControl radGrpRadio = new UISegmentedControl();
+                radGrpRadio = radGrp.GetRadioGroup();
+                radGrpRadio.TouchUpInside += (sender,e) => {SetRowRadioChanged(sender, e, m_i20MinSection);};
+                radGrpRadio.ValueChanged += (sender,e) => {SetRowRadioChanged(sender, e, m_i20MinSection);};
+                radGrpRadio.InsertSegment("Res", 0, false);
+                radGrpRadio.InsertSegment("Site", 1, false);
+                radGrpRadio.SelectedSegment = iTestType;
+
+                arrItems4[8] = radGrpVw;
+
                 iUtils.CreateFormGridItem chkBMPBPUCB = new iUtils.CreateFormGridItem();
                 UIView chkBMPBPUCBVw = new UIView();
                 chkBMPBPUCB.SetDimensions(800f,iVert, 200f, iEditRowHeight, 30f, 2.5f, 30f, 2.5f);
@@ -998,7 +1076,7 @@ namespace ITPiPadSoln
                     chkBMPBPUCBCheck.Enabled = false;
                 }
 
-                arrItems4[8] = chkBMPBPUCBVw;
+                arrItems4[9] = chkBMPBPUCBVw;
 
                 SectionTableRow.AddSubviews(arrItems4);
 
@@ -1127,19 +1205,56 @@ namespace ITPiPadSoln
                 lblSumLoadCurrentLabelVw = lblSumLoadCurrentLabel.GetLabelCell();
                 arrItems6 [4] = lblSumLoadCurrentLabelVw;
 
-                iUtils.CreateFormGridItem lblSumLoadCurrentResult = new iUtils.CreateFormGridItem();
-                UIView lblSumLoadCurrentResultVw = new UIView();
-                lblSumLoadCurrentResult.SetDimensions(800f,iVert, 100f, iEditRowHeight, 2f, 2f, 2f, 2f);
-                lblSumLoadCurrentResult.SetLabelText(dSumLoadCurrentResult.ToString());
-                lblSumLoadCurrentResult.SetTextAlignment("right");
-                lblSumLoadCurrentResult.SetHideBorder(true, false, true, false);
-                lblSumLoadCurrentResult.SetBorderWidth(1.0f);
-                lblSumLoadCurrentResult.SetFontName("Verdana");
-                lblSumLoadCurrentResult.SetFontSize(12f);
-                lblSumLoadCurrentResult.SetTag(iSummaryLoadCurrentResultTagId);
-                lblSumLoadCurrentResult.SetCellColour("Pale Yellow");
-                lblSumLoadCurrentResultVw = lblSumLoadCurrentResult.GetLabelCell();
-                arrItems6 [5] = lblSumLoadCurrentResultVw;
+                iUtils.CreateFormGridItem lblSummaryLoadCurrent = new iUtils.CreateFormGridItem();
+                UIView lblSummaryLoadCurrentVw = new UIView();
+                lblSummaryLoadCurrent.SetDimensions(800f, iVert, 100f, iEditRowHeight, 2f, 2f, 2f, 2f);
+                lblSummaryLoadCurrent.SetLabelText(dSumLoadCurrentResult.ToString());
+                lblSummaryLoadCurrent.SetBorderWidth(1.0f);
+                lblSummaryLoadCurrent.SetHideBorder(true,false,true,false);
+                lblSummaryLoadCurrent.SetFontName("Verdana");
+                lblSummaryLoadCurrent.SetFontSize(12f);
+                lblSummaryLoadCurrent.SetTextAlignment("right");
+                lblSummaryLoadCurrent.SetTag(iSummaryLoadCurrentResultTagId);
+                lblSummaryLoadCurrent.SetCellColour("Pale Yellow");
+
+                lblSummaryLoadCurrentVw = lblSummaryLoadCurrent.GetTextFieldCell();
+                UITextField txtSummaryLoadCurrentView = lblSummaryLoadCurrent.GetTextFieldView();
+                txtSummaryLoadCurrentView.AutocorrectionType = UITextAutocorrectionType.No;
+                txtSummaryLoadCurrentView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
+                txtSummaryLoadCurrentView.ReturnKeyType = UIReturnKeyType.Next;
+                txtSummaryLoadCurrentView.ShouldBeginEditing += (sender) => {
+                    return SetGlobalEditItems(sender, 9);};
+                txtSummaryLoadCurrentView.ShouldEndEditing += (sender) => {
+                    return ValidateNumberOnly(sender,0, m_i20MinSection);};
+                txtSummaryLoadCurrentView.ShouldReturn += (sender) => {
+                    return MoveNextTextField(sender, 9, 0);};
+
+                if(bReadOnly)
+                {
+                    txtSummaryLoadCurrentView.Enabled = false;
+                }
+
+                arrItems6[5] = lblSummaryLoadCurrentVw;
+
+                UILabel hfCurrentSummaryLoadCurrent = new UILabel();
+                hfCurrentSummaryLoadCurrent.Text = dSumLoadCurrentResult.ToString();
+                hfCurrentSummaryLoadCurrent.Tag = iSummaryLoadCurrentResultHiddenTagId;
+                hfCurrentSummaryLoadCurrent.Hidden = true;
+                arrItems6[6] = hfCurrentSummaryLoadCurrent;
+
+//                iUtils.CreateFormGridItem lblSumLoadCurrentResult = new iUtils.CreateFormGridItem();
+//                UIView lblSumLoadCurrentResultVw = new UIView();
+//                lblSumLoadCurrentResult.SetDimensions(800f,iVert, 100f, iEditRowHeight, 2f, 2f, 2f, 2f);
+//                lblSumLoadCurrentResult.SetLabelText(dSumLoadCurrentResult.ToString());
+//                lblSumLoadCurrentResult.SetTextAlignment("right");
+//                lblSumLoadCurrentResult.SetHideBorder(true, false, true, false);
+//                lblSumLoadCurrentResult.SetBorderWidth(1.0f);
+//                lblSumLoadCurrentResult.SetFontName("Verdana");
+//                lblSumLoadCurrentResult.SetFontSize(12f);
+//                lblSumLoadCurrentResult.SetTag(iSummaryLoadCurrentResultTagId);
+//                lblSumLoadCurrentResult.SetCellColour("Pale Yellow");
+//                lblSumLoadCurrentResultVw = lblSumLoadCurrentResult.GetLabelCell();
+//                arrItems6 [7] = lblSumLoadCurrentResultVw;
 
                 iUtils.CreateFormGridItem lblSumLoadCurrentUnit = new iUtils.CreateFormGridItem();
                 UIView lblSumLoadCurrentUnitVw = new UIView();
@@ -1153,7 +1268,7 @@ namespace ITPiPadSoln
 
                 lblSumLoadCurrentUnit.SetCellColour("Pale Yellow");
                 lblSumLoadCurrentUnitVw = lblSumLoadCurrentUnit.GetLabelCell();
-                arrItems6 [6] = lblSumLoadCurrentUnitVw;
+                arrItems6 [7] = lblSumLoadCurrentUnitVw;
 
                 iVert += iEditRowHeight; 
 
@@ -1168,7 +1283,7 @@ namespace ITPiPadSoln
                 lblSum20MinEndVoltLabel.SetTag(iSummary20MinEndVoltLabelTagId);
                 lblSum20MinEndVoltLabel.SetCellColour("Pale Yellow");
                 lblSum20MinEndVoltLabelVw = lblSum20MinEndVoltLabel.GetLabelCell();
-                arrItems6 [7] = lblSum20MinEndVoltLabelVw;
+                arrItems6 [8] = lblSum20MinEndVoltLabelVw;
 
                 iUtils.CreateFormGridItem lblSum20MinEndVoltResult = new iUtils.CreateFormGridItem();
                 UIView lblSum20MinEndVoltResultVw = new UIView();
@@ -1182,7 +1297,7 @@ namespace ITPiPadSoln
                 lblSum20MinEndVoltResult.SetTag(iSummary20MinEndVoltResultTagId);
                 lblSum20MinEndVoltResult.SetCellColour("Pale Yellow");
                 lblSum20MinEndVoltResultVw = lblSum20MinEndVoltResult.GetLabelCell();
-                arrItems6 [8] = lblSum20MinEndVoltResultVw;
+                arrItems6 [9] = lblSum20MinEndVoltResultVw;
 
                 iUtils.CreateFormGridItem lblSum20MinEndVoltUnit = new iUtils.CreateFormGridItem();
                 UIView lblSum20MinEndVoltUnitVw = new UIView();
@@ -1196,7 +1311,7 @@ namespace ITPiPadSoln
 
                 lblSum20MinEndVoltUnit.SetCellColour("Pale Yellow");
                 lblSum20MinEndVoltUnitVw = lblSum20MinEndVoltUnit.GetLabelCell();
-                arrItems6 [9] = lblSum20MinEndVoltUnitVw;
+                arrItems6 [10] = lblSum20MinEndVoltUnitVw;
 
                 SectionTableRow.AddSubviews(arrItems6);
 
@@ -2353,7 +2468,7 @@ namespace ITPiPadSoln
 
         public void CheckUnsaved ()
         {
-        int iSectionId = -1;
+            int iSectionId = -1;
 
             if (m_iValidateType >= 100 && m_iValidateType <= 5000)
             {
@@ -2383,6 +2498,8 @@ namespace ITPiPadSoln
                 case 4: //Float Voltage Prior
                 case 5: //Charge Period Prior
                 case 6: //Battery Capacity
+                case 7: //Discharge Load
+                case 9: //Summary Float Current
                     if(!ValidateNumberOnly(m_sender, 1, m_i20MinSection))
                     {
                         gbSuppressSecondCheck = false;
@@ -2596,6 +2713,7 @@ namespace ITPiPadSoln
             {
                 UILabel lblUnsavedSectionFlag = (UILabel)View.ViewWithTag((iSectionId + 1) * iSectionStatusTagId);
                 lblUnsavedSectionFlag.Text = "1";
+                SetSectionValueChanged(iSectionId + 1);
                 SetAnyValueChanged(sender, null, iSectionId);
             }
 
@@ -2610,10 +2728,26 @@ namespace ITPiPadSoln
             return true;
         }
 
+        public void SetRowRadioChanged(object sender, EventArgs e, int iSectionId)
+        {
+            UISegmentedControl radGrp = (UISegmentedControl)sender;
+            int iSenderId = radGrp.Tag;
+            int iSectionNo = iSectionId; //This it the number of the section (1 based)
+            SetSectionValueChanged(iSectionNo+ 1);
+            SetAnyValueChanged(sender, e, iSectionNo);
+        }
+
         public bool SaveThisSection (object sender, EventArgs e)
         {
             UIButton btnSave = (UIButton)sender;
             int iBtnId = btnSave.Tag;
+            int iSectionId = -1;
+
+            if (m_iValidateType >= 100 && m_iValidateType <= 5000)
+            {
+                iSectionId = m_iValidateType / 100;
+                m_iValidateType = 100;
+            }
 
             //Now check to see if we are in a field and haven't ended editing yet
             if(m_iValidateType > 0)
@@ -2636,6 +2770,24 @@ namespace ITPiPadSoln
                             return false;
                         }
                         break;
+                    case 4: //Float Voltage Prior
+                    case 5: //Charge Period Prior
+                    case 6: //Battery Capacity
+                    case 7: //Discharge Load
+                    case 9: //Summary Float Current
+                        if(!ValidateNumberOnly(m_sender, 1, m_i20MinSection))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
+                    case 100: //Cell type items
+                        if(!ValidateNumberOnly(m_sender, 1, iSectionId))
+                        {
+                            gbSuppressSecondCheck = false;
+                            return false;
+                        }
+                        break;
                 }
             }
             return SaveSection(iBtnId);
@@ -2650,28 +2802,172 @@ namespace ITPiPadSoln
 
         public void SaveAllSections ()
         {
-//            //Cycle through each section
-//            for (int i = 0; i< m_iSections; i++) 
-//            {
-//                if(!SaveSection(iSaveSectionBtnTagId * (i+1)))
-//                {
-//                    iUtils.AlertBox alert = new iUtils.AlertBox();
-//                    UILabel lblSectionDesc = (UILabel)View.ViewWithTag (iSectionDescTagId * (i+1));
-//                    string sDesc = lblSectionDesc.Text;
-//                    alert.CreateErrorAlertDialog("Could not save section " + sDesc + ". Exiting.");
-//                    return;
-//                }
-//            }
+            //Cycle through each section
+            for (int i = 0; i< m_iSections; i++) 
+            {
+                if(!SaveSection(iSaveSectionBtnTagId * (i+1)))
+                {
+                    iUtils.AlertBox alert = new iUtils.AlertBox();
+                    UILabel lblSectionDesc = (UILabel)View.ViewWithTag (iSectionDescTagId * (i+1));
+                    string sDesc = lblSectionDesc.Text;
+                    alert.CreateErrorAlertDialog("Could not save section " + sDesc + ". Exiting.");
+                    return;
+                }
+            }
 
         }
 
         public bool SaveSection (int iBtnId)
         {
-            switch (iBtnId)
+            int iSectionId;
+            bool bReturn = false;
+            iSectionId = iBtnId/ iSaveSectionBtnTagId;
+
+            switch (iSectionId)
             {
-                default:
-                break;
+                case 1:
+                    bReturn = SaveHeaderSection();
+                    break;
             }
+
+            if (bReturn)
+            {
+                UILabel hfSectionStatus = (UILabel)View.ViewWithTag (iSectionStatusTagId * iSectionId);
+                hfSectionStatus.Text = "0";
+                SetAnyValueChangedOff(iSectionId);
+                   
+            }
+
+            return bReturn;
+        }
+
+        public bool SaveHeaderSection()
+        {
+            clsTabletDB.ITPBatteryTest clsDB = new clsTabletDB.ITPBatteryTest();
+
+            //Only bother saving if the section is flagged as changed
+            UILabel hfSectionStatus = (UILabel)View.ViewWithTag(iSectionStatusTagId * (m_i20MinSection + 1));
+            int iStatus = Convert.ToInt32(hfSectionStatus.Text);
+
+            if (iStatus == 1)
+            {
+                string[] sItemValues = new string[24];
+                int iResistiveLoad = 1;
+                int iSiteLoad = 0;
+
+                UILabel lblAutoId = (UILabel)View.ViewWithTag(iAutoIdHeaderTagId);
+                int iAutoId = Convert.ToInt32(lblAutoId.Text);
+
+                UILabel lblPwrId = (UILabel)View.ViewWithTag(iPwrIdHdrTagId);
+                string sPwrId = lblPwrId.Text;
+
+                UILabel lblBankNo = (UILabel)View.ViewWithTag(iBankNoHdrTagId);
+                int iBankNo = Convert.ToInt32(lblBankNo.Text);
+
+                UITextField txtInspectDate = (UITextField)View.ViewWithTag(iInspectedDateTagId);
+                string sInspectDate = txtInspectDate.Text;
+                if (txtInspectDate.Text == "" || txtInspectDate.Text == "0")
+                {
+                    sInspectDate = "01/01/1900";
+                }
+
+                UITextField txtInspectBy = (UITextField)View.ViewWithTag(iInspectedByTagId);
+                string sInspectBy = txtInspectBy.Text;
+
+                UITextField txtTestDate = (UITextField)View.ViewWithTag(iTestDateTagId);
+                string sTestDate = txtTestDate.Text;
+                if (txtTestDate.Text == "" || txtTestDate.Text == "0")
+                {
+                    sTestDate = "01/01/1900";
+                }
+
+                UITextField txtFloatVoltPrior = (UITextField)View.ViewWithTag(iFloatVoltPriorTagId);
+                string sFloatVolt = txtFloatVoltPrior.Text;
+
+                UITextField txtChargePeriodPrior = (UITextField)View.ViewWithTag(iChargePeriodPriorTagId);
+                string sChargePeriodPrior = txtChargePeriodPrior.Text;
+
+                UITextField txtBatteryCapacity = (UITextField)View.ViewWithTag(iBatteryCapacityTagId);
+                string sBatteryCapacity = txtBatteryCapacity.Text;
+
+                UITextField txtDischargeLoadRate = (UITextField)View.ViewWithTag(iDischargeLoadTagId);
+                string sDischargeLoadRate = txtDischargeLoadRate.Text;
+
+                UISwitch chkBPU = (UISwitch)View.ViewWithTag(iBMPBPUCBTagId);
+                bool bBPU = chkBPU.On;
+                int iBPU;
+                if (bBPU)
+                {
+                    iBPU = 1;
+                }
+                else
+                {
+                    iBPU = 0;
+                }
+
+                UISegmentedControl radGrp = (UISegmentedControl)View.ViewWithTag (iTestTypeTagId);
+                int iTestType = radGrp.SelectedSegment;  
+
+                if (iTestType > 0)
+                {
+                    iResistiveLoad = 0;
+                    iSiteLoad = 1;
+                }
+                else
+                {
+                    iResistiveLoad = 1;
+                    iSiteLoad = 0;
+                }
+
+                UITextView txtComments = (UITextView)View.ViewWithTag(iCommentsTagId);
+                string sComments = txtComments.Text;
+
+                UILabel lblFloatVoltage = (UILabel)View.ViewWithTag(iSummaryFloatVoltResultTagId);
+                double dFloatVoltage = Convert.ToDouble(lblFloatVoltage.Text);
+
+                UITextField lblFloatLoadCurrent = (UITextField)View.ViewWithTag(iSummaryLoadCurrentResultTagId);
+                double dFloatLoadCurrent = Convert.ToDouble(lblFloatLoadCurrent.Text);
+
+                UILabel lblEndOfDischarge = (UILabel)View.ViewWithTag(iSummary20MinEndVoltResultTagId);
+                double dEndOfDischarge = Convert.ToDouble(lblEndOfDischarge.Text);
+
+                UILabel lblCellMbVolts = (UILabel)View.ViewWithTag(iCellMbVoltageTagId);
+                double dCellMbVolts = Convert.ToDouble(lblCellMbVolts.Text);
+
+                UILabel lblCellPost = (UILabel)View.ViewWithTag(iCellMbPostTagId);
+                double dCellPost = Convert.ToDouble(lblCellPost.Text);
+
+                string sCurrentDateAndTime = "";
+                sCurrentDateAndTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+
+                sItemValues[0] = m_sPassedId;
+                sItemValues[1] = sPwrId;
+                sItemValues[2] = iBankNo.ToString();
+                sItemValues[3] = sInspectDate;
+                sItemValues[4] = sInspectBy;
+                sItemValues[5] = sTestDate;
+                sItemValues[6] = sFloatVolt;
+                sItemValues[7] = sChargePeriodPrior;
+                sItemValues[8] = sBatteryCapacity;
+                sItemValues[9] = sDischargeLoadRate;
+                sItemValues[10] = ""; //The technician name and number are put in when it is uploaded
+                sItemValues[11] = ""; //The technician name and number are put in when it is uploaded
+                sItemValues[12] = iBPU.ToString();
+                sItemValues[13] = iSiteLoad.ToString();
+                sItemValues[14] = iResistiveLoad.ToString();
+                sItemValues[15] = sComments;
+                sItemValues[16] = dFloatVoltage.ToString();
+                sItemValues[17] = dFloatLoadCurrent.ToString();
+                sItemValues[18] = dEndOfDischarge.ToString();
+                sItemValues[19] = dCellMbVolts.ToString();
+                sItemValues[20] = dCellPost.ToString();
+                sItemValues[21] = ""; //Currently it is unknown what this field is for
+                sItemValues[22] = ""; //The audit user is put in at upload time
+                sItemValues[23] = sCurrentDateAndTime;
+
+                clsDB.TableITPBatteryAcceptTestHeaderSetRecord(m_sPassedId, ref iAutoId, sItemValues);
+            }
+
             return true;
         }
 
@@ -2715,7 +3011,7 @@ namespace ITPiPadSoln
 //            ShowCompletedLabels();
 
             //Disable the Save section button
-            UIButton btnSave = (UIButton)View.ViewWithTag (iSaveSectionBtnTagId * (iSectionId+1));
+            UIButton btnSave = (UIButton)View.ViewWithTag (iSaveSectionBtnTagId * iSectionId);
             btnSave.Hidden = true;
             m_iValidateType = -1;
         }
@@ -2935,7 +3231,19 @@ namespace ITPiPadSoln
                     txtNext = (UITextField)View.ViewWithTag (iDischargeLoadTagId);
                     break;
 
-                case 7: //Coming from discharge load back to inspected by
+                case 7: //Coming from discharge load to load current summary 
+                    if(m_bSuppressMove) //This is required on the validate because the endediting and return delegates both fire
+                    {
+                        m_bSuppressMove = false;
+                        return false;
+                    }
+
+                    txtNext = (UITextField)View.ViewWithTag (iSummaryLoadCurrentResultTagId);
+                    break;
+                case 8: //This is reserved for the comments field to keep things in synch with the SetGlobalEditItems funciton
+                       //but you cannot move next from a text view because the return key is for adding a new line
+                    break;
+                case 9: //Coming from load current summary back to inspected by
                     if(m_bSuppressMove) //This is required on the validate because the endediting and return delegates both fire
                     {
                         m_bSuppressMove = false;
