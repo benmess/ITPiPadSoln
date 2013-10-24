@@ -2059,7 +2059,7 @@ namespace ITPiPadSoln
                 txtCellView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
                 txtCellView.ReturnKeyType = UIReturnKeyType.Next;
                 txtCellView.ShouldBeginEditing += (sender) => {
-                    return SetGlobalEditItems(sender, (100 * iSectionId));};
+                    return SetGlobalEditItems(sender, (100 * iSectionId - 1));};
                 txtCellView.ShouldEndEditing += (sender) => {
                     return ValidateNumberOnly(sender,0, iSectionId - 1);};
                 txtCellView.ShouldReturn += (sender) => {
@@ -2164,7 +2164,7 @@ namespace ITPiPadSoln
                 txtCellView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
                 txtCellView.ReturnKeyType = UIReturnKeyType.Next;
                 txtCellView.ShouldBeginEditing += (sender) => {
-                    return SetGlobalEditItems(sender, (100 * iSectionId));};
+                    return SetGlobalEditItems(sender, (100 * iSectionId - 1));};
                 txtCellView.ShouldEndEditing += (sender) => {
                     return ValidateNumberOnly(sender,0, iSectionId - 1);};
                 txtCellView.ShouldReturn += (sender) => {
@@ -2303,11 +2303,11 @@ namespace ITPiPadSoln
                     txtCellView.KeyboardType = UIKeyboardType.NumbersAndPunctuation;
                     txtCellView.ReturnKeyType = UIReturnKeyType.Next;
                     txtCellView.ShouldBeginEditing += (sender) => {
-                        return SetGlobalEditItems(sender, (100 * iSectionId));};
+                        return SetGlobalEditItems(sender, (100 * iSectionId-1));};
                     txtCellView.ShouldEndEditing += (sender) => {
                         return ValidateNumberOnly(sender, 0, iSectionId - 1);};
                     txtCellView.ShouldReturn += (sender) => {
-                        return MoveNextTextField(sender, (100 * iUniqueRowId), 1);};
+                        return MoveNextTextField(sender, (100 * iUniqueRowId), 0);};
 
                     if (bReadOnly)
                     {
@@ -2817,7 +2817,7 @@ namespace ITPiPadSoln
 
         }
 
-        public bool SaveSection (int iBtnId)
+        public bool SaveSection(int iBtnId)
         {
             int iSectionId;
             bool bReturn = false;
@@ -2828,6 +2828,49 @@ namespace ITPiPadSoln
                 case 1:
                     bReturn = SaveHeaderSection();
                     break;
+                case 2:
+                    bReturn = SaveType2Row(1, iSectionId);
+                    break;
+                case 3:
+                    bReturn = SaveType2Row(2, iSectionId);
+                    if (bReturn)
+                    {
+                        bReturn = SaveType2Row(3, iSectionId);
+                    }
+                    break;
+                case 4:
+                    bReturn = SaveType1Row(4, iSectionId);
+                    if (bReturn)
+                    {
+                        bReturn = SaveType1Row(5, iSectionId);
+                    }
+                    break;
+                case 5:
+                    bReturn = SaveType2Row(6, iSectionId);
+                    if (bReturn)
+                    {
+                        bReturn = SaveType2Row(7, iSectionId);
+                    }
+                    if (bReturn)
+                    {
+                        bReturn = SaveType2Row(8, iSectionId);
+                    }
+                    if (bReturn)
+                    {
+                        bReturn = SaveType2Row(9, iSectionId);
+                    }
+                    break;
+                case 6:
+                    bReturn = SaveType3Row(10, iSectionId);
+                    if (bReturn)
+                    {
+                        bReturn = SaveType3Row(11, iSectionId);
+                    }
+                    if (bReturn)
+                    {
+                        bReturn = SaveType3Row(12, iSectionId);
+                    }
+                    break;
             }
 
             if (bReturn)
@@ -2835,10 +2878,14 @@ namespace ITPiPadSoln
                 UILabel hfSectionStatus = (UILabel)View.ViewWithTag (iSectionStatusTagId * iSectionId);
                 hfSectionStatus.Text = "0";
                 SetAnyValueChangedOff(iSectionId);
-                   
+                gbSuppressSecondCheck = false;                   
+                return true;
             }
-
-            return bReturn;
+            else
+            {
+                gbSuppressSecondCheck = false;
+                return false;
+            }
         }
 
         public bool SaveHeaderSection()
@@ -2965,7 +3012,282 @@ namespace ITPiPadSoln
                 sItemValues[22] = ""; //The audit user is put in at upload time
                 sItemValues[23] = sCurrentDateAndTime;
 
-                clsDB.TableITPBatteryAcceptTestHeaderSetRecord(m_sPassedId, ref iAutoId, sItemValues);
+                if (!clsDB.TableITPBatteryAcceptTestHeaderSetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                {
+                    string sTest = "Could not save header information";
+                    iUtils.AlertBox alert = new iUtils.AlertBox ();
+                    alert.CreateErrorAlertDialog (sTest);
+                }
+            }
+
+            return true;
+        }
+
+        public bool SaveType1Row(int iUniqueRowId, int iSectionId)
+        {
+            clsTabletDB.ITPBatteryTest clsDB = new clsTabletDB.ITPBatteryTest();
+            int i;
+            int j = 0;
+
+            //Only bother saving if the section is flagged as changed
+            UILabel hfSectionStatus = (UILabel)View.ViewWithTag(iSectionStatusTagId * iSectionId);
+            int iStatus = Convert.ToInt32(hfSectionStatus.Text);
+
+            if (iStatus == 1)
+            {
+                string[] sItemValues = new string[29];
+
+                sItemValues[j] = m_sPassedId;
+                UILabel lblAutoId = (UILabel)View.ViewWithTag(iAutoIdHeaderTagId);
+                int iAutoId = Convert.ToInt32(lblAutoId.Text);
+                j++;
+
+                UILabel lblPwrId = (UILabel)View.ViewWithTag(iPwrIdHdrTagId);
+                string sPwrId = lblPwrId.Text;
+                sItemValues[j] = sPwrId;
+                j++;
+
+                UILabel lblBankNo = (UILabel)View.ViewWithTag(iBankNoHdrTagId);
+                int iBankNo = Convert.ToInt32(lblBankNo.Text);
+                sItemValues[j] = iBankNo.ToString();
+                j++;
+
+                for(i=0;i<24;i++)
+                {
+                    UITextField txtCellValue = (UITextField)View.ViewWithTag((iType1234CellBaseId * iUniqueRowId) + (i+1));
+                    double dCellValue = Convert.ToDouble(txtCellValue.Text);
+                    sItemValues[j] = dCellValue.ToString();
+                    j++;
+                }
+
+                sItemValues[j] = ""; //The audit user is put in at upload time
+                j++;
+
+                string sCurrentDateAndTime = "";
+                sCurrentDateAndTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+
+                sItemValues[j] = sCurrentDateAndTime;
+
+                switch(iUniqueRowId)
+                {
+                    case 4:
+                        if (!clsDB.TableITPBatteryAcceptTestDischargeVoltSetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                        {
+                            string sTest = "Could not save short discharge test voltage information";
+                            iUtils.AlertBox alert = new iUtils.AlertBox ();
+                            alert.CreateErrorAlertDialog (sTest);
+                            return false;
+                        }
+                        break;
+                    case 5:
+                        if (!clsDB.TableITPBatteryAcceptTestDischargeCurrentSetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                        {
+                            string sTest = "Could not save short discharge test current information";
+                            iUtils.AlertBox alert = new iUtils.AlertBox ();
+                            alert.CreateErrorAlertDialog (sTest);
+                            return false;
+                        }
+                        break;
+                }
+            }
+
+            return true;
+        }
+
+        public bool SaveType2Row(int iUniqueRowId, int iSectionId)
+        {
+            clsTabletDB.ITPBatteryTest clsDB = new clsTabletDB.ITPBatteryTest();
+            int i;
+            int j = 0;
+
+            //Only bother saving if the section is flagged as changed
+            UILabel hfSectionStatus = (UILabel)View.ViewWithTag(iSectionStatusTagId * iSectionId);
+            int iStatus = Convert.ToInt32(hfSectionStatus.Text);
+
+            if (iStatus == 1)
+            {
+                string[] sItemValues = new string[29];
+
+                sItemValues[j] = m_sPassedId;
+                UILabel lblAutoId = (UILabel)View.ViewWithTag(iAutoIdHeaderTagId);
+                int iAutoId = Convert.ToInt32(lblAutoId.Text);
+                j++;
+
+                UILabel lblPwrId = (UILabel)View.ViewWithTag(iPwrIdHdrTagId);
+                string sPwrId = lblPwrId.Text;
+                sItemValues[j] = sPwrId;
+                j++;
+
+                UILabel lblBankNo = (UILabel)View.ViewWithTag(iBankNoHdrTagId);
+                int iBankNo = Convert.ToInt32(lblBankNo.Text);
+                sItemValues[j] = iBankNo.ToString();
+                j++;
+
+                for(i=0;i<24;i++)
+                {
+                    UITextField txtCellValue = (UITextField)View.ViewWithTag((iType1234CellBaseId * iUniqueRowId) + (i+1));
+                    double dCellValue = Convert.ToDouble(txtCellValue.Text);
+                    sItemValues[j] = dCellValue.ToString();
+                    j++;
+                }
+
+                sItemValues[j] = ""; //The audit user is put in at upload time
+                j++;
+
+                string sCurrentDateAndTime = "";
+                sCurrentDateAndTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+
+                sItemValues[j] = sCurrentDateAndTime;
+
+                switch(iUniqueRowId)
+                {
+                    case 1:
+                        if (!clsDB.TableITPBatteryAcceptTestUnpackedSetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                        {
+                            string sTest = "Could not save unpacked information";
+                            iUtils.AlertBox alert = new iUtils.AlertBox ();
+                            alert.CreateErrorAlertDialog (sTest);
+                            return false;
+                        }
+                        break;
+                    case 2:
+                        if (!clsDB.TableITPBatteryAcceptTestFloatRecordSetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                        {
+                            string sTest = "Could not save float record voltage information";
+                            iUtils.AlertBox alert = new iUtils.AlertBox ();
+                            alert.CreateErrorAlertDialog (sTest);
+                            return false;
+                        }
+                        break;
+                    case 3:
+                        if (!clsDB.TableITPBatteryAcceptTestOCVolts05HrSetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                        {
+                            string sTest = "Could not save float record current information";
+                            iUtils.AlertBox alert = new iUtils.AlertBox ();
+                            alert.CreateErrorAlertDialog (sTest);
+                            return false;
+                        }
+                        break;
+                    case 6:
+                        if (!clsDB.TableITPBatteryAcceptTestVolts5MinSetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                        {
+                            string sTest = "Could not save 5 minute information";
+                            iUtils.AlertBox alert = new iUtils.AlertBox ();
+                            alert.CreateErrorAlertDialog (sTest);
+                            return false;
+                        }
+                        break;
+                    case 7:
+                        if (!clsDB.TableITPBatteryAcceptTestVolts10MinSetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                        {
+                            string sTest = "Could not save 10 minute information";
+                            iUtils.AlertBox alert = new iUtils.AlertBox ();
+                            alert.CreateErrorAlertDialog (sTest);
+                            return false;
+                        }
+                        break;
+                    case 8:
+                        if (!clsDB.TableITPBatteryAcceptTestVolts15MinSetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                        {
+                            string sTest = "Could not save 15 minute information";
+                            iUtils.AlertBox alert = new iUtils.AlertBox ();
+                            alert.CreateErrorAlertDialog (sTest);
+                            return false;
+                        }
+                        break;
+                    case 9:
+                        if (!clsDB.TableITPBatteryAcceptTestVolts20MinSetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                        {
+                            string sTest = "Could not save 20 minute information";
+                            iUtils.AlertBox alert = new iUtils.AlertBox ();
+                            alert.CreateErrorAlertDialog (sTest);
+                            return false;
+                        }
+                        break;
+                }
+            }
+
+            return true;
+        }
+
+        public bool SaveType3Row(int iUniqueRowId, int iSectionId)
+        {
+            clsTabletDB.ITPBatteryTest clsDB = new clsTabletDB.ITPBatteryTest();
+            int i;
+            int j = 0;
+
+            //Only bother saving if the section is flagged as changed
+            UILabel hfSectionStatus = (UILabel)View.ViewWithTag(iSectionStatusTagId * iSectionId);
+            int iStatus = Convert.ToInt32(hfSectionStatus.Text);
+
+            if (iStatus == 1)
+            {
+                string[] sItemValues = new string[30];
+
+                sItemValues[j] = m_sPassedId;
+                UILabel lblAutoId = (UILabel)View.ViewWithTag(iAutoIdHeaderTagId);
+                int iAutoId = Convert.ToInt32(lblAutoId.Text);
+                j++;
+
+                UILabel lblPwrId = (UILabel)View.ViewWithTag(iPwrIdHdrTagId);
+                string sPwrId = lblPwrId.Text;
+                sItemValues[j] = sPwrId;
+                j++;
+
+                UILabel lblBankNo = (UILabel)View.ViewWithTag(iBankNoHdrTagId);
+                int iBankNo = Convert.ToInt32(lblBankNo.Text);
+                sItemValues[j] = iBankNo.ToString();
+                j++;
+
+                for(i=0;i<26;i++) //23 Cell n to n and then Pos and Neg and a blank at cell 24
+                {
+                    if (i != 23)
+                    {
+                        UITextField txtCellValue = (UITextField)View.ViewWithTag((iType1234CellBaseId * iUniqueRowId) + (i + 1));
+                        double dCellValue = Convert.ToDouble(txtCellValue.Text);
+                        sItemValues [j] = dCellValue.ToString();
+                        j++;
+                    }
+                }
+
+                sItemValues[j] = ""; //The audit user is put in at upload time
+                j++;
+
+                string sCurrentDateAndTime = "";
+                sCurrentDateAndTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+
+                sItemValues[j] = sCurrentDateAndTime;
+
+                switch(iUniqueRowId)
+                {
+                    case 10:
+                        if (!clsDB.TableITPBatteryAcceptTestLink1to3SetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                        {
+                            string sTest = "Could not save link 1 of 3 information";
+                            iUtils.AlertBox alert = new iUtils.AlertBox ();
+                            alert.CreateErrorAlertDialog (sTest);
+                            return false;
+                        }
+                        break;
+                    case 11:
+                        if (!clsDB.TableITPBatteryAcceptTestLink2to3SetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                        {
+                            string sTest = "Could not save link 2 of 3 information";
+                            iUtils.AlertBox alert = new iUtils.AlertBox ();
+                            alert.CreateErrorAlertDialog (sTest);
+                            return false;
+                        }
+                        break;
+                    case 12:
+                        if (!clsDB.TableITPBatteryAcceptTestLink3to3SetRecord(m_sPassedId, ref iAutoId, sItemValues))
+                        {
+                            string sTest = "Could not save link 3 of 3 information";
+                            iUtils.AlertBox alert = new iUtils.AlertBox ();
+                            alert.CreateErrorAlertDialog (sTest);
+                            return false;
+                        }
+                        break;
+                }
             }
 
             return true;

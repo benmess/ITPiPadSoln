@@ -10270,7 +10270,7 @@ image_table:
 
 	.long 1,0,0,0,0
 	.asciz "clsTabletCommon"
-	.asciz "E97F4218-053F-48C5-83C8-71F8F6E70DA4"
+	.asciz "ECEA177E-7071-44C1-AD3D-22F2A7B9F886"
 	.asciz ""
 	.asciz ""
 	.align 3
