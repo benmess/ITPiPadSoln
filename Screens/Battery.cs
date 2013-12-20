@@ -2331,6 +2331,7 @@ namespace ITPiPadSoln
             string sSelectedValue = lblVwUpdate.Text;
             thistable.SetTableSelectedText(cmbModel, sSelectedValue, m_sBatteryModels, true);
             
+
             //Get the main scroll view
             UIScrollView scrollVw = (UIScrollView)View.ViewWithTag (2);
             scrollVw.AddSubview(cmbModel);
@@ -3459,6 +3460,19 @@ namespace ITPiPadSoln
         //Open a new page with the 20 minute test details
         public void Open20MinTest(object sender, EventArgs e)
         {
+
+            //First of all check there are no unsaved changes
+            UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
+            string sOverallStatus = txtEditStatus.Text;
+
+            if (sOverallStatus == "1")
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox();
+                alert.CreateAlertDialog();
+                alert.SetAlertMessage("You cannot open the battery test screen whilst there are unsaved changes. Please save first.");
+                alert.ShowAlertBox(); 
+                return;
+            }
 
             //Show the progress indicator and position at top left of button
             UIButton btnOpen = (UIButton)sender;

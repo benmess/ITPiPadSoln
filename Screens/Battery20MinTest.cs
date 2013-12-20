@@ -961,7 +961,7 @@ namespace ITPiPadSoln
                 lblDischargeLoad.SetFontName("Verdana");
                 lblDischargeLoad.SetFontSize(12f);
                 lblDischargeLoad.SetTag(iDischargeLoadTagId);
-                lblDischargeLoad.SetCellColour("Pale Yellow");
+				lblDischargeLoad.SetCellColour("Pale Yellow");
 
                 lblDischargeLoadVw = lblDischargeLoad.GetTextFieldCell();
                 UITextField txtDischargeLoadView = lblDischargeLoad.GetTextFieldView();
@@ -985,7 +985,7 @@ namespace ITPiPadSoln
                 UILabel hfCurrentDischargeLoad = new UILabel();
                 hfCurrentDischargeLoad.Text = dDischargeLoad.ToString();
                 hfCurrentDischargeLoad.Tag = iDischargeLoadHiddenTagId;
-                hfCurrentDischargeLoad.Hidden = true;
+				hfCurrentDischargeLoad.Hidden = true;
                 arrItems4[5] = hfCurrentDischargeLoad;
 
                 iUtils.CreateFormGridItem lblCellMbPost = new iUtils.CreateFormGridItem();
@@ -1040,7 +1040,7 @@ namespace ITPiPadSoln
                 radGrp.SetBorderWidth(1.0f);
                 radGrp.SetFontSize(12f);
                 radGrp.SetTag(iTestTypeTagId);
-                radGrp.SetCellColour("Pale Yellow");
+				radGrp.SetCellColour("Pale Yellow");
 
                 radGrpVw = radGrp.GetRadioButtonCell();
 
@@ -1073,7 +1073,7 @@ namespace ITPiPadSoln
 
                 if(bReadOnly)
                 {
-                    chkBMPBPUCBCheck.Enabled = false;
+					chkBMPBPUCBCheck.Enabled = false;
                 }
 
                 arrItems4[9] = chkBMPBPUCBVw;
@@ -2703,6 +2703,7 @@ namespace ITPiPadSoln
             UITextField txtNumberField = (UITextField)sender;
             string sNumberField = txtNumberField.Text;
             string sNumberReturn = Regex.Replace(sNumberField, @"[^0-9\.]+","");
+            sNumberReturn = Regex.Replace(sNumberField, @"^0+","");
             txtNumberField.Text = sNumberReturn;
 
             //Get the hidden value whichhas a tag 100 more
@@ -3244,7 +3245,12 @@ namespace ITPiPadSoln
                     if (i != 23)
                     {
                         UITextField txtCellValue = (UITextField)View.ViewWithTag((iType1234CellBaseId * iUniqueRowId) + (i + 1));
-                        double dCellValue = Convert.ToDouble(txtCellValue.Text);
+                        string sValue = txtCellValue.Text;
+                        if (sValue == "")
+                        {
+                            sValue = "0";
+                        }
+                        double dCellValue = Convert.ToDouble(sValue);
                         sItemValues [j] = dCellValue.ToString();
                         j++;
                     }

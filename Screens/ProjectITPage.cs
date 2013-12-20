@@ -2780,6 +2780,19 @@ namespace ITPiPadSoln
 
         public void OpenBatteries(object sender, EventArgs e)
         {
+            //First of all check there are no unsaved changes
+            UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
+            string sOverallStatus = txtEditStatus.Text;
+
+            if (sOverallStatus == "1")
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox();
+                alert.CreateAlertDialog();
+                alert.SetAlertMessage("You cannot open the batteries screen whilst there are unsaved changes. Please save first.");
+                alert.ShowAlertBox(); 
+                return;
+            }
+
             //Show the progress indicator and position at top left of button
             UIButton btnOpen = (UIButton)sender;
             prog.SetActivityIndicatorTitle("Open Batteries");
@@ -2815,6 +2828,19 @@ namespace ITPiPadSoln
 
         public void OpenPowerConversion(object sender, EventArgs e)
         {
+            //First of all check there are no unsaved changes
+            UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
+            string sOverallStatus = txtEditStatus.Text;
+
+            if (sOverallStatus == "1")
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox();
+                alert.CreateAlertDialog();
+                alert.SetAlertMessage("You cannot open the power conversion screen whilst there are unsaved changes. Please save first.");
+                alert.ShowAlertBox(); 
+                return;
+            }
+
             //Show the progress indicator and position at top left of button
             UIButton btnOpen = (UIButton)sender;
             prog.SetActivityIndicatorTitle("Open Pwr Conv");

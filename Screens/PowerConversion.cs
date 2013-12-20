@@ -300,6 +300,7 @@ namespace ITPiPadSoln
                 bool bHideSectionComplete = true;
                 bool bFullyCommitted = false;
                 bool bRFUPwrIdCommitted = false;
+                bool bPwrIdExists;
                 UIView[] arrItems4 = new UIView[8];
                 UIView[] arrItems5 = new UIView[8];
 
@@ -531,6 +532,14 @@ namespace ITPiPadSoln
                         arrItems5[1] = rowPwrIdLabelVw;
                         
                         bRFUPwrIdCommitted = RFUPwrIdCommitted(sPwrId);
+                        if(PowerConversionPwrIdExists(sPwrId))
+                        {
+                            bPwrIdExists = true;
+                        }
+                        else
+                        {
+                            bPwrIdExists = false;
+                        }
 
                         iUtils.CreateFormGridItem btnNewEquipment = new iUtils.CreateFormGridItem();
                         UIView btnNewEquipmentVw = new UIView();
@@ -554,7 +563,7 @@ namespace ITPiPadSoln
                         btnNewEquipmentButton = btnNewEquipment.GetButton();
                         btnNewEquipmentButton.TouchUpInside += (sender,e) => {AddNewEquipment(sender, e);};
                         
-                        if(bRFUPwrIdCommitted)
+                        if(bRFUPwrIdCommitted && bPwrIdExists)
                         {
                             btnNewEquipmentButton.Enabled = false;
                         }
@@ -574,8 +583,16 @@ namespace ITPiPadSoln
                         PwrIdCompleteLabel.SetDimensions(400f,0f, 150f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
                         if(bRFUPwrIdCommitted)
                         {
-                            PwrIdCompleteLabel.SetLabelText("COMMITTED");
-                            bHideSectionComplete = false;
+                            if(PowerConversionPwrIdExists(sPwrId))
+                            {
+                                PwrIdCompleteLabel.SetLabelText("COMMITTED");
+                                bHideSectionComplete = false;
+                            }
+                            else
+                            {
+                                PwrIdCompleteLabel.SetLabelText("NO EQUIPMENT");
+                                bHideSectionComplete = false;
+                            }
                         }
                         else
                         {
@@ -4289,6 +4306,12 @@ namespace ITPiPadSoln
         {
             clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
             return DBQ.ProjectSection10PwrIdPowerConversionComplete(m_sPassedId, sPwrId);
+        }
+
+        public bool PowerConversionPwrIdExists(string sPwrId)
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSection10PwrIdPowerConversionExists(m_sPassedId, sPwrId);
         }
 
         public bool PowerConversionFullyCommitted()
