@@ -9,6 +9,7 @@ using MonoTouch.SystemConfiguration;
 using MonoTouch.CoreFoundation;
 
 using clsiOS;
+using ITPAndroidApp;
 
 namespace ITPiPadSoln
 {
@@ -19,6 +20,7 @@ namespace ITPiPadSoln
 		string m_sLoggedIn = "";
 		UIImage imageRedBlock = UIImage.FromFile("Images/Red_Block.jpg");
 		UIImage imageGreenBlock = UIImage.FromFile("Images/Green_Block.JPG");
+        int giSecureFlag = 0;
 
 		public HomeScreen () : base ("HomeScreen", null)
 		{
@@ -34,20 +36,38 @@ namespace ITPiPadSoln
 		}
 		public override void ViewWillAppear(bool animated)
         {
+            SetEveryTimeOpens();
+        }
+
+        public void SetEveryTimeOpens()
+        {
+            clsITPFramework ITPFwrk = new clsITPFramework();
             var bConnStatus = GetConnectionStatus ();
             UIImageView imgConnectionStatus = (UIImageView)View.ViewWithTag (651);
             if (!bConnStatus) 
             {
                 imgConnectionStatus.Image = imageRedBlock;
+                giSecureFlag = 0;
+                SetSecureId();
             } 
             else 
             {
                 imgConnectionStatus.Image = imageGreenBlock;
+                //Now check to see if we have http or https to Silcar
+                ITPFwrk.giSecureFlag = giSecureFlag;
+                object[] objLoggedIn = ITPFwrk.IsUserLoggedIn(m_sSessionId, m_sLogin);
+                if (!Convert.ToBoolean(objLoggedIn [0]))
+                {
+                    m_sLogin = "Logged Out";
+                    m_sSessionId = "";
+                    m_sLoggedIn = "0";
+                }
+                giSecureFlag = ITPFwrk.giSecureFlag;
+                SetSecureId();
             }
-
         }
 
-		public override void ViewDidLoad ()
+        public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 			
@@ -55,7 +75,7 @@ namespace ITPiPadSoln
             NSDictionary info = NSBundle.MainBundle.InfoDictionary;
             string versionId = info["CFBundleVersion"].ToString();
 
-			UIView[] arrButts = new UIView[11];
+            UIView[] arrButts = new UIView[12];
 
 
 			UILabel lblVersion = new UILabel ();
@@ -110,7 +130,14 @@ namespace ITPiPadSoln
 			hfLoggedIn.Hidden = true;
 			arrButts[6] = hfLoggedIn;
 
-			var btnExit = UIButton.FromType(UIButtonType.Custom);
+            UILabel hfSecureId = new UILabel();
+            hfSecureId.Tag = 900;
+            hfSecureId.Frame = new RectangleF(230f,100f,200f,30f);
+            hfSecureId.Text = giSecureFlag.ToString();
+            hfSecureId.Hidden = true;
+            arrButts[7] = hfSecureId;
+
+            var btnExit = UIButton.FromType(UIButtonType.Custom);
 			btnExit.Frame = new RectangleF(120f,150f,100f,30f);
 			btnExit.SetTitle("Exit App", UIControlState.Normal);
 			btnExit.BackgroundColor = UIColor.FromRGBA(255,70,74,250);
@@ -118,25 +145,25 @@ namespace ITPiPadSoln
 			btnExit.Font = UIFont.FromName("Verdana-Bold", 12f);
 			btnExit.Layer.CornerRadius = 8;
 			btnExit.TouchUpInside += (sender,e) => {ExitApp(sender, e);};
-			arrButts[7] = btnExit;
+            arrButts[8] = btnExit;
 
 			var btnLogin = UIButton.FromType(UIButtonType.RoundedRect);
 			btnLogin.Frame = new RectangleF(230f,150f,100f,30f);
 			btnLogin.SetTitle("Login", UIControlState.Normal);
 			btnLogin.TouchUpInside += (sender,e) => {OpenLoginScreen(sender, e);};
-			arrButts[8] = btnLogin;
+            arrButts[9] = btnLogin;
 
 			var btnDownload = UIButton.FromType(UIButtonType.RoundedRect);
 			btnDownload.Frame = new RectangleF(340f,150f,200f,30f);
 			btnDownload.SetTitle("Download ITPs", UIControlState.Normal);
 			btnDownload.TouchUpInside += (sender,e) => {OpenDownloadITPScreen(sender, e);};
-			arrButts[9] = btnDownload;
+            arrButts[10] = btnDownload;
 
 			var btnOpenDownload = UIButton.FromType(UIButtonType.RoundedRect);
 			btnOpenDownload.Frame = new RectangleF(550f,150f,250f,30f);
 			btnOpenDownload.SetTitle("Open Downloaded ITPs", UIControlState.Normal);
 			btnOpenDownload.TouchUpInside += (sender,e) => {OpenDownloadedITPsScreen(sender, e);};
-			arrButts[10] = btnOpenDownload;
+            arrButts[11] = btnOpenDownload;
 			
 			View.AddSubviews(arrButts);
 //			View.Add(vwScroll);
@@ -209,7 +236,19 @@ namespace ITPiPadSoln
 			return txtName.Text;
 		}
 
-		public void SetSessionId(string sSessionId)
+        public void SetSecureId()
+        {
+            var hfSecureFlag = (UILabel)View.ViewWithTag (900);
+            hfSecureFlag.Text = giSecureFlag.ToString();
+        }
+
+        public int GetGlobalSecureFlag()
+        {
+            var hfSecureFlag = (UILabel)View.ViewWithTag (900);
+            return Convert.ToInt32(hfSecureFlag.Text);
+        }
+
+        public void SetSessionId(string sSessionId)
 		{
 			m_sSessionId = sSessionId;
 			var hfSessionId = (UILabel)View.ViewWithTag (700);

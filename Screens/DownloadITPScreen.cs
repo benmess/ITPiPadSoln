@@ -8,7 +8,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using clsiOS;
-using nspTabletCommon;	
+using ITPAndroidApp;	
 using clsTabletCommon.ITPExternal;
 
 namespace ITPiPadSoln
@@ -57,6 +57,7 @@ namespace ITPiPadSoln
 
         iUtils.ProgressBar progBarProjBattTestOCVolts05HrVw = new iUtils.ProgressBar();
         UIView progBarProjBattTestOCVolts05Hr = new UIView();
+
         iUtils.ProgressBar progBarProjBattTestUnpackedVw = new iUtils.ProgressBar();
         UIView progBarProjBattTestUnpacked = new UIView();
         iUtils.ProgressBar progBarProjBattTestVolts5MinVw = new iUtils.ProgressBar();
@@ -74,6 +75,7 @@ namespace ITPiPadSoln
         int iStatusButtonTag = 100013000;
 
         int iProjectsInList = 0;
+        int giSecureFlag = 0;
 
 		public DownloadITPScreen () : base ("DownloadITPScreen", null)
 		{
@@ -90,7 +92,10 @@ namespace ITPiPadSoln
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
+
+            HomeScreen home = GetHomeScreen();
+            giSecureFlag =  home.GetGlobalSecureFlag();
+
 			// Perform any additional setup after loading the view, typically from a nib.
 			DrawMenu();
 			DrawOpeningPage();
@@ -362,7 +367,7 @@ namespace ITPiPadSoln
 			string sSessionId = m_sSessionId;
 			string sUser = m_sUser;
 			clsITPFramework csITP = new clsITPFramework();
-			object[] objListITPs = csITP.GetITPsForDownload(sSessionId, sUser);
+            object[] objListITPs = csITP.GetITPsForDownload(sSessionId, sUser, giSecureFlag);
 			return objListITPs;
 
 		}
@@ -370,7 +375,7 @@ namespace ITPiPadSoln
 		public bool SetITPDownloaded(string sId, string sUser, string sSessionId, ref string sRtnMsg)
 		{
 			clsITPFramework csITP = new clsITPFramework();
-			bool bITPDownloaded = csITP.MarkITPDownloaded(sSessionId, sUser, sId, ref sRtnMsg);
+            bool bITPDownloaded = csITP.MarkITPDownloaded(sSessionId, sUser, sId, giSecureFlag,ref sRtnMsg);
 			return bITPDownloaded;
 		}
 
@@ -516,7 +521,7 @@ namespace ITPiPadSoln
 				//****************************************************************************************//
 				//                      DOCUMENT HEADER                                                   //
 				//****************************************************************************************//
-				object[] objListITPs = csITP.DownloadITPInfo(sSessionId, sUser, sId);
+                object[] objListITPs = csITP.DownloadITPInfo(sSessionId, sUser, sId, giSecureFlag);
 				
 				if (objListITPs[0].ToString() == "Success")
 				{
@@ -567,7 +572,7 @@ namespace ITPiPadSoln
 					//****************************************************************************************//
 					//                      QUESTIONNAIRE MASTER                                              //
 					//****************************************************************************************//
-					object[] objITPQuestions = csITP.DownloadProjectITPQuestions(sSessionId, sUser, sId);
+                    object[] objITPQuestions = csITP.DownloadProjectITPQuestions(sSessionId, sUser, sId, giSecureFlag);
 					
 					//Get any questions already raised on the website version into the local DB
 					if (objITPQuestions[0].ToString() == "Success")
@@ -621,7 +626,7 @@ namespace ITPiPadSoln
 					//****************************************************************************************//
 					//                      SECTION 10                                                       //
 					//****************************************************************************************//
-					object[] objITPSection10Info = csITP.DownloadProjectITPSection10(sSessionId, sUser, sId);
+                    object[] objITPSection10Info = csITP.DownloadProjectITPSection10(sSessionId, sUser, sId, giSecureFlag);
 					
 					//Get any section 10 info already raised on the website version into the local DB
 					if (objITPSection10Info[0].ToString() == "Success")
@@ -675,7 +680,7 @@ namespace ITPiPadSoln
                     //****************************************************************************************//
                     //                      RFU HEADER INFO                                                   //
                     //****************************************************************************************//
-                    object[] objITPRFUInfo = csITP.DownloadProjectITPRFU(sSessionId, sUser, sId);
+                    object[] objITPRFUInfo = csITP.DownloadProjectITPRFU(sSessionId, sUser, sId, giSecureFlag);
                     
                     //Get any RFU info already raised on the website version into the local DB
                     if (objITPRFUInfo[0].ToString() == "Success")
@@ -714,7 +719,7 @@ namespace ITPiPadSoln
                             //****************************************************************************************//
                             //                      BATTERY DISCHARGE TEST INFO                                                   //
                             //****************************************************************************************//
-                            object[] objITPBatteryInfo = csITP.DownloadProjectITPBatteryDischargeTest(sSessionId, sUser, sId);
+                            object[] objITPBatteryInfo = csITP.DownloadProjectITPBatteryDischargeTest(sSessionId, sUser, sId, giSecureFlag);
 
                             //Get any Battery Discharge Test info already raised on the website version into the local DB
                             if (objITPBatteryInfo[0].ToString() == "Success")
@@ -1399,10 +1404,11 @@ namespace ITPiPadSoln
 				double dNewVersionNumber = 0.0;
 				DateTime dtLastVersionDate;
 				//Only do all of this if the version has changed. So get the local version number and compare to that on the DB. If different do all of this. - WRITE LATER as a general function
-				bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sDocQuestionnaireTableName, ref dNewVersionNumber, ref dtLastVersionDate);
+                bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sDocQuestionnaireTableName, giSecureFlag, ref dNewVersionNumber, ref dtLastVersionDate);
 				if (!DB.TableExists(sDocQuestionnaireTableName) || bNewVersion)
 				{
 					clsLocalUtils util = new clsLocalUtils();
+                    util.SetSecureFlag(giSecureFlag);
 					string sURL = util.GetEnvironment_wbsURL("wbsITP_External");
 					wbsITP_External ws = new wbsITP_External();
 					ws.Url = sURL;
@@ -1472,10 +1478,11 @@ namespace ITPiPadSoln
 				DateTime dtLastVersionDate;
 
 				//Only do all of this if the version has changed. So get the local versoin umber and compare to that on the DB. If different do all of this. - WRITE LATER as a general function
-				bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPTypeTableName, ref dNewVersionNumber, ref dtLastVersionDate);
+                bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPTypeTableName, giSecureFlag, ref dNewVersionNumber, ref dtLastVersionDate);
 				if (!DB.TableExists(sITPTypeTableName) || bNewVersion)
 				{
 					clsLocalUtils util = new clsLocalUtils();
+                    util.SetSecureFlag(giSecureFlag);
 					string sURL = util.GetEnvironment_wbsURL("wbsITP_External");
 					wbsITP_External ws = new wbsITP_External();
 					ws.Url = sURL;
@@ -1543,11 +1550,12 @@ namespace ITPiPadSoln
 				double dNewVersionNumber = 0.0;
 				DateTime dtLastVersionDate;
 				//Only do all of this if the version has changed. So get the local version umber and compare to that on the DB. If different do all of this. - WRITE LATER as a general function
-				bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPDocumentSectionTableName, ref dNewVersionNumber, ref dtLastVersionDate);
+                bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPDocumentSectionTableName, giSecureFlag, ref dNewVersionNumber, ref dtLastVersionDate);
 				
 				if (!DB.TableExists(sITPDocumentSectionTableName) || bNewVersion)
 				{
 					clsLocalUtils util = new clsLocalUtils();
+                    util.SetSecureFlag(giSecureFlag);
 					string sURL = util.GetEnvironment_wbsURL("wbsITP_External");
 					wbsITP_External ws = new wbsITP_External();
 					ws.Url = sURL;
@@ -1618,13 +1626,14 @@ namespace ITPiPadSoln
 				string sITPInventoryTableName = ITPInventory.sITPInventoryTableName;
 
 				//Only do all of this if the version has changed. So get the local version number and compare to that on the DB. If different do all of this. - WRITE LATER as a general function
-				bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPInventoryTableName, ref dNewVersionNumber, ref dtLastVersionDate);
+                bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPInventoryTableName, giSecureFlag, ref dNewVersionNumber, ref dtLastVersionDate);
 				TimeSpan ts = dtToday - dtLastVersionDate;
 				int iDaysSinceUpdate = ts.Days;
 				
 				if (!DB.TableExists(sITPInventoryTableName) || bNewVersion || iDaysSinceUpdate >= 30)
 				{
 					clsLocalUtils util = new clsLocalUtils();
+                    util.SetSecureFlag(giSecureFlag);
 					string sURL = util.GetEnvironment_wbsURL("wbsITP_External");
 					wbsITP_External ws = new wbsITP_External();
 					ws.Url = sURL;
@@ -1693,11 +1702,12 @@ namespace ITPiPadSoln
                 string sITPBatteryFuseTypesTableName = ITPBatteryFuseTypes.sITPBatteryFuseTypeTableName;
                 
                 //Only do all of this if the version has changed. So get the local version number and compare to that on the DB. If different do all of this. - WRITE LATER as a general function
-                bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPBatteryFuseTypesTableName, ref dNewVersionNumber, ref dtLastVersionDate);
+                bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPBatteryFuseTypesTableName, giSecureFlag, ref dNewVersionNumber, ref dtLastVersionDate);
 
                 if (!DB.TableExists(sITPBatteryFuseTypesTableName) || bNewVersion)
                 {
                     clsLocalUtils util = new clsLocalUtils();
+                    util.SetSecureFlag(giSecureFlag);
                     string sURL = util.GetEnvironment_wbsURL("wbsITP_External");
                     wbsITP_External ws = new wbsITP_External();
                     ws.Url = sURL;
@@ -1770,11 +1780,12 @@ namespace ITPiPadSoln
                 string sITPBatteryCellInfoTableName = ITPBatteryCellInfo.sITPBatteryCellInfoTableName;
 
                 //Only do all of this if the version has changed. So get the local version number and compare to that on the DB. If different do all of this. - WRITE LATER as a general function
-                bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPBatteryCellInfoTableName, ref dNewVersionNumber, ref dtLastVersionDate);
+                bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPBatteryCellInfoTableName, giSecureFlag, ref dNewVersionNumber, ref dtLastVersionDate);
 
                 if (!DB.TableExists(sITPBatteryCellInfoTableName) || bNewVersion)
                 {
                     clsLocalUtils util = new clsLocalUtils();
+                    util.SetSecureFlag(giSecureFlag);
                     string sURL = util.GetEnvironment_wbsURL("wbsITP_External");
                     wbsITP_External ws = new wbsITP_External();
                     ws.Url = sURL;
@@ -1855,11 +1866,12 @@ namespace ITPiPadSoln
                 string sITPValidHierarchyTableName = ITPValidHierarchy.sITPValidHierarchyTableName;
                 
                 //Only do all of this if the version has changed. So get the local version number and compare to that on the DB. If different do all of this. - WRITE LATER as a general function
-                bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPValidHierarchyTableName, ref dNewVersionNumber, ref dtLastVersionDate);
+                bool bNewVersion = Static.IsNewVersionOfTable(sSessionId, sUser, sITPValidHierarchyTableName, giSecureFlag, ref dNewVersionNumber, ref dtLastVersionDate);
 
                 if (!DB.TableExists(sITPValidHierarchyTableName) || bNewVersion)
                 {
                     clsLocalUtils util = new clsLocalUtils();
+                    util.SetSecureFlag(giSecureFlag);
                     string sURL = util.GetEnvironment_wbsURL("wbsITP_External");
                     wbsITP_External ws = new wbsITP_External();
                     ws.Url = sURL;

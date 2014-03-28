@@ -7,7 +7,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using clsiOS;
-using nspTabletCommon;  
+using ITPAndroidApp;  
 using clsTabletCommon.ITPExternal;
 using System.Collections.Generic;
 

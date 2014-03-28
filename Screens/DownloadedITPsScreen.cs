@@ -8,7 +8,7 @@ using MonoTouch.UIKit;
 using MonoTouch.CoreGraphics;
 
 using clsiOS;
-using nspTabletCommon;	
+using ITPAndroidApp;	
 using clsTabletCommon.ITPExternal;
 
 namespace ITPiPadSoln
@@ -34,6 +34,8 @@ namespace ITPiPadSoln
 		int m_iProjectsInList = 0;
 		Task taskA;
 
+        int giSecureFlag = 0;
+
 //		UIActivityIndicatorView prog = new UIActivityIndicatorView();
 		iUtils.ActivityIndicator prog = new iUtils.ActivityIndicator();
 		UIView progVw = new UIView();
@@ -54,6 +56,9 @@ namespace ITPiPadSoln
 		{
 			base.ViewDidLoad ();
 			
+            HomeScreen home = GetHomeScreen();
+            giSecureFlag =  home.GetGlobalSecureFlag();
+
 			// Perform any additional setup after loading the view, typically from a nib.
 			DrawMenu();
 			DrawOpeningPage();
@@ -476,7 +481,16 @@ namespace ITPiPadSoln
 		{
 			UIButton btnClicked = (UIButton)sender;
 			int iClicked = btnClicked.Tag;
-			UILabel projId = (UILabel)View.ViewWithTag (iClicked/iUploadBtnTagId*iProjectIdTagId);
+			int iBtnClickedTagId = -1;
+			if (iMarkUploadType == 1)
+			{
+				iBtnClickedTagId = iUploadBtnTagId;
+			}
+			else
+			{
+				iBtnClickedTagId = iBackupBtnTagId;
+			}
+			UILabel projId = (UILabel)View.ViewWithTag (iClicked/iBtnClickedTagId*iProjectIdTagId);
 			string sId = projId.Text;
             int iOpenBtnId = -1;
             if(iMarkUploadType == 1)
@@ -509,7 +523,7 @@ namespace ITPiPadSoln
                 {
 
                     //Has the project been made available online again and if so you cannot upload
-                    object[] objUploadable = ITPFwrk.IsITPUploadable(m_sSessionId, m_sUser, sId);
+                    object[] objUploadable = ITPFwrk.IsITPUploadable(m_sSessionId, m_sUser, sId, giSecureFlag);
                     if (objUploadable [0].ToString() != "Success")
                     {
                         iUtils.AlertBox alert4 = new iUtils.AlertBox();
@@ -575,7 +589,7 @@ namespace ITPiPadSoln
 			string sSessionId = m_sSessionId;
 			clsITPFramework ITPFwrk = new clsITPFramework();
 			string sRtnMsg = "";
-            bool bUpload = ITPFwrk.UploadITPInfo(sSessionId, sUser, sId, iUploadOrBackup, ref sRtnMsg);
+            bool bUpload = ITPFwrk.UploadITPInfo(sSessionId, sUser, sId, iUploadOrBackup, giSecureFlag, ref sRtnMsg);
 			if (bUpload && sRtnMsg == "")
 			{
 				//Now also disable the open button for this project

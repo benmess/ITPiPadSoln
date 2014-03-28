@@ -7,7 +7,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using clsiOS;
-using nspTabletCommon;  
+using ITPAndroidApp;  
 using clsTabletCommon.ITPExternal;
 using System.Collections.Generic;
 
@@ -66,14 +66,14 @@ namespace ITPiPadSoln
         int iBMPBPUCBAlarmHdrLabel = 10012600;
 
         int iCellMbVoltageTagId = 10012700;
-        int iCellMbVoltageSearchTagId = 10012800;
+        //int iCellMbVoltageSearchTagId = 10012800;
         int iCellMbVoltageHiddenTagId = 10012900;
         int iBatteryCapacityTagId = 10013000;
         int iBatteryCapacityHiddenTagId = 10013100;
         int iDischargeLoadTagId = 10013200;
         int iDischargeLoadHiddenTagId = 10013300;
         int iCellMbPostTagId = 10013400;
-        int iCellMbPostSearchTagId = 10013500;
+        //int iCellMbPostSearchTagId = 10013500;
         int iCellMbPostHiddenTagId = 10013600;
         int iTestTypeTagId = 10013700;
         int iBMPBPUCBTagId = 10013800;
@@ -274,16 +274,16 @@ namespace ITPiPadSoln
             UIView hdrSection;
             UIView hdrSection2;
             UIView hdrSection3;
-            UIView hdrSection4; //Not used because 2 sub headers and we want to keep things synchronised
+            //            UIView hdrSection4; //Not used because 2 sub headers and we want to keep things synchronised
             UIView hdrSection5;
-            UIView hdrSection6; //Not used because 2 sub headers and we want to keep things synchronised
+            //            UIView hdrSection6; //Not used because 2 sub headers and we want to keep things synchronised
             UIView hdrSection7;
-            UIView hdrSection8; //Not used because 2 sub headers and we want to keep things synchronised
-            UIView hdrSection9; //Not used because 2 sub headers and we want to keep things synchronised
-            UIView hdrSection10; //Not used because 2 sub headers and we want to keep things synchronised
+            //            UIView hdrSection8; //Not used because 2 sub headers and we want to keep things synchronised
+            //            UIView hdrSection9; //Not used because 2 sub headers and we want to keep things synchronised
+            //            UIView hdrSection10; //Not used because 2 sub headers and we want to keep things synchronised
             UIView hdrSection11;
-            UIView hdrSection12; //Not used because 2 sub headers and we want to keep things synchronised
-            UIView hdrSection13; //Not used because 2 sub headers and we want to keep things synchronised
+            //            UIView hdrSection12; //Not used because 2 sub headers and we want to keep things synchronised
+            //            UIView hdrSection13; //Not used because 2 sub headers and we want to keep things synchronised
             UIView hdrSubSection3;
             UIView hdrSubSection4;
             UIView hdrSubSection5;
@@ -2682,7 +2682,7 @@ namespace ITPiPadSoln
 
         public void SetCommentsTextChanged(object sender, EventArgs e)
         {
-            UITextView edtText = (UITextView)sender;
+            //            UITextView edtText = (UITextView)sender;
             int iSection =  m_i20MinSection;
             SetSectionValueChanged(iSection + 1);
             SetAnyValueChanged(sender, null, iSection);
@@ -2723,7 +2723,7 @@ namespace ITPiPadSoln
 
         public bool CheckboxChanged(object sender, EventArgs e, int iCheckboxIndex, int iSectionId)
         {
-            UISwitch checkbox = (UISwitch)sender;
+            //UISwitch checkbox = (UISwitch)sender;
             SetSectionValueChanged(iSectionId + 1);
             SetAnyValueChanged(sender, null, iSectionId);
             return true;
@@ -2731,8 +2731,8 @@ namespace ITPiPadSoln
 
         public void SetRowRadioChanged(object sender, EventArgs e, int iSectionId)
         {
-            UISegmentedControl radGrp = (UISegmentedControl)sender;
-            int iSenderId = radGrp.Tag;
+            //UISegmentedControl radGrp = (UISegmentedControl)sender;
+            //int iSenderId = radGrp.Tag;
             int iSectionNo = iSectionId; //This it the number of the section (1 based)
             SetSectionValueChanged(iSectionNo+ 1);
             SetAnyValueChanged(sender, e, iSectionNo);
@@ -2822,7 +2822,7 @@ namespace ITPiPadSoln
         {
             int iSectionId;
             bool bReturn = false;
-            iSectionId = iBtnId/ iSaveSectionBtnTagId;
+			iSectionId = iBtnId/ iSaveSectionBtnTagId;
 
             switch (iSectionId)
             {

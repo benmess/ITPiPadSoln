@@ -6,23 +6,23 @@
 	<dict>
 		<key>Battery.nib</key>
 		<data>
-		Ryen1dLHA1Gnm7eIQ0GxtDw4UGw=
+		yddXF8QjcvGqrPKERs7HpvbRCIs=
 		</data>
 		<key>Battery20MinTest.nib</key>
 		<data>
-		1F2SWrwTGiMosVtfOwIXz1QyOG0=
+		OhCKlrP1FKi8zz0pUqoBeNhH7Zc=
 		</data>
 		<key>DownloadITPScreen.nib</key>
 		<data>
-		BxO3jKtu/fxX8ZRM9ZAhzx0lYVY=
+		FHA6sGxipw4xNPQjFdhX46CneHY=
 		</data>
 		<key>DownloadedITPsScreen.nib</key>
 		<data>
-		Ryen1dLHA1Gnm7eIQ0GxtDw4UGw=
+		2hw1zjrsdKHtTTbhY2TJ1Mh50KY=
 		</data>
 		<key>HomeScreen.nib</key>
 		<data>
-		e7pDv7hm/aiUIpB1pNWssKiIEkc=
+		M08uSZ573kIhi8enxlE5ltbgU+w=
 		</data>
 		<key>ITP App Artwork 144 x 144.png</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>ITPiPadSoln.exe</key>
 		<data>
-		Md75RwBR19/N0MKXNu3TeuNhNRM=
+		Rav5udKJ6P0pLYFuDbTQQ8PLH34=
 		</data>
 		<key>Images/Green_Block.JPG</key>
 		<data>
@@ -70,11 +70,11 @@
 		</data>
 		<key>LoginScreen.nib</key>
 		<data>
-		H7gYQMYq7kw1qSstl22VtRDEDmc=
+		LQYlo72E7uC5X2p5y3pgspNpE/4=
 		</data>
 		<key>Mono.Data.Sqlite.dll</key>
 		<data>
-		8CSEgZYg6AniAzhSkpPOA26LCh4=
+		RECvIK64x24WEg65S6BLPCsnJ8Q=
 		</data>
 		<key>NOTICE</key>
 		<data>
@@ -86,43 +86,43 @@
 		</data>
 		<key>PowerConversion.nib</key>
 		<data>
-		Ryen1dLHA1Gnm7eIQ0GxtDw4UGw=
+		qTObS8GclhptVZU8IUffWA1+0b4=
 		</data>
 		<key>ProjectITPage.nib</key>
 		<data>
-		Ryen1dLHA1Gnm7eIQ0GxtDw4UGw=
+		bFeps4HImM3zZ+IDUdVS67pHfx4=
 		</data>
 		<key>System.Core.dll</key>
 		<data>
-		UU/UfuPK6EuK9gvTLaPZs9BSHoo=
+		OARklVNKvr+3Mk5B4eyECH4jG+Q=
 		</data>
 		<key>System.Data.dll</key>
 		<data>
-		dbHhxZNuO9q7XTy3zgQXZnSgjE8=
+		T/yZwGSJv44ek5dlJOGydjv0gNU=
 		</data>
 		<key>System.Transactions.dll</key>
 		<data>
-		9/MJCjTB2hBaGLov8CgxROTvCTw=
+		bJhGjFG0Thsio0UL71C9jDezNI8=
 		</data>
 		<key>System.Web.Services.dll</key>
 		<data>
-		NRomP8srqU5SYLZa7FhtqPtuIFo=
+		h12r0Ximsu0bHnpvPGXtGx9WObg=
 		</data>
 		<key>System.Xml.dll</key>
 		<data>
-		87cfMykAx69O+FXrTZJik6tJkLU=
+		ejVffbDD7CsCfYRCXUlDzyb4t+0=
 		</data>
 		<key>System.dll</key>
 		<data>
-		8A7U0stsrQlTfBJGnGapvqD5U70=
+		t5S8ZMa5nmHfbBsKxLjnWqQy1T4=
 		</data>
 		<key>clsTabletCommon.dll</key>
 		<data>
-		DhcAx0Y2DBYd+SlAsub8SVslY4U=
+		0ge8oDB037OpP1M30/zoj0CYAjQ=
 		</data>
 		<key>clsiOS.dll</key>
 		<data>
-		rgDOocyMtSm8r0QMVWePduGiQ5U=
+		g6Djw69ITGDOqAozAj61e5gNuYM=
 		</data>
 		<key>embedded.mobileprovision</key>
 		<data>
@@ -130,11 +130,11 @@
 		</data>
 		<key>monotouch.dll</key>
 		<data>
-		4Mzh1N+8hna8+vOmtJcWjJj/OlA=
+		OarliqAt9Ivj0bJrfbY4LlHfBDI=
 		</data>
 		<key>mscorlib.dll</key>
 		<data>
-		olZuOhcH2e2DMoGKpUcPbN0wNso=
+		g+D9Q5yteedxLl1lb2mSGkzva2I=
 		</data>
 	</dict>
 	<key>rules</key>
