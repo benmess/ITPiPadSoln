@@ -73,6 +73,8 @@ namespace ITPiPadSoln
         int iProjDescTag = 100011000;
         int iDownloadButtonTag = 100012000;
         int iStatusButtonTag = 100013000;
+        int iCPTag = 100014000;
+        int iProjTypeTag = 100015000;
 
         int iProjectsInList = 0;
         int giSecureFlag = 0;
@@ -227,7 +229,9 @@ namespace ITPiPadSoln
 				{
 					object[] arrIdList = (object[])arrITP[1];
 					object[] arrDescList = (object[])arrITP[2];
-					UIView[] arrItems2 = new UIView[4];
+                    object[] arrProjType = (object[])arrITP[3];
+                    object[] arrProjCP = (object[])arrITP[4];
+                    UIView[] arrItems2 = new UIView[6];
 					iProjectsInList = arrIdList.Length;
                     iTotalHeight = (iProjectsInList) * iRowHeight;
 
@@ -276,6 +280,18 @@ namespace ITPiPadSoln
 						btnStatus.Text = "0";
 						btnStatus.Hidden = true;
 						arrItems2[3] = btnStatus;
+
+                        UILabel lblCP = new UILabel();
+                        lblCP.Tag = iCPTag * (i+1);
+                        lblCP.Text = arrProjCP[i].ToString();
+                        lblCP.Hidden = true;
+                        arrItems2[4] = lblCP;
+
+                        UILabel lblProjType = new UILabel();
+                        lblProjType.Tag = iProjTypeTag * (i+1);
+                        lblProjType.Text = arrProjType[i].ToString();
+                        lblProjType.Hidden = true;
+                        arrItems2[5] = lblProjType;
 
                         layout.AddSubviews(arrItems2);
 
@@ -401,11 +417,17 @@ namespace ITPiPadSoln
                 var txtDesc = (UILabel)View.ViewWithTag(button.Tag / iDownloadButtonTag * iProjDescTag);
                 string sDesc = txtDesc.Text;
 
+                var txtCP = (UILabel)View.ViewWithTag(button.Tag / iDownloadButtonTag * iCPTag);
+                string sCP = txtCP.Text;
+
+                var txtProjType = (UILabel)View.ViewWithTag(button.Tag / iDownloadButtonTag * iProjTypeTag);
+                Int32 iProjType = Convert.ToInt32(txtProjType.Text);
+
                 if (!HasConnectionStatus())
                 {
                 }
                 //Start the downlaod task. It has to be run as a separate thread for some reason otherwise it won't show. What a pain!!!
-                taskA = new Task(() => RunDownload(sId, sDesc, button, sUser, sSessionId));
+                taskA = new Task(() => RunDownload(sId, sDesc, button, sUser, sSessionId,iProjType, sCP));
                 taskA.Start();
 
                 //Now disable the download button for all projects so the user cannot click whilst an existing download is in progress
@@ -434,12 +456,12 @@ namespace ITPiPadSoln
 		}
 
 		//This is all in a separate thread so to display anything you have to use the RunOnUiThread method
-		public bool RunDownload(string sId, string sDescription, UIButton button, string sUser, string sSessionId)
+        public bool RunDownload(string sId, string sDescription, UIButton button, string sUser, string sSessionId, Int32 iProjType, string sCP)
 		{
 			try
 			{
 				string sRtnMsg = ""; 
-				if (!DownloadProjectITPInfo(sId, sDescription,sUser, sSessionId))
+                if (!DownloadProjectITPInfo(sId, sDescription,sUser, sSessionId, iProjType, sCP))
 				{
 					this.InvokeOnMainThread(() => {
 						iUtils.AlertBox alert = new iUtils.AlertBox();
@@ -507,7 +529,7 @@ namespace ITPiPadSoln
 			}
 		}
 		
-		public bool DownloadProjectITPInfo(string sId, string sDescription, string sUser, string sSessionId)
+        public bool DownloadProjectITPInfo(string sId, string sDescription, string sUser, string sSessionId, Int32 iProjType, string sCP)
 		{
 			//First get all the static info
 			if (DownloadStaticTables(sUser, sSessionId))
@@ -549,8 +571,10 @@ namespace ITPiPadSoln
 									{
 										string[] delimiters2 = new string[] { "^" };
 										string[] sHeaderSplitItems = sHeaderItems[i].Split(delimiters2, StringSplitOptions.None);
-										Array.Resize<string>(ref sHeaderSplitItems, sHeaderSplitItems.Length + 1);
-										sHeaderSplitItems[sHeaderSplitItems.Length - 1] = sDescription;
+                                        Array.Resize<string>(ref sHeaderSplitItems, sHeaderSplitItems.Length + 3);
+                                        sHeaderSplitItems[sHeaderSplitItems.Length - 3] = sDescription;
+                                        sHeaderSplitItems[sHeaderSplitItems.Length - 2] = sCP;
+                                        sHeaderSplitItems[sHeaderSplitItems.Length - 1] = iProjType.ToString();
 										ITPDB.TableHeaderAddRecord(sHeaderSplitItems);
 										this.InvokeOnMainThread(() => { progBarProjITPHeaderVw.UpdateProgressBar(i + 1); });
 									}
@@ -1445,6 +1469,11 @@ namespace ITPiPadSoln
 						//Update the version number locally
 						Static.UpdateVersionNumber(sDocQuestionnaireTableName, dNewVersionNumber);
 						this.InvokeOnMainThread(() => { progBarQuestionVw.CloseProgressBar(); });
+
+                        if(!ITPQuest.AddTAndDQuestions())
+                        {
+                            return false;
+                        }
 						return true;
 					}
 					else

@@ -232,4 +232,10 @@
       <UpdateFromURL>http://www.w3schools.com/WebServices/TempConvert.asmx</UpdateFromURL>
     </WebReferenceUrl>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\ITP App Artwork 72 x 72 THIESS.png" />
+    <BundleResource Include="Images\ITP App Artwork 144 x 144 THIESS.png" />
+    <BundleResource Include="Images\ITP57x57.png" />
+    <BundleResource Include="Images\ITP512x512.png" />
+  </ItemGroup>
 </Project>

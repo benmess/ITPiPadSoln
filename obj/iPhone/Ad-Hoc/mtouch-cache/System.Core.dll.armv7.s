@@ -1,3 +1,4 @@
+.subsections_via_symbols
 .section __DWARF, __debug_abbrev,regular,debug
 
 	.byte 1,17,1,37,8,3,8,27,8,19,11,17,1,18,1,16,6,0,0,2,46,1,3,8,17,1,18,1,64,10,0,0
@@ -16,8 +17,8 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 4,1
-	.asciz "Mono AOT Compiler 3.2.3 (mtvs-1.8-series/bfa7186 Mon Nov 11 15:53:20 EST 2013)"
-	.asciz "JITted code"
+	.asciz "Mono AOT Compiler 3.2.7 (monotouch-7.0.7-hotfix-branch/2d13830 Mon Mar 10 17:51:56 EDT 2014)"
+	.asciz "System.Core.dll"
 	.asciz ""
 
 	.byte 2,0,0,0,0,0,0,0,0
@@ -93,32 +94,6 @@ LDIE_SZARRAY:
 	.asciz "object"
 .section __DWARF, __debug_loc,regular,debug
 Ldebug_loc_start:
-.section __DWARF, __debug_line,regular,debug
-Ldebug_line_section_start:
-.section __DWARF, __debug_line,regular,debug
-Ldebug_line_start:
-
-	.long Ldebug_line_end - . -4
-	.short 2
-	.long Ldebug_line_header_end - . -4
-	.byte 1,1,251,14,13,0,1,1,1,1,0,0,0,1,0,0,1
-.section __DWARF, __debug_line,regular,debug
-.section __DWARF, __debug_line,regular,debug
-
-	.byte 0
-.section __DWARF, __debug_line,regular,debug
-	.asciz "xdb.il"
-
-	.byte 0,0,0
-.section __DWARF, __debug_line,regular,debug
-.section __DWARF, __debug_line,regular,debug
-
-	.byte 0
-Ldebug_line_header_end:
-.section __DWARF, __debug_line,regular,debug
-
-	.byte 0,1,1
-Ldebug_line_end:
 .section __DWARF, __debug_frame,regular,debug
 	.align 3
 
@@ -141,8 +116,6 @@ methods:
 	.align 2
 	.no_dead_strip _System_Security_Cryptography_AesManaged__ctor
 _System_Security_Cryptography_AesManaged__ctor:
-.file 1 "/Developer/MonoTouch/Source/monotouch/src/CommonCrypto/AesManaged.g.cs"
-.loc 1 18 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229
 bl _p_1
@@ -154,7 +127,6 @@ Lme_0:
 	.align 2
 	.no_dead_strip _System_Security_Cryptography_AesManaged_GenerateIV
 _System_Security_Cryptography_AesManaged_GenerateIV:
-.loc 1 24 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,24,0,144,229,192,1,160,225
 bl _p_2
@@ -166,7 +138,6 @@ Lme_1:
 	.align 2
 	.no_dead_strip _System_Security_Cryptography_AesManaged_GenerateKey
 _System_Security_Cryptography_AesManaged_GenerateKey:
-.loc 1 29 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,28,0,144,229,192,1,160,225
 bl _p_3
@@ -178,27 +149,18 @@ Lme_2:
 	.align 2
 	.no_dead_strip _System_Security_Cryptography_AesManaged_CreateDecryptor_byte___byte__
 _System_Security_Cryptography_AesManaged_CreateDecryptor_byte___byte__:
-.loc 1 34 0
 
 	.byte 128,64,45,233,13,112,160,225,96,13,45,233,36,208,77,226,13,176,160,225,0,80,160,225,1,96,160,225,2,160,160,225
 	.byte 0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . + 4
-	.byte 0,0,159,231,0,0,144,229,8,0,139,229
-.loc 1 35 0
-
-	.byte 5,0,160,225,0,16,149,229,15,224,160,225,92,240,145,229,1,0,64,226,16,0,139,229,4,0,80,227,80,0,0,42
-	.byte 16,0,155,229,0,17,160,225,0,0,159,229,0,0,0,234
+	.byte 0,0,159,231,0,0,144,229,8,0,139,229,5,0,160,225,0,16,149,229,15,224,160,225,92,240,145,229,1,0,64,226
+	.byte 16,0,139,229,4,0,80,227,80,0,0,42,16,0,155,229,0,17,160,225,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . + 8
-	.byte 0,0,159,231,1,0,128,224,0,0,144,229,0,240,160,225
-.loc 1 37 0
-
-	.byte 1,0,160,227,0,16,160,227,0,32,160,227,6,48,160,225,0,160,141,229
+	.byte 0,0,159,231,1,0,128,224,0,0,144,229,0,240,160,225,1,0,160,227,0,16,160,227,0,32,160,227,6,48,160,225
+	.byte 0,160,141,229
 bl _p_4
 
-	.byte 8,0,139,229,28,0,139,229
-.loc 1 38 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 8,0,139,229,28,0,139,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . + 12
 	.byte 0,0,159,231
 bl _p_5
@@ -206,16 +168,10 @@ bl _p_5
 	.byte 28,16,155,229,24,0,139,229,5,32,160,225,0,48,160,227,0,160,141,229
 bl _p_6
 
-	.byte 24,0,155,229,74,0,0,234
-.loc 1 40 0
-
-	.byte 1,0,160,227,0,16,160,227,2,32,160,227,6,48,160,225,0,160,141,229
+	.byte 24,0,155,229,74,0,0,234,1,0,160,227,0,16,160,227,2,32,160,227,6,48,160,225,0,160,141,229
 bl _p_4
 
-	.byte 8,0,139,229,28,0,139,229
-.loc 1 41 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 8,0,139,229,28,0,139,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . + 12
 	.byte 0,0,159,231
 bl _p_5
@@ -223,22 +179,13 @@ bl _p_5
 	.byte 28,16,155,229,24,0,139,229,5,32,160,225,0,48,160,227,0,160,141,229
 bl _p_6
 
-	.byte 24,0,155,229,53,0,0,234
-.loc 1 44 0
-
-	.byte 0,0,160,227,0,16,160,227,2,32,160,227,6,48,160,225,0,160,141,229
+	.byte 24,0,155,229,53,0,0,234,0,0,160,227,0,16,160,227,2,32,160,227,6,48,160,225,0,160,141,229
 bl _p_4
 
-	.byte 12,0,139,229
-.loc 1 45 0
-
-	.byte 1,0,160,227,0,16,160,227,2,32,160,227,6,48,160,225,0,160,141,229
+	.byte 12,0,139,229,1,0,160,227,0,16,160,227,2,32,160,227,6,48,160,225,0,160,141,229
 bl _p_4
 
-	.byte 8,0,139,229,28,0,139,229
-.loc 1 46 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 8,0,139,229,28,0,139,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . + 16
 	.byte 0,0,159,231
 bl _p_5
@@ -246,21 +193,18 @@ bl _p_5
 	.byte 28,16,155,229,24,0,139,229,12,32,155,229,5,48,160,225,0,192,160,227,0,192,141,229,4,160,141,229
 bl _p_7
 
-	.byte 24,0,155,229,23,0,0,234
-.loc 1 51 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 24,0,155,229,23,0,0,234,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . -12
 	.byte 0,0,159,231,1,16,160,227
 bl _p_8
 
-	.byte 24,0,139,229,5,0,160,225,0,16,149,229,15,224,160,225,92,240,145,229,28,0,139,229,173,1,0,227
+	.byte 24,0,139,229,5,0,160,225,0,16,149,229,15,224,160,225,92,240,145,229,28,0,139,229,175,1,0,227
 bl _p_9
 
 	.byte 0,16,160,225,24,0,155,229,28,32,155,229,8,32,129,229
 bl _p_10
 
-	.byte 0,16,160,225,175,1,0,227,0,2,64,227
+	.byte 0,16,160,225,177,1,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_11
 
@@ -271,27 +215,18 @@ Lme_3:
 	.align 2
 	.no_dead_strip _System_Security_Cryptography_AesManaged_CreateEncryptor_byte___byte__
 _System_Security_Cryptography_AesManaged_CreateEncryptor_byte___byte__:
-.loc 1 57 0
 
 	.byte 128,64,45,233,13,112,160,225,112,13,45,233,32,208,77,226,13,176,160,225,0,80,160,225,1,96,160,225,2,160,160,225
 	.byte 0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . + 4
-	.byte 0,0,159,231,0,64,144,229
-.loc 1 58 0
-
-	.byte 5,0,160,225,0,16,149,229,15,224,160,225,92,240,145,229,1,0,64,226,8,0,139,229,4,0,80,227,79,0,0,42
-	.byte 8,0,155,229,0,17,160,225,0,0,159,229,0,0,0,234
+	.byte 0,0,159,231,0,64,144,229,5,0,160,225,0,16,149,229,15,224,160,225,92,240,145,229,1,0,64,226,8,0,139,229
+	.byte 4,0,80,227,79,0,0,42,8,0,155,229,0,17,160,225,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . + 20
-	.byte 0,0,159,231,1,0,128,224,0,0,144,229,0,240,160,225
-.loc 1 60 0
-
-	.byte 0,0,160,227,0,16,160,227,0,32,160,227,6,48,160,225,0,160,141,229
+	.byte 0,0,159,231,1,0,128,224,0,0,144,229,0,240,160,225,0,0,160,227,0,16,160,227,0,32,160,227,6,48,160,225
+	.byte 0,160,141,229
 bl _p_4
 
-	.byte 0,64,160,225,20,0,139,229
-.loc 1 61 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 0,64,160,225,20,0,139,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . + 12
 	.byte 0,0,159,231
 bl _p_5
@@ -299,16 +234,10 @@ bl _p_5
 	.byte 20,16,155,229,16,0,139,229,5,32,160,225,1,48,160,227,0,160,141,229
 bl _p_6
 
-	.byte 16,0,155,229,73,0,0,234
-.loc 1 63 0
-
-	.byte 0,0,160,227,0,16,160,227,2,32,160,227,6,48,160,225,0,160,141,229
+	.byte 16,0,155,229,73,0,0,234,0,0,160,227,0,16,160,227,2,32,160,227,6,48,160,225,0,160,141,229
 bl _p_4
 
-	.byte 0,64,160,225,20,0,139,229
-.loc 1 64 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 0,64,160,225,20,0,139,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . + 12
 	.byte 0,0,159,231
 bl _p_5
@@ -316,16 +245,10 @@ bl _p_5
 	.byte 20,16,155,229,16,0,139,229,5,32,160,225,1,48,160,227,0,160,141,229
 bl _p_6
 
-	.byte 16,0,155,229,52,0,0,234
-.loc 1 67 0
-
-	.byte 0,0,160,227,0,16,160,227,2,32,160,227,6,48,160,225,0,160,141,229
+	.byte 16,0,155,229,52,0,0,234,0,0,160,227,0,16,160,227,2,32,160,227,6,48,160,225,0,160,141,229
 bl _p_4
 
-	.byte 0,64,160,225,20,0,139,229
-.loc 1 68 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 0,64,160,225,20,0,139,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . + 4
 	.byte 0,0,159,231,0,0,144,229,24,0,139,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . + 16
@@ -335,21 +258,18 @@ bl _p_5
 	.byte 20,16,155,229,24,32,155,229,16,0,139,229,5,48,160,225,1,192,160,227,0,192,141,229,4,160,141,229
 bl _p_7
 
-	.byte 16,0,155,229,23,0,0,234
-.loc 1 73 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 16,0,155,229,23,0,0,234,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Core_got - . -12
 	.byte 0,0,159,231,1,16,160,227
 bl _p_8
 
-	.byte 16,0,139,229,5,0,160,225,0,16,149,229,15,224,160,225,92,240,145,229,20,0,139,229,173,1,0,227
+	.byte 16,0,139,229,5,0,160,225,0,16,149,229,15,224,160,225,92,240,145,229,20,0,139,229,175,1,0,227
 bl _p_9
 
 	.byte 0,16,160,225,16,0,155,229,20,32,155,229,8,32,129,229
 bl _p_10
 
-	.byte 0,16,160,225,175,1,0,227,0,2,64,227
+	.byte 0,16,160,225,177,1,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_11
 
@@ -382,6 +302,8 @@ code_offsets:
 	.align 3
 unbox_trampolines:
 unbox_trampolines_end:
+
+	.long 0
 .section __TEXT, __const
 	.align 3
 method_info_offsets:
@@ -516,14 +438,14 @@ image_table:
 
 	.long 2
 	.asciz "System.Core"
-	.asciz "4E3A2A74-F23E-42AD-B2B2-B8A78CD109AE"
+	.asciz "97EA4F60-101B-4BD1-BABC-C5212EDE49B5"
 	.asciz ""
 	.asciz "7cec85d7bea7798e"
 	.align 3
 
 	.long 1,2,0,5,0
 	.asciz "mscorlib"
-	.asciz "E3F22CEB-454B-4F21-8D65-5E22A00B8616"
+	.asciz "9627E3FA-7529-4FE8-8CA2-665E2FF84CAD"
 	.asciz ""
 	.asciz "7cec85d7bea7798e"
 	.align 3
@@ -537,7 +459,7 @@ got_end:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "4E3A2A74-F23E-42AD-B2B2-B8A78CD109AE"
+	.asciz "97EA4F60-101B-4BD1-BABC-C5212EDE49B5"
 .section __TEXT, __const
 	.align 2
 runtime_version:
@@ -550,7 +472,7 @@ assembly_name:
 	.align 3
 _mono_aot_file_info:
 
-	.long 95,0
+	.long 97,0
 	.align 2
 	.long _mono_aot_System_Core_got
 	.align 2
@@ -612,9 +534,10 @@ _mono_aot_file_info:
 	.align 2
 	.long unbox_trampolines_end
 
-	.long 9,84,12,6,10,118565375,0,313
+	.long 9,84,12,6,10,387000831,0,313
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,128,4,4,14
+	.long 0,0,0,0,0
 	.globl _mono_aot_module_System_Core_info
 	.align 2
 _mono_aot_module_System_Core_info:
@@ -624,16 +547,16 @@ _mono_aot_module_System_Core_info:
 	.align 3
 blob:
 
-	.byte 0,0,0,0,0,0,0,0,5,4,5,6,6,7,0,6,4,8,6,6,4,7,12,0,39,42,47,16,2,130,134,1
-	.byte 137,75,8,4,124,128,208,129,156,129,36,14,2,10,1,14,2,8,1,8,4,120,128,204,129,148,129,32,3,193,0,1
+	.byte 0,0,0,0,0,0,0,0,5,4,5,6,6,7,0,6,4,8,6,6,4,7,12,0,39,42,47,16,2,130,139,1
+	.byte 137,87,8,4,124,128,208,129,156,129,36,14,2,10,1,14,2,8,1,8,4,120,128,204,129,148,129,32,3,193,0,1
 	.byte 217,3,193,0,0,222,3,193,0,0,221,3,193,0,0,5,7,24,109,111,110,111,95,111,98,106,101,99,116,95,110,101
 	.byte 119,95,115,112,101,99,105,102,105,99,0,3,193,0,0,22,3,193,0,0,13,7,17,109,111,110,111,95,104,101,108,112
 	.byte 101,114,95,108,100,115,116,114,0,7,27,109,111,110,111,95,104,101,108,112,101,114,95,110,101,119,111,98,106,95,109,115
-	.byte 99,111,114,108,105,98,0,3,193,0,20,51,7,25,109,111,110,111,95,97,114,99,104,95,116,104,114,111,119,95,101,120
+	.byte 99,111,114,108,105,98,0,3,193,0,20,97,7,25,109,111,110,111,95,97,114,99,104,95,116,104,114,111,119,95,101,120
 	.byte 99,101,112,116,105,111,110,0,2,0,0,2,0,0,2,0,0,2,19,0,2,49,0,0,128,144,8,0,0,1,24,128
-	.byte 160,48,0,0,4,193,0,19,93,193,0,19,90,193,0,19,89,193,0,19,87,193,0,11,32,3,2,5,193,0,11,37
-	.byte 4,193,0,11,35,193,0,11,34,193,0,11,31,193,0,11,30,193,0,11,29,193,0,11,28,193,0,11,27,193,0,11
-	.byte 26,193,0,11,25,193,0,11,24,193,0,11,23,193,0,11,22,193,0,11,21,193,0,11,20,98,111,101,104,109,0
+	.byte 160,48,0,0,4,193,0,19,139,193,0,19,136,193,0,19,135,193,0,19,133,193,0,11,71,3,2,5,193,0,11,76
+	.byte 4,193,0,11,74,193,0,11,73,193,0,11,70,193,0,11,69,193,0,11,68,193,0,11,67,193,0,11,66,193,0,11
+	.byte 65,193,0,11,64,193,0,11,63,193,0,11,62,193,0,11,61,193,0,11,60,193,0,11,59,98,111,101,104,109,0
 .section __TEXT, __const
 	.align 3
 Lglobals_hash:
@@ -1140,6 +1063,58 @@ Lfde4_end:
 
 	.byte 0
 Ldebug_info_end:
+.section __DWARF, __debug_line,regular,debug
+Ldebug_line_section_start:
+Ldebug_line_start:
+
+	.long Ldebug_line_end - . -4
+	.short 2
+	.long Ldebug_line_header_end - . -4
+	.byte 1,1,251,14,13,0,1,1,1,1,0,0,0,1,0,0,1
+.section __DWARF, __debug_line,regular,debug
+	.asciz "/Developer/MonoTouch/Source/monotouch/src/CommonCrypto"
+
+	.byte 0
+	.asciz "<unknown>"
+
+	.byte 0,0,0
+	.asciz "AesManaged.g.cs"
+
+	.byte 1,0,0,0
+Ldebug_line_header_end:
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Security_Cryptography_AesManaged__ctor
+
+	.byte 3,17,4,2,1,3,17,2,24,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Security_Cryptography_AesManaged_GenerateIV
+
+	.byte 3,23,4,2,1,3,23,2,24,1,2,36,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Security_Cryptography_AesManaged_GenerateKey
+
+	.byte 3,28,4,2,1,3,28,2,24,1,2,36,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Security_Cryptography_AesManaged_CreateDecryptor_byte___byte__
+
+	.byte 3,33,4,2,1,3,33,2,32,1,8,117,3,2,2,196,0,1,8,229,3,2,2,52,1,8,229,3,3,2,52,1
+	.byte 8,173,8,229,3,5,2,60,1,2,236,0,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Security_Cryptography_AesManaged_CreateEncryptor_byte___byte__
+
+	.byte 3,56,4,2,1,3,56,2,32,1,8,61,3,2,2,196,0,1,8,229,3,2,2,52,1,8,229,3,3,2,52,1
+	.byte 8,229,3,5,2,212,0,1,2,236,0,1,0,1,1,0,1,1
+Ldebug_line_end:
 .text
 	.align 3
 mem_end:

@@ -4,8 +4,8 @@
 <dict>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>Images/ITP App Artwork 72 x 72.png</string>
-		<string>Images/ITP App Artwork 144 x 144.png</string>
+		<string>Images/ITP App Artwork 72 x 72 THIESS</string>
+		<string>Images/ITP App Artwork 144 x 144 THIESS</string>
 	</array>
 	<key>MinimumOSVersion</key>
 	<string>4.1</string>
@@ -25,6 +25,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.16</string>
+	<string>1.17</string>
 </dict>
 </plist>

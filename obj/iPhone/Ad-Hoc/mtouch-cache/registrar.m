@@ -2270,6 +2270,7 @@ void monotouch_create_classes (void) {
 			class_addIvar (handle, __monotouch_ivars [ivar_offset].name, __monotouch_ivars [ivar_offset].size, __monotouch_ivars [ivar_offset].align, __monotouch_ivars [ivar_offset].type);
 		class_addMethod (handle, sel_registerName ("release"), (IMP) &monotouch_release_trampoline, "v@:");
 		class_addMethod (handle, sel_registerName ("retain"), (IMP) &monotouch_retain_trampoline, "@@:");
+		class_addMethod (handle, sel_registerName ("dealloc"), (IMP) &monotouch_dealloc_trampoline, "v@:");
 		class_addMethod (handle, sel_registerName ("conformsToProtocol:"), (IMP) &monotouch_trampoline, "B@:^v");
 		for (j = 0; j < __monotouch_classes [i].method_count; j++, method_offset++) {
 			Class h = (__monotouch_methods [method_offset].isstatic ? object_getClass (handle) : handle);

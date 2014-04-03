@@ -1,3 +1,4 @@
+.subsections_via_symbols
 .section __DWARF, __debug_abbrev,regular,debug
 
 	.byte 1,17,1,37,8,3,8,27,8,19,11,17,1,18,1,16,6,0,0,2,46,1,3,8,17,1,18,1,64,10,0,0
@@ -16,8 +17,8 @@ Ldebug_info_begin:
 	.short 2
 	.long 0
 	.byte 4,1
-	.asciz "Mono AOT Compiler 3.2.3 (mtvs-1.8-series/bfa7186 Mon Nov 11 15:53:20 EST 2013)"
-	.asciz "JITted code"
+	.asciz "Mono AOT Compiler 3.2.7 (monotouch-7.0.7-hotfix-branch/2d13830 Mon Mar 10 17:51:56 EDT 2014)"
+	.asciz "System.Transactions.dll"
 	.asciz ""
 
 	.byte 2,0,0,0,0,0,0,0,0
@@ -93,32 +94,6 @@ LDIE_SZARRAY:
 	.asciz "object"
 .section __DWARF, __debug_loc,regular,debug
 Ldebug_loc_start:
-.section __DWARF, __debug_line,regular,debug
-Ldebug_line_section_start:
-.section __DWARF, __debug_line,regular,debug
-Ldebug_line_start:
-
-	.long Ldebug_line_end - . -4
-	.short 2
-	.long Ldebug_line_header_end - . -4
-	.byte 1,1,251,14,13,0,1,1,1,1,0,0,0,1,0,0,1
-.section __DWARF, __debug_line,regular,debug
-.section __DWARF, __debug_line,regular,debug
-
-	.byte 0
-.section __DWARF, __debug_line,regular,debug
-	.asciz "xdb.il"
-
-	.byte 0,0,0
-.section __DWARF, __debug_line,regular,debug
-.section __DWARF, __debug_line,regular,debug
-
-	.byte 0
-Ldebug_line_header_end:
-.section __DWARF, __debug_line,regular,debug
-
-	.byte 0,1,1
-Ldebug_line_end:
 .section __DWARF, __debug_frame,regular,debug
 	.align 3
 
@@ -141,8 +116,6 @@ methods:
 	.align 2
 	.no_dead_strip _System_Transactions_Enlistment__ctor
 _System_Transactions_Enlistment__ctor:
-.file 1 "/Developer/MonoTouch/Source/mono/mcs/class/System.Transactions/System.Transactions/Enlistment.cs"
-.loc 1 22 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,0,16,160,227,8,16,192,229
 	.byte 12,208,141,226,0,1,189,232,128,128,189,232
@@ -152,7 +125,6 @@ Lme_4:
 	.align 2
 	.no_dead_strip _System_Transactions_Enlistment_Done
 _System_Transactions_Enlistment_Done:
-.loc 1 27 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,1,16,160,227,8,16,192,229
 	.byte 12,208,141,226,0,1,189,232,128,128,189,232
@@ -162,17 +134,9 @@ Lme_5:
 	.align 2
 	.no_dead_strip _System_Transactions_PreparingEnlistment__ctor_System_Transactions_Transaction_System_Transactions_IEnlistmentNotification
 _System_Transactions_PreparingEnlistment__ctor_System_Transactions_Transaction_System_Transactions_IEnlistmentNotification:
-.file 2 "/Developer/MonoTouch/Source/mono/mcs/class/System.Transactions/System.Transactions/PreparingEnlistment.cs"
-.loc 2 28 0
 
 	.byte 128,64,45,233,13,112,160,225,32,1,45,233,16,208,77,226,0,80,160,225,0,16,141,229,4,32,141,229,0,0,160,227
-	.byte 8,0,197,229,0,0,157,229,12,0,133,229,4,0,157,229
-.loc 2 29 0
-
-	.byte 16,0,133,229
-.loc 2 30 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 8,0,197,229,0,0,157,229,12,0,133,229,4,0,157,229,16,0,133,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 4
 	.byte 0,0,159,231
 bl _p_1
@@ -187,7 +151,6 @@ Lme_c:
 	.align 2
 	.no_dead_strip _System_Transactions_PreparingEnlistment_get_IsPrepared
 _System_Transactions_PreparingEnlistment_get_IsPrepared:
-.loc 2 61 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,28,0,208,229,12,208,141,226
 	.byte 0,1,189,232,128,128,189,232
@@ -197,7 +160,6 @@ Lme_d:
 	.align 2
 	.no_dead_strip _System_Transactions_PreparingEnlistment_get_WaitHandle
 _System_Transactions_PreparingEnlistment_get_WaitHandle:
-.loc 2 65 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,20,0,144,229,12,208,141,226
 	.byte 0,1,189,232,128,128,189,232
@@ -207,7 +169,6 @@ Lme_e:
 	.align 2
 	.no_dead_strip _System_Transactions_PreparingEnlistment_get_EnlistmentNotification
 _System_Transactions_PreparingEnlistment_get_EnlistmentNotification:
-.loc 2 70 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,16,0,144,229,12,208,141,226
 	.byte 0,1,189,232,128,128,189,232
@@ -217,7 +178,6 @@ Lme_f:
 	.align 2
 	.no_dead_strip _System_Transactions_PreparingEnlistment_get_Exception
 _System_Transactions_PreparingEnlistment_get_Exception:
-.loc 2 77 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,24,0,144,229,12,208,141,226
 	.byte 0,1,189,232,128,128,189,232
@@ -227,7 +187,6 @@ Lme_10:
 	.align 2
 	.no_dead_strip _System_Transactions_PreparingEnlistment_set_Exception_System_Exception
 _System_Transactions_PreparingEnlistment_set_Exception_System_Exception:
-.loc 2 78 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,4,16,141,229,4,16,157,229,0,0,157,229
 	.byte 24,16,128,229,12,208,141,226,0,1,189,232,128,128,189,232
@@ -237,7 +196,6 @@ Lme_11:
 	.align 2
 	.no_dead_strip _System_Transactions_PreparingEnlistment_ForceRollback
 _System_Transactions_PreparingEnlistment_ForceRollback:
-.loc 2 35 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,0,16,160,227
 bl _p_3
@@ -249,12 +207,10 @@ Lme_12:
 	.align 2
 	.no_dead_strip _System_Transactions_PreparingEnlistment_ForceRollback_System_Exception
 _System_Transactions_PreparingEnlistment_ForceRollback_System_Exception:
-.loc 2 41 0
 
 	.byte 128,64,45,233,13,112,160,225,64,1,45,233,8,208,77,226,0,96,160,225,0,16,141,229,12,48,150,229,16,32,150,229
 	.byte 3,0,160,225,0,16,157,229,0,224,211,229
 bl _p_4
-.loc 2 43 0
 
 	.byte 20,96,150,229,0,0,86,227,9,0,0,10,0,0,150,229,0,0,144,229,8,0,144,229,16,0,144,229,0,16,159,229
 	.byte 0,0,0,234
@@ -265,20 +221,16 @@ bl _p_5
 	.byte 8,208,141,226,64,1,189,232,128,128,189,232,14,16,160,225,0,0,159,229
 bl _p_6
 
-	.byte 135,2,0,2
+	.byte 140,2,0,2
 
 Lme_13:
 .text
 	.align 2
 	.no_dead_strip _System_Transactions_PreparingEnlistment_Prepared
 _System_Transactions_PreparingEnlistment_Prepared:
-.loc 2 49 0
 
-	.byte 128,64,45,233,13,112,160,225,0,5,45,233,0,160,160,225,1,0,160,227,28,0,202,229
-.loc 2 51 0
-
-	.byte 20,160,154,229,0,0,90,227,9,0,0,10,0,0,154,229,0,0,144,229,8,0,144,229,16,0,144,229,0,16,159,229
-	.byte 0,0,0,234
+	.byte 128,64,45,233,13,112,160,225,0,5,45,233,0,160,160,225,1,0,160,227,28,0,202,229,20,160,154,229,0,0,90,227
+	.byte 9,0,0,10,0,0,154,229,0,0,144,229,8,0,144,229,16,0,144,229,0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 8
 	.byte 1,16,159,231,1,0,80,225,5,0,0,27,10,0,160,225,0,224,218,229
 bl _p_5
@@ -286,15 +238,13 @@ bl _p_5
 	.byte 0,208,141,226,0,5,189,232,128,128,189,232,14,16,160,225,0,0,159,229
 bl _p_6
 
-	.byte 135,2,0,2
+	.byte 140,2,0,2
 
 Lme_14:
 .text
 	.align 2
 	.no_dead_strip _System_Transactions_SinglePhaseEnlistment__ctor
 _System_Transactions_SinglePhaseEnlistment__ctor:
-.file 3 "/Developer/MonoTouch/Source/mono/mcs/class/System.Transactions/System.Transactions/SinglePhaseEnlistment.cs"
-.loc 3 26 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,0,16,160,227,8,16,192,229
 	.byte 12,208,141,226,0,1,189,232,128,128,189,232
@@ -304,65 +254,47 @@ Lme_15:
 	.align 2
 	.no_dead_strip _System_Transactions_SinglePhaseEnlistment__ctor_System_Transactions_Transaction_object
 _System_Transactions_SinglePhaseEnlistment__ctor_System_Transactions_Transaction_object:
-.loc 3 30 0
 
 	.byte 128,64,45,233,13,112,160,225,32,1,45,233,8,208,77,226,0,80,160,225,0,16,141,229,4,32,141,229,0,0,160,227
-	.byte 8,0,197,229,0,0,157,229,12,0,133,229,4,0,157,229
-.loc 3 31 0
-
-	.byte 16,0,133,229,8,208,141,226,32,1,189,232,128,128,189,232
+	.byte 8,0,197,229,0,0,157,229,12,0,133,229,4,0,157,229,16,0,133,229,8,208,141,226,32,1,189,232,128,128,189,232
 
 Lme_16:
 .text
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_get_Volatiles
 _System_Transactions_Transaction_get_Volatiles:
-.file 4 "/Developer/MonoTouch/Source/mono/mcs/class/System.Transactions/System.Transactions/Transaction.cs"
-.loc 4 57 0
 
-	.byte 128,64,45,233,13,112,160,225,0,5,45,233,0,160,160,225,16,0,154,229,0,0,80,227,11,0,0,26
-.loc 4 58 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 128,64,45,233,13,112,160,225,0,5,45,233,0,160,160,225,16,0,154,229,0,0,80,227,11,0,0,26,0,0,159,229
+	.byte 0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 12
 	.byte 0,0,159,231
 bl _p_1
 
 	.byte 0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 16
-	.byte 1,16,159,231,0,16,145,229,8,16,128,229,16,0,138,229
-.loc 4 59 0
-
-	.byte 16,0,154,229,0,208,141,226,0,5,189,232,128,128,189,232
+	.byte 1,16,159,231,0,16,145,229,8,16,128,229,16,0,138,229,16,0,154,229,0,208,141,226,0,5,189,232,128,128,189,232
 
 Lme_17:
 .text
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_get_Durables
 _System_Transactions_Transaction_get_Durables:
-.loc 4 65 0
 
-	.byte 128,64,45,233,13,112,160,225,0,5,45,233,0,160,160,225,20,0,154,229,0,0,80,227,11,0,0,26
-.loc 4 66 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 128,64,45,233,13,112,160,225,0,5,45,233,0,160,160,225,20,0,154,229,0,0,80,227,11,0,0,26,0,0,159,229
+	.byte 0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 20
 	.byte 0,0,159,231
 bl _p_1
 
 	.byte 0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 24
-	.byte 1,16,159,231,0,16,145,229,8,16,128,229,20,0,138,229
-.loc 4 67 0
-
-	.byte 20,0,154,229,0,208,141,226,0,5,189,232,128,128,189,232
+	.byte 1,16,159,231,0,16,145,229,8,16,128,229,20,0,138,229,20,0,154,229,0,208,141,226,0,5,189,232,128,128,189,232
 
 Lme_18:
 .text
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction__ctor
 _System_Transactions_Transaction__ctor:
-.loc 4 30 0
 
 	.byte 128,64,45,233,13,112,160,225,0,5,45,233,24,208,77,226,0,160,160,225,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 28
@@ -372,14 +304,10 @@ bl _p_1
 	.byte 0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 32
 	.byte 1,16,159,231,0,16,145,229,8,16,128,229,12,0,138,229,13,0,160,225
-.loc 4 53 0
 bl _p_7
 
 	.byte 48,0,138,226,0,16,157,229,0,16,128,229,4,16,157,229,4,16,128,229,8,16,157,229,8,16,128,229,12,16,157,229
-	.byte 12,16,128,229
-.loc 4 75 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 12,16,128,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 36
 	.byte 0,0,159,231
 bl _p_1
@@ -387,23 +315,18 @@ bl _p_1
 	.byte 16,0,141,229
 bl _p_8
 
-	.byte 16,0,157,229,8,0,138,229,0,0,160,227
-.loc 4 76 0
-
-	.byte 40,0,138,229,24,208,141,226,0,5,189,232,128,128,189,232
+	.byte 16,0,157,229,8,0,138,229,0,0,160,227,40,0,138,229,24,208,141,226,0,5,189,232,128,128,189,232
 
 Lme_19:
 .text
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_get_Current
 _System_Transactions_Transaction_get_Current:
-.loc 4 101 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226
 bl _mono_domain_get
 
 	.byte 0,0,141,229
-.loc 4 100 0
 bl _p_9
 
 	.byte 0,0,157,229,0,16,159,229,0,0,0,234
@@ -411,17 +334,13 @@ bl _p_9
 	.byte 1,16,159,231
 bl _p_10
 
-	.byte 0,0,144,229
-.loc 4 101 0
-
-	.byte 12,208,141,226,0,1,189,232,128,128,189,232
+	.byte 0,0,144,229,12,208,141,226,0,1,189,232,128,128,189,232
 
 Lme_1a:
 .text
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_get_CurrentInternal
 _System_Transactions_Transaction_get_CurrentInternal:
-.loc 4 110 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,4,208,77,226
 bl _mono_domain_get
@@ -438,7 +357,6 @@ Lme_1b:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_set_CurrentInternal_System_Transactions_Transaction
 _System_Transactions_Transaction_set_CurrentInternal_System_Transactions_Transaction:
-.loc 4 111 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229
 bl _mono_domain_get
@@ -455,37 +373,27 @@ Lme_1c:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_get_TransactionInformation
 _System_Transactions_Transaction_get_TransactionInformation:
-.loc 4 123 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229
 bl _p_9
 
-	.byte 0,0,157,229
-.loc 4 124 0
-
-	.byte 8,0,144,229,12,208,141,226,0,1,189,232,128,128,189,232
+	.byte 0,0,157,229,8,0,144,229,12,208,141,226,0,1,189,232,128,128,189,232
 
 Lme_1d:
 .text
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_set_Aborted_bool
 _System_Transactions_Transaction_set_Aborted_bool:
-.loc 4 301 0
 
 	.byte 128,64,45,233,13,112,160,225,0,5,45,233,8,208,77,226,0,160,160,225,0,16,205,229,0,0,221,229,46,0,202,229
-.loc 4 302 0
-
-	.byte 255,0,0,226,0,0,80,227,3,0,0,10
-.loc 4 303 0
-
-	.byte 8,0,154,229,0,224,208,229,2,16,160,227,36,16,128,229,8,208,141,226,0,5,189,232,128,128,189,232
+	.byte 255,0,0,226,0,0,80,227,3,0,0,10,8,0,154,229,0,224,208,229,2,16,160,227,36,16,128,229,8,208,141,226
+	.byte 0,5,189,232,128,128,189,232
 
 Lme_1e:
 .text
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_get_Scope
 _System_Transactions_Transaction_get_Scope:
-.loc 4 308 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,28,0,144,229,12,208,141,226
 	.byte 0,1,189,232,128,128,189,232
@@ -495,7 +403,6 @@ Lme_1f:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_set_Scope_System_Transactions_TransactionScope
 _System_Transactions_Transaction_set_Scope_System_Transactions_TransactionScope:
-.loc 4 309 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,4,16,141,229,4,16,157,229,0,0,157,229
 	.byte 28,16,128,229,12,208,141,226,0,1,189,232,128,128,189,232
@@ -505,14 +412,12 @@ Lme_20:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_Dispose
 _System_Transactions_Transaction_Dispose:
-.loc 4 135 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229
 bl _System_Transactions_Transaction_get_TransactionInformation
 
 	.byte 0,16,160,225,0,224,209,229,36,0,144,229,0,0,80,227,1,0,0,26,0,0,157,229
 bl _System_Transactions_Transaction_Rollback
-.loc 4 136 0
 
 	.byte 12,208,141,226,0,1,189,232,128,128,189,232
 
@@ -521,7 +426,6 @@ Lme_21:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_EnlistVolatile_System_Transactions_IEnlistmentNotification_System_Transactions_EnlistmentOptions
 _System_Transactions_Transaction_EnlistVolatile_System_Transactions_IEnlistmentNotification_System_Transactions_EnlistmentOptions:
-.loc 4 198 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,20,208,77,226,0,0,141,229,4,16,141,229,8,32,141,229,0,0,157,229
 	.byte 4,16,157,229,8,32,157,229
@@ -534,18 +438,15 @@ Lme_22:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_EnlistVolatileInternal_System_Transactions_IEnlistmentNotification_System_Transactions_EnlistmentOptions
 _System_Transactions_Transaction_EnlistVolatileInternal_System_Transactions_IEnlistmentNotification_System_Transactions_EnlistmentOptions:
-.loc 4 214 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,20,208,77,226,0,0,141,229,4,16,141,229,8,32,141,229
 bl _p_9
 
 	.byte 0,0,157,229
-.loc 4 216 0
 bl _p_12
 
 	.byte 0,32,160,225,4,16,157,229,0,224,210,229
 bl _p_13
-.loc 4 219 0
 
 	.byte 0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 44
@@ -559,7 +460,6 @@ Lme_23:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_Equals_object
 _System_Transactions_Transaction_Equals_object:
-.loc 4 224 0
 
 	.byte 128,64,45,233,13,112,160,225,80,5,45,233,8,208,77,226,0,96,160,225,1,160,160,225,0,160,141,229,10,64,160,225
 	.byte 0,0,90,227,11,0,0,10,0,0,157,229,0,0,144,229,0,0,144,229,8,0,144,229,4,0,144,229,0,16,159,229
@@ -575,38 +475,21 @@ Lme_24:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_Equals_System_Transactions_Transaction
 _System_Transactions_Transaction_Equals_System_Transactions_Transaction:
-.loc 4 230 0
 
 	.byte 128,64,45,233,13,112,160,225,96,5,45,233,0,96,160,225,1,160,160,225,6,0,90,225,0,0,160,19,1,0,160,3
-	.byte 0,0,80,227,1,0,0,10
-.loc 4 231 0
-
-	.byte 1,0,160,227,18,0,0,234,0,0,90,227,0,0,160,19,1,0,160,3
-.loc 4 232 0
-
-	.byte 0,0,80,227,1,0,0,10
-.loc 4 233 0
-
-	.byte 0,0,160,227,11,0,0,234
-.loc 4 234 0
-
-	.byte 40,0,150,229,40,16,154,229,1,0,80,225,5,0,0,26,8,0,150,229,8,16,154,229,1,0,80,225,0,80,160,19
-	.byte 1,80,160,3,0,0,0,234,0,80,160,227,5,0,160,225,0,208,141,226,96,5,189,232,128,128,189,232
+	.byte 0,0,80,227,1,0,0,10,1,0,160,227,18,0,0,234,0,0,90,227,0,0,160,19,1,0,160,3,0,0,80,227
+	.byte 1,0,0,10,0,0,160,227,11,0,0,234,40,0,150,229,40,16,154,229,1,0,80,225,5,0,0,26,8,0,150,229
+	.byte 8,16,154,229,1,0,80,225,0,80,160,19,1,80,160,3,0,0,0,234,0,80,160,227,5,0,160,225,0,208,141,226
+	.byte 96,5,189,232,128,128,189,232
 
 Lme_25:
 .text
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_op_Equality_System_Transactions_Transaction_System_Transactions_Transaction
 _System_Transactions_Transaction_op_Equality_System_Transactions_Transaction_System_Transactions_Transaction:
-.loc 4 240 0
 
 	.byte 128,64,45,233,13,112,160,225,64,1,45,233,8,208,77,226,0,96,160,225,0,16,141,229,0,0,86,227,0,0,160,19
-	.byte 1,0,160,3,0,0,80,227,4,0,0,10,0,0,157,229,0,0,80,227,0,0,160,19,1,0,160,3
-.loc 4 241 0
-
-	.byte 4,0,0,234
-.loc 4 242 0
-
+	.byte 1,0,160,3,0,0,80,227,4,0,0,10,0,0,157,229,0,0,80,227,0,0,160,19,1,0,160,3,4,0,0,234
 	.byte 6,0,160,225,0,16,157,229,0,224,214,229
 bl _System_Transactions_Transaction_Equals_System_Transactions_Transaction
 
@@ -617,7 +500,6 @@ Lme_26:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_op_Inequality_System_Transactions_Transaction_System_Transactions_Transaction
 _System_Transactions_Transaction_op_Inequality_System_Transactions_Transaction_System_Transactions_Transaction:
-.loc 4 247 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,4,16,141,229,0,0,157,229,4,16,157,229
 bl _System_Transactions_Transaction_op_Equality_System_Transactions_Transaction_System_Transactions_Transaction
@@ -629,7 +511,6 @@ Lme_27:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_GetHashCode
 _System_Transactions_Transaction_GetHashCode:
-.loc 4 252 0
 
 	.byte 128,64,45,233,13,112,160,225,0,5,45,233,8,208,77,226,0,160,160,225,40,0,154,229,4,0,141,229,8,16,154,229
 	.byte 1,0,160,225,0,16,145,229,15,224,160,225,36,240,145,229,0,16,160,225,4,0,157,229,1,0,32,224,0,0,141,229
@@ -641,7 +522,6 @@ Lme_28:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_Rollback
 _System_Transactions_Transaction_Rollback:
-.loc 4 257 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,0,16,160,227
 bl _System_Transactions_Transaction_Rollback_System_Exception
@@ -653,15 +533,11 @@ Lme_29:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_Rollback_System_Exception
 _System_Transactions_Transaction_Rollback_System_Exception:
-.loc 4 262 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,4,16,141,229
 bl _p_9
 
-	.byte 0,0,157,229,4,16,157,229
-.loc 4 263 0
-
-	.byte 0,32,160,227
+	.byte 0,0,157,229,4,16,157,229,0,32,160,227
 bl _p_4
 
 	.byte 12,208,141,226,0,1,189,232,128,128,189,232
@@ -671,31 +547,19 @@ Lme_2a:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_Rollback_System_Exception_object
 _System_Transactions_Transaction_Rollback_System_Exception_object:
-.loc 4 268 0
 
 	.byte 128,64,45,233,13,112,160,225,48,13,45,233,92,208,77,226,13,176,160,225,68,0,139,229,72,16,139,229,76,32,139,229
 	.byte 0,0,160,227,0,0,139,229,0,0,160,227,4,0,139,229,0,0,160,227,8,0,139,229,0,0,160,227,12,0,139,229
 	.byte 68,0,155,229,46,0,208,229,0,0,80,227,2,0,0,10,68,0,155,229
-.loc 4 270 0
 bl _p_15
-.loc 4 271 0
 
-	.byte 145,0,0,234,68,0,155,229
-.loc 4 275 0
-
-	.byte 8,0,144,229,0,16,160,225,0,224,209,229,36,0,144,229,1,0,80,227,141,0,0,10,72,16,155,229,68,0,155,229
-.loc 4 279 0
-
-	.byte 32,16,128,229
-.loc 4 281 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 145,0,0,234,68,0,155,229,8,0,144,229,0,16,160,225,0,224,209,229,36,0,144,229,1,0,80,227,141,0,0,10
+	.byte 72,16,155,229,68,0,155,229,32,16,128,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 52
 	.byte 0,0,159,231
 bl _p_1
 
 	.byte 0,16,160,227,8,16,192,229,0,64,160,225,68,0,155,229
-.loc 4 282 0
 bl _p_12
 
 	.byte 0,32,160,225,11,16,160,225,0,224,210,229
@@ -703,13 +567,8 @@ bl _p_16
 
 	.byte 18,0,0,234,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 56
-	.byte 0,0,159,231,12,80,155,229
-.loc 4 283 0
-
-	.byte 5,0,160,225,76,16,155,229,1,0,80,225,9,0,0,10
-.loc 4 284 0
-
-	.byte 5,0,160,225,4,16,160,225,0,32,149,229,0,128,159,229,0,0,0,234
+	.byte 0,0,159,231,12,80,155,229,5,0,160,225,76,16,155,229,1,0,80,225,9,0,0,10,5,0,160,225,4,16,160,225
+	.byte 0,32,149,229,0,128,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 60
 	.byte 8,128,159,231,4,224,143,226,28,240,18,229,0,0,0,0,0,128,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 56
@@ -719,44 +578,26 @@ bl _p_17
 	.byte 255,0,0,226,0,0,80,227,227,255,255,26,0,0,0,235,9,0,0,234,64,224,139,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 56
 	.byte 0,0,159,231,32,176,139,229,11,0,160,225,0,224,208,229,64,192,155,229,12,240,160,225,68,0,155,229
-.loc 4 286 0
 bl _p_18
 
-	.byte 0,160,160,225,0,16,160,225,0,224,209,229,12,0,144,229
-.loc 4 287 0
-
-	.byte 0,0,80,227,46,0,0,218,10,80,160,225,0,0,160,227,40,0,139,229,0,224,218,229,12,16,154,229,40,0,155,229
-	.byte 1,0,80,225,84,0,0,42,8,0,149,229,40,16,155,229,1,17,160,225,1,0,128,224,16,0,128,226,0,0,144,229
-	.byte 36,0,139,229,36,0,155,229,76,16,155,229,1,0,80,225,27,0,0,10
-.loc 4 288 0
-
-	.byte 48,160,139,229,0,0,160,227,52,0,139,229,0,224,218,229,48,0,155,229,12,16,144,229,52,0,155,229,1,0,80,225
-	.byte 74,0,0,42,48,0,155,229,8,0,144,229,52,16,155,229,1,17,160,225,1,0,128,224,16,0,128,226,0,0,144,229
-	.byte 44,0,139,229,44,0,155,229,4,16,160,225,44,32,155,229,0,32,146,229,0,128,159,229,0,0,0,234
+	.byte 0,160,160,225,0,16,160,225,0,224,209,229,12,0,144,229,0,0,80,227,46,0,0,218,10,80,160,225,0,0,160,227
+	.byte 40,0,139,229,0,224,218,229,12,16,154,229,40,0,155,229,1,0,80,225,84,0,0,42,8,0,149,229,40,16,155,229
+	.byte 1,17,160,225,1,0,128,224,16,0,128,226,0,0,144,229,36,0,139,229,36,0,155,229,76,16,155,229,1,0,80,225
+	.byte 27,0,0,10,48,160,139,229,0,0,160,227,52,0,139,229,0,224,218,229,48,0,155,229,12,16,144,229,52,0,155,229
+	.byte 1,0,80,225,74,0,0,42,48,0,155,229,8,0,144,229,52,16,155,229,1,17,160,225,1,0,128,224,16,0,128,226
+	.byte 0,0,144,229,44,0,139,229,44,0,155,229,4,16,160,225,44,32,155,229,0,32,146,229,0,128,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 60
-	.byte 8,128,159,231,4,224,143,226,28,240,18,229,0,0,0,0,68,0,155,229
-.loc 4 290 0
-
-	.byte 24,0,144,229,0,0,80,227,16,0,0,10,68,0,155,229,24,0,144,229,76,16,155,229,1,0,80,225,11,0,0,10
-	.byte 68,0,155,229
-.loc 4 291 0
-
-	.byte 24,32,144,229,2,0,160,225,4,16,160,225,0,32,146,229,0,128,159,229,0,0,0,234
+	.byte 8,128,159,231,4,224,143,226,28,240,18,229,0,0,0,0,68,0,155,229,24,0,144,229,0,0,80,227,16,0,0,10
+	.byte 68,0,155,229,24,0,144,229,76,16,155,229,1,0,80,225,11,0,0,10,68,0,155,229,24,32,144,229,2,0,160,225
+	.byte 4,16,160,225,0,32,146,229,0,128,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 64
-	.byte 8,128,159,231,4,224,143,226,64,240,18,229,0,0,0,0,68,0,155,229
-.loc 4 293 0
-
-	.byte 1,16,160,227
+	.byte 8,128,159,231,4,224,143,226,64,240,18,229,0,0,0,0,68,0,155,229,1,16,160,227
 bl _System_Transactions_Transaction_set_Aborted_bool
 
 	.byte 68,0,155,229
-.loc 4 295 0
 bl _p_15
 
-	.byte 92,208,139,226,48,13,189,232,128,128,189,232
-.loc 4 276 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 92,208,139,226,48,13,189,232,128,128,189,232,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . -12
 	.byte 0,0,159,231,1,16,160,227
 bl _p_19
@@ -775,14 +616,14 @@ bl _p_20
 	.byte 139,4,2,227
 bl _p_21
 
-	.byte 0,16,160,225,53,2,0,227,0,2,64,227
+	.byte 0,16,160,225,57,2,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_20
 
 	.byte 0,0,160,227,36,0,139,229,160,255,255,234,139,4,2,227
 bl _p_21
 
-	.byte 0,16,160,225,53,2,0,227,0,2,64,227
+	.byte 0,16,160,225,57,2,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_20
 
@@ -793,30 +634,16 @@ Lme_2b:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_CommitInternal
 _System_Transactions_Transaction_CommitInternal:
-.loc 4 330 0
 
 	.byte 128,64,45,233,13,112,160,225,0,13,45,233,52,208,77,226,13,176,160,225,0,160,160,225,0,0,160,227,0,0,139,229
-	.byte 45,0,218,229,0,0,80,227,37,0,0,26,44,0,218,229,0,0,80,227,34,0,0,26,1,0,160,227
-.loc 4 333 0
-
-	.byte 44,0,202,229
-.loc 4 336 0
-
+	.byte 45,0,218,229,0,0,80,227,37,0,0,26,44,0,218,229,0,0,80,227,34,0,0,26,1,0,160,227,44,0,202,229
 	.byte 10,0,160,225
 bl _p_22
-.loc 4 338 0
 
 	.byte 26,0,0,234,4,0,155,229,4,0,155,229
-.loc 4 340 0
 bl _p_23
 
-	.byte 255,255,255,234,8,0,155,229,8,0,155,229
-.loc 4 342 0
-
-	.byte 0,0,139,229
-.loc 4 344 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 255,255,255,234,8,0,155,229,8,0,155,229,0,0,139,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . -12
 	.byte 0,0,159,231,244,16,160,227
 bl _p_19
@@ -832,15 +659,12 @@ bl _System_Transactions_TransactionAbortedException__ctor_string_System_Exceptio
 	.byte 32,0,155,229
 bl _p_20
 
-	.byte 52,208,139,226,0,13,189,232,128,128,189,232
-.loc 4 331 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 52,208,139,226,0,13,189,232,128,128,189,232,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . -12
 	.byte 0,0,159,231,138,16,160,227
 bl _p_19
 
-	.byte 0,16,160,225,136,2,0,227,0,2,64,227
+	.byte 0,16,160,225,141,2,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_20
 
@@ -849,94 +673,50 @@ Lme_2c:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_DoCommit
 _System_Transactions_Transaction_DoCommit:
-.loc 4 351 0
 
 	.byte 128,64,45,233,13,112,160,225,112,13,45,233,40,208,77,226,0,160,160,225,28,0,154,229,0,0,80,227,5,0,0,10
-.loc 4 353 0
-
 	.byte 10,0,160,225,0,16,160,227,0,32,160,227
 bl _p_4
-.loc 4 354 0
 
 	.byte 10,0,160,225
 bl _p_24
-.loc 4 357 0
 
 	.byte 10,0,160,225
 bl _p_12
 
-	.byte 0,96,160,225
-.loc 4 358 0
-
-	.byte 10,0,160,225
+	.byte 0,96,160,225,10,0,160,225
 bl _p_18
 
-	.byte 0,80,160,225,0,224,214,229,12,0,150,229
-.loc 4 359 0
-
-	.byte 1,0,80,227,70,0,0,26,0,224,213,229,12,0,149,229,0,0,80,227,66,0,0,26
-.loc 4 362 0
-
-	.byte 6,176,160,225,0,0,160,227,4,0,141,229,0,224,214,229,12,16,150,229,4,0,157,229,1,0,80,225,106,0,0,42
-	.byte 8,0,155,229,4,16,157,229,1,17,160,225,1,0,128,224,16,0,128,226,0,0,144,229,0,0,141,229,0,0,157,229
-	.byte 8,0,141,229,28,0,141,229,8,0,157,229,0,0,80,227,22,0,0,10,28,0,157,229,0,64,144,229,180,1,212,225
-	.byte 0,16,159,229,0,0,0,234
+	.byte 0,80,160,225,0,224,214,229,12,0,150,229,1,0,80,227,70,0,0,26,0,224,213,229,12,0,149,229,0,0,80,227
+	.byte 66,0,0,26,6,176,160,225,0,0,160,227,4,0,141,229,0,224,214,229,12,16,150,229,4,0,157,229,1,0,80,225
+	.byte 106,0,0,42,8,0,155,229,4,16,157,229,1,17,160,225,1,0,128,224,16,0,128,226,0,0,144,229,0,0,141,229
+	.byte 0,0,157,229,8,0,141,229,28,0,141,229,8,0,157,229,0,0,80,227,22,0,0,10,28,0,157,229,0,64,144,229
+	.byte 180,1,212,225,0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 76
 	.byte 1,16,159,231,1,0,80,225,13,0,0,58,16,0,148,229,0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 76
 	.byte 1,16,159,231,193,33,160,225,2,0,128,224,0,0,208,229,7,32,1,226,1,16,160,227,17,18,160,225,1,0,0,224
 	.byte 0,0,80,227,2,0,0,26,1,0,160,227,32,0,141,229,1,0,0,234,0,0,160,227,32,0,141,229,32,0,157,229
 	.byte 0,0,80,227,2,0,0,10,0,0,160,227,12,0,141,229,1,0,0,234,8,0,157,229,12,0,141,229,12,64,157,229
-	.byte 4,0,160,225
-.loc 4 363 0
-
-	.byte 0,0,80,227,5,0,0,10
-.loc 4 365 0
-
-	.byte 10,0,160,225,4,16,160,225
+	.byte 4,0,160,225,0,0,80,227,5,0,0,10,10,0,160,225,4,16,160,225
 bl _p_25
-.loc 4 366 0
 
 	.byte 10,0,160,225
 bl _System_Transactions_Transaction_Complete
-.loc 4 367 0
 
-	.byte 44,0,0,234,0,224,214,229,12,0,150,229
-.loc 4 371 0
-
-	.byte 0,0,80,227,1,0,0,218
-.loc 4 372 0
-
-	.byte 10,0,160,225
+	.byte 44,0,0,234,0,224,214,229,12,0,150,229,0,0,80,227,1,0,0,218,10,0,160,225
 bl _p_26
 
-	.byte 0,224,213,229,12,0,149,229
-.loc 4 374 0
-
-	.byte 0,0,80,227,20,0,0,218
-.loc 4 375 0
-
-	.byte 10,176,160,225,20,80,141,229,0,0,160,227,24,0,141,229,0,224,213,229,20,0,157,229,12,16,144,229,24,0,157,229
-	.byte 1,0,80,225,37,0,0,42,20,0,157,229,8,0,144,229,24,16,157,229,1,17,160,225,1,0,128,224,16,0,128,226
-	.byte 0,0,144,229,16,0,141,229,11,0,160,225,16,16,157,229
+	.byte 0,224,213,229,12,0,149,229,0,0,80,227,20,0,0,218,10,176,160,225,20,80,141,229,0,0,160,227,24,0,141,229
+	.byte 0,224,213,229,20,0,157,229,12,16,144,229,24,0,157,229,1,0,80,225,37,0,0,42,20,0,157,229,8,0,144,229
+	.byte 24,16,157,229,1,17,160,225,1,0,128,224,16,0,128,226,0,0,144,229,16,0,141,229,11,0,160,225,16,16,157,229
 bl _p_25
-.loc 4 377 0
 
-	.byte 24,0,154,229,0,0,80,227,2,0,0,10
-.loc 4 378 0
-
-	.byte 24,16,154,229,10,0,160,225
+	.byte 24,0,154,229,0,0,80,227,2,0,0,10,24,16,154,229,10,0,160,225
 bl _p_27
 
-	.byte 0,224,214,229,12,0,150,229
-.loc 4 380 0
-
-	.byte 0,0,80,227,1,0,0,218
-.loc 4 381 0
-
-	.byte 10,0,160,225
+	.byte 0,224,214,229,12,0,150,229,0,0,80,227,1,0,0,218,10,0,160,225
 bl _p_28
-.loc 4 383 0
 
 	.byte 10,0,160,225
 bl _System_Transactions_Transaction_Complete
@@ -944,14 +724,14 @@ bl _System_Transactions_Transaction_Complete
 	.byte 40,208,141,226,112,13,189,232,128,128,189,232,139,4,2,227
 bl _p_21
 
-	.byte 0,16,160,225,53,2,0,227,0,2,64,227
+	.byte 0,16,160,225,57,2,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_20
 
 	.byte 0,0,160,227,0,0,141,229,138,255,255,234,139,4,2,227
 bl _p_21
 
-	.byte 0,16,160,225,53,2,0,227,0,2,64,227
+	.byte 0,16,160,225,57,2,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_20
 
@@ -962,21 +742,9 @@ Lme_2d:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_Complete
 _System_Transactions_Transaction_Complete:
-.loc 4 388 0
 
-	.byte 128,64,45,233,13,112,160,225,0,5,45,233,0,160,160,225,0,0,160,227,44,0,202,229,1,0,160,227
-.loc 4 389 0
-
-	.byte 45,0,202,229
-.loc 4 391 0
-
-	.byte 46,0,218,229,0,0,80,227,3,0,0,26
-.loc 4 392 0
-
-	.byte 8,0,154,229,0,224,208,229,1,16,160,227,36,16,128,229
-.loc 4 394 0
-
-	.byte 10,0,160,225
+	.byte 128,64,45,233,13,112,160,225,0,5,45,233,0,160,160,225,0,0,160,227,44,0,202,229,1,0,160,227,45,0,202,229
+	.byte 46,0,218,229,0,0,80,227,3,0,0,26,8,0,154,229,0,224,208,229,1,16,160,227,36,16,128,229,10,0,160,225
 bl _p_15
 
 	.byte 0,208,141,226,0,5,189,232,128,128,189,232
@@ -986,33 +754,20 @@ Lme_2e:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_PrepareCallbackWrapper_object
 _System_Transactions_Transaction_PrepareCallbackWrapper_object:
-.loc 4 411 0
 
 	.byte 128,64,45,233,13,112,160,225,32,13,45,233,64,208,77,226,13,176,160,225,0,160,160,225,0,0,160,227,0,0,139,229
 	.byte 0,0,160,227,4,0,139,229,48,160,139,229,10,80,160,225,0,0,90,227,11,0,0,10,48,0,155,229,0,0,144,229
 	.byte 0,0,144,229,8,0,144,229,8,0,144,229,0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 80
-	.byte 1,16,159,231,1,0,80,225,0,0,0,10,0,80,160,227,0,80,139,229,0,80,155,229,0,224,213,229,16,32,149,229
-	.byte 0,16,155,229
-.loc 4 415 0
-
-	.byte 2,0,160,225,0,32,146,229,0,128,159,229,0,0,0,234
+	.byte 1,16,159,231,1,0,80,225,0,0,0,10,0,80,160,227,0,80,139,229,0,0,155,229,0,16,160,225,0,224,209,229
+	.byte 16,32,144,229,0,16,155,229,2,0,160,225,0,32,146,229,0,128,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 84
-	.byte 8,128,159,231,4,224,143,226,28,240,18,229,0,0,0,0
-.loc 4 417 0
-
-	.byte 52,0,0,234,8,0,155,229,8,0,155,229,4,0,139,229,0,16,155,229,4,0,155,229
-.loc 4 424 0
-
-	.byte 12,16,139,229,16,0,139,229,12,0,155,229,0,224,208,229,12,0,155,229,16,16,155,229,24,16,128,229,0,0,155,229
-.loc 4 429 0
-
-	.byte 24,0,139,229,0,224,208,229,24,0,155,229,28,0,208,229,20,0,203,229,255,0,0,226,0,0,80,227,24,0,0,26
-	.byte 0,0,155,229
-.loc 4 430 0
-
-	.byte 32,0,139,229,0,224,208,229,32,0,155,229,20,0,144,229,28,0,139,229,52,0,139,229,0,0,80,227,10,0,0,10
-	.byte 52,0,155,229,0,0,144,229,0,0,144,229,8,0,144,229,16,0,144,229,0,16,159,229,0,0,0,234
+	.byte 8,128,159,231,4,224,143,226,28,240,18,229,0,0,0,0,52,0,0,234,8,0,155,229,8,0,155,229,4,0,139,229
+	.byte 0,16,155,229,4,0,155,229,12,16,139,229,16,0,139,229,12,0,155,229,0,224,208,229,12,0,155,229,16,16,155,229
+	.byte 24,16,128,229,0,0,155,229,24,0,139,229,0,224,208,229,24,0,155,229,28,0,208,229,20,0,203,229,255,0,0,226
+	.byte 0,0,80,227,24,0,0,26,0,0,155,229,32,0,139,229,0,224,208,229,32,0,155,229,20,0,144,229,28,0,139,229
+	.byte 52,0,139,229,0,0,80,227,10,0,0,10,52,0,155,229,0,0,144,229,0,0,144,229,8,0,144,229,16,0,144,229
+	.byte 0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 8
 	.byte 1,16,159,231,1,0,80,225,14,0,0,27,52,0,155,229,0,16,160,225,0,224,209,229,52,16,155,229
 bl _p_5
@@ -1024,14 +779,13 @@ bl _p_20
 	.byte 255,255,255,234,64,208,139,226,32,13,189,232,128,128,189,232,14,16,160,225,0,0,159,229
 bl _p_6
 
-	.byte 135,2,0,2
+	.byte 140,2,0,2
 
 Lme_2f:
 .text
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_DoPreparePhase
 _System_Transactions_Transaction_DoPreparePhase:
-.loc 4 437 0
 
 	.byte 128,64,45,233,13,112,160,225,96,13,45,233,76,208,77,226,13,176,160,225,0,160,160,225,0,0,160,227,0,0,139,229
 	.byte 0,0,160,227,4,0,139,229,0,0,160,227,8,0,139,229,0,0,160,227,12,0,139,229,0,0,160,227,16,0,139,229
@@ -1041,12 +795,9 @@ bl _p_12
 	.byte 0,32,160,225,11,16,160,225,0,224,210,229
 bl _p_16
 
-	.byte 95,0,0,234,0,0,159,229,0,0,0,234
+	.byte 100,0,0,234,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 56
-	.byte 0,0,159,231,12,96,155,229
-.loc 4 439 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 0,0,159,231,12,96,155,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 88
 	.byte 0,0,159,231
 bl _p_1
@@ -1054,10 +805,7 @@ bl _p_1
 	.byte 64,0,139,229,10,16,160,225,6,32,160,225
 bl _p_30
 
-	.byte 64,0,155,229,0,80,160,225
-.loc 4 440 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 64,0,155,229,0,80,160,225,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 92
 	.byte 0,0,159,231
 bl _p_1
@@ -1066,70 +814,44 @@ bl _p_1
 	.long _mono_aot_System_Transactions_got - . + 96
 	.byte 1,16,159,231,20,16,128,229,0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 100
+	.byte 1,16,159,231,28,16,128,229,0,16,159,229,0,0,0,234
+	.long _mono_aot_System_Transactions_got - . + 104
 	.byte 1,16,159,231,12,16,128,229,5,16,160,225
 bl _p_31
 
-	.byte 28,0,154,229
-.loc 4 443 0
-
-	.byte 0,0,80,227,8,0,0,10,28,0,154,229,0,16,160,225,0,224,209,229,20,0,128,226,0,16,144,229,40,16,139,229
-	.byte 4,0,144,229,44,0,139,229,1,0,0,234,40,0,139,226
+	.byte 28,0,154,229,0,0,80,227,8,0,0,10,28,0,154,229,0,16,160,225,0,224,209,229,20,0,128,226,0,16,144,229
+	.byte 40,16,139,229,4,0,144,229,44,0,139,229,1,0,0,234,40,0,139,226
 bl _p_32
 
-	.byte 40,0,155,229,16,0,139,229,44,0,155,229,20,0,139,229,0,224,213,229,20,192,149,229
-.loc 4 446 0
-
-	.byte 12,0,160,225,40,16,155,229,44,32,155,229,1,48,160,227,0,192,156,229,15,224,160,225,52,240,156,229,255,0,0,226
-	.byte 0,0,80,227,13,0,0,26
-.loc 4 448 0
-
+	.byte 40,0,155,229,16,0,139,229,44,0,155,229,20,0,139,229,0,224,213,229,20,192,149,229,12,0,160,225,40,16,155,229
+	.byte 44,32,155,229,1,48,160,227,0,192,156,229,15,224,160,225,52,240,156,229,255,0,0,226,0,0,80,227,13,0,0,26
 	.byte 10,0,160,225,1,16,160,227
 bl _System_Transactions_Transaction_set_Aborted_bool
-.loc 4 449 0
 
 	.byte 0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . -12
 	.byte 0,0,159,231,26,17,0,227
 bl _p_19
 
-	.byte 0,16,160,225,202,2,0,227,0,2,64,227
+	.byte 0,16,160,225,207,2,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_20
 
-	.byte 0,224,213,229,24,0,149,229
-.loc 4 452 0
-
-	.byte 0,0,80,227,6,0,0,10,0,224,213,229,24,0,149,229
-.loc 4 454 0
-
-	.byte 32,0,138,229
-.loc 4 455 0
-
-	.byte 10,0,160,225,1,16,160,227
+	.byte 0,224,213,229,24,0,149,229,0,0,80,227,6,0,0,10,0,224,213,229,24,0,149,229,32,0,138,229,10,0,160,225
+	.byte 1,16,160,227
 bl _System_Transactions_Transaction_set_Aborted_bool
-.loc 4 456 0
 
-	.byte 16,0,0,234,0,224,213,229,28,0,213,229
-.loc 4 459 0
-
-	.byte 0,0,80,227,3,0,0,26
-.loc 4 463 0
-
-	.byte 10,0,160,225,1,16,160,227
+	.byte 16,0,0,234,0,224,213,229,28,0,213,229,0,0,80,227,3,0,0,26,10,0,160,225,1,16,160,227
 bl _System_Transactions_Transaction_set_Aborted_bool
-.loc 4 464 0
 
 	.byte 8,0,0,234,0,128,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 56
 	.byte 8,128,159,231,11,0,160,225
 bl _p_17
 
-	.byte 255,0,0,226,0,0,80,227,150,255,255,26,0,0,0,235,9,0,0,234,60,224,139,229,0,0,159,229,0,0,0,234
+	.byte 255,0,0,226,0,0,80,227,145,255,255,26,0,0,0,235,9,0,0,234,60,224,139,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 56
-	.byte 0,0,159,231,48,176,139,229,11,0,160,225,0,224,208,229,60,192,155,229,12,240,160,225
-.loc 4 470 0
-
-	.byte 10,0,160,225
+	.byte 0,0,159,231,48,176,139,229,11,0,160,225,0,224,208,229,60,192,155,229,12,240,160,225,10,0,160,225
 bl _p_24
 
 	.byte 76,208,139,226,96,13,189,232,128,128,189,232
@@ -1139,7 +861,6 @@ Lme_30:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_DoCommitPhase
 _System_Transactions_Transaction_DoCommitPhase:
-.loc 4 475 0
 
 	.byte 128,64,45,233,13,112,160,225,96,9,45,233,56,208,77,226,13,176,160,225,48,0,139,229,0,0,160,227,0,0,139,229
 	.byte 0,0,160,227,4,0,139,229,0,0,160,227,8,0,139,229,0,0,160,227,12,0,139,229,48,0,155,229
@@ -1150,19 +871,13 @@ bl _p_16
 
 	.byte 22,0,0,234,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 56
-	.byte 0,0,159,231,12,96,155,229
-.loc 4 476 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 0,0,159,231,12,96,155,229,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 44
 	.byte 0,0,159,231
 bl _p_14
 
-	.byte 0,16,160,225,0,0,160,227,8,0,193,229,1,80,160,225
-.loc 4 477 0
-
-	.byte 6,0,160,225,0,32,150,229,0,128,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 104
+	.byte 0,16,160,225,0,0,160,227,8,0,193,229,1,80,160,225,6,0,160,225,0,32,150,229,0,128,159,229,0,0,0,234
+	.long _mono_aot_System_Transactions_got - . + 108
 	.byte 8,128,159,231,4,224,143,226,8,240,18,229,0,0,0,0,0,128,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 56
 	.byte 8,128,159,231,11,0,160,225
@@ -1178,37 +893,8 @@ Lme_31:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_DoSingleCommit_System_Transactions_ISinglePhaseNotification
 _System_Transactions_Transaction_DoSingleCommit_System_Transactions_ISinglePhaseNotification:
-.loc 4 484 0
 
 	.byte 128,64,45,233,13,112,160,225,0,5,45,233,16,208,77,226,0,0,141,229,1,160,160,225,0,0,90,227,20,0,0,10
-.loc 4 487 0
-
-	.byte 0,0,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 52
-	.byte 0,0,159,231
-bl _p_1
-
-	.byte 8,0,141,229,0,16,157,229,10,32,160,225
-bl _System_Transactions_SinglePhaseEnlistment__ctor_System_Transactions_Transaction_object
-
-	.byte 8,16,157,229,10,0,160,225,0,32,154,229,0,128,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 108
-	.byte 8,128,159,231,4,224,143,226,8,240,18,229,0,0,0,0,0,0,157,229
-.loc 4 488 0
-bl _p_24
-
-	.byte 16,208,141,226,0,5,189,232,128,128,189,232
-
-Lme_32:
-.text
-	.align 2
-	.no_dead_strip _System_Transactions_Transaction_DoSingleCommit_System_Transactions_IPromotableSinglePhaseNotification
-_System_Transactions_Transaction_DoSingleCommit_System_Transactions_IPromotableSinglePhaseNotification:
-.loc 4 493 0
-
-	.byte 128,64,45,233,13,112,160,225,0,5,45,233,16,208,77,226,0,0,141,229,1,160,160,225,0,0,90,227,20,0,0,10
-.loc 4 496 0
-
 	.byte 0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 52
 	.byte 0,0,159,231
@@ -1219,8 +905,29 @@ bl _System_Transactions_SinglePhaseEnlistment__ctor_System_Transactions_Transact
 
 	.byte 8,16,157,229,10,0,160,225,0,32,154,229,0,128,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 112
+	.byte 8,128,159,231,4,224,143,226,8,240,18,229,0,0,0,0,0,0,157,229
+bl _p_24
+
+	.byte 16,208,141,226,0,5,189,232,128,128,189,232
+
+Lme_32:
+.text
+	.align 2
+	.no_dead_strip _System_Transactions_Transaction_DoSingleCommit_System_Transactions_IPromotableSinglePhaseNotification
+_System_Transactions_Transaction_DoSingleCommit_System_Transactions_IPromotableSinglePhaseNotification:
+
+	.byte 128,64,45,233,13,112,160,225,0,5,45,233,16,208,77,226,0,0,141,229,1,160,160,225,0,0,90,227,20,0,0,10
+	.byte 0,0,159,229,0,0,0,234
+	.long _mono_aot_System_Transactions_got - . + 52
+	.byte 0,0,159,231
+bl _p_1
+
+	.byte 8,0,141,229,0,16,157,229,10,32,160,225
+bl _System_Transactions_SinglePhaseEnlistment__ctor_System_Transactions_Transaction_object
+
+	.byte 8,16,157,229,10,0,160,225,0,32,154,229,0,128,159,229,0,0,0,234
+	.long _mono_aot_System_Transactions_got - . + 116
 	.byte 8,128,159,231,4,224,143,226,28,240,18,229,0,0,0,0,0,0,157,229
-.loc 4 497 0
 bl _p_24
 
 	.byte 16,208,141,226,0,5,189,232,128,128,189,232
@@ -1230,13 +937,9 @@ Lme_33:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_CheckAborted
 _System_Transactions_Transaction_CheckAborted:
-.loc 4 502 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,28,208,77,226,0,0,141,229,0,0,157,229,46,0,208,229,0,0,80,227
-	.byte 2,0,0,26
-.loc 4 503 0
-
-	.byte 28,208,141,226,0,1,189,232,128,128,189,232,0,0,159,229,0,0,0,234
+	.byte 2,0,0,26,28,208,141,226,0,1,189,232,128,128,189,232,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . -12
 	.byte 0,0,159,231,81,31,160,227
 bl _p_19
@@ -1257,13 +960,10 @@ Lme_34:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_FireCompleted
 _System_Transactions_Transaction_FireCompleted:
-.loc 4 508 0
 
 	.byte 128,64,45,233,13,112,160,225,0,5,45,233,8,208,77,226,0,160,160,225,36,0,154,229,0,0,80,227,15,0,0,10
-.loc 4 509 0
-
 	.byte 36,0,154,229,4,0,141,229,0,0,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 116
+	.long _mono_aot_System_Transactions_got - . + 120
 	.byte 0,0,159,231
 bl _p_1
 
@@ -1275,7 +975,6 @@ Lme_35:
 	.align 2
 	.no_dead_strip _System_Transactions_Transaction_EnsureIncompleteCurrentScope
 _System_Transactions_Transaction_EnsureIncompleteCurrentScope:
-.loc 4 517 0
 
 	.byte 128,64,45,233,13,112,160,225,0,5,45,233
 bl _mono_domain_get
@@ -1285,10 +984,7 @@ bl _mono_domain_get
 	.byte 1,16,159,231,10,0,160,225
 bl _p_10
 
-	.byte 0,0,144,229
-.loc 4 514 0
-
-	.byte 0,16,160,227
+	.byte 0,0,144,229,0,16,160,227
 bl _System_Transactions_Transaction_op_Equality_System_Transactions_Transaction_System_Transactions_Transaction
 
 	.byte 255,0,0,226,0,0,80,227,26,0,0,26,0,16,159,229,0,0,0,234
@@ -1296,24 +992,18 @@ bl _System_Transactions_Transaction_op_Equality_System_Transactions_Transaction_
 	.byte 1,16,159,231,10,0,160,225
 bl _p_10
 
-	.byte 0,0,144,229,0,16,160,225,0,224,209,229,28,0,144,229
-.loc 4 516 0
-
-	.byte 0,0,80,227,14,0,0,10,0,16,159,229,0,0,0,234
+	.byte 0,0,144,229,0,16,160,225,0,224,209,229,28,0,144,229,0,0,80,227,14,0,0,10,0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 40
 	.byte 1,16,159,231,10,0,160,225
 bl _p_10
 
 	.byte 0,0,144,229,0,16,160,225,0,224,209,229,28,0,144,229,0,16,160,225,0,224,209,229,33,0,208,229,0,0,80,227
-	.byte 2,0,0,26
-.loc 4 517 0
-
-	.byte 0,208,141,226,0,5,189,232,128,128,189,232,0,0,159,229,0,0,0,234
+	.byte 2,0,0,26,0,208,141,226,0,5,189,232,128,128,189,232,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . -12
 	.byte 0,0,159,231,93,31,160,227
 bl _p_19
 
-	.byte 0,16,160,225,136,2,0,227,0,2,64,227
+	.byte 0,16,160,225,141,2,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_20
 
@@ -1322,8 +1012,6 @@ Lme_36:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionAbortedException__ctor
 _System_Transactions_TransactionAbortedException__ctor:
-.file 5 "/Developer/MonoTouch/Source/mono/mcs/class/System.Transactions/System.Transactions/TransactionAbortedException.cs"
-.loc 5 18 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229
 bl _System_Transactions_TransactionException__ctor
@@ -1335,7 +1023,6 @@ Lme_37:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionAbortedException__ctor_string_System_Exception
 _System_Transactions_TransactionAbortedException__ctor_string_System_Exception:
-.loc 5 28 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,20,208,77,226,0,0,141,229,4,16,141,229,8,32,141,229,0,0,157,229
 	.byte 4,16,157,229,8,32,157,229
@@ -1348,7 +1035,6 @@ Lme_38:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionAbortedException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext
 _System_Transactions_TransactionAbortedException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext:
-.loc 5 34 0
 
 	.byte 128,64,45,233,13,112,160,225,0,9,45,233,16,208,77,226,13,176,160,225,0,0,139,229,4,16,139,229,8,32,139,229
 	.byte 12,48,139,229,0,0,155,229,4,16,155,229,8,32,155,229,12,48,155,229
@@ -1361,8 +1047,6 @@ Lme_39:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionEventArgs__ctor
 _System_Transactions_TransactionEventArgs__ctor:
-.file 6 "/Developer/MonoTouch/Source/mono/mcs/class/System.Transactions/System.Transactions/TransactionEventArgs.cs"
-.loc 6 18 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,12,208,141,226,0,1,189,232,128,128,189,232
 
@@ -1371,7 +1055,6 @@ Lme_3a:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionEventArgs__ctor_System_Transactions_Transaction
 _System_Transactions_TransactionEventArgs__ctor_System_Transactions_Transaction:
-.loc 6 25 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,4,16,141,229,4,16,157,229,0,0,157,229
 	.byte 8,16,128,229,12,208,141,226,0,1,189,232,128,128,189,232
@@ -1381,8 +1064,6 @@ Lme_3b:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionException__ctor
 _System_Transactions_TransactionException__ctor:
-.file 7 "/Developer/MonoTouch/Source/mono/mcs/class/System.Transactions/System.Transactions/TransactionException.cs"
-.loc 7 18 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229
 bl _p_33
@@ -1394,7 +1075,6 @@ Lme_3c:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionException__ctor_string
 _System_Transactions_TransactionException__ctor_string:
-.loc 7 23 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,4,16,141,229,0,0,157,229,4,16,157,229
 bl _p_34
@@ -1406,7 +1086,6 @@ Lme_3d:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionException__ctor_string_System_Exception
 _System_Transactions_TransactionException__ctor_string_System_Exception:
-.loc 7 28 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,20,208,77,226,0,0,141,229,4,16,141,229,8,32,141,229,0,0,157,229
 	.byte 4,16,157,229,8,32,157,229
@@ -1419,7 +1098,6 @@ Lme_3e:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext
 _System_Transactions_TransactionException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext:
-.loc 7 34 0
 
 	.byte 128,64,45,233,13,112,160,225,0,9,45,233,16,208,77,226,13,176,160,225,0,0,139,229,4,16,139,229,8,32,139,229
 	.byte 12,48,139,229,0,0,155,229,4,16,155,229,8,32,155,229,12,48,155,229
@@ -1432,8 +1110,6 @@ Lme_3f:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionInformation__ctor
 _System_Transactions_TransactionInformation__ctor:
-.file 8 "/Developer/MonoTouch/Source/mono/mcs/class/System.Transactions/System.Transactions/TransactionInformation.cs"
-.loc 8 17 0
 
 	.byte 128,64,45,233,13,112,160,225,0,5,45,233,48,208,77,226,0,160,160,225,0,0,160,227,0,0,141,229,0,0,160,227
 	.byte 4,0,141,229,0,0,160,227,8,0,141,229,0,0,160,227,12,0,141,229,0,0,160,227,16,0,141,229,0,0,160,227
@@ -1441,28 +1117,23 @@ _System_Transactions_TransactionInformation__ctor:
 bl _p_37
 
 	.byte 0,0,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 120
+	.long _mono_aot_System_Transactions_got - . + 124
 	.byte 0,0,159,231,0,16,144,229,24,16,141,229,4,16,144,229,28,16,141,229,8,16,144,229,32,16,141,229,12,0,144,229
 	.byte 36,0,141,229,12,0,138,226,24,16,157,229,0,16,128,229,28,16,157,229,4,16,128,229,32,16,157,229,8,16,128,229
-	.byte 36,16,157,229,12,16,128,229,0,0,160,227
-.loc 8 23 0
-
-	.byte 36,0,138,229,13,0,160,225
-.loc 8 24 0
+	.byte 36,16,157,229,12,16,128,229,0,0,160,227,36,0,138,229,13,0,160,225
 bl _p_38
 
 	.byte 40,16,141,226,13,0,160,225
 bl _p_39
 
 	.byte 28,0,138,226,40,16,157,229,0,16,128,229,44,16,157,229,4,16,128,229,8,0,141,226
-.loc 8 25 0
 bl _p_7
 
 	.byte 8,0,141,226
 bl _p_40
 
 	.byte 0,16,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 124
+	.long _mono_aot_System_Transactions_got - . + 128
 	.byte 1,16,159,231
 bl _p_41
 
@@ -1473,7 +1144,6 @@ Lme_40:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionInformation_get_Status
 _System_Transactions_TransactionInformation_get_Status:
-.loc 8 50 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,36,0,144,229,12,208,141,226
 	.byte 0,1,189,232,128,128,189,232
@@ -1483,7 +1153,6 @@ Lme_41:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionInformation_set_Status_System_Transactions_TransactionStatus
 _System_Transactions_TransactionInformation_set_Status_System_Transactions_TransactionStatus:
-.loc 8 51 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,4,16,141,229,4,16,157,229,0,0,157,229
 	.byte 36,16,128,229,12,208,141,226,0,1,189,232,128,128,189,232
@@ -1493,24 +1162,19 @@ Lme_42:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionManager__cctor
 _System_Transactions_TransactionManager__cctor:
-.file 9 "/Developer/MonoTouch/Source/mono/mcs/class/System.Transactions/System.Transactions/TransactionManager.cs"
-.loc 9 34 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,36,208,77,226,0,0,160,227,0,0,141,229,0,0,160,227,4,0,141,229
 	.byte 13,0,160,225,0,16,160,227,1,32,160,227,0,48,160,227
 bl _p_42
 
 	.byte 0,0,157,229,16,0,141,229,4,0,157,229,20,0,141,229,0,0,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 128
+	.long _mono_aot_System_Transactions_got - . + 132
 	.byte 0,0,159,231,16,16,157,229,0,16,128,229,20,16,157,229,4,16,128,229,0,0,160,227,8,0,141,229,0,0,160,227
-	.byte 12,0,141,229
-.loc 9 35 0
-
-	.byte 8,0,141,226,0,16,160,227,10,32,160,227,0,48,160,227
+	.byte 12,0,141,229,8,0,141,226,0,16,160,227,10,32,160,227,0,48,160,227
 bl _p_42
 
 	.byte 8,0,157,229,24,0,141,229,12,0,157,229,28,0,141,229,0,0,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 132
+	.long _mono_aot_System_Transactions_got - . + 136
 	.byte 0,0,159,231,24,16,157,229,0,16,128,229,28,16,157,229,4,16,128,229,36,208,141,226,0,1,189,232,128,128,189,232
 
 Lme_43:
@@ -1518,13 +1182,12 @@ Lme_43:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionManager_get_DefaultTimeout
 _System_Transactions_TransactionManager_get_DefaultTimeout:
-.loc 9 49 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,20,208,77,226,0,0,141,229
 bl _p_43
 
 	.byte 0,0,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 128
+	.long _mono_aot_System_Transactions_got - . + 132
 	.byte 0,0,159,231,0,16,144,229,4,16,141,229,4,0,144,229,8,0,141,229,0,0,157,229,4,16,157,229,0,16,128,229
 	.byte 8,16,157,229,4,16,128,229,20,208,141,226,0,1,189,232,128,128,189,232
 
@@ -1539,15 +1202,10 @@ ut_69:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionOptions__ctor_System_Transactions_IsolationLevel_System_TimeSpan
 _System_Transactions_TransactionOptions__ctor_System_Transactions_IsolationLevel_System_TimeSpan:
-.file 10 "/Developer/MonoTouch/Source/mono/mcs/class/System.Transactions/System.Transactions/TransactionOptions.cs"
-.loc 10 22 0
 
 	.byte 128,64,45,233,13,112,160,225,0,9,45,233,16,208,77,226,13,176,160,225,0,0,139,229,4,16,139,229,8,32,139,229
 	.byte 12,48,139,229,4,16,155,229,0,0,155,229,0,16,128,229,4,0,128,226,8,16,155,229,0,16,128,229,12,16,155,229
-	.byte 4,16,128,229
-.loc 10 23 0
-
-	.byte 16,208,139,226,0,9,189,232,128,128,189,232
+	.byte 4,16,128,229,16,208,139,226,0,9,189,232,128,128,189,232
 
 Lme_45:
 .text
@@ -1560,7 +1218,6 @@ ut_70:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionOptions_op_Equality_System_Transactions_TransactionOptions_System_Transactions_TransactionOptions
 _System_Transactions_TransactionOptions_op_Equality_System_Transactions_TransactionOptions_System_Transactions_TransactionOptions:
-.loc 10 39 0
 
 	.byte 128,64,45,233,13,112,160,225,0,13,45,233,44,208,77,226,13,176,160,225,16,0,139,229,20,16,139,229,24,32,139,229
 	.byte 28,48,139,229,64,224,157,229,32,224,139,229,68,224,157,229,36,224,139,229,16,0,155,229,28,16,155,229,1,0,80,225
@@ -1582,21 +1239,15 @@ ut_71:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionOptions_Equals_object
 _System_Transactions_TransactionOptions_Equals_object:
-.loc 10 52 0
 
 	.byte 128,64,45,233,13,112,160,225,16,13,45,233,40,208,77,226,13,176,160,225,36,0,139,229,1,160,160,225,8,160,139,229
 	.byte 10,64,160,225,0,0,90,227,11,0,0,10,8,0,155,229,0,0,144,229,0,0,144,229,8,0,144,229,8,0,144,229
 	.byte 0,16,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 136
-	.byte 1,16,159,231,1,0,80,225,0,0,0,10,0,64,160,227,0,0,84,227,1,0,0,26
-.loc 10 53 0
-
-	.byte 0,0,160,227,35,0,0,234,36,0,155,229,0,16,144,229,12,16,139,229,4,16,144,229,16,16,139,229,8,0,144,229
-	.byte 20,0,139,229
-.loc 10 54 0
-
-	.byte 0,0,154,229,22,16,208,229,0,0,81,227,27,0,0,27,0,0,144,229,0,0,144,229,0,16,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 136
+	.long _mono_aot_System_Transactions_got - . + 140
+	.byte 1,16,159,231,1,0,80,225,0,0,0,10,0,64,160,227,0,0,84,227,1,0,0,26,0,0,160,227,35,0,0,234
+	.byte 36,0,155,229,0,16,144,229,12,16,139,229,4,16,144,229,16,16,139,229,8,0,144,229,20,0,139,229,0,0,154,229
+	.byte 22,16,208,229,0,0,81,227,27,0,0,27,0,0,144,229,0,0,144,229,0,16,159,229,0,0,0,234
+	.long _mono_aot_System_Transactions_got - . + 140
 	.byte 1,16,159,231,1,0,80,225,19,0,0,27,8,0,138,226,0,16,144,229,24,16,139,229,4,16,144,229,28,16,139,229
 	.byte 8,0,144,229,32,0,139,229,12,0,155,229,16,16,155,229,20,32,155,229,24,48,155,229,28,192,155,229,0,192,141,229
 	.byte 32,192,155,229,4,192,141,229
@@ -1605,7 +1256,7 @@ bl _System_Transactions_TransactionOptions_op_Equality_System_Transactions_Trans
 	.byte 255,0,0,226,40,208,139,226,16,13,189,232,128,128,189,232,14,16,160,225,0,0,159,229
 bl _p_6
 
-	.byte 135,2,0,2
+	.byte 140,2,0,2
 
 Lme_47:
 .text
@@ -1618,7 +1269,6 @@ ut_72:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionOptions_GetHashCode
 _System_Transactions_TransactionOptions_GetHashCode:
-.loc 10 59 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,20,208,77,226,0,0,141,229,0,0,157,229,0,16,144,229,8,16,141,229
 	.byte 4,0,128,226
@@ -1631,8 +1281,6 @@ Lme_48:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionScope_get_IsComplete
 _System_Transactions_TransactionScope_get_IsComplete:
-.file 11 "/Developer/MonoTouch/Source/mono/mcs/class/System.Transactions/System.Transactions/TransactionScope.cs"
-.loc 11 143 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,12,208,77,226,0,0,141,229,0,0,157,229,33,0,208,229,12,208,141,226
 	.byte 0,1,189,232,128,128,189,232
@@ -1642,7 +1290,6 @@ Lme_49:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionScope_get_Timeout
 _System_Transactions_TransactionScope_get_Timeout:
-.loc 11 148 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,20,208,77,226,0,16,141,229,12,0,141,229,12,0,157,229,20,0,128,226
 	.byte 0,16,144,229,4,16,141,229,4,0,144,229,8,0,141,229,0,0,157,229,4,16,157,229,0,16,128,229,8,16,157,229
@@ -1653,47 +1300,24 @@ Lme_4a:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionScope_Dispose
 _System_Transactions_TransactionScope_Dispose:
-.loc 11 195 0
 
 	.byte 128,64,45,233,13,112,160,225,64,5,45,233,12,208,77,226,0,160,160,225
 bl _mono_domain_get
 
-	.byte 0,96,160,225
-.loc 11 153 0
-
-	.byte 32,0,218,229,0,0,80,227,124,0,0,26,1,0,160,227
-.loc 11 156 0
-
-	.byte 32,0,202,229
-.loc 11 158 0
-
-	.byte 16,0,154,229,0,0,80,227,3,0,0,10
-.loc 11 159 0
-
-	.byte 16,0,154,229,28,16,144,229,1,16,65,226,28,16,128,229
-.loc 11 161 0
-
-	.byte 28,0,154,229,0,0,80,227,115,0,0,202,0,16,159,229,0,0,0,234
+	.byte 0,96,160,225,32,0,218,229,0,0,80,227,124,0,0,26,1,0,160,227,32,0,202,229,16,0,154,229,0,0,80,227
+	.byte 3,0,0,10,16,0,154,229,28,16,144,229,1,16,65,226,28,16,128,229,28,0,154,229,0,0,80,227,115,0,0,202
+	.byte 0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 40
 	.byte 1,16,159,231,6,0,160,225
 bl _p_10
 
-	.byte 0,0,144,229
-.loc 11 166 0
-
-	.byte 8,16,154,229
+	.byte 0,0,144,229,8,16,154,229
 bl _System_Transactions_Transaction_op_Inequality_System_Transactions_Transaction_System_Transactions_Transaction
 
-	.byte 255,0,0,226,0,0,80,227,43,0,0,10
-.loc 11 167 0
-
-	.byte 8,0,154,229,0,16,160,227
+	.byte 255,0,0,226,0,0,80,227,43,0,0,10,8,0,154,229,0,16,160,227
 bl _System_Transactions_Transaction_op_Inequality_System_Transactions_Transaction_System_Transactions_Transaction
 
-	.byte 255,0,0,226,0,0,80,227,3,0,0,10
-.loc 11 168 0
-
-	.byte 8,16,154,229,1,0,160,225,0,224,209,229
+	.byte 255,0,0,226,0,0,80,227,3,0,0,10,8,16,154,229,1,0,160,225,0,224,209,229
 bl _System_Transactions_Transaction_Rollback
 
 	.byte 0,16,159,229,0,0,0,234
@@ -1704,10 +1328,7 @@ bl _p_10
 	.byte 0,0,144,229,0,16,160,227
 bl _System_Transactions_Transaction_op_Inequality_System_Transactions_Transaction_System_Transactions_Transaction
 
-	.byte 255,0,0,226
-.loc 11 169 0
-
-	.byte 0,0,80,227,10,0,0,10,0,16,159,229,0,0,0,234
+	.byte 255,0,0,226,0,0,80,227,10,0,0,10,0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 40
 	.byte 1,16,159,231,6,0,160,225
 bl _p_10
@@ -1715,15 +1336,12 @@ bl _p_10
 	.byte 0,16,144,229,1,0,160,225,0,224,209,229
 bl _System_Transactions_Transaction_Rollback
 
-	.byte 255,255,255,234
-.loc 11 172 0
-
-	.byte 0,0,159,229,0,0,0,234
+	.byte 255,255,255,234,0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . -12
 	.byte 0,0,159,231,137,31,160,227
 bl _p_19
 
-	.byte 0,16,160,225,136,2,0,227,0,2,64,227
+	.byte 0,16,160,225,141,2,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_20
 
@@ -1732,67 +1350,37 @@ bl _p_20
 	.byte 1,16,159,231,6,0,160,225
 bl _p_10
 
-	.byte 0,0,144,229
-.loc 11 175 0
-
-	.byte 12,16,154,229
+	.byte 0,0,144,229,12,16,154,229
 bl _System_Transactions_Transaction_op_Equality_System_Transactions_Transaction_System_Transactions_Transaction
 
 	.byte 255,0,0,226,0,0,80,227,9,0,0,10,12,0,154,229,0,16,160,227
 bl _System_Transactions_Transaction_op_Inequality_System_Transactions_Transaction_System_Transactions_Transaction
 
-	.byte 255,0,0,226,0,0,80,227,3,0,0,10
-.loc 11 176 0
-
-	.byte 12,0,154,229,16,16,154,229,0,224,208,229,28,16,128,229
-.loc 11 178 0
-
-	.byte 12,0,154,229,0,0,141,229,0,16,159,229,0,0,0,234
+	.byte 255,0,0,226,0,0,80,227,3,0,0,10,12,0,154,229,16,16,154,229,0,224,208,229,28,16,128,229,12,0,154,229
+	.byte 0,0,141,229,0,16,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . + 40
 	.byte 1,16,159,231,6,0,160,225
 bl _p_10
 
-	.byte 0,16,157,229,0,16,128,229
-.loc 11 180 0
-
-	.byte 8,0,154,229,0,16,160,227
+	.byte 0,16,157,229,0,16,128,229,8,0,154,229,0,16,160,227
 bl _System_Transactions_Transaction_op_Equality_System_Transactions_Transaction_System_Transactions_Transaction
 
-	.byte 255,0,0,226,0,0,80,227,18,0,0,26
-.loc 11 184 0
-
-	.byte 8,0,154,229,0,224,208,229,0,16,160,227,28,16,128,229,33,0,218,229
-.loc 11 186 0
-
-	.byte 0,0,80,227,4,0,0,26
-.loc 11 187 0
-
-	.byte 8,16,154,229,1,0,160,225,0,224,209,229
+	.byte 255,0,0,226,0,0,80,227,18,0,0,26,8,0,154,229,0,224,208,229,0,16,160,227,28,16,128,229,33,0,218,229
+	.byte 0,0,80,227,4,0,0,26,8,16,154,229,1,0,160,225,0,224,209,229
 bl _System_Transactions_Transaction_Rollback
-.loc 11 188 0
 
-	.byte 6,0,0,234
-.loc 11 191 0
-
-	.byte 34,0,218,229,0,0,80,227,3,0,0,10
-.loc 11 195 0
-
-	.byte 8,16,154,229,1,0,160,225,0,224,209,229
+	.byte 6,0,0,234,34,0,218,229,0,0,80,227,3,0,0,10,8,16,154,229,1,0,160,225,0,224,209,229
 bl _p_46
 
-	.byte 12,208,141,226,64,5,189,232,128,128,189,232
-.loc 11 162 0
-
-	.byte 8,16,154,229,1,0,160,225,0,224,209,229
+	.byte 12,208,141,226,64,5,189,232,128,128,189,232,8,16,154,229,1,0,160,225,0,224,209,229
 bl _System_Transactions_Transaction_Rollback
-.loc 11 163 0
 
 	.byte 0,0,159,229,0,0,0,234
 	.long _mono_aot_System_Transactions_got - . -12
 	.byte 0,0,159,231,119,31,160,227
 bl _p_19
 
-	.byte 0,16,160,225,136,2,0,227,0,2,64,227
+	.byte 0,16,160,225,141,2,0,227,0,2,64,227
 bl _mono_create_corlib_exception_1
 bl _p_20
 
@@ -1801,7 +1389,6 @@ Lme_4b:
 	.align 2
 	.no_dead_strip _System_Transactions_TransactionScope__cctor
 _System_Transactions_TransactionScope__cctor:
-.loc 11 20 0
 
 	.byte 128,64,45,233,13,112,160,225,0,1,45,233,36,208,77,226,12,0,141,226
 bl _p_32
@@ -1809,7 +1396,7 @@ bl _p_32
 	.byte 0,0,160,227,0,0,141,229,0,0,160,227,4,0,141,229,0,0,160,227,8,0,141,229,0,0,160,227,0,0,141,229
 	.byte 12,0,157,229,4,0,141,229,16,0,157,229,8,0,141,229,0,0,157,229,20,0,141,229,4,0,157,229,24,0,141,229
 	.byte 8,0,157,229,28,0,141,229,0,0,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 140
+	.long _mono_aot_System_Transactions_got - . + 144
 	.byte 0,0,159,231,20,16,157,229,0,16,128,229,24,16,157,229,4,16,128,229,28,16,157,229,8,16,128,229,36,208,141,226
 	.byte 0,1,189,232,128,128,189,232
 
@@ -1818,11 +1405,9 @@ Lme_4c:
 	.align 2
 	.no_dead_strip _wrapper_delegate_invoke__Module_invoke_void__this___object_TransactionEventArgs_object_System_Transactions_TransactionEventArgs
 _wrapper_delegate_invoke__Module_invoke_void__this___object_TransactionEventArgs_object_System_Transactions_TransactionEventArgs:
-.file 12 "<unknown>"
-.loc 12 1 0
 
 	.byte 128,64,45,233,13,112,160,225,112,13,45,233,0,80,160,225,1,96,160,225,2,160,160,225,0,0,159,229,0,0,0,234
-	.long _mono_aot_System_Transactions_got - . + 144
+	.long _mono_aot_System_Transactions_got - . + 148
 	.byte 0,0,159,231,0,0,144,229,0,0,80,227,30,0,0,26,44,0,133,226,0,176,144,229,11,0,160,225,0,0,80,227
 	.byte 19,0,0,26,16,0,133,226,0,64,144,229,4,0,160,225,0,0,80,227,6,0,0,10,8,0,133,226,0,48,144,229
 	.byte 4,0,160,225,6,16,160,225,10,32,160,225,51,255,47,225,4,0,0,234,8,0,133,226,0,32,144,229,6,0,160,225
@@ -1837,7 +1422,6 @@ Lme_4e:
 	.align 2
 	.no_dead_strip _wrapper_delegate_begin_invoke__Module_begin_invoke_IAsyncResult__this___object_TransactionEventArgs_AsyncCallback_object_object_System_Transactions_TransactionEventArgs_System_AsyncCallback_object
 _wrapper_delegate_begin_invoke__Module_begin_invoke_IAsyncResult__this___object_TransactionEventArgs_AsyncCallback_object_object_System_Transactions_TransactionEventArgs_System_AsyncCallback_object:
-.loc 12 1 0
 
 	.byte 128,64,45,233,13,112,160,225,0,9,45,233,24,208,77,226,13,176,160,225,0,0,139,229,4,16,139,229,8,32,139,229
 	.byte 12,48,139,229,40,224,157,229,16,224,139,229,20,0,160,227,7,16,128,226,7,16,193,227,1,208,77,224,0,224,160,227
@@ -1853,7 +1437,6 @@ Lme_4f:
 	.align 2
 	.no_dead_strip _wrapper_delegate_end_invoke__Module_end_invoke_void__this___IAsyncResult_System_IAsyncResult
 _wrapper_delegate_end_invoke__Module_end_invoke_void__this___IAsyncResult_System_IAsyncResult:
-.loc 12 1 0
 
 	.byte 128,64,45,233,13,112,160,225,0,9,45,233,8,208,77,226,13,176,160,225,0,0,139,229,4,16,139,229,8,0,160,227
 	.byte 7,16,128,226,7,16,193,227,1,208,77,224,0,224,160,227,0,0,0,234,1,224,141,231,4,16,81,226,252,255,255,170
@@ -1873,7 +1456,6 @@ ut_81:
 	.align 2
 	.no_dead_strip _wrapper_unknown_System_Transactions_TransactionOptions_StructureToPtr_object_intptr_bool
 _wrapper_unknown_System_Transactions_TransactionOptions_StructureToPtr_object_intptr_bool:
-.loc 12 1 0
 
 	.byte 128,64,45,233,13,112,160,225,0,5,45,233,8,208,77,226,0,0,141,229,1,160,160,225,4,32,205,229,0,0,157,229
 	.byte 8,0,128,226,0,16,144,229,0,16,138,229,4,16,144,229,4,16,138,229,8,0,144,229,8,0,138,229,8,208,141,226
@@ -1890,7 +1472,6 @@ ut_82:
 	.align 2
 	.no_dead_strip _wrapper_unknown_System_Transactions_TransactionOptions_PtrToStructure_intptr_object
 _wrapper_unknown_System_Transactions_TransactionOptions_PtrToStructure_intptr_object:
-.loc 12 1 0
 
 	.byte 128,64,45,233,13,112,160,225,64,1,45,233,8,208,77,226,0,96,160,225,0,16,141,229,0,0,157,229,8,0,128,226
 	.byte 0,16,150,229,0,16,128,229,4,16,150,229,4,16,128,229,8,16,150,229,8,16,128,229,8,208,141,226,64,1,189,232
@@ -2024,6 +1605,8 @@ unbox_trampolines:
 
 	bl ut_82
 unbox_trampolines_end:
+
+	.long 0
 .section __TEXT, __const
 	.align 3
 method_info_offsets:
@@ -2032,23 +1615,23 @@ method_info_offsets:
 	.short 0, 14, 24, 34, 44, 54, 64, 75
 	.short 91
 	.byte 0,0,0,0,1,2,255,255,255,255,253,0,0,0,0,0,5,3,2,2,2,2,2,2,23,3,2,2,4,4,5,3
-	.byte 3,3,54,2,2,2,2,2,3,3,2,2,76,2,2,2,10,3,4,2,5,9,122,4,4,3,3,5,2,2,2,2
-	.byte 128,151,2,2,2,2,4,2,2,5,4,128,178,2,4,2,3,3,8,255,255,255,255,56,128,204,3,128,209,2,2
+	.byte 3,3,54,2,2,2,2,2,3,3,2,2,76,2,2,2,10,3,4,2,5,10,123,4,4,3,3,5,2,2,2,2
+	.byte 128,152,2,2,2,2,4,2,2,5,4,128,179,2,4,2,3,3,8,255,255,255,255,55,128,205,3,128,210,2,2
 .section __TEXT, __const
 	.align 3
 extra_method_table:
 
-	.long 11,230,79,11,0,0,0,0
-	.long 0,0,0,0,0,215,78,0
-	.long 0,0,0,278,82,0,0,0
-	.long 0,0,0,0,254,80,0,0
-	.long 0,0,269,81,0
+	.long 11,231,79,11,0,0,0,0
+	.long 0,0,0,0,0,216,78,0
+	.long 0,0,0,279,82,0,0,0
+	.long 0,0,0,0,255,80,0,0
+	.long 0,0,270,81,0
 .section __TEXT, __const
 	.align 3
 extra_method_info_offsets:
 
-	.long 5,78,215,79,230,80,254,81
-	.long 269,82,278
+	.long 5,78,216,79,231,80,255,81
+	.long 270,82,279
 .section __TEXT, __const
 	.align 3
 class_name_table:
@@ -2068,10 +1651,10 @@ class_name_table:
 	.align 3
 got_info_offsets:
 
-	.long 40,10,4,2
-	.short 0, 11, 22, 33
-	.byte 129,31,2,1,1,1,5,5,14,6,14,129,86,14,6,3,4,3,3,3,6,2,129,132,3,3,3,3,2,3,5,2
-	.byte 5,129,163,2,2,3,7,4,4,4,3,4
+	.long 41,10,5,2
+	.short 0, 11, 22, 33, 44
+	.byte 129,32,2,1,1,1,5,5,14,6,14,129,87,14,6,3,4,3,3,3,6,2,129,133,3,3,3,3,2,3,5,2
+	.byte 2,129,164,2,2,2,3,7,4,4,4,3,129,199
 .section __TEXT, __const
 	.align 3
 ex_info_offsets:
@@ -2079,10 +1662,10 @@ ex_info_offsets:
 	.long 83,10,9,2
 	.short 0, 15, 26, 37, 48, 59, 70, 81
 	.short 97
-	.byte 0,0,0,0,131,193,3,255,255,255,252,60,0,0,0,0,0,131,199,3,3,3,3,3,3,3,131,223,3,3,3,3
-	.byte 3,3,3,3,3,131,253,4,3,3,3,4,4,4,4,3,132,32,4,3,3,15,23,4,3,17,14,132,132,4,4,4
-	.byte 4,3,3,4,4,3,132,168,3,3,4,4,4,3,3,4,4,132,204,4,4,4,3,4,4,255,255,255,251,29,132,231
-	.byte 4,132,239,4,4
+	.byte 0,0,0,0,131,196,3,255,255,255,252,57,0,0,0,0,0,131,202,3,3,3,3,3,3,3,131,226,3,3,3,3
+	.byte 3,3,3,3,3,132,0,4,3,3,3,4,4,4,4,3,132,35,4,3,3,15,23,4,3,17,14,132,135,4,4,4
+	.byte 4,3,3,4,4,3,132,171,3,3,4,4,4,3,3,4,4,132,207,4,4,4,3,4,4,255,255,255,251,26,132,234
+	.byte 4,132,242,4,4
 .section __TEXT, __const
 	.align 3
 unwind_info:
@@ -2114,7 +1697,7 @@ class_info_offsets:
 
 	.long 20,10,2,2
 	.short 0, 11
-	.byte 132,250,7,46,23,99,7,7,7,7,99,134,63,23,17,67,23,67,23,24,17,25
+	.byte 132,253,7,46,23,99,7,7,7,7,99,134,66,23,17,67,23,67,23,24,17,25
 
 .text
 	.align 4
@@ -2125,295 +1708,295 @@ plt__jit_icall_mono_object_new_fast:
 _p_1:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 160,453
+	.long _mono_aot_System_Transactions_got - . + 164,456
 	.no_dead_strip plt_System_Threading_ManualResetEvent__ctor_bool
 plt_System_Threading_ManualResetEvent__ctor_bool:
 _p_2:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 164,476
+	.long _mono_aot_System_Transactions_got - . + 168,479
 	.no_dead_strip plt_System_Transactions_PreparingEnlistment_ForceRollback_System_Exception
 plt_System_Transactions_PreparingEnlistment_ForceRollback_System_Exception:
 _p_3:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 168,481
+	.long _mono_aot_System_Transactions_got - . + 172,484
 	.no_dead_strip plt_System_Transactions_Transaction_Rollback_System_Exception_object
 plt_System_Transactions_Transaction_Rollback_System_Exception_object:
 _p_4:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 172,483
+	.long _mono_aot_System_Transactions_got - . + 176,486
 	.no_dead_strip plt_System_Threading_EventWaitHandle_Set
 plt_System_Threading_EventWaitHandle_Set:
 _p_5:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 176,485
+	.long _mono_aot_System_Transactions_got - . + 180,488
 	.no_dead_strip plt__jit_icall_mono_arch_throw_corlib_exception
 plt__jit_icall_mono_arch_throw_corlib_exception:
 _p_6:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 180,490
+	.long _mono_aot_System_Transactions_got - . + 184,493
 	.no_dead_strip plt_System_Guid_NewGuid
 plt_System_Guid_NewGuid:
 _p_7:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 184,525
+	.long _mono_aot_System_Transactions_got - . + 188,528
 	.no_dead_strip plt_System_Transactions_TransactionInformation__ctor
 plt_System_Transactions_TransactionInformation__ctor:
 _p_8:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 188,530
+	.long _mono_aot_System_Transactions_got - . + 192,533
 	.no_dead_strip plt_System_Transactions_Transaction_EnsureIncompleteCurrentScope
 plt_System_Transactions_Transaction_EnsureIncompleteCurrentScope:
 _p_9:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 192,532
+	.long _mono_aot_System_Transactions_got - . + 196,535
 	.no_dead_strip plt__jit_icall_mono_class_static_field_address
 plt__jit_icall_mono_class_static_field_address:
 _p_10:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 196,534
+	.long _mono_aot_System_Transactions_got - . + 200,537
 	.no_dead_strip plt_System_Transactions_Transaction_EnlistVolatileInternal_System_Transactions_IEnlistmentNotification_System_Transactions_EnlistmentOptions
 plt_System_Transactions_Transaction_EnlistVolatileInternal_System_Transactions_IEnlistmentNotification_System_Transactions_EnlistmentOptions:
 _p_11:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 200,568
+	.long _mono_aot_System_Transactions_got - . + 204,571
 	.no_dead_strip plt_System_Transactions_Transaction_get_Volatiles
 plt_System_Transactions_Transaction_get_Volatiles:
 _p_12:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 204,570
+	.long _mono_aot_System_Transactions_got - . + 208,573
 	.no_dead_strip plt_System_Collections_Generic_List_1_System_Transactions_IEnlistmentNotification_Add_System_Transactions_IEnlistmentNotification
 plt_System_Collections_Generic_List_1_System_Transactions_IEnlistmentNotification_Add_System_Transactions_IEnlistmentNotification:
 _p_13:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 208,572
+	.long _mono_aot_System_Transactions_got - . + 212,575
 	.no_dead_strip plt__jit_icall_mono_object_new_ptrfree
 plt__jit_icall_mono_object_new_ptrfree:
 _p_14:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 212,583
+	.long _mono_aot_System_Transactions_got - . + 216,586
 	.no_dead_strip plt_System_Transactions_Transaction_FireCompleted
 plt_System_Transactions_Transaction_FireCompleted:
 _p_15:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 216,609
+	.long _mono_aot_System_Transactions_got - . + 220,612
 	.no_dead_strip plt_System_Collections_Generic_List_1_System_Transactions_IEnlistmentNotification_GetEnumerator
 plt_System_Collections_Generic_List_1_System_Transactions_IEnlistmentNotification_GetEnumerator:
 _p_16:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 220,611
+	.long _mono_aot_System_Transactions_got - . + 224,614
 	.no_dead_strip plt_System_Collections_Generic_List_1_Enumerator_System_Transactions_IEnlistmentNotification_MoveNext
 plt_System_Collections_Generic_List_1_Enumerator_System_Transactions_IEnlistmentNotification_MoveNext:
 _p_17:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 224,622
+	.long _mono_aot_System_Transactions_got - . + 228,625
 	.no_dead_strip plt_System_Transactions_Transaction_get_Durables
 plt_System_Transactions_Transaction_get_Durables:
 _p_18:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 228,633
+	.long _mono_aot_System_Transactions_got - . + 232,636
 	.no_dead_strip plt__jit_icall_mono_helper_ldstr
 plt__jit_icall_mono_helper_ldstr:
 _p_19:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 232,635
+	.long _mono_aot_System_Transactions_got - . + 236,638
 	.no_dead_strip plt__jit_icall_mono_arch_throw_exception
 plt__jit_icall_mono_arch_throw_exception:
 _p_20:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 236,655
+	.long _mono_aot_System_Transactions_got - . + 240,658
 	.no_dead_strip plt__jit_icall_mono_helper_ldstr_mscorlib
 plt__jit_icall_mono_helper_ldstr_mscorlib:
 _p_21:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 240,683
+	.long _mono_aot_System_Transactions_got - . + 244,686
 	.no_dead_strip plt_System_Transactions_Transaction_DoCommit
 plt_System_Transactions_Transaction_DoCommit:
 _p_22:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 244,712
+	.long _mono_aot_System_Transactions_got - . + 248,715
 	.no_dead_strip plt__jit_icall_mono_arch_rethrow_exception
 plt__jit_icall_mono_arch_rethrow_exception:
 _p_23:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 248,714
+	.long _mono_aot_System_Transactions_got - . + 252,717
 	.no_dead_strip plt_System_Transactions_Transaction_CheckAborted
 plt_System_Transactions_Transaction_CheckAborted:
 _p_24:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 252,744
+	.long _mono_aot_System_Transactions_got - . + 256,747
 	.no_dead_strip plt_System_Transactions_Transaction_DoSingleCommit_System_Transactions_ISinglePhaseNotification
 plt_System_Transactions_Transaction_DoSingleCommit_System_Transactions_ISinglePhaseNotification:
 _p_25:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 256,746
+	.long _mono_aot_System_Transactions_got - . + 260,749
 	.no_dead_strip plt_System_Transactions_Transaction_DoPreparePhase
 plt_System_Transactions_Transaction_DoPreparePhase:
 _p_26:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 260,748
+	.long _mono_aot_System_Transactions_got - . + 264,751
 	.no_dead_strip plt_System_Transactions_Transaction_DoSingleCommit_System_Transactions_IPromotableSinglePhaseNotification
 plt_System_Transactions_Transaction_DoSingleCommit_System_Transactions_IPromotableSinglePhaseNotification:
 _p_27:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 264,750
+	.long _mono_aot_System_Transactions_got - . + 268,753
 	.no_dead_strip plt_System_Transactions_Transaction_DoCommitPhase
 plt_System_Transactions_Transaction_DoCommitPhase:
 _p_28:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 268,752
+	.long _mono_aot_System_Transactions_got - . + 272,755
 	.no_dead_strip plt__jit_icall_mono_thread_get_undeniable_exception
 plt__jit_icall_mono_thread_get_undeniable_exception:
 _p_29:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 272,754
+	.long _mono_aot_System_Transactions_got - . + 276,757
 	.no_dead_strip plt_System_Transactions_PreparingEnlistment__ctor_System_Transactions_Transaction_System_Transactions_IEnlistmentNotification
 plt_System_Transactions_PreparingEnlistment__ctor_System_Transactions_Transaction_System_Transactions_IEnlistmentNotification:
 _p_30:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 276,793
+	.long _mono_aot_System_Transactions_got - . + 280,796
 	.no_dead_strip plt_System_Threading_ThreadPool_QueueUserWorkItem_System_Threading_WaitCallback_object
 plt_System_Threading_ThreadPool_QueueUserWorkItem_System_Threading_WaitCallback_object:
 _p_31:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 280,795
+	.long _mono_aot_System_Transactions_got - . + 284,798
 	.no_dead_strip plt_System_Transactions_TransactionManager_get_DefaultTimeout
 plt_System_Transactions_TransactionManager_get_DefaultTimeout:
 _p_32:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 284,800
+	.long _mono_aot_System_Transactions_got - . + 288,803
 	.no_dead_strip plt_System_SystemException__ctor
 plt_System_SystemException__ctor:
 _p_33:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 288,802
+	.long _mono_aot_System_Transactions_got - . + 292,805
 	.no_dead_strip plt_System_SystemException__ctor_string
 plt_System_SystemException__ctor_string:
 _p_34:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 292,807
+	.long _mono_aot_System_Transactions_got - . + 296,810
 	.no_dead_strip plt_System_SystemException__ctor_string_System_Exception
 plt_System_SystemException__ctor_string_System_Exception:
 _p_35:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 296,812
+	.long _mono_aot_System_Transactions_got - . + 300,815
 	.no_dead_strip plt_System_SystemException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext
 plt_System_SystemException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext:
 _p_36:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 300,817
+	.long _mono_aot_System_Transactions_got - . + 304,820
 	.no_dead_strip plt__class_init_System_Guid
 plt__class_init_System_Guid:
 _p_37:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 304,822
+	.long _mono_aot_System_Transactions_got - . + 308,825
 	.no_dead_strip plt_System_DateTime_get_Now
 plt_System_DateTime_get_Now:
 _p_38:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 308,827
+	.long _mono_aot_System_Transactions_got - . + 312,830
 	.no_dead_strip plt_System_DateTime_ToUniversalTime
 plt_System_DateTime_ToUniversalTime:
 _p_39:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 312,832
+	.long _mono_aot_System_Transactions_got - . + 316,835
 	.no_dead_strip plt_System_Guid_ToString
 plt_System_Guid_ToString:
 _p_40:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 316,837
+	.long _mono_aot_System_Transactions_got - . + 320,840
 	.no_dead_strip plt_string_Concat_string_string
 plt_string_Concat_string_string:
 _p_41:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 320,842
+	.long _mono_aot_System_Transactions_got - . + 324,845
 	.no_dead_strip plt_System_TimeSpan__ctor_int_int_int
 plt_System_TimeSpan__ctor_int_int_int:
 _p_42:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 324,847
+	.long _mono_aot_System_Transactions_got - . + 328,850
 	.no_dead_strip plt__class_init_System_Transactions_TransactionManager
 plt__class_init_System_Transactions_TransactionManager:
 _p_43:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 328,852
+	.long _mono_aot_System_Transactions_got - . + 332,855
 	.no_dead_strip plt_System_TimeSpan_op_Equality_System_TimeSpan_System_TimeSpan
 plt_System_TimeSpan_op_Equality_System_TimeSpan_System_TimeSpan:
 _p_44:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 332,855
+	.long _mono_aot_System_Transactions_got - . + 336,858
 	.no_dead_strip plt_System_TimeSpan_GetHashCode
 plt_System_TimeSpan_GetHashCode:
 _p_45:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 336,860
+	.long _mono_aot_System_Transactions_got - . + 340,863
 	.no_dead_strip plt_System_Transactions_Transaction_CommitInternal
 plt_System_Transactions_Transaction_CommitInternal:
 _p_46:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 340,865
+	.long _mono_aot_System_Transactions_got - . + 344,868
 	.no_dead_strip plt__jit_icall_mono_thread_interruption_checkpoint
 plt__jit_icall_mono_thread_interruption_checkpoint:
 _p_47:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 344,867
+	.long _mono_aot_System_Transactions_got - . + 348,870
 	.no_dead_strip plt__jit_icall_mono_delegate_begin_invoke
 plt__jit_icall_mono_delegate_begin_invoke:
 _p_48:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 348,905
+	.long _mono_aot_System_Transactions_got - . + 352,908
 	.no_dead_strip plt__jit_icall_mono_delegate_end_invoke
 plt__jit_icall_mono_delegate_end_invoke:
 _p_49:
 
 	.byte 0,192,159,229,12,240,159,231
-	.long _mono_aot_System_Transactions_got - . + 352,934
+	.long _mono_aot_System_Transactions_got - . + 356,937
 plt_end:
 .section __TEXT, __const
 	.align 3
@@ -2421,14 +2004,14 @@ image_table:
 
 	.long 2
 	.asciz "System.Transactions"
-	.asciz "94BCCD6B-ABA3-48DA-B6FA-F4E5803A7B8C"
+	.asciz "48EFDC18-B019-411E-99C0-6B3BEAA2698B"
 	.asciz ""
 	.asciz "b77a5c561934e089"
 	.align 3
 
 	.long 1,2,0,5,0
 	.asciz "mscorlib"
-	.asciz "E3F22CEB-454B-4F21-8D65-5E22A00B8616"
+	.asciz "9627E3FA-7529-4FE8-8CA2-665E2FF84CAD"
 	.asciz ""
 	.asciz "7cec85d7bea7798e"
 	.align 3
@@ -2437,12 +2020,12 @@ image_table:
 .data
 	.align 3
 _mono_aot_System_Transactions_got:
-	.space 360
+	.space 364
 got_end:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "94BCCD6B-ABA3-48DA-B6FA-F4E5803A7B8C"
+	.asciz "48EFDC18-B019-411E-99C0-6B3BEAA2698B"
 .section __TEXT, __const
 	.align 2
 runtime_version:
@@ -2455,7 +2038,7 @@ assembly_name:
 	.align 3
 _mono_aot_file_info:
 
-	.long 95,0
+	.long 97,0
 	.align 2
 	.long _mono_aot_System_Transactions_got
 	.align 2
@@ -2517,9 +2100,10 @@ _mono_aot_file_info:
 	.align 2
 	.long unbox_trampolines_end
 
-	.long 40,360,50,83,10,118565375,0,1984
+	.long 41,364,50,83,10,387000831,0,1987
 	.long 0,0,0,0,0,0,0,0
 	.long 0,0,0,0,128,4,4,14
+	.long 0,0,0,0,0
 	.globl _mono_aot_module_System_Transactions_info
 	.align 2
 _mono_aot_module_System_Transactions_info:
@@ -2532,66 +2116,66 @@ blob:
 	.byte 0,0,0,0,0,0,1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,5,0,1,5,0,0,0,0,0,2
 	.byte 6,7,0,2,8,9,0,3,10,11,12,0,1,13,0,1,13,0,1,13,0,0,0,0,0,0,0,0,0,0,0,0
 	.byte 0,1,14,0,1,15,0,0,0,0,0,0,0,0,0,0,0,0,0,8,16,17,18,17,17,18,19,20,0,1,21,0
-	.byte 2,22,22,0,0,0,3,23,24,5,0,7,17,25,26,27,28,17,17,0,5,17,14,29,17,17,0,2,16,30,0,2
-	.byte 16,31,0,1,21,0,1,32,0,3,13,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 2,33,34,0,0,0,0,1,17,2,35,36,1,17,1,35,0,0,0,0,0,2,37,37,0,0,1,19,0,1,19,0
-	.byte 1,19,5,13,13,13,13,13,1,19,1,38,0,1,39,0,0,0,0,0,0,0,0,255,252,0,0,0,1,0,0,32
-	.byte 2,1,28,18,1,14,255,252,0,0,0,2,0,32,4,18,2,130,119,1,28,18,1,14,18,2,130,64,1,28,255,252
-	.byte 0,0,0,3,0,32,1,1,18,2,130,119,1,255,252,0,0,0,25,8,1,18,255,252,0,0,0,25,7,1,18,12
-	.byte 0,39,42,47,14,2,130,18,1,11,2,130,18,1,14,3,219,0,0,1,4,2,130,94,1,1,1,5,16,7,129,52
-	.byte 136,217,14,3,219,0,0,2,4,2,130,94,1,1,1,7,16,7,129,72,136,217,14,2,122,1,4,2,130,94,1,1
-	.byte 2,130,163,1,16,7,129,90,136,217,14,1,16,13,1,12,20,14,1,3,11,1,12,14,1,11,14,3,219,0,0,3
-	.byte 6,9,6,10,14,1,15,14,1,13,23,1,7,11,1,10,6,8,14,1,10,14,2,130,39,1,6,48,30,2,130,39
-	.byte 1,6,7,6,12,6,11,14,1,14,16,2,130,116,1,137,55,17,0,129,214,16,1,17,39,16,1,17,40,11,1,18
-	.byte 16,1,19,43,33,7,20,109,111,110,111,95,111,98,106,101,99,116,95,110,101,119,95,102,97,115,116,0,3,193,0,12
-	.byte 247,3,20,3,44,3,193,0,12,228,7,32,109,111,110,111,95,97,114,99,104,95,116,104,114,111,119,95,99,111,114,108
-	.byte 105,98,95,101,120,99,101,112,116,105,111,110,0,3,193,0,17,166,3,65,3,55,7,31,109,111,110,111,95,99,108,97
-	.byte 115,115,95,115,116,97,116,105,99,95,102,105,101,108,100,95,97,100,100,114,101,115,115,0,3,36,3,24,3,255,254,0
-	.byte 0,0,0,202,0,0,10,7,23,109,111,110,111,95,111,98,106,101,99,116,95,110,101,119,95,112,116,114,102,114,101,101
-	.byte 0,3,54,3,255,254,0,0,0,0,202,0,0,13,3,255,254,0,0,0,0,202,0,0,15,3,25,7,17,109,111,110
-	.byte 111,95,104,101,108,112,101,114,95,108,100,115,116,114,0,7,25,109,111,110,111,95,97,114,99,104,95,116,104,114,111,119
-	.byte 95,101,120,99,101,112,116,105,111,110,0,7,26,109,111,110,111,95,104,101,108,112,101,114,95,108,100,115,116,114,95,109
-	.byte 115,99,111,114,108,105,98,0,3,46,7,27,109,111,110,111,95,97,114,99,104,95,114,101,116,104,114,111,119,95,101,120
-	.byte 99,101,112,116,105,111,110,0,3,53,3,51,3,49,3,52,3,50,7,36,109,111,110,111,95,116,104,114,101,97,100,95
-	.byte 103,101,116,95,117,110,100,101,110,105,97,98,108,101,95,101,120,99,101,112,116,105,111,110,0,3,13,3,193,0,13,60
-	.byte 3,69,3,193,0,20,141,3,193,0,20,142,3,193,0,20,144,3,193,0,20,143,15,2,130,116,1,3,193,0,15,253
-	.byte 3,193,0,16,54,3,193,0,17,172,3,193,0,20,59,3,193,0,20,148,15,1,17,3,193,0,20,181,3,193,0,20
-	.byte 174,3,45,7,35,109,111,110,111,95,116,104,114,101,97,100,95,105,110,116,101,114,114,117,112,116,105,111,110,95,99,104
-	.byte 101,99,107,112,111,105,110,116,0,7,26,109,111,110,111,95,100,101,108,101,103,97,116,101,95,98,101,103,105,110,95,105
-	.byte 110,118,111,107,101,0,7,24,109,111,110,111,95,100,101,108,101,103,97,116,101,95,101,110,100,95,105,110,118,111,107,101
-	.byte 0,2,0,0,2,0,0,2,19,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,40,0,2
-	.byte 61,0,2,0,0,2,79,0,2,61,0,2,61,0,2,100,0,2,0,0,2,121,0,2,0,0,2,0,0,2,128,140
-	.byte 0,2,0,0,2,0,0,2,0,0,2,128,161,0,2,128,161,0,2,128,180,0,2,128,205,0,2,40,0,2,0,0
-	.byte 2,128,140,0,2,0,0,2,0,0,6,128,227,1,2,0,129,96,128,188,129,52,129,56,0,6,129,1,2,0,4,2
-	.byte 1,15,64,76,76,0,8,4,2,130,108,1,64,76,92,0,2,129,27,0,2,61,0,6,129,56,1,0,8,4,2,130
-	.byte 108,1,108,128,164,128,164,0,6,129,84,1,2,0,130,56,96,130,12,130,16,0,6,129,114,1,2,0,129,4,80,128
-	.byte 216,128,220,0,2,129,142,0,2,129,142,0,2,129,163,0,2,128,140,0,2,61,0,2,0,0,2,128,161,0,2,129
-	.byte 182,0,2,0,0,2,0,0,2,0,0,2,0,0,2,128,161,0,2,129,182,0,2,129,206,0,2,0,0,2,0,0
-	.byte 2,129,227,0,2,128,161,0,2,129,182,0,2,129,246,0,2,130,16,0,2,128,161,0,2,0,0,2,128,161,0,2
-	.byte 130,44,0,2,129,227,0,2,130,67,0,2,130,93,0,2,130,117,0,2,128,140,0,2,40,0,0,128,144,8,0,0
-	.byte 1,12,128,160,52,0,0,4,193,0,19,93,193,0,18,214,193,0,19,89,193,0,18,213,193,0,16,211,193,0,18,219
-	.byte 193,0,18,216,193,0,18,215,193,0,16,211,4,3,2,4,128,128,9,0,0,1,193,0,19,93,193,0,19,90,193,0
-	.byte 19,89,193,0,19,87,23,128,144,12,0,0,4,193,0,17,59,193,0,17,73,193,0,19,89,193,0,17,71,193,0,17
-	.byte 58,193,0,17,28,193,0,17,29,193,0,17,30,193,0,17,31,193,0,17,32,193,0,17,33,193,0,17,34,193,0,17
-	.byte 35,193,0,17,36,193,0,17,37,193,0,17,38,193,0,17,39,193,0,17,60,193,0,17,40,193,0,17,41,193,0,17
-	.byte 42,193,0,17,43,193,0,17,61,0,128,144,8,0,0,1,0,128,144,8,0,0,1,0,128,144,8,0,0,1,0,128
-	.byte 144,8,0,0,1,23,128,144,12,0,0,4,193,0,17,59,193,0,17,73,193,0,19,89,193,0,17,71,193,0,17,58
-	.byte 193,0,17,28,193,0,17,29,193,0,17,30,193,0,17,31,193,0,17,32,193,0,17,33,193,0,17,34,193,0,17,35
-	.byte 193,0,17,36,193,0,17,37,193,0,17,38,193,0,17,39,193,0,17,60,193,0,17,40,193,0,17,41,193,0,17,42
-	.byte 193,0,17,43,193,0,17,61,4,128,160,32,0,0,4,193,0,19,93,193,0,19,90,193,0,19,89,193,0,19,87,4
-	.byte 128,160,20,0,0,4,193,0,19,93,193,0,19,90,193,0,19,89,193,0,19,87,5,96,64,4,0,4,193,0,19,93
-	.byte 41,193,0,19,89,37,34,15,128,160,60,0,0,4,193,0,17,124,193,0,19,90,193,0,19,89,193,0,19,87,193,0
-	.byte 17,126,193,0,17,123,193,0,17,122,193,0,17,120,193,0,17,119,193,0,17,118,193,0,17,117,193,0,17,116,193,0
-	.byte 17,113,193,0,17,112,193,0,17,111,4,128,160,12,0,0,4,193,0,19,93,193,0,19,90,193,0,19,89,193,0,19
-	.byte 87,15,128,160,60,0,0,4,193,0,17,124,193,0,19,90,193,0,19,89,193,0,19,87,193,0,17,126,193,0,17,123
-	.byte 193,0,17,122,193,0,17,120,193,0,17,119,193,0,17,118,193,0,17,117,193,0,17,116,193,0,17,113,193,0,17,112
-	.byte 193,0,17,111,4,128,160,40,0,0,4,193,0,19,93,193,0,19,90,193,0,19,89,193,0,19,87,4,128,132,68,8
-	.byte 16,0,1,193,0,19,93,193,0,19,90,193,0,19,89,193,0,19,87,4,128,144,20,0,0,4,193,0,21,201,73,193
-	.byte 0,19,89,72,5,128,164,77,36,12,0,4,193,0,19,93,193,0,19,90,193,0,19,89,193,0,19,87,76,23,128,144
-	.byte 12,0,0,4,193,0,17,59,193,0,17,73,193,0,19,89,193,0,17,71,193,0,17,58,193,0,17,28,193,0,17,29
-	.byte 193,0,17,30,193,0,17,31,193,0,17,32,193,0,17,33,193,0,17,34,193,0,17,35,193,0,17,36,193,0,17,37
-	.byte 193,0,17,38,193,0,17,39,193,0,17,60,193,0,17,40,193,0,17,41,193,0,17,42,193,0,17,43,193,0,17,61
-	.byte 98,111,101,104,109,0
+	.byte 2,22,22,0,0,0,3,23,24,5,0,8,17,25,26,27,28,29,17,17,0,5,17,14,30,17,17,0,2,16,31,0
+	.byte 2,16,32,0,1,21,0,1,33,0,3,13,13,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+	.byte 0,2,34,35,0,0,0,0,1,17,2,36,37,1,17,1,36,0,0,0,0,0,2,38,38,0,0,1,19,0,1,19
+	.byte 0,1,19,5,13,13,13,13,13,1,19,1,39,0,1,40,0,0,0,0,0,0,0,0,255,252,0,0,0,1,0,0
+	.byte 32,2,1,28,18,1,14,255,252,0,0,0,2,0,32,4,18,2,130,124,1,28,18,1,14,18,2,130,68,1,28,255
+	.byte 252,0,0,0,3,0,32,1,1,18,2,130,124,1,255,252,0,0,0,25,8,1,18,255,252,0,0,0,25,7,1,18
+	.byte 12,0,39,42,47,14,2,130,22,1,11,2,130,22,1,14,3,219,0,0,1,4,2,130,99,1,1,1,5,16,7,129
+	.byte 53,136,229,14,3,219,0,0,2,4,2,130,99,1,1,1,7,16,7,129,73,136,229,14,2,122,1,4,2,130,99,1
+	.byte 1,2,130,168,1,16,7,129,91,136,229,14,1,16,13,1,12,20,14,1,3,11,1,12,14,1,11,14,3,219,0,0
+	.byte 3,6,9,6,10,14,1,15,14,1,13,23,1,7,11,1,10,6,8,14,1,10,14,2,130,43,1,6,48,50,48,30
+	.byte 2,130,43,1,6,7,6,12,6,11,14,1,14,16,2,130,121,1,137,67,17,0,129,214,16,1,17,39,16,1,17,40
+	.byte 11,1,18,16,1,19,43,33,7,20,109,111,110,111,95,111,98,106,101,99,116,95,110,101,119,95,102,97,115,116,0,3
+	.byte 193,0,13,34,3,20,3,44,3,193,0,13,15,7,32,109,111,110,111,95,97,114,99,104,95,116,104,114,111,119,95,99
+	.byte 111,114,108,105,98,95,101,120,99,101,112,116,105,111,110,0,3,193,0,17,212,3,65,3,55,7,31,109,111,110,111,95
+	.byte 99,108,97,115,115,95,115,116,97,116,105,99,95,102,105,101,108,100,95,97,100,100,114,101,115,115,0,3,36,3,24,3
+	.byte 255,254,0,0,0,0,202,0,0,10,7,23,109,111,110,111,95,111,98,106,101,99,116,95,110,101,119,95,112,116,114,102
+	.byte 114,101,101,0,3,54,3,255,254,0,0,0,0,202,0,0,13,3,255,254,0,0,0,0,202,0,0,15,3,25,7,17
+	.byte 109,111,110,111,95,104,101,108,112,101,114,95,108,100,115,116,114,0,7,25,109,111,110,111,95,97,114,99,104,95,116,104
+	.byte 114,111,119,95,101,120,99,101,112,116,105,111,110,0,7,26,109,111,110,111,95,104,101,108,112,101,114,95,108,100,115,116
+	.byte 114,95,109,115,99,111,114,108,105,98,0,3,46,7,27,109,111,110,111,95,97,114,99,104,95,114,101,116,104,114,111,119
+	.byte 95,101,120,99,101,112,116,105,111,110,0,3,53,3,51,3,49,3,52,3,50,7,36,109,111,110,111,95,116,104,114,101
+	.byte 97,100,95,103,101,116,95,117,110,100,101,110,105,97,98,108,101,95,101,120,99,101,112,116,105,111,110,0,3,13,3,193
+	.byte 0,13,103,3,69,3,193,0,20,187,3,193,0,20,188,3,193,0,20,190,3,193,0,20,189,15,2,130,121,1,3,193
+	.byte 0,16,43,3,193,0,16,100,3,193,0,17,218,3,193,0,20,105,3,193,0,20,194,15,1,17,3,193,0,20,227,3
+	.byte 193,0,20,220,3,45,7,35,109,111,110,111,95,116,104,114,101,97,100,95,105,110,116,101,114,114,117,112,116,105,111,110
+	.byte 95,99,104,101,99,107,112,111,105,110,116,0,7,26,109,111,110,111,95,100,101,108,101,103,97,116,101,95,98,101,103,105
+	.byte 110,95,105,110,118,111,107,101,0,7,24,109,111,110,111,95,100,101,108,101,103,97,116,101,95,101,110,100,95,105,110,118
+	.byte 111,107,101,0,2,0,0,2,0,0,2,19,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0,2,0,0,2
+	.byte 40,0,2,61,0,2,0,0,2,79,0,2,61,0,2,61,0,2,100,0,2,0,0,2,121,0,2,0,0,2,0,0
+	.byte 2,128,140,0,2,0,0,2,0,0,2,0,0,2,128,161,0,2,128,161,0,2,128,180,0,2,128,205,0,2,40,0
+	.byte 2,0,0,2,128,140,0,2,0,0,2,0,0,6,128,227,1,2,0,129,96,128,188,129,52,129,56,0,6,129,1,2
+	.byte 0,4,2,1,15,64,76,76,0,8,4,2,130,113,1,64,76,92,0,2,129,27,0,2,61,0,6,129,56,1,0,8
+	.byte 4,2,130,113,1,108,128,168,128,168,0,6,129,84,1,2,0,130,76,96,130,32,130,36,0,6,129,114,1,2,0,129
+	.byte 4,80,128,216,128,220,0,2,129,142,0,2,129,142,0,2,129,163,0,2,128,140,0,2,61,0,2,0,0,2,128,161
+	.byte 0,2,129,182,0,2,0,0,2,0,0,2,0,0,2,0,0,2,128,161,0,2,129,182,0,2,129,206,0,2,0,0
+	.byte 2,0,0,2,129,227,0,2,128,161,0,2,129,182,0,2,129,246,0,2,130,16,0,2,128,161,0,2,0,0,2,128
+	.byte 161,0,2,130,44,0,2,129,227,0,2,130,67,0,2,130,93,0,2,130,117,0,2,128,140,0,2,40,0,0,128,144
+	.byte 8,0,0,1,12,128,160,52,0,0,4,193,0,19,139,193,0,19,5,193,0,19,135,193,0,19,4,193,0,17,1,193
+	.byte 0,19,10,193,0,19,7,193,0,19,6,193,0,17,1,4,3,2,4,128,128,9,0,0,1,193,0,19,139,193,0,19
+	.byte 136,193,0,19,135,193,0,19,133,23,128,144,12,0,0,4,193,0,17,105,193,0,17,119,193,0,19,135,193,0,17,117
+	.byte 193,0,17,104,193,0,17,74,193,0,17,75,193,0,17,76,193,0,17,77,193,0,17,78,193,0,17,79,193,0,17,80
+	.byte 193,0,17,81,193,0,17,82,193,0,17,83,193,0,17,84,193,0,17,85,193,0,17,106,193,0,17,86,193,0,17,87
+	.byte 193,0,17,88,193,0,17,89,193,0,17,107,0,128,144,8,0,0,1,0,128,144,8,0,0,1,0,128,144,8,0,0
+	.byte 1,0,128,144,8,0,0,1,23,128,144,12,0,0,4,193,0,17,105,193,0,17,119,193,0,19,135,193,0,17,117,193
+	.byte 0,17,104,193,0,17,74,193,0,17,75,193,0,17,76,193,0,17,77,193,0,17,78,193,0,17,79,193,0,17,80,193
+	.byte 0,17,81,193,0,17,82,193,0,17,83,193,0,17,84,193,0,17,85,193,0,17,106,193,0,17,86,193,0,17,87,193
+	.byte 0,17,88,193,0,17,89,193,0,17,107,4,128,160,32,0,0,4,193,0,19,139,193,0,19,136,193,0,19,135,193,0
+	.byte 19,133,4,128,160,20,0,0,4,193,0,19,139,193,0,19,136,193,0,19,135,193,0,19,133,5,96,64,4,0,4,193
+	.byte 0,19,139,41,193,0,19,135,37,34,15,128,160,60,0,0,4,193,0,17,170,193,0,19,136,193,0,19,135,193,0,19
+	.byte 133,193,0,17,172,193,0,17,169,193,0,17,168,193,0,17,166,193,0,17,165,193,0,17,164,193,0,17,163,193,0,17
+	.byte 162,193,0,17,159,193,0,17,158,193,0,17,157,4,128,160,12,0,0,4,193,0,19,139,193,0,19,136,193,0,19,135
+	.byte 193,0,19,133,15,128,160,60,0,0,4,193,0,17,170,193,0,19,136,193,0,19,135,193,0,19,133,193,0,17,172,193
+	.byte 0,17,169,193,0,17,168,193,0,17,166,193,0,17,165,193,0,17,164,193,0,17,163,193,0,17,162,193,0,17,159,193
+	.byte 0,17,158,193,0,17,157,4,128,160,40,0,0,4,193,0,19,139,193,0,19,136,193,0,19,135,193,0,19,133,4,128
+	.byte 132,68,8,16,0,1,193,0,19,139,193,0,19,136,193,0,19,135,193,0,19,133,4,128,144,20,0,0,4,193,0,21
+	.byte 248,73,193,0,19,135,72,5,128,164,77,36,12,0,4,193,0,19,139,193,0,19,136,193,0,19,135,193,0,19,133,76
+	.byte 23,128,144,12,0,0,4,193,0,17,105,193,0,17,119,193,0,19,135,193,0,17,117,193,0,17,104,193,0,17,74,193
+	.byte 0,17,75,193,0,17,76,193,0,17,77,193,0,17,78,193,0,17,79,193,0,17,80,193,0,17,81,193,0,17,82,193
+	.byte 0,17,83,193,0,17,84,193,0,17,85,193,0,17,106,193,0,17,86,193,0,17,87,193,0,17,88,193,0,17,89,193
+	.byte 0,17,107,98,111,101,104,109,0
 .section __TEXT, __const
 	.align 3
 Lglobals_hash:
@@ -6727,6 +6311,466 @@ Lfde71_end:
 
 	.byte 0
 Ldebug_info_end:
+.section __DWARF, __debug_line,regular,debug
+Ldebug_line_section_start:
+Ldebug_line_start:
+
+	.long Ldebug_line_end - . -4
+	.short 2
+	.long Ldebug_line_header_end - . -4
+	.byte 1,1,251,14,13,0,1,1,1,1,0,0,0,1,0,0,1
+.section __DWARF, __debug_line,regular,debug
+	.asciz "/Developer/MonoTouch/Source/mono/mcs/class/System.Transactions/System.Transactions"
+
+	.byte 0
+	.asciz "<unknown>"
+
+	.byte 0,0,0
+	.asciz "Enlistment.cs"
+
+	.byte 1,0,0
+	.asciz "PreparingEnlistment.cs"
+
+	.byte 1,0,0
+	.asciz "SinglePhaseEnlistment.cs"
+
+	.byte 1,0,0
+	.asciz "Transaction.cs"
+
+	.byte 1,0,0
+	.asciz "TransactionAbortedException.cs"
+
+	.byte 1,0,0
+	.asciz "TransactionEventArgs.cs"
+
+	.byte 1,0,0
+	.asciz "TransactionException.cs"
+
+	.byte 1,0,0
+	.asciz "TransactionInformation.cs"
+
+	.byte 1,0,0
+	.asciz "TransactionManager.cs"
+
+	.byte 1,0,0
+	.asciz "TransactionOptions.cs"
+
+	.byte 1,0,0
+	.asciz "TransactionScope.cs"
+
+	.byte 1,0,0,0
+Ldebug_line_header_end:
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Enlistment__ctor
+
+	.byte 3,21,4,2,1,3,21,2,28,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Enlistment_Done
+
+	.byte 3,26,4,2,1,3,26,2,28,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_PreparingEnlistment__ctor_System_Transactions_Transaction_System_Transactions_IEnlistmentNotification
+
+	.byte 3,27,4,3,1,3,27,2,40,1,131,75,2,52,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_PreparingEnlistment_get_IsPrepared
+
+	.byte 3,60,4,3,1,3,60,2,24,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_PreparingEnlistment_get_WaitHandle
+
+	.byte 3,192,0,4,3,1,3,192,0,2,24,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_PreparingEnlistment_get_EnlistmentNotification
+
+	.byte 3,197,0,4,3,1,3,197,0,2,24,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_PreparingEnlistment_get_Exception
+
+	.byte 3,204,0,4,3,1,3,204,0,2,24,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_PreparingEnlistment_set_Exception_System_Exception
+
+	.byte 3,205,0,4,3,1,3,205,0,2,32,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_PreparingEnlistment_ForceRollback
+
+	.byte 3,34,4,3,1,3,34,2,24,1,2,20,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_PreparingEnlistment_ForceRollback_System_Exception
+
+	.byte 3,40,4,3,1,3,40,2,24,1,8,118,2,220,0,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_PreparingEnlistment_Prepared
+
+	.byte 3,48,4,3,1,3,48,2,20,1,76,2,220,0,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_SinglePhaseEnlistment__ctor
+
+	.byte 3,25,4,4,1,3,25,2,32,1,2,12,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_SinglePhaseEnlistment__ctor_System_Transactions_Transaction_object
+
+	.byte 3,29,4,4,1,3,29,2,40,1,131,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_get_Volatiles
+
+	.byte 3,56,4,5,1,3,56,2,16,1,187,3,1,2,48,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_get_Durables
+
+	.byte 3,192,0,4,5,1,3,192,0,2,16,1,187,3,1,2,48,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction__ctor
+
+	.byte 3,29,4,5,1,3,29,2,20,1,3,23,2,52,1,3,22,2,40,1,3,1,2,40,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_get_Current
+
+	.byte 3,228,0,4,5,1,3,228,0,2,16,1,129,8,229,2,12,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_get_CurrentInternal
+
+	.byte 3,237,0,4,5,1,3,237,0,2,16,1,2,40,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_set_CurrentInternal_System_Transactions_Transaction
+
+	.byte 3,238,0,4,5,1,3,238,0,2,20,1,2,44,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_get_TransactionInformation
+
+	.byte 3,250,0,4,5,1,3,250,0,2,20,1,131,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_set_Aborted_bool
+
+	.byte 3,172,2,4,5,1,3,172,2,2,28,1,75,187,2,28,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_get_Scope
+
+	.byte 3,179,2,4,5,1,3,179,2,2,24,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_set_Scope_System_Transactions_TransactionScope
+
+	.byte 3,180,2,4,5,1,3,180,2,2,32,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_Dispose
+
+	.byte 3,134,1,4,5,1,3,134,1,2,40,1,243,2,12,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_EnlistVolatile_System_Transactions_IEnlistmentNotification_System_Transactions_EnlistmentOptions
+
+	.byte 3,197,1,4,5,1,3,197,1,2,40,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_EnlistVolatileInternal_System_Transactions_IEnlistmentNotification_System_Transactions_EnlistmentOptions
+
+	.byte 3,213,1,4,5,1,3,213,1,2,28,1,132,8,63,2,40,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_Equals_object
+
+	.byte 3,223,1,4,5,1,3,223,1,2,24,1,2,220,0,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_Equals_System_Transactions_Transaction
+
+	.byte 3,229,1,4,5,1,3,229,1,2,32,1,131,8,61,131,131,2,60,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_op_Equality_System_Transactions_Transaction_System_Transactions_Transaction
+
+	.byte 3,239,1,4,5,1,3,239,1,2,36,1,8,117,75,2,32,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_op_Inequality_System_Transactions_Transaction_System_Transactions_Transaction
+
+	.byte 3,246,1,4,5,1,3,246,1,2,32,1,2,32,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_GetHashCode
+
+	.byte 3,251,1,4,5,1,3,251,1,2,20,1,2,216,0,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_Rollback
+
+	.byte 3,128,2,4,5,1,3,128,2,2,32,1,2,12,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_Rollback_System_Exception
+
+	.byte 3,133,2,4,5,1,3,133,2,2,24,1,187,2,20,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_Rollback_System_Exception_object
+
+	.byte 3,139,2,4,5,1,3,139,2,2,196,0,1,244,75,134,8,232,76,3,1,2,36,1,3,1,2,44,1,243,3,2
+	.byte 2,128,1,1,8,61,3,1,2,212,0,1,3,2,2,244,0,1,3,1,2,36,1,3,2,2,48,1,188,3,109,2
+	.byte 16,1,2,148,1,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_CommitInternal
+
+	.byte 3,201,2,4,5,1,3,201,2,2,32,1,8,175,77,132,188,244,76,3,115,2,220,0,1,2,44,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_DoCommit
+
+	.byte 3,222,2,4,5,1,3,222,2,2,24,1,132,243,133,187,8,61,8,119,3,1,2,236,1,1,132,187,131,190,131,244
+	.byte 131,3,2,2,212,0,1,187,8,62,131,132,2,228,0,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_Complete
+
+	.byte 3,131,3,4,5,1,3,131,3,2,20,1,131,76,187,244,2,20,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_PrepareCallbackWrapper_object
+
+	.byte 3,154,3,4,5,1,3,154,3,2,40,1,3,4,2,216,0,1,3,2,2,36,1,8,123,8,233,3,1,2,36,1
+	.byte 2,152,1,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_DoPreparePhase
+
+	.byte 3,180,3,4,5,1,3,180,3,2,200,0,1,3,2,2,48,1,3,1,2,44,1,3,3,2,220,0,1,3,3,2
+	.byte 204,0,1,3,2,2,40,1,187,3,3,2,52,1,244,75,187,189,134,187,3,6,2,216,0,1,2,20,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_DoCommitPhase
+
+	.byte 3,218,3,4,5,1,3,218,3,2,60,1,3,1,2,44,1,3,1,2,36,1,2,132,1,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_DoSingleCommit_System_Transactions_ISinglePhaseNotification
+
+	.byte 3,227,3,4,5,1,3,227,3,2,24,1,133,3,1,2,208,0,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_DoSingleCommit_System_Transactions_IPromotableSinglePhaseNotification
+
+	.byte 3,236,3,4,5,1,3,236,3,2,24,1,133,3,1,2,208,0,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_CheckAborted
+
+	.byte 3,245,3,4,5,1,3,245,3,2,24,1,187,2,224,0,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_FireCompleted
+
+	.byte 3,251,3,4,5,1,3,251,3,2,20,1,187,2,204,0,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_Transaction_EnsureIncompleteCurrentScope
+
+	.byte 3,132,4,4,5,1,3,132,4,2,12,1,3,125,2,36,1,3,2,2,60,1,3,1,2,196,0,1,2,56,1,0
+	.byte 1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionAbortedException__ctor
+
+	.byte 3,17,4,6,1,3,17,2,28,1,2,12,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionAbortedException__ctor_string_System_Exception
+
+	.byte 3,27,4,6,1,3,27,2,44,1,2,12,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionAbortedException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext
+
+	.byte 3,33,4,6,1,3,33,2,56,1,2,12,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionEventArgs__ctor
+
+	.byte 3,17,4,7,1,3,17,2,20,1,2,12,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionEventArgs__ctor_System_Transactions_Transaction
+
+	.byte 3,24,4,7,1,3,24,2,32,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionException__ctor
+
+	.byte 3,17,4,8,1,3,17,2,24,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionException__ctor_string
+
+	.byte 3,22,4,8,1,3,22,2,36,1,2,12,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionException__ctor_string_System_Exception
+
+	.byte 3,27,4,8,1,3,27,2,40,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionException__ctor_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext
+
+	.byte 3,33,4,8,1,3,33,2,56,1,2,12,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionInformation__ctor
+
+	.byte 3,16,4,9,1,3,16,2,196,0,1,3,6,2,220,0,1,131,3,1,2,40,1,2,48,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionInformation_get_Status
+
+	.byte 3,49,4,9,1,3,49,2,24,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionInformation_set_Status_System_Transactions_TransactionStatus
+
+	.byte 3,50,4,9,1,3,50,2,32,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionManager__cctor
+
+	.byte 3,33,4,10,1,3,33,2,32,1,3,1,2,212,0,1,2,208,0,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionManager_get_DefaultTimeout
+
+	.byte 3,48,4,10,1,3,48,2,20,1,2,196,0,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionOptions__ctor_System_Transactions_IsolationLevel_System_TimeSpan
+
+	.byte 3,21,4,11,1,3,21,2,44,1,8,117,2,12,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionOptions_op_Equality_System_Transactions_TransactionOptions_System_Transactions_TransactionOptions
+
+	.byte 3,38,4,11,1,3,38,2,52,1,2,240,0,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionOptions_Equals_object
+
+	.byte 3,51,4,11,1,3,51,2,28,1,3,1,2,200,0,1,3,1,2,36,1,2,144,1,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionOptions_GetHashCode
+
+	.byte 3,58,4,11,1,3,58,2,24,1,2,40,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionScope_get_IsComplete
+
+	.byte 3,142,1,4,12,1,3,142,1,2,24,1,2,16,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionScope_get_Timeout
+
+	.byte 3,147,1,4,12,1,3,147,1,2,196,0,1,2,12,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionScope_Dispose
+
+	.byte 3,194,1,4,12,1,3,194,1,2,20,1,3,86,2,8,1,245,76,187,244,3,5,2,40,1,8,61,8,117,3,1
+	.byte 2,56,1,3,3,2,52,1,3,3,2,200,0,1,3,1,2,44,1,244,3,2,2,40,1,8,120,8,62,131,243,77
+	.byte 190,3,95,2,28,1,243,2,44,1,0,1,1
+.section __DWARF, __debug_line,regular,debug
+
+	.byte 0,5,2
+	.long _System_Transactions_TransactionScope__cctor
+
+	.byte 3,19,4,12,1,3,19,2,20,1,2,128,1,1,0,1,1,0,1,1
+Ldebug_line_end:
 .text
 	.align 3
 mem_end:

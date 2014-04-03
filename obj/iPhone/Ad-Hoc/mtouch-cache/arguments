@@ -1,1 +1,35 @@
-/Users/benmessenger/Projects/ITPiPadSoln/ITPiPadSoln/bin/iPhone/Ad-Hoc/mtouch.exe|-sdkroot|/Applications/Xcode.app/Contents/Developer|--cache|/Users/benmessenger/Projects/ITPiPadSoln/ITPiPadSoln/obj/iPhone/Ad-Hoc/mtouch-cache|--nomanifest|--nosign|-dev|/Users/benmessenger/Projects/ITPiPadSoln/ITPiPadSoln/bin/iPhone/Ad-Hoc/SilcarESITP.app|-r|/Users/benmessenger/Projects/ITPiPadSoln/clsiOS/bin/iPhone/SESAdHocITP/clsiOS.dll|-r|/Users/benmessenger/Projects/ITPiPadSoln/clsTabletCommon/bin/iPhone/SESAdHocITP/clsTabletCommon.dll|-r|/Developer/MonoTouch/usr/lib/mono/2.1/System.dll|-r|/Developer/MonoTouch/usr/lib/mono/2.1/System.Xml.dll|-r|/Developer/MonoTouch/usr/lib/mono/2.1/System.Core.dll|-r|/Developer/MonoTouch/usr/lib/mono/2.1/monotouch.dll|-r|/Developer/MonoTouch/usr/lib/mono/2.1/Mono.Data.Sqlite.dll|-r|/Developer/MonoTouch/usr/lib/mono/2.1/System.Data.dll|-r|/Developer/MonoTouch/usr/lib/mono/2.1/System.Web.Services.dll|-sdk|6.1|-targetver|4.1|--abi=armv7|/Users/benmessenger/Projects/ITPiPadSoln/ITPiPadSoln/bin/iPhone/Ad-Hoc/ITPiPadSoln.exe
+# Version: 7.2.0.2 (58c3efa)
+# [first argument, ignore] # /Users/benmessenger/Projects/ITPiPadSoln/ITPiPadSoln/bin/iPhone/Ad-Hoc/mtouch.exe
+/Developer/MonoTouch/usr/bin/mtouch \
+	-sdkroot \
+	/Applications/Xcode.app/Contents/Developer \
+	--cache \
+	/Users/benmessenger/Projects/ITPiPadSoln/ITPiPadSoln/obj/iPhone/Ad-Hoc/mtouch-cache \
+	--nomanifest \
+	--nosign \
+	-dev \
+	/Users/benmessenger/Projects/ITPiPadSoln/ITPiPadSoln/bin/iPhone/Ad-Hoc/SilcarESITP.app \
+	-r \
+	/Users/benmessenger/Projects/ITPiPadSoln/clsiOS/bin/iPhone/SESAdHocITP/clsiOS.dll \
+	-r \
+	/Users/benmessenger/Projects/ITPiPadSoln/clsTabletCommon/bin/iPhone/SESAdHocITP/clsTabletCommon.dll \
+	-r \
+	/Developer/MonoTouch/usr/lib/mono/2.1/System.dll \
+	-r \
+	/Developer/MonoTouch/usr/lib/mono/2.1/System.Xml.dll \
+	-r \
+	/Developer/MonoTouch/usr/lib/mono/2.1/System.Core.dll \
+	-r \
+	/Developer/MonoTouch/usr/lib/mono/2.1/monotouch.dll \
+	-r \
+	/Developer/MonoTouch/usr/lib/mono/2.1/Mono.Data.Sqlite.dll \
+	-r \
+	/Developer/MonoTouch/usr/lib/mono/2.1/System.Data.dll \
+	-r \
+	/Developer/MonoTouch/usr/lib/mono/2.1/System.Web.Services.dll \
+	-sdk \
+	6.1 \
+	-targetver \
+	4.1 \
+	--abi=armv7 \
+	/Users/benmessenger/Projects/ITPiPadSoln/ITPiPadSoln/bin/iPhone/Ad-Hoc/ITPiPadSoln.exe \
