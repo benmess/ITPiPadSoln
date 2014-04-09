@@ -8,7 +8,7 @@ using MonoTouch.UIKit;
 using MonoTouch.CoreGraphics;
 
 using clsiOS;
-using nspTabletCommon;	
+using ITPAndroidApp;	
 using clsTabletCommon.ITPExternal;
 
 namespace ITPiPadSoln
@@ -34,6 +34,8 @@ namespace ITPiPadSoln
 		int m_iProjectsInList = 0;
 		Task taskA;
 
+        int giSecureFlag = 0;
+
 //		UIActivityIndicatorView prog = new UIActivityIndicatorView();
 		iUtils.ActivityIndicator prog = new iUtils.ActivityIndicator();
 		UIView progVw = new UIView();
@@ -54,6 +56,9 @@ namespace ITPiPadSoln
 		{
 			base.ViewDidLoad ();
 			
+            HomeScreen home = GetHomeScreen();
+            giSecureFlag =  home.GetGlobalSecureFlag();
+
 			// Perform any additional setup after loading the view, typically from a nib.
 			DrawMenu();
 			DrawOpeningPage();
@@ -75,7 +80,7 @@ namespace ITPiPadSoln
 			//Create a table view
 			iUtils.CreateFormGridItem lblUsername = new iUtils.CreateFormGridItem();
 			UIView lblUsernameVw = new UIView();
-			lblUsername.SetDimensions(100f,40f, 100f, 25f, 2f, 2f, 2f, 2f);
+			lblUsername.SetDimensions(100f,5f, 100f, 25f, 2f, 2f, 2f, 2f);
 			lblUsername.SetLabelText("Username:");
 			lblUsername.SetBorderWidth(0.0f);
 			lblUsername.SetFontName("Verdana");
@@ -87,7 +92,7 @@ namespace ITPiPadSoln
 			
 			iUtils.CreateFormGridItem txtUsername = new iUtils.CreateFormGridItem();
 			UIView txtUsernameVw = new UIView();
-			txtUsername.SetDimensions(200f,40f, 200f, 25f, 2f, 2f, 2f, 2f);
+			txtUsername.SetDimensions(200f,5f, 200f, 25f, 2f, 2f, 2f, 2f);
 			txtUsername.SetLabelText(sUsername);
 			txtUsername.SetBorderWidth(0.0f);
 			txtUsername.SetFontName("Verdana");
@@ -122,10 +127,10 @@ namespace ITPiPadSoln
 				int iOpenBtnId = -1;
                 float iTotalHeight = 0.0f;
 
-				float iVert = 100.0f;
+				float iVert = 5.0f;
 				float iRowHeight = 50f;
                 UIScrollView layout = new UIScrollView();
-                layout.Frame = new RectangleF(0f,0f,1000f,620f);
+                layout.Frame = new RectangleF(0f,35f,1000f,620f);
                 layout.Tag = 2;
                 View.AddSubview(layout);
 
@@ -408,6 +413,7 @@ namespace ITPiPadSoln
 				}
 								
                 //And reduce the content size of the main scroll view by the same amount
+                iTotalHeight += 200f;
                 SizeF layoutSize = new SizeF(1000f, iTotalHeight);
                 layout.ContentSize = layoutSize;
 
@@ -475,7 +481,16 @@ namespace ITPiPadSoln
 		{
 			UIButton btnClicked = (UIButton)sender;
 			int iClicked = btnClicked.Tag;
-			UILabel projId = (UILabel)View.ViewWithTag (iClicked/iUploadBtnTagId*iProjectIdTagId);
+			int iBtnClickedTagId = -1;
+			if (iMarkUploadType == 1)
+			{
+				iBtnClickedTagId = iUploadBtnTagId;
+			}
+			else
+			{
+				iBtnClickedTagId = iBackupBtnTagId;
+			}
+			UILabel projId = (UILabel)View.ViewWithTag (iClicked/iBtnClickedTagId*iProjectIdTagId);
 			string sId = projId.Text;
             int iOpenBtnId = -1;
             if(iMarkUploadType == 1)
@@ -499,13 +514,37 @@ namespace ITPiPadSoln
 			}
             else
             {
-                //Has the project been made available online again and if so you cannot upload
                 clsITPFramework ITPFwrk = new clsITPFramework();
-                object[] objUploadable = ITPFwrk.IsITPUploadable(m_sSessionId, m_sUser, sId);
-                if (objUploadable[0].ToString() != "Success")
+
+                //Check to see if the user is still logged in
+                object[] objLoggedIn = ITPFwrk.IsUserLoggedIn(m_sSessionId, m_sUser);
+
+                if (Convert.ToBoolean(objLoggedIn[0]))
                 {
-                    iUtils.AlertBox alert4 = new iUtils.AlertBox();
-                    alert4.CreateErrorAlertDialog(objUploadable[1].ToString());
+
+                    //Has the project been made available online again and if so you cannot upload
+                    object[] objUploadable = ITPFwrk.IsITPUploadable(m_sSessionId, m_sUser, sId, giSecureFlag);
+                    if (objUploadable [0].ToString() != "Success")
+                    {
+                        iUtils.AlertBox alert4 = new iUtils.AlertBox();
+                        alert4.CreateErrorAlertDialog(objUploadable [1].ToString());
+                        return;
+                    }
+                }
+                else
+                {
+                    iUtils.AlertBox alert5 = new iUtils.AlertBox();
+                    alert5.CreateErrorAlertDialog("You are no longer logged in to the SCMS. You must login again before you can upload or backup a project.");
+                    HomeScreen home = GetHomeScreen();
+                    home.SetLoginName("Not logged in to SCMS");
+                    m_sUser = "Not logged in to SCMS";
+                    home.SetSessionId("");
+                    m_sSessionId = "";
+                    UILabel Username = (UILabel)View.ViewWithTag (20);
+                    Username.Text = "Not logged in to SCMS";
+                    UILabel Session = (UILabel)View.ViewWithTag (70);
+                    Session.Text = "";
+                    home.SetLoggedInStatus("0");
                     return;
                 }
             }
@@ -550,7 +589,7 @@ namespace ITPiPadSoln
 			string sSessionId = m_sSessionId;
 			clsITPFramework ITPFwrk = new clsITPFramework();
 			string sRtnMsg = "";
-            bool bUpload = ITPFwrk.UploadITPInfo(sSessionId, sUser, sId, iUploadOrBackup, ref sRtnMsg);
+            bool bUpload = ITPFwrk.UploadITPInfo(sSessionId, sUser, sId, iUploadOrBackup, giSecureFlag, ref sRtnMsg);
 			if (bUpload && sRtnMsg == "")
 			{
 				//Now also disable the open button for this project

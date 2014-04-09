@@ -6,7 +6,7 @@ using System.Net;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-using nspTabletCommon;	
+using ITPAndroidApp;	
 using clsTabletCommon.ITPExternal;
 using clsiOS;
 
@@ -14,6 +14,8 @@ namespace ITPiPadSoln
 {
 	public partial class LoginScreen : UIViewController
 	{
+        int giSecureFlag = 0;
+
 		public LoginScreen () : base ("LoginScreen", null)
 		{
 		}
@@ -54,6 +56,10 @@ namespace ITPiPadSoln
 
 		public void BuildLoginScreen()
 		{
+            HomeScreen home = GetHomeScreen();
+
+            giSecureFlag =  home.GetGlobalSecureFlag();
+
 			//create a login text box and password text box and button
 			UIView[] arrItems = new UIView[6];
 
@@ -111,34 +117,37 @@ namespace ITPiPadSoln
 			var txtPass = (UITextField)View.ViewWithTag (2000);
 			string sPass = txtPass.Text;
 
-            try{
-			clsLocalUtils util = new clsLocalUtils ();
-			string sURL = util.GetEnvironment_wbsURL ("wbsITP_Exernal");
-			wbsITP_External ws = new wbsITP_External ();
-			ws.Url = sURL;
-			ws.CookieContainer = new CookieContainer ();
-//                object[] sTest = ws.GetITPBatteryFuseTypeInfo("","gmorris");
-			string sSessionId = ws.CookieLogin (sName, sPass);
+            try
+            {
+    			clsLocalUtils util = new clsLocalUtils ();
+                util.SetSecureFlag(giSecureFlag);
+                string sURL = util.GetEnvironment_wbsURL ("wbsITP_External");
+    			wbsITP_External ws = new wbsITP_External ();
+    			ws.Url = sURL;
+    			ws.CookieContainer = new CookieContainer ();
+    //                object[] sTest = ws.GetITPBatteryFuseTypeInfo("","gmorris");
+    			string sSessionId = ws.CookieLogin (sName, sPass);
 
-			HomeScreen homeScreen = (HomeScreen)NavigationController.ViewControllers [0];
-			if (sSessionId != "") {
-				var hfLoggedIn = (UILabel)View.ViewWithTag (3000);
-				hfLoggedIn.Text = "1";
-				homeScreen.SetLoginName (sName);
-				homeScreen.SetSessionId (sSessionId);
-				homeScreen.SetLoggedInStatus("1");
-				NavigationController.PopToViewController (homeScreen, true);
-				//this.Dispose();
+    			HomeScreen homeScreen = (HomeScreen)NavigationController.ViewControllers [0];
+    			if (sSessionId != "") 
+                {
+    				var hfLoggedIn = (UILabel)View.ViewWithTag (3000);
+    				hfLoggedIn.Text = "1";
+    				homeScreen.SetLoginName (sName);
+    				homeScreen.SetSessionId (sSessionId);
+    				homeScreen.SetLoggedInStatus("1");
+    				NavigationController.PopToViewController (homeScreen, true);
+    				//this.Dispose();
 
-			} 
-			else 
-			{
-				iUtils.AlertBox alert = new iUtils.AlertBox();
-				alert.CreateErrorAlertDialog("Incorrect username and/or password");
-                homeScreen.SetLoginName ("Not logged in to SCMS");
-				homeScreen.SetSessionId ("");
-				homeScreen.SetLoggedInStatus("0");
-			}
+    			} 
+    			else 
+    			{
+    				iUtils.AlertBox alert = new iUtils.AlertBox();
+    				alert.CreateErrorAlertDialog("Incorrect username and/or password");
+                    homeScreen.SetLoginName ("Not logged in to SCMS");
+    				homeScreen.SetSessionId ("");
+    				homeScreen.SetLoggedInStatus("0");
+    			}
             }
             catch(Exception ex)
             {
@@ -153,6 +162,23 @@ namespace ITPiPadSoln
 		{
 
 		}
+        public HomeScreen GetHomeScreen ()
+        {
+            int i;
+            for (i=0; i<NavigationController.ViewControllers.Length; i++) 
+            {
+                if(NavigationController.ViewControllers [i].NibName == "HomeScreen")
+                {
+                    HomeScreen homeScreen = (HomeScreen)NavigationController.ViewControllers [i];
+                    return homeScreen;
+
+                }
+            }
+
+            //Just in case nothing is discovered in the loop the home screen becomes the 1st screen on the stack
+            HomeScreen homeScreenDefault = (HomeScreen)NavigationController.ViewControllers [0];
+            return homeScreenDefault;
+        }
 	}
 }
 

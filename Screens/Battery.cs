@@ -3,12 +3,13 @@ using System;
 using System.Drawing;
 using System.Data;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using clsiOS;
-using nspTabletCommon;  
+using ITPAndroidApp;  
 using clsTabletCommon.ITPExternal;
 using System.Collections.Generic;
 
@@ -16,6 +17,10 @@ namespace ITPiPadSoln
 {
     public partial class Battery : UIViewController
     {
+        iUtils.ActivityIndicator prog = new iUtils.ActivityIndicator();
+        UIView progVw = new UIView();
+        Task taskA;
+
         //Set the tag id constants.
         int iSearchTextTagId = 90;
         int iSearchButtonTagId = 91;
@@ -117,6 +122,9 @@ namespace ITPiPadSoln
         bool m_bSuppressMove = false;
         bool gbSuppressSecondCheck = false;
         UIView m_vwSearch;
+        int m_BankNo = -1;
+        string m_PwrId = "";
+        string m_SPN = "";
         
         UITableView m_cmbSearch;
         UIButton m_btnSearching;
@@ -161,6 +169,8 @@ namespace ITPiPadSoln
             try
             {
                 DrawOpeningPage();
+                progVw = prog.CreateActivityIndicator();
+                View.Add(progVw);
             }
             catch (Exception ex)
             {
@@ -2187,6 +2197,7 @@ namespace ITPiPadSoln
         public void OpenMakeList (object sender, EventArgs e)
         {
             UIButton btnMakeSearch = (UIButton)sender;
+            btnMakeSearch.Enabled = false;
             ScreenUtils scnUtils = new ScreenUtils ();
             scnUtils.GetAbsolutePosition (btnMakeSearch);
             float iTop = scnUtils.GetPositionTop ();
@@ -2234,7 +2245,7 @@ namespace ITPiPadSoln
             UIButton btnSectionSave = (UIButton)View.ViewWithTag ((iSectionCounterId + 1) * iSaveSectionBtnTagId);
             tabdata.SetSectionSaveButton(btnSectionSave);
             UILabel lblViewModel = (UILabel)View.ViewWithTag (iBankModelTagId * (iPwrIdRow) + (iStringRow));
-            tabdata.SetMakePostUpdate(1, lblViewModel);
+            tabdata.SetMakePostUpdate(1, lblViewModel, btnMakeSearch);
             
             cmbMake.Source = tabdata;
             iUtils.SESTable thistable = new iUtils.SESTable();
@@ -2249,6 +2260,7 @@ namespace ITPiPadSoln
         public void OpenModelList (object sender, EventArgs e)
         {
             UIButton btnModelSearch = (UIButton)sender;
+            btnModelSearch.Enabled = false;
             ScreenUtils scnUtils = new ScreenUtils ();
             scnUtils.GetAbsolutePosition (btnModelSearch);
             float iTop = scnUtils.GetPositionTop ();
@@ -2261,7 +2273,9 @@ namespace ITPiPadSoln
             int iSectionCounterId = Convert.ToInt32 (hfSectionCounter.Text);
             UILabel lblSupplier = (UILabel)View.ViewWithTag (iBankMakeTagId * (iPwrIdRow) + (iStringRow));
             string sSupplier = lblSupplier.Text;
-            
+            UIButton btnMakeSearch = (UIButton)View.ViewWithTag (iBankMakeSearchTagId * (iPwrIdRow) + (iStringRow));
+            btnMakeSearch.Enabled = false;
+
             if (sSupplier == "") 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
@@ -2302,7 +2316,7 @@ namespace ITPiPadSoln
             tabdata.SetShowUnsavedOnChange(true);
             UILabel hfRowStatus = (UILabel)View.ViewWithTag (iStringRowStatusTagId * (iPwrIdRow) + (iStringRow));
             UILabel lblSPN = (UILabel)View.ViewWithTag (iSPNHiddenTagId * (iPwrIdRow) + (iStringRow));
-            tabdata.SetModelPostUpdate(6, hfRowStatus, lblSPN, sSupplier);
+            tabdata.SetModelPostUpdate(6, hfRowStatus, lblSPN, sSupplier, btnMakeSearch, btnModelSearch);
             
             //Also set the section flag to 1 that it has changed and the overall flag that it has changed
             UILabel lblUnsavedFlag = (UILabel)View.ViewWithTag (80);
@@ -2317,6 +2331,7 @@ namespace ITPiPadSoln
             string sSelectedValue = lblVwUpdate.Text;
             thistable.SetTableSelectedText(cmbModel, sSelectedValue, m_sBatteryModels, true);
             
+
             //Get the main scroll view
             UIScrollView scrollVw = (UIScrollView)View.ViewWithTag (2);
             scrollVw.AddSubview(cmbModel);
@@ -3445,9 +3460,77 @@ namespace ITPiPadSoln
         //Open a new page with the 20 minute test details
         public void Open20MinTest(object sender, EventArgs e)
         {
-            return;
+
+            //First of all check there are no unsaved changes
+            UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
+            string sOverallStatus = txtEditStatus.Text;
+
+            if (sOverallStatus == "1")
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox();
+                alert.CreateAlertDialog();
+                alert.SetAlertMessage("You cannot open the battery test screen whilst there are unsaved changes. Please save first.");
+                alert.ShowAlertBox(); 
+                return;
+            }
+
+            //Show the progress indicator and position at top left of button
+            UIButton btnOpen = (UIButton)sender;
+            int iTagId = btnOpen.Tag;
+            int iPwrIdRow = iTagId / i20MinTestBtnTagId;
+            int iStringRow = iTagId - (iPwrIdRow * i20MinTestBtnTagId);
+
+            UILabel PwrId = (UILabel)View.ViewWithTag ((iPwrIdRowLabelTagId + (iPwrIdRow)) * (m_iBatterySectionCounter+1));
+            string sPwrId = PwrId.Text;
+            m_PwrId = sPwrId;
+
+            //First check that the make and model are specified
+            UILabel lblMake = (UILabel)View.ViewWithTag(iBankMakeTagId * (iPwrIdRow) + (iStringRow));
+            string sMake = lblMake.Text;
+            UILabel lblModel = (UILabel)View.ViewWithTag(iBankModelTagId * (iPwrIdRow) + (iStringRow));
+            string sModel = lblModel.Text;
+
+            if (sMake == "" || sModel == "")
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox();
+                alert.CreateErrorAlertDialog("You must have both make and model specified before you can perform the 20 minute test");
+                return;
+            }
+
+            UITextField BankNo = (UITextField)View.ViewWithTag (iBankNoTagId * (iPwrIdRow) + (iStringRow));
+            int iBankNo = Convert.ToInt32(BankNo.Text);
+            m_BankNo = iBankNo;
+            UILabel SPN = (UILabel)View.ViewWithTag (iSPNHiddenTagId * (iPwrIdRow) + (iStringRow));
+            string sSPN = SPN.Text;
+            m_SPN = sSPN;
+
+            prog.SetActivityIndicatorTitle("20 Min Test");
+            ScreenUtils scnUtils = new ScreenUtils();
+            scnUtils.GetAbsolutePosition(btnOpen);
+            UIScrollView scrollVw = (UIScrollView)View.ViewWithTag (2);
+            PointF layoutOffset = scrollVw.ContentOffset;
+            float iVertOffset = layoutOffset.Y;
+            float iTop = scnUtils.GetPositionTop() - iVertOffset;
+            float iLeft = scnUtils.GetPositionLeft();
+            prog.SetActivityIndicatorPosition(iLeft,iTop);
+            prog.ShowActivityIndicator();
+            prog.StartAnimating();
+
+            taskA = new Task (() => Open20MinTestTask (sender, e));
+            taskA.Start ();
         }
         
+        public void Open20MinTestTask(object sender, EventArgs e)
+        {
+            this.InvokeOnMainThread(() => 
+                                    {
+                Battery20MinTest projBattery20MinScreen = new Battery20MinTest();
+                this.NavigationController.PushViewController(projBattery20MinScreen, true);
+                prog.StopAnimating();
+                prog.CloseActivityIndicator();
+            });
+        }
+
         public void DeleteBatteryString(object sender, EventArgs e)
         {
             string sRtnMsg = "";
@@ -4499,6 +4582,21 @@ namespace ITPiPadSoln
             return null;
         }
         
+        public string GetSelectedPwrId()
+        {
+            return m_PwrId;
+        }
+
+        public string GetSelectedSPN()
+        {
+            return m_SPN;
+        }
+
+        public int GetSelectedBankNo()
+        {
+            return m_BankNo;
+        }
+
         public bool GetConnectionStatus ()
         {
             

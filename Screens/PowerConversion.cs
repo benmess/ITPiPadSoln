@@ -7,7 +7,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using clsiOS;
-using nspTabletCommon;  
+using ITPAndroidApp;  
 using clsTabletCommon.ITPExternal;
 using System.Collections.Generic;
 
@@ -300,6 +300,7 @@ namespace ITPiPadSoln
                 bool bHideSectionComplete = true;
                 bool bFullyCommitted = false;
                 bool bRFUPwrIdCommitted = false;
+                bool bPwrIdExists;
                 UIView[] arrItems4 = new UIView[8];
                 UIView[] arrItems5 = new UIView[8];
 
@@ -531,6 +532,14 @@ namespace ITPiPadSoln
                         arrItems5[1] = rowPwrIdLabelVw;
                         
                         bRFUPwrIdCommitted = RFUPwrIdCommitted(sPwrId);
+                        if(PowerConversionPwrIdExists(sPwrId))
+                        {
+                            bPwrIdExists = true;
+                        }
+                        else
+                        {
+                            bPwrIdExists = false;
+                        }
 
                         iUtils.CreateFormGridItem btnNewEquipment = new iUtils.CreateFormGridItem();
                         UIView btnNewEquipmentVw = new UIView();
@@ -554,7 +563,7 @@ namespace ITPiPadSoln
                         btnNewEquipmentButton = btnNewEquipment.GetButton();
                         btnNewEquipmentButton.TouchUpInside += (sender,e) => {AddNewEquipment(sender, e);};
                         
-                        if(bRFUPwrIdCommitted)
+                        if(bRFUPwrIdCommitted && bPwrIdExists)
                         {
                             btnNewEquipmentButton.Enabled = false;
                         }
@@ -574,8 +583,16 @@ namespace ITPiPadSoln
                         PwrIdCompleteLabel.SetDimensions(400f,0f, 150f, iSectionHdrRowHeight, 4f, 7.5f, 4f, 7.5f);
                         if(bRFUPwrIdCommitted)
                         {
-                            PwrIdCompleteLabel.SetLabelText("COMMITTED");
-                            bHideSectionComplete = false;
+                            if(PowerConversionPwrIdExists(sPwrId))
+                            {
+                                PwrIdCompleteLabel.SetLabelText("COMMITTED");
+                                bHideSectionComplete = false;
+                            }
+                            else
+                            {
+                                PwrIdCompleteLabel.SetLabelText("NO EQUIPMENT");
+                                bHideSectionComplete = false;
+                            }
                         }
                         else
                         {
@@ -2245,6 +2262,7 @@ namespace ITPiPadSoln
         public void OpenMakeList (object sender, EventArgs e)
         {
             UIButton btnMakeSearch = (UIButton)sender;
+            btnMakeSearch.Enabled = false;
             ScreenUtils scnUtils = new ScreenUtils ();
             scnUtils.GetAbsolutePosition (btnMakeSearch);
             float iTop = scnUtils.GetPositionTop ();
@@ -2323,7 +2341,7 @@ namespace ITPiPadSoln
             UILabel lblUnsavedSectionFlag = (UILabel)View.ViewWithTag ((iSectionCounterId + 1) * iSectionStatusTagId);
             tabdata.SetUnsavedChangesSectionHiddenLabel(lblUnsavedSectionFlag);
             UILabel lblViewModel = (UILabel)View.ViewWithTag (iEquipmentModelTagId * (iPwrIdRow) + (iStringRow));
-            tabdata.SetMakePostUpdate(1, lblViewModel);
+            tabdata.SetMakePostUpdate(1, lblViewModel, btnMakeSearch);
             
             cmbMake.Source = tabdata;
             iUtils.SESTable thistable = new iUtils.SESTable();
@@ -2355,6 +2373,7 @@ namespace ITPiPadSoln
         public void OpenModelList (object sender, EventArgs e)
         {
             UIButton btnModelSearch = (UIButton)sender;
+            btnModelSearch.Enabled = false;
             ScreenUtils scnUtils = new ScreenUtils ();
             scnUtils.GetAbsolutePosition (btnModelSearch);
             float iTop = scnUtils.GetPositionTop ();
@@ -2367,7 +2386,9 @@ namespace ITPiPadSoln
             int iSectionCounterId = Convert.ToInt32 (hfSectionCounter.Text);
             UILabel lblSupplier = (UILabel)View.ViewWithTag (iEquipmentMakeTagId * (iPwrIdRow) + (iStringRow));
             string sSupplier = lblSupplier.Text;
-            
+            UIButton btnMakeSearch = (UIButton)View.ViewWithTag (iEquipmentMakeSearchTagId * (iPwrIdRow) + (iStringRow));
+            btnMakeSearch.Enabled = false;
+
             if (sSupplier == "") 
             {
                 iUtils.AlertBox alert = new iUtils.AlertBox ();
@@ -2450,7 +2471,7 @@ namespace ITPiPadSoln
             tabdata.SetShowUnsavedOnChange(true);
             UILabel hfRowStatus = (UILabel)View.ViewWithTag (iEquipmentRowStatusTagId * (iPwrIdRow) + (iStringRow));
             UILabel lblSPN = (UILabel)View.ViewWithTag (iEquipmentSPNHiddenTagId * (iPwrIdRow) + (iStringRow));
-            tabdata.SetModelPostUpdate(6, hfRowStatus, lblSPN, sSupplier); //Here the 6 refers to the post update index and NOT batteries as the equipment type
+            tabdata.SetModelPostUpdate(6, hfRowStatus, lblSPN, sSupplier, btnMakeSearch, btnModelSearch); //Here the 6 refers to the post update index and NOT batteries as the equipment type
             
             //Also set the section flag to 1 that it has changed and the overall flag that it has changed
             UILabel lblUnsavedFlag = (UILabel)View.ViewWithTag (80);
@@ -4273,8 +4294,6 @@ namespace ITPiPadSoln
             btnContract.Enabled = false;
             UIButton btnExpand = (UIButton)View.ViewWithTag (iBtnId / iContractSectionBtnTagId * iExpandSectionBtnTagId);
             btnExpand.Enabled = true;
-            
-            
         }
         
         public bool PowerConversionFullyComplete()
@@ -4287,6 +4306,12 @@ namespace ITPiPadSoln
         {
             clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
             return DBQ.ProjectSection10PwrIdPowerConversionComplete(m_sPassedId, sPwrId);
+        }
+
+        public bool PowerConversionPwrIdExists(string sPwrId)
+        {
+            clsTabletDB.ITPDocumentSection DBQ = new clsTabletDB.ITPDocumentSection();
+            return DBQ.ProjectSection10PwrIdPowerConversionExists(m_sPassedId, sPwrId);
         }
 
         public bool PowerConversionFullyCommitted()

@@ -23,7 +23,8 @@
     <MtouchDebug>True</MtouchDebug>
     <MtouchLink>None</MtouchLink>
     <AssemblyName>ITPiPadSoln</AssemblyName>
-    <MtouchI18n />
+    <MtouchI18n>
+    </MtouchI18n>
     <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
@@ -45,14 +46,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchDebug>True</MtouchDebug>
-    <IpaPackageName />
-    <MtouchLink>Full</MtouchLink>
-    <MtouchI18n />
+    <CodesignKey>iPhone Developer: Ben Messenger (24EM7D3Z58)</CodesignKey>
+    <IpaPackageName>
+    </IpaPackageName>
+    <MtouchI18n>
+    </MtouchI18n>
     <MtouchArch>ARMv7</MtouchArch>
     <MtouchUseSGen>true</MtouchUseSGen>
     <AssemblyName>ITPiPadSoln</AssemblyName>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignProvision>6F1A3D22-08EB-421A-803B-8487A678ECBA</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -74,10 +77,13 @@
     <BuildIpa>True</BuildIpa>
     <CodesignKey>iPhone Distribution</CodesignKey>
     <AssemblyName>ITPiPadSoln</AssemblyName>
-    <IpaPackageName />
-    <MtouchI18n />
+    <IpaPackageName>
+    </IpaPackageName>
+    <MtouchI18n>
+    </MtouchI18n>
     <MtouchArch>ARMv7</MtouchArch>
-    <CodesignProvision>9AF5ED2B-6EBA-4B23-B7A0-7DA1F041236C</CodesignProvision>
+    <CodesignProvision>6FC1774F-87E2-43DC-9146-38178F7ECBF9</CodesignProvision>
+    <MtouchLink>Full</MtouchLink>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>none</DebugType>
@@ -95,9 +101,10 @@
     <WarningLevel>4</WarningLevel>
     <AssemblyName>SilcarESITP</AssemblyName>
     <CodesignKey>iPhone Distribution</CodesignKey>
-    <CodesignProvision>E40CDACF-580A-44A3-A038-071580B0FB90</CodesignProvision>
+    <CodesignProvision>Automatic:AdHoc</CodesignProvision>
     <MtouchLink>Full</MtouchLink>
-    <MtouchI18n />
+    <MtouchI18n>
+    </MtouchI18n>
     <MtouchArch>ARMv7</MtouchArch>
     <BuildIpa>true</BuildIpa>
     <IpaPackageName>SESITPApp</IpaPackageName>
@@ -110,10 +117,12 @@
     <AssemblyName>SilcarESITP</AssemblyName>
     <CodesignKey>iPhone Distribution: B Messenger</CodesignKey>
     <CodesignProvision>E40CDACF-580A-44A3-A038-071580B0FB90</CodesignProvision>
-    <MtouchI18n />
+    <MtouchI18n>
+    </MtouchI18n>
     <MtouchArch>ARMv7</MtouchArch>
     <BuildIpa>true</BuildIpa>
-    <IpaPackageName />
+    <IpaPackageName>
+    </IpaPackageName>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -126,8 +135,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
-    <None Include="Web References\ITPExternal\wbsITP_External.wsdl" />
-    <None Include="Web References\ITPExternal\wbsITP_External.disco" />
+    <None Include="Web References\ITPExternal\TempConvert.wsdl" />
+    <None Include="Web References\ITPExternal\TempConvert.disco" />
     <None Include="Web References\ITPExternal\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -156,9 +165,6 @@
     <Compile Include="Screens\ProjectITPage.designer.cs">
       <DependentUpon>ProjectITPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Web References\ITPExternal\Reference.cs">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
     <Compile Include="Screens\Battery.cs" />
     <Compile Include="Screens\Battery.designer.cs">
       <DependentUpon>Battery.cs</DependentUpon>
@@ -166,6 +172,13 @@
     <Compile Include="Screens\PowerConversion.cs" />
     <Compile Include="Screens\PowerConversion.designer.cs">
       <DependentUpon>PowerConversion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Battery20MinTest.cs" />
+    <Compile Include="Screens\Battery20MinTest.designer.cs">
+      <DependentUpon>Battery20MinTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\ITPExternal\Reference.cs">
+      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -181,6 +194,7 @@
     <InterfaceDefinition Include="Screens\ProjectITPage.xib" />
     <InterfaceDefinition Include="Screens\Battery.xib" />
     <InterfaceDefinition Include="Screens\PowerConversion.xib" />
+    <InterfaceDefinition Include="Screens\Battery20MinTest.xib" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\Green_Block.JPG" />
@@ -193,21 +207,11 @@
       <Properties>
         <Policies>
           <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
-          <CSharpFormattingPolicy IndentSwitchBody="True" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" AllowPropertyGetBlockInline="False" AllowPropertySetBlockInline="False" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" AllowEventAddBlockInline="False" AllowEventRemoveBlockInline="False" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" ElseIfNewLinePlacement="SameLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="NewLine" ArrayInitializerBraceStyle="NextLine" BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" BeforeDelegateDeclarationParentheses="False" NewParentheses="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
+          <CSharpFormattingPolicy IndentSwitchBody="True" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" AllowEventAddBlockInline="False" AllowEventRemoveBlockInline="False" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="NewLine" ArrayInitializerBraceStyle="NextLine" BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" BeforeDelegateDeclarationParentheses="False" NewParentheses="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
         </Policies>
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup>
-    <WebReferences Include="Web References" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://silcar-ws11.silcar.com.au:8003/wbsITP_External.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\ITPExternal</RelPath>
-      <UpdateFromURL>http://silcar-ws11.silcar.com.au:8003/wbsITP_External.asmx</UpdateFromURL>
-    </WebReferenceUrl>
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\clsiOS\clsiOS.csproj">
       <Project>{B51B0263-83AC-4DD2-B744-A14D484B149D}</Project>
@@ -217,5 +221,21 @@
       <Project>{D9D9EE65-BB75-481F-9010-34C571C0C411}</Project>
       <Name>clsTabletCommon</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://www.w3schools.com/WebServices/TempConvert.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ITPExternal</RelPath>
+      <UpdateFromURL>http://www.w3schools.com/WebServices/TempConvert.asmx</UpdateFromURL>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\ITP App Artwork 72 x 72 THIESS.png" />
+    <BundleResource Include="Images\ITP App Artwork 144 x 144 THIESS.png" />
+    <BundleResource Include="Images\ITP57x57.png" />
+    <BundleResource Include="Images\ITP512x512.png" />
   </ItemGroup>
 </Project>

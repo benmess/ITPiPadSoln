@@ -1,1 +1,0 @@
---debug --aot=mtriple=armv7-darwin,full,static,asmonly,direct-icalls,no-direct-calls,iphone-abi,outfile=/Mono.Data.Sqlite.dll.armv7.s "/Users/benmessenger/Projects/ITPiPadSoln/ITPiPadSoln/bin/iPhone/Debug/SilcarESITP.app/Mono.Data.Sqlite.dll"

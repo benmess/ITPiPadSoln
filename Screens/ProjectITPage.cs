@@ -9,7 +9,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using clsiOS;
-using nspTabletCommon;	
+using ITPAndroidApp;	
 using clsTabletCommon.ITPExternal;
 using System.Collections.Generic;
 
@@ -71,6 +71,8 @@ namespace ITPiPadSoln
         int iPwrIdHeightTagId  = 10021400;
         int ihfCutoverLoadRowLabelTagId = 10022300;
         int ihfCutoverDateRowLabelTagId = 10022400;
+        int iRFUCommentsTagId = 10022500;
+        int iRFULabelCommentsTagId = 10022600;
 
 
         string m_sSessionId = "";
@@ -269,6 +271,7 @@ namespace ITPiPadSoln
                 UIView[] arrItems4 = new UIView[6];
                 UIView[] arrItems6 = new UIView[11];
                 UIView[] arrItems7 = new UIView[7];
+                UIView[] arrItems8 = new UIView[2];
                 UIView[] arrItems14 = new UIView[8];
 
 				UIScrollView layout = new UIScrollView();
@@ -996,7 +999,7 @@ namespace ITPiPadSoln
                     
                     UILabel hfSectionRFU = new UILabel();
                     hfSectionRFU.Text = "RFU";
-                    hfSectionRFU.Tag = iSectionDBIdTagId * (ii+1);
+                    hfSectionRFU.Tag = iSectionDBIdTagId * (m_iRFUSectionCounter+1);
                     hfSectionRFU.Hidden = true;
                     SectionRFURow.AddSubview(hfSectionRFU);
                     
@@ -1009,7 +1012,7 @@ namespace ITPiPadSoln
                     SectionRFU.SetTextColour("White");
                     SectionRFU.SetFontSize(12f);
                     SectionRFU.SetCellColour("DarkSlateGrey");
-                    SectionRFU.SetTag(iSectionDescTagId * (ii+1));
+                    SectionRFU.SetTag(iSectionDescTagId * (m_iRFUSectionCounter+1));
                     SectionRFUVw = SectionRFU.GetLabelCell();
                     arrItems14[0] = SectionRFUVw;
                     
@@ -1032,7 +1035,7 @@ namespace ITPiPadSoln
                     SectionCompleteLabel.SetTextColour("Bright Yellow");
                     SectionCompleteLabel.SetFontSize(14f);
                     SectionCompleteLabel.SetCellColour("DarkSlateGrey");
-                    SectionCompleteLabel.SetTag(iSectionCompleteLabelTagId * (ii+1));
+                    SectionCompleteLabel.SetTag(iSectionCompleteLabelTagId * (m_iRFUSectionCounter+1));
                     SectionCompleteLabel.SetHidden(bFullyCommitted);
                     SectionCompleteLabelVw = SectionCompleteLabel.GetLabelCell();
                     arrItems14[1] = SectionCompleteLabelVw;
@@ -1044,7 +1047,7 @@ namespace ITPiPadSoln
                     btnSaveRFU.SetBorderWidth(0.0f);
                     btnSaveRFU.SetFontName("Verdana");
                     btnSaveRFU.SetFontSize(12f);
-                    btnSaveRFU.SetTag(iSaveSectionBtnTagId * (ii+1));
+                    btnSaveRFU.SetTag(iSaveSectionBtnTagId * (m_iRFUSectionCounter+1));
                     btnSaveRFU.SetCellColour("DarkSlateGrey");
                     btnSaveRFUVw = btnSaveRFU.GetButtonCell();
                     
@@ -1061,7 +1064,7 @@ namespace ITPiPadSoln
                     btnExpandRFU.SetBorderWidth(0.0f);
                     btnExpandRFU.SetFontName("Verdana");
                     btnExpandRFU.SetFontSize(12f);
-                    btnExpandRFU.SetTag(iExpandSectionBtnTagId * (ii+1));
+                    btnExpandRFU.SetTag(iExpandSectionBtnTagId * (m_iRFUSectionCounter+1));
                     btnExpandRFU.SetCellColour("DarkSlateGrey");
                     btnExpandRFUVw = btnExpandRFU.GetButtonCell();
                     
@@ -1079,7 +1082,7 @@ namespace ITPiPadSoln
                     btnContractRFU.SetBorderWidth(0.0f);
                     btnContractRFU.SetFontName("Verdana");
                     btnContractRFU.SetFontSize(12f);
-                    btnContractRFU.SetTag(iContractSectionBtnTagId * (ii+1));
+                    btnContractRFU.SetTag(iContractSectionBtnTagId * (m_iRFUSectionCounter+1));
                     btnContractRFU.SetCellColour("DarkSlateGrey");
                     btnContractRFUVw = btnContractRFU.GetButtonCell();
                     
@@ -1090,19 +1093,19 @@ namespace ITPiPadSoln
                     arrItems14[4] = btnContractRFUVw;
                     
                     UILabel hfSectionHeight = new UILabel();
-                    hfSectionHeight.Tag = iSectionHeightTagId * (ii+1);
+                    hfSectionHeight.Tag = iSectionHeightTagId * (m_iRFUSectionCounter+1);
                     hfSectionHeight.Hidden = true;
                     hfSectionHeight.Text = "0";
                     arrItems14[5] = hfSectionHeight;
                     
                     UILabel hfSectionRows = new UILabel();
-                    hfSectionRows.Tag = iSectionRowsTagId * (ii+1);
+                    hfSectionRows.Tag = iSectionRowsTagId * (m_iRFUSectionCounter+1);
                     hfSectionRows.Hidden = true;
                     hfSectionRows.Text = iPwrIdRowsRFU.ToString();
                     arrItems14[6] = hfSectionRows;
                     
                     UILabel hfSectionStatus = new UILabel();
-                    hfSectionStatus.Tag = iSectionStatusTagId * (ii+1);
+                    hfSectionStatus.Tag = iSectionStatusTagId * (m_iRFUSectionCounter+1);
                     hfSectionStatus.Hidden = true;
                     hfSectionStatus.Text = "0";
                     arrItems14[7] = hfSectionStatus;
@@ -1116,7 +1119,7 @@ namespace ITPiPadSoln
                     //Now add a new view to this view to hold another view containing all the pwrid info for this RFU section
                     UIView RFUTableRow = new UIView();
                     RFUTableRow.Frame = new RectangleF(0f,iRFURowVertTop,1000f,iSectionHdrRowHeight);
-                    iSectionId = iContainerSectionTagId * (ii+1);
+                    iSectionId = iContainerSectionTagId * (m_iRFUSectionCounter+1);
                     RFUTableRow.Tag = iSectionId;
                     layout.AddSubview(RFUTableRow);
 
@@ -1133,7 +1136,7 @@ namespace ITPiPadSoln
                     rowPwrIdHdrLbl.SetBorderWidth(0.0f);
                     rowPwrIdHdrLbl.SetFontName("Verdana-Bold");
                     rowPwrIdHdrLbl.SetFontSize(14f);
-                    rowPwrIdHdrLbl.SetTag((iRFUPwrIdHdrLabelTagId) * (ii+1));                   
+                    rowPwrIdHdrLbl.SetTag((iRFUPwrIdHdrLabelTagId) * (m_iRFUSectionCounter+1));                   
                     rowPwrIdHdrLbl.SetCellColour("Pale Yellow");
 
                     rowPwrIdHdrLblVw = rowPwrIdHdrLbl.GetLabelCell();
@@ -1149,7 +1152,7 @@ namespace ITPiPadSoln
                     rowDesignLoadHdrLbl.SetBorderWidth(0.0f);
                     rowDesignLoadHdrLbl.SetFontName("Verdana-Bold");
                     rowDesignLoadHdrLbl.SetFontSize(14f);
-                    rowDesignLoadHdrLbl.SetTag((iRFUDesignLoadHdrLabelTagId) * (ii+1));                   
+                    rowDesignLoadHdrLbl.SetTag((iRFUDesignLoadHdrLabelTagId) * (m_iRFUSectionCounter+1));                   
                     rowDesignLoadHdrLbl.SetCellColour("Pale Yellow");
                     rowDesignLoadHdrLblVw = rowDesignLoadHdrLbl.GetLabelCell();
                     iHeightToAdd = iSectionHdrRowHeight;
@@ -1164,7 +1167,7 @@ namespace ITPiPadSoln
                     rowCutoverLoadHdrLbl.SetBorderWidth(0.0f);
                     rowCutoverLoadHdrLbl.SetFontName("Verdana-Bold");
                     rowCutoverLoadHdrLbl.SetFontSize(14f);
-                    rowCutoverLoadHdrLbl.SetTag((iRFUCutoverLoadHdrLabelTagId) * (ii+1));                   
+                    rowCutoverLoadHdrLbl.SetTag((iRFUCutoverLoadHdrLabelTagId) * (m_iRFUSectionCounter+1));                   
                     rowCutoverLoadHdrLbl.SetCellColour("Pale Yellow");
                     
                     rowCutoverLoadHdrLblVw = rowCutoverLoadHdrLbl.GetLabelCell();
@@ -1180,7 +1183,7 @@ namespace ITPiPadSoln
                     rowCutoverDateHdrLbl.SetBorderWidth(0.0f);
                     rowCutoverDateHdrLbl.SetFontName("Verdana-Bold");
                     rowCutoverDateHdrLbl.SetFontSize(14f);
-                    rowCutoverDateHdrLbl.SetTag((iRFUCutoverDateHdrLabelTagId) * (ii+1));                   
+                    rowCutoverDateHdrLbl.SetTag((iRFUCutoverDateHdrLabelTagId) * (m_iRFUSectionCounter+1));                   
                     rowCutoverDateHdrLbl.SetCellColour("Pale Yellow");
                     
                     rowCutoverDateHdrLblVw = rowCutoverDateHdrLbl.GetLabelCell();
@@ -1196,7 +1199,7 @@ namespace ITPiPadSoln
                     rowDecommissionedHdrLbl.SetBorderWidth(0.0f);
                     rowDecommissionedHdrLbl.SetFontName("Verdana-Bold");
                     rowDecommissionedHdrLbl.SetFontSize(14f);
-                    rowDecommissionedHdrLbl.SetTag((iRFUDecommissionedHdrLabelTagId) * (ii+1));                   
+                    rowDecommissionedHdrLbl.SetTag((iRFUDecommissionedHdrLabelTagId) * (m_iRFUSectionCounter+1));                   
                     rowDecommissionedHdrLbl.SetCellColour("Pale Yellow");
                     
                     rowDecommissionedHdrLblVw = rowDecommissionedHdrLbl.GetLabelCell();
@@ -1212,7 +1215,7 @@ namespace ITPiPadSoln
                     rowCommissionedHdrLbl.SetBorderWidth(0.0f);
                     rowCommissionedHdrLbl.SetFontName("Verdana-Bold");
                     rowCommissionedHdrLbl.SetFontSize(14f);
-                    rowCommissionedHdrLbl.SetTag((iRFUCommissionedHdrLabelTagId) * (ii+1));                   
+                    rowCommissionedHdrLbl.SetTag((iRFUCommissionedHdrLabelTagId) * (m_iRFUSectionCounter+1));                   
                     rowCommissionedHdrLbl.SetCellColour("Pale Yellow");
                     
                     rowCommissionedHdrLblVw = rowCommissionedHdrLbl.GetLabelCell();
@@ -1228,7 +1231,7 @@ namespace ITPiPadSoln
                     rowSaveRFUHdrLbl.SetBorderWidth(0.0f);
                     rowSaveRFUHdrLbl.SetFontName("Verdana-Bold");
                     rowSaveRFUHdrLbl.SetFontSize(14f);
-                    rowSaveRFUHdrLbl.SetTag((iRFUSaveRFUHdrLabelTagId) * (ii+1));                   
+                    rowSaveRFUHdrLbl.SetTag((iRFUSaveRFUHdrLabelTagId) * (m_iRFUSectionCounter+1));                   
                     rowSaveRFUHdrLbl.SetCellColour("Pale Yellow");
                     
                     rowSaveRFUHdrLblVw = rowSaveRFUHdrLbl.GetLabelCell();
@@ -1249,28 +1252,30 @@ namespace ITPiPadSoln
                     iRFURowVert = 0f;
 
 
-                    for (var j = 0; j < iPwrIdRowsRFU; j++)
+                    for (var jjjj = 0; jjjj < iPwrIdRowsRFU; jjjj++)
                     {
                         UIView vwPwrInternalRowId = new UIView();
                         vwPwrInternalRowId.Frame = new RectangleF(0f,iRFURowVert,1000f,200f); //This will be resized later on
-                        vwPwrInternalRowId.Tag = (iPwrIdSectionTagId + (j+1)) * (ii+1);                   
+                        vwPwrInternalRowId.Tag = (iPwrIdSectionTagId + (jjjj+1)) * (m_iRFUSectionCounter+1);                   
                         
                         iColNo = arrITPRFUs.Tables[0].Columns["PwrId"].Ordinal;
-                        string sPwrId = arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo].ToString();
+                        string sPwrId = arrITPRFUs.Tables[0].Rows[jjjj].ItemArray[iColNo].ToString();
                         iColNo = arrITPRFUs.Tables[0].Columns["CutoverLoad"].Ordinal;
-                        string sCutoverLoad = arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo].ToString();
+                        string sCutoverLoad = arrITPRFUs.Tables[0].Rows[jjjj].ItemArray[iColNo].ToString();
                         iColNo = arrITPRFUs.Tables[0].Columns["CutoverDate"].Ordinal;
-                        string sCutoverDate = arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo].ToString();
+                        string sCutoverDate = arrITPRFUs.Tables[0].Rows[jjjj].ItemArray[iColNo].ToString();
                         iColNo = arrITPRFUs.Tables[0].Columns["Decommission"].Ordinal;
-                        int iDecommission = Convert.ToInt32(arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo]);
+                        int iDecommission = Convert.ToInt32(arrITPRFUs.Tables[0].Rows[jjjj].ItemArray[iColNo]);
                         iColNo = arrITPRFUs.Tables[0].Columns["Commission"].Ordinal;
-                        int iCommission = Convert.ToInt32(arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo]);
+                        int iCommission = Convert.ToInt32(arrITPRFUs.Tables[0].Rows[jjjj].ItemArray[iColNo]);
+                        iColNo = arrITPRFUs.Tables[0].Columns["Comments"].Ordinal;
+                        string sComments =arrITPRFUs.Tables[0].Rows[jjjj].ItemArray[iColNo].ToString();
 
                         bDisableRow = RFUPwrIdCommitted(sPwrId);
 
                         UILabel hfRowRFUStatus = new UILabel();
                         hfRowRFUStatus.Text = "0";
-                        hfRowRFUStatus.Tag = (ihfRowRFUStatusTagId + (j+1)) * (ii+1);
+                        hfRowRFUStatus.Tag = (ihfRowRFUStatusTagId + (jjjj+1)) * (m_iRFUSectionCounter+1);
                         hfRowRFUStatus.Hidden = true;
                         arrItems6[0] = hfRowRFUStatus;
                         
@@ -1283,9 +1288,9 @@ namespace ITPiPadSoln
                         rowPwrIdLabel.SetBorderWidth(0.0f);
                         rowPwrIdLabel.SetFontName("Verdana");
                         rowPwrIdLabel.SetFontSize(14f);
-                        rowPwrIdLabel.SetTag((iRFUPwrIdRowLabelTagId + (j+1)) * (ii+1));
+                        rowPwrIdLabel.SetTag((iRFUPwrIdRowLabelTagId + (jjjj+1)) * (m_iRFUSectionCounter+1));
                         
-                        if (j % 2 == 0)
+                        if (jjjj % 2 == 0)
                         {
                             rowPwrIdLabel.SetCellColour("Pale Blue");
                         }
@@ -1302,7 +1307,7 @@ namespace ITPiPadSoln
                         iUtils.CreateFormGridItem rowDesignLoadLabel = new iUtils.CreateFormGridItem();
                         UIView rowDesignLoadLabelVw = new UIView();
                         iColNo = arrITPRFUs.Tables[0].Columns["DesignLoad"].Ordinal;
-                        string sDesignLoad = arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo].ToString();
+                        string sDesignLoad = arrITPRFUs.Tables[0].Rows[jjjj].ItemArray[iColNo].ToString();
                         rowDesignLoadLabel.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
                         rowDesignLoadLabel.SetDimensions(100f,iRFURowVert, 100f, iSectionHdrRowHeight, 20f, 2.5f, 20f, 2.5f);
                         rowDesignLoadLabel.SetLabelText(sDesignLoad);
@@ -1310,9 +1315,9 @@ namespace ITPiPadSoln
                         rowDesignLoadLabel.SetBorderWidth(0.0f);
                         rowDesignLoadLabel.SetFontName("Verdana");
                         rowDesignLoadLabel.SetFontSize(14f);
-                        rowDesignLoadLabel.SetTag((iRFUDesignLoadRowLabelTagId + (j+1)) * (ii+1));
+                        rowDesignLoadLabel.SetTag((iRFUDesignLoadRowLabelTagId + (jjjj+1)) * (m_iRFUSectionCounter+1));
                         
-                        if (j % 2 == 0)
+                        if (jjjj % 2 == 0)
                         {
                             rowDesignLoadLabel.SetCellColour("Pale Blue");
                         }
@@ -1333,9 +1338,9 @@ namespace ITPiPadSoln
                         txtCutoverLoad.SetBorderWidth(0.0f);
                         txtCutoverLoad.SetFontName("Verdana");
                         txtCutoverLoad.SetFontSize(14f);
-                        txtCutoverLoad.SetTag((iRFUCutoverLoadRowLabelTagId + (j+1)) * (ii+1));
+                        txtCutoverLoad.SetTag((iRFUCutoverLoadRowLabelTagId + (jjjj+1)) * (m_iRFUSectionCounter+1));
                         
-                        if (j % 2 == 0)
+                        if (jjjj % 2 == 0)
                         {
                             txtCutoverLoad.SetCellColour("Pale Blue");
                         }
@@ -1363,7 +1368,7 @@ namespace ITPiPadSoln
 
                         UILabel hfCurrentCutoverLoad = new UILabel();
                         hfCurrentCutoverLoad.Text = sCutoverLoad;
-                        hfCurrentCutoverLoad.Tag = (ihfCutoverLoadRowLabelTagId + (j + 1)) * (ii + 1);
+                        hfCurrentCutoverLoad.Tag = (ihfCutoverLoadRowLabelTagId + (jjjj + 1)) * (m_iRFUSectionCounter + 1);
                         hfCurrentCutoverLoad.Hidden = true;
                         arrItems6 [4] = hfCurrentCutoverLoad;
 
@@ -1381,9 +1386,9 @@ namespace ITPiPadSoln
                         txtCutoverDate.SetBorderWidth(0.0f);
                         txtCutoverDate.SetFontName("Verdana");
                         txtCutoverDate.SetFontSize(14f);
-                        txtCutoverDate.SetTag((iRFUCutoverDateRowLabelTagId + (j+1)) * (ii+1));
+                        txtCutoverDate.SetTag((iRFUCutoverDateRowLabelTagId + (jjjj+1)) * (m_iRFUSectionCounter+1));
                         
-                        if (j % 2 == 0)
+                        if (jjjj % 2 == 0)
                         {
                             txtCutoverDate.SetCellColour("Pale Blue");
                         }
@@ -1412,7 +1417,7 @@ namespace ITPiPadSoln
 
                         UILabel hfCurrentCutoverDate = new UILabel();
                         hfCurrentCutoverDate.Text = sCutoverDisplay;
-                        hfCurrentCutoverDate.Tag = (ihfCutoverDateRowLabelTagId + (j + 1)) * (ii + 1);
+                        hfCurrentCutoverDate.Tag = (ihfCutoverDateRowLabelTagId + (jjjj + 1)) * (m_iRFUSectionCounter + 1);
                         hfCurrentCutoverDate.Hidden = true;
                         arrItems6[6] = hfCurrentCutoverDate;
 
@@ -1429,9 +1434,9 @@ namespace ITPiPadSoln
                       
 
                         chkDecommission.SetSwitchType(2);
-                        chkDecommission.SetTag((iRFUDecommissionRowCheckTagId + (j+1)) * (ii+1));
+                        chkDecommission.SetTag((iRFUDecommissionRowCheckTagId + (jjjj+1)) * (m_iRFUSectionCounter+1));
                         
-                        if (j % 2 == 0)
+                        if (jjjj % 2 == 0)
                         {
                             chkDecommission.SetCellColour("Pale Blue");
                         }
@@ -1463,9 +1468,9 @@ namespace ITPiPadSoln
                         chkCommission.SetCheckboxOnOff(bCommission);
                         chkCommission.SetBorderWidth(0.0f);
                         chkCommission.SetSwitchType(2);
-                        chkCommission.SetTag((iRFUCommissionRowCheckTagId + (j+1)) * (ii+1));
+                        chkCommission.SetTag((iRFUCommissionRowCheckTagId + (jjjj+1)) * (m_iRFUSectionCounter+1));
                         
-                        if (j % 2 == 0)
+                        if (jjjj % 2 == 0)
                         {
                             chkCommission.SetCellColour("Pale Blue");
                         }
@@ -1499,9 +1504,9 @@ namespace ITPiPadSoln
                         btnRFU.SetBorderWidth(0.0f);
                         btnRFU.SetFontName("Verdana");
                         btnRFU.SetFontSize(14f);
-                        btnRFU.SetTag((iRFUButtonSaveTagId + (j+1)) * (ii+1));
+                        btnRFU.SetTag((iRFUButtonSaveTagId + (jjjj+1)) * (m_iRFUSectionCounter+1));
 
-                        if (j % 2 == 0)
+                        if (jjjj % 2 == 0)
                         {
                             btnRFU.SetCellColour("Pale Blue");
                         }
@@ -1525,10 +1530,10 @@ namespace ITPiPadSoln
                         
 
                         iColNo = arrITPRFUs.Tables[0].Columns["BatteryCapacity"].Ordinal;
-                        string sBatteryCapacity = arrITPRFUs.Tables[0].Rows[j].ItemArray[iColNo].ToString();
+                        string sBatteryCapacity = arrITPRFUs.Tables[0].Rows[jjjj].ItemArray[iColNo].ToString();
                         UILabel hfRFUBatteryCapacity = new UILabel();
                         hfRFUBatteryCapacity.Text = sBatteryCapacity;
-                        hfRFUBatteryCapacity.Tag = (ihfRowRFUBatteryCapacityTagId + (j+1)) * (ii+1);
+                        hfRFUBatteryCapacity.Tag = (ihfRowRFUBatteryCapacityTagId + (jjjj+1)) * (m_iRFUSectionCounter+1);
                         hfRFUBatteryCapacity.Hidden = true;
                         arrItems6[10] = hfRFUBatteryCapacity;
                         
@@ -1539,7 +1544,76 @@ namespace ITPiPadSoln
                         iRFURowVert += iHeightToAdd;
                         iVert += iHeightToAdd;
 
+                        //Now put in a second row for the comments
+                        iUtils.CreateFormGridItem lblRFUComments = new iUtils.CreateFormGridItem();
+                        UIView lblRFUCommentsVw = new UIView();
+                        lblRFUComments.SetLabelWrap(0); //This means the text will NOT be wrapped in the label
+                        lblRFUComments.SetDimensions(0f,iRFURowVert, 100f, iSectionHdrRowHeight * 2, 2f, 2.5f, 2f, 2.5f);
+                        lblRFUComments.SetLabelText("Comments");
+                        lblRFUComments.SetBorderWidth(0.0f);
+                        lblRFUComments.SetFontName("Verdana");
+                        lblRFUComments.SetFontSize(14f);
+                        lblRFUComments.SetTag((iRFULabelCommentsTagId + (jjjj+1)) * (m_iRFUSectionCounter+1));
+
+                        if (jjjj % 2 == 0)
+                        {
+                            lblRFUComments.SetCellColour("Pale Blue");
+                        }
+                        else
+                        {
+                            lblRFUComments.SetCellColour("Sky Blue");
+                        }
+
+                        lblRFUCommentsVw = lblRFUComments.GetLabelCell();
+                        iHeightToAdd = iSectionHdrRowHeight * 2;
+                        arrItems8[0] = lblRFUCommentsVw;
+
+                        iUtils.CreateFormGridItem txtRFUComments = new iUtils.CreateFormGridItem();
+                        UIView txtRFUCommentsVw = new UIView();
+                        txtRFUComments.SetDimensions(100f,iRFURowVert, 730f, iSectionHdrRowHeight * 2, 15f, 2.5f, 15f, 2.5f);
+                        txtRFUComments.SetLabelText(sComments);
+                        txtRFUComments.SetTextAlignment("left");
+                        txtRFUComments.SetBorderWidth(0.0f);
+                        txtRFUComments.SetFontName("Verdana");
+                        txtRFUComments.SetFontSize(14f);
+                        txtRFUComments.SetTag((iRFUCommentsTagId + (jjjj+1)) * (m_iRFUSectionCounter+1));
+
+                        if (jjjj % 2 == 0)
+                        {
+                            txtRFUComments.SetCellColour("Pale Blue");
+                        }
+                        else
+                        {
+                            txtRFUComments.SetCellColour("Sky Blue");
+                        }
+
+                        txtRFUCommentsVw = txtRFUComments.GetTextCell();
+
+                        UITextView txtRFUCommentsView = txtRFUComments.GetTextView();
+                        txtRFUCommentsView.KeyboardType = UIKeyboardType.Default;
+                        txtRFUCommentsView.ReturnKeyType = UIReturnKeyType.Default;
+                        txtRFUCommentsView.ShouldBeginEditing += (sender) => {
+                            return SetGlobalEditItems(sender, 11);};
+//                        txtRFUCommentsView.ShouldEndEditing += (sender) => {
+//                            return ValidateCutoverLoad(sender, 0);};
+//                        txtRFUCommentsView.s += (sender) => {
+//                            return MoveNextTextField(sender, 11);};
+                        txtRFUCommentsView.Changed += (sender,e) => {SetRFURowEditTextChanged(sender, e);};
+
+                        if(bDisableRow)
+                        {
+                            txtRFUCommentsView.Editable = false;
+                        }
+                        arrItems8[1] = txtRFUCommentsVw;
+
                             
+                        //Now add the row details into the view
+                        vwPwrInternalRowId.AddSubviews(arrItems8);
+
+                        iSectionRFUHeight += iHeightToAdd;
+                        iRFURowVert += iHeightToAdd;
+                        iVert += iHeightToAdd;
+
                         vwPwrInternalRowId.Frame = new RectangleF(0f, iRFURowInnerTop, 1000f, iRFURowVert);
                         RFUTableRow.AddSubview(vwPwrInternalRowId);
                         iRFURowInnerTop += iRFURowVert;
@@ -1563,7 +1637,7 @@ namespace ITPiPadSoln
 				layout.AddSubview(hfScrollContentHeight);
 				View.AddSubview(layout);
 
-                //Now determine what is to be contrated by default
+                //Now determine what is to be contracted by default
                 for(int iiii=0;iiii< m_iQuestionSections; iiii++)
                 {
                     if(bHideSections[iiii])
@@ -2245,7 +2319,7 @@ namespace ITPiPadSoln
         public bool SaveRFURow(string sId, int iRow, bool bCheckSectionStatus, bool bSaveOnly)
         {
             clsTabletDB.ITPDocumentSection DB = new clsTabletDB.ITPDocumentSection();
-            string[] sItemValues = new string[9];
+            string[] sItemValues = new string[10];
             int i;
 
             UILabel hfRFURowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + (iRow + 1)) * (m_iRFUSectionCounter + 1));
@@ -2283,6 +2357,9 @@ namespace ITPiPadSoln
             UILabel hfBatteryCapacity = (UILabel)View.ViewWithTag((ihfRowRFUBatteryCapacityTagId + (iRow + 1)) * (m_iRFUSectionCounter + 1));
             string sBatteryCapacity = hfBatteryCapacity.Text;
 
+            UITextView txtComments = (UITextView)View.ViewWithTag((iRFUCommentsTagId + (iRow + 1)) * (m_iRFUSectionCounter + 1));
+            string sComments = txtComments.Text;
+
             //Get all the info for this RFU row
             sItemValues [0] = sId;
             sItemValues [1] = sPwrId;
@@ -2293,6 +2370,7 @@ namespace ITPiPadSoln
             sItemValues [6] = iCommission.ToString();
             sItemValues [7] = sCurrentDateAndTime;
             sItemValues [8] = sBatteryCapacity;
+            sItemValues [9] = sComments;
 
             if (sCutoverLoad == "" || sCutoverDate == "" || (iDecommission == 0 && iCommission == 0) ||
                 (iDecommission == 1 && iCommission == 1))
@@ -2378,7 +2456,19 @@ namespace ITPiPadSoln
 			SetAnyValueChanged(sender, e);
 		}
 
-		//Send through just the section counter NOT the section Id. So 1 NOT 10000 etc
+        public void SetRFURowEditTextChanged(object sender, EventArgs e)
+        {
+            UITextView edtText = (UITextView)sender;
+            int iTagId = edtText.Tag;
+            int iSection =  m_iRFUSectionCounter + 1;
+            int iStringRow = iTagId/iSection - iRFUCommentsTagId;
+            UILabel hfRowStatus = (UILabel)View.ViewWithTag((ihfRowRFUStatusTagId + iStringRow) * iSection);
+            hfRowStatus.Text = "1";
+            SetSectionValueChanged(m_iRFUSectionCounter + 1);
+            SetAnyValueChanged(sender, null);
+        }
+
+        //Send through just the section counter NOT the section Id. So 1 NOT 10000 etc
 		public void SetSectionValueChanged(int iSectionId)
 		{
 			UILabel txtEditStatus = (UILabel)View.ViewWithTag (iSectionId * iSectionStatusTagId);
@@ -2690,6 +2780,19 @@ namespace ITPiPadSoln
 
         public void OpenBatteries(object sender, EventArgs e)
         {
+            //First of all check there are no unsaved changes
+            UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
+            string sOverallStatus = txtEditStatus.Text;
+
+            if (sOverallStatus == "1")
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox();
+                alert.CreateAlertDialog();
+                alert.SetAlertMessage("You cannot open the batteries screen whilst there are unsaved changes. Please save first.");
+                alert.ShowAlertBox(); 
+                return;
+            }
+
             //Show the progress indicator and position at top left of button
             UIButton btnOpen = (UIButton)sender;
             prog.SetActivityIndicatorTitle("Open Batteries");
@@ -2725,6 +2828,19 @@ namespace ITPiPadSoln
 
         public void OpenPowerConversion(object sender, EventArgs e)
         {
+            //First of all check there are no unsaved changes
+            UILabel txtEditStatus = (UILabel)View.ViewWithTag (80);
+            string sOverallStatus = txtEditStatus.Text;
+
+            if (sOverallStatus == "1")
+            {
+                iUtils.AlertBox alert = new iUtils.AlertBox();
+                alert.CreateAlertDialog();
+                alert.SetAlertMessage("You cannot open the power conversion screen whilst there are unsaved changes. Please save first.");
+                alert.ShowAlertBox(); 
+                return;
+            }
+
             //Show the progress indicator and position at top left of button
             UIButton btnOpen = (UIButton)sender;
             prog.SetActivityIndicatorTitle("Open Pwr Conv");
