@@ -5495,7 +5495,7 @@ image_table:
 
 	.long 5
 	.asciz "clsiOS"
-	.asciz "E5CCA809-4FD6-48A2-BE3A-A6A35F9DFE5B"
+	.asciz "26BF3202-BE94-4415-A3B7-00A10C544928"
 	.asciz ""
 	.asciz ""
 	.align 3
@@ -5516,7 +5516,7 @@ image_table:
 
 	.long 1,0,0,0,0
 	.asciz "clsTabletCommon"
-	.asciz "B1E174D7-1039-4F0F-BBA0-26221E8829F9"
+	.asciz "F65402B3-77B2-4249-8968-64259AF720DE"
 	.asciz ""
 	.asciz ""
 	.align 3
@@ -5537,7 +5537,7 @@ got_end:
 .section __TEXT, __const
 	.align 2
 assembly_guid:
-	.asciz "E5CCA809-4FD6-48A2-BE3A-A6A35F9DFE5B"
+	.asciz "26BF3202-BE94-4415-A3B7-00A10C544928"
 .section __TEXT, __const
 	.align 2
 runtime_version:

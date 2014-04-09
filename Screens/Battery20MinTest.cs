@@ -526,6 +526,10 @@ namespace ITPiPadSoln
                         dSum20MinEndVoltResult = 0.0;
                     }
                 }
+                else
+                {
+                    dCellMbVoltage = dDefaultVoltage;
+                }
 
 
                 UILabel hfRow10Status = new UILabel();
@@ -3056,6 +3060,10 @@ namespace ITPiPadSoln
                 for(i=0;i<24;i++)
                 {
                     UITextField txtCellValue = (UITextField)View.ViewWithTag((iType1234CellBaseId * iUniqueRowId) + (i+1));
+                    if (txtCellValue.Text == "")
+                    {
+                        txtCellValue.Text = "0";
+                    }
                     double dCellValue = Convert.ToDouble(txtCellValue.Text);
                     sItemValues[j] = dCellValue.ToString();
                     j++;
@@ -3127,6 +3135,10 @@ namespace ITPiPadSoln
                 for(i=0;i<24;i++)
                 {
                     UITextField txtCellValue = (UITextField)View.ViewWithTag((iType1234CellBaseId * iUniqueRowId) + (i+1));
+                    if (txtCellValue.Text == "")
+                    {
+                        txtCellValue.Text = "0";
+                    }
                     double dCellValue = Convert.ToDouble(txtCellValue.Text);
                     sItemValues[j] = dCellValue.ToString();
                     j++;
